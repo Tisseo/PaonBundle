@@ -1,5 +1,5 @@
 {
-    "name" : "tisseo/datawarehousebundle",
+    "name" : "tisseo/datawarehouse-bundle",
     "description" : "An interface tool consisting in public transport data edition.",
     "type" : "symfony-bundle",
     "authors" : [{
