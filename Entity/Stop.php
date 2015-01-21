@@ -93,4 +93,32 @@ class Stop
     {
         return $this->stopArea;
     }
+    /**
+     * @var \Tisseo\DatawarehouseBundle\Entity\Waypoint
+     */
+    private $waypoint;
+
+
+    /**
+     * Set waypoint
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Waypoint $waypoint
+     * @return Stop
+     */
+    public function setWaypoint(\Tisseo\DatawarehouseBundle\Entity\Waypoint $waypoint = null)
+    {
+        $this->waypoint = $waypoint;
+
+        return $this;
+    }
+
+    /**
+     * Get waypoint
+     *
+     * @return \Tisseo\DatawarehouseBundle\Entity\Waypoint 
+     */
+    public function getWaypoint()
+    {
+        return $this->waypoint;
+    }
 }

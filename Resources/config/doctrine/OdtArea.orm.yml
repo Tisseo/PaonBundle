@@ -1,7 +1,14 @@
 Tisseo\DatawarehouseBundle\Entity\OdtArea:
     type: entity
     table: odt_area
-    id: {  }
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
     fields:
         name:
             type: string
@@ -14,7 +21,7 @@ Tisseo\DatawarehouseBundle\Entity\OdtArea:
             length: null
             fixed: false
     oneToOne:
-        id:
+        waypoint:
             targetEntity: Waypoint
             cascade: {  }
             mappedBy: null

@@ -8,9 +8,16 @@ Tisseo\DatawarehouseBundle\Entity\Stop:
         IDX_B95616B61AD056BA:
             columns:
                 - stop_area_id
-    id: {  }
-    oneToOne:
+    id:
         id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    oneToOne:
+        waypoint:
             targetEntity: Waypoint
             cascade: {  }
             mappedBy: null
