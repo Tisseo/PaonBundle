@@ -1,0 +1,60 @@
+Tisseo\DatawarehouseBundle\Entity\Transfer:
+    type: entity
+    table: transfer
+    indexes:
+        IDX_4034A3C0ACCD57D4:
+            columns:
+                - end_stop_id
+        IDX_4034A3C0C9C75AEE:
+            columns:
+                - start_stop_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        duration:
+            type: integer
+            nullable: false
+            unsigned: false
+        distance:
+            type: integer
+            nullable: true
+            unsigned: false
+        theGeom:
+            type: geometry
+            nullable: true
+            requireSQLConversion: true
+            column: the_geom
+        accessibility:
+            type: boolean
+            nullable: true
+        description:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+    manyToOne:
+        endStop:
+            targetEntity: Stop
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                end_stop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        startStop:
+            targetEntity: Stop
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                start_stop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

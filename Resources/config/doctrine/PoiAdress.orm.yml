@@ -1,0 +1,43 @@
+Tisseo\DatawarehouseBundle\Entity\PoiAdress:
+    type: entity
+    table: poi_adress
+    indexes:
+        poi_adress_poi_id_idx:
+            columns:
+                - poi_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: "\n"
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        adress:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: "\n"
+        isEntrance:
+            type: boolean
+            nullable: false
+            column: is_entrance
+        theGeom:
+            type: geometry
+            nullable: false
+            requireSQLConversion: true
+            column: the_geom
+    manyToOne:
+        poi:
+            targetEntity: Poi
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                poi_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

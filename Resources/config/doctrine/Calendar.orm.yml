@@ -1,0 +1,23 @@
+Tisseo\DatawarehouseBundle\Entity\Calendar:
+    type: entity
+    table: calendar
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            fixed: false
+        calendarType:
+            type: integer
+            nullable: false
+            unsigned: false
+            column: calendar_type
+    lifecycleCallbacks: {  }

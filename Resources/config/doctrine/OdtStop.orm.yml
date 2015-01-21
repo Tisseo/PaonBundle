@@ -1,0 +1,48 @@
+Tisseo\DatawarehouseBundle\Entity\OdtStop:
+    type: entity
+    table: odt_stop
+    indexes:
+        IDX_A1F2DBEF718D9B49:
+            columns:
+                - odt_area_id
+        IDX_A1F2DBEF3902063D:
+            columns:
+                - stop_id
+    id:
+        startDate:
+            type: date
+            nullable: false
+            id: true
+            column: start_date
+    fields:
+        endDate:
+            type: date
+            nullable: true
+            column: end_date
+        pickup:
+            type: boolean
+            nullable: false
+        dropOff:
+            type: boolean
+            nullable: false
+            column: drop_off
+    oneToOne:
+        odtArea:
+            targetEntity: OdtArea
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                odt_area_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        stop:
+            targetEntity: Stop
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                stop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

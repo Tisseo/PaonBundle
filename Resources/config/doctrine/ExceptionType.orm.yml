@@ -1,0 +1,36 @@
+Tisseo\DatawarehouseBundle\Entity\ExceptionType:
+    type: entity
+    table: exception_type
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        label:
+            type: string
+            nullable: true
+            length: 5
+            fixed: false
+        exceptionText:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            column: exception_text
+        gridCalendarPattern:
+            type: string
+            nullable: true
+            length: 7
+            fixed: false
+            column: grid_calendar_pattern
+        tripCalendarPattern:
+            type: string
+            nullable: true
+            length: 7
+            fixed: false
+            column: trip_calendar_pattern
+    lifecycleCallbacks: {  }

@@ -1,0 +1,112 @@
+Tisseo\DatawarehouseBundle\Entity\LineVersion:
+    type: entity
+    table: line_version
+    indexes:
+        IDX_AB852A44D7B7542:
+            columns:
+                - line_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        version:
+            type: integer
+            nullable: false
+            unsigned: false
+        startDate:
+            type: date
+            nullable: false
+            column: start_date
+        endDate:
+            type: date
+            nullable: true
+            column: end_date
+        plannedEndDate:
+            type: date
+            nullable: false
+            column: planned_end_date
+        childLineId:
+            type: integer
+            nullable: true
+            unsigned: false
+            column: child_line_id
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+        forwardDirection:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            column: forward_direction
+        backwardDirection:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            column: backward_direction
+        bgColor:
+            type: string
+            nullable: false
+            length: 20
+            fixed: false
+            column: bg_color
+        bgHexaColor:
+            type: string
+            nullable: false
+            length: 6
+            fixed: false
+            column: bg_hexa_color
+        fgColor:
+            type: string
+            nullable: false
+            length: 20
+            fixed: false
+            column: fg_color
+        fgHexaColor:
+            type: string
+            nullable: false
+            length: 6
+            fixed: false
+            column: fg_hexa_color
+        cartoFile:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            column: carto_file
+        accessibility:
+            type: boolean
+            nullable: false
+        airConditioned:
+            type: boolean
+            nullable: false
+            column: air_conditioned
+        comment:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+        depot:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+    manyToOne:
+        line:
+            targetEntity: Line
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                line_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

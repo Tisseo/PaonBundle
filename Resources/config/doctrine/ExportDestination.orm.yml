@@ -1,0 +1,23 @@
+Tisseo\DatawarehouseBundle\Entity\ExportDestination:
+    type: entity
+    table: export_destination
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nom:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+        url:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+    lifecycleCallbacks: {  }

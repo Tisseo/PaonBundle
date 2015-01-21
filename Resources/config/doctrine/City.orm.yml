@@ -1,0 +1,36 @@
+Tisseo\DatawarehouseBundle\Entity\City:
+    type: entity
+    table: city
+    indexes:
+        IDX_2D5B0234368E303:
+            columns:
+                - main_stop_area_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        insee:
+            type: integer
+            nullable: false
+            unsigned: false
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+    manyToOne:
+        mainStopArea:
+            targetEntity: StopArea
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                main_stop_area_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

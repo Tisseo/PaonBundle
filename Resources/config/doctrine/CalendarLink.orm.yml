@@ -1,0 +1,50 @@
+Tisseo\DatawarehouseBundle\Entity\CalendarLink:
+    type: entity
+    table: calendar_link
+    indexes:
+        calendar_link_trip_id_idx:
+            columns:
+                - trip_id
+        calendar_link_period_calendar_id_idx:
+            columns:
+                - period_calendar_id
+        calendar_link_day_calendar_id_idx:
+            columns:
+                - day_calendar_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        dayCalendar:
+            targetEntity: Calendar
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                day_calendar_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        periodCalendar:
+            targetEntity: Calendar
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                period_calendar_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        trip:
+            targetEntity: Trip
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                trip_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

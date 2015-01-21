@@ -1,0 +1,44 @@
+Tisseo\DatawarehouseBundle\Entity\PoiAdressDatasource:
+    type: entity
+    table: poi_adress_datasource
+    indexes:
+        IDX_95703A1D712290DD:
+            columns:
+                - datasource_id
+        IDX_95703A1DEE4F5105:
+            columns:
+                - poi_adress_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        code:
+            type: string
+            nullable: true
+            length: 20
+            fixed: false
+    manyToOne:
+        datasource:
+            targetEntity: Datasource
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                datasource_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        poiAdress:
+            targetEntity: PoiAdress
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                poi_adress_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

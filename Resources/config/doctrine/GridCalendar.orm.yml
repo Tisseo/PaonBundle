@@ -1,0 +1,56 @@
+Tisseo\DatawarehouseBundle\Entity\GridCalendar:
+    type: entity
+    table: grid_calendar
+    indexes:
+        IDX_E17079D0F50734EE:
+            columns:
+                - line_version_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        active:
+            type: boolean
+            nullable: false
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+        monday:
+            type: boolean
+            nullable: false
+        tuesday:
+            type: boolean
+            nullable: false
+        wednesday:
+            type: boolean
+            nullable: false
+        thursday:
+            type: boolean
+            nullable: false
+        friday:
+            type: boolean
+            nullable: false
+        saturday:
+            type: boolean
+            nullable: false
+        sunday:
+            type: boolean
+            nullable: false
+    manyToOne:
+        lineVersion:
+            targetEntity: LineVersion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                line_version_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

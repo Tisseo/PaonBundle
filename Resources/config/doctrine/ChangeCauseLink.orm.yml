@@ -1,0 +1,38 @@
+Tisseo\DatawarehouseBundle\Entity\ChangeCauseLink:
+    type: entity
+    table: change_cause_link
+    indexes:
+        IDX_8A1CBA69C9183EF0:
+            columns:
+                - change_cause_id
+        IDX_8A1CBA69F50734EE:
+            columns:
+                - line_version_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        changeCause:
+            targetEntity: ChangeCause
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                change_cause_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        lineVersion:
+            targetEntity: LineVersion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                line_version_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

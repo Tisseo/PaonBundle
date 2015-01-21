@@ -1,0 +1,18 @@
+Tisseo\DatawarehouseBundle\Entity\PoiType:
+    type: entity
+    table: poi_type
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            fixed: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,24 @@
+Tisseo\DatawarehouseBundle\Entity\Comment:
+    type: entity
+    table: comment
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        label:
+            type: string
+            nullable: true
+            length: 5
+            fixed: false
+        commentText:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            column: comment_text
+    lifecycleCallbacks: {  }

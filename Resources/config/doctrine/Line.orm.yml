@@ -1,0 +1,40 @@
+Tisseo\DatawarehouseBundle\Entity\Line:
+    type: entity
+    table: line
+    indexes:
+        IDX_D114B4F6635D2D67:
+            columns:
+                - physical_mode_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        number:
+            type: string
+            nullable: false
+            length: 10
+            fixed: false
+    manyToOne:
+        physicalMode:
+            targetEntity: PhysicalMode
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                physical_mode_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        priorityLine:
+            targetEntity: Line
+            cascade: {  }
+            mappedBy: nonPriorityLine
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+    lifecycleCallbacks: {  }

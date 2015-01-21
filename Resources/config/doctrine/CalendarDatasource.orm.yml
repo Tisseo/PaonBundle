@@ -1,0 +1,44 @@
+Tisseo\DatawarehouseBundle\Entity\CalendarDatasource:
+    type: entity
+    table: calendar_datasource
+    indexes:
+        IDX_D479B75A40A2C8:
+            columns:
+                - calendar_id
+        IDX_D479B75712290DD:
+            columns:
+                - datasource_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        code:
+            type: string
+            nullable: true
+            length: 20
+            fixed: false
+    manyToOne:
+        calendar:
+            targetEntity: Calendar
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                calendar_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        datasource:
+            targetEntity: Datasource
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                datasource_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

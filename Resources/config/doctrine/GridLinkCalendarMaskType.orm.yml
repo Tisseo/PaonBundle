@@ -1,0 +1,42 @@
+Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType:
+    type: entity
+    table: grid_link_calendar_mask_type
+    indexes:
+        IDX_71F474A245304362:
+            columns:
+                - grid_calendar_id
+        IDX_71F474A27D504B03:
+            columns:
+                - grid_mask_type_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        active:
+            type: boolean
+            nullable: false
+    manyToOne:
+        gridCalendar:
+            targetEntity: GridCalendar
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grid_calendar_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        gridMaskType:
+            targetEntity: GridMaskType
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grid_mask_type_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

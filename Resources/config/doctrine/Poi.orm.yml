@@ -1,0 +1,37 @@
+Tisseo\DatawarehouseBundle\Entity\Poi:
+    type: entity
+    table: poi
+    indexes:
+        poi_poi_type_id_idx:
+            columns:
+                - poi_type_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+        cityId:
+            type: integer
+            nullable: false
+            unsigned: false
+            column: city_id
+    manyToOne:
+        poiType:
+            targetEntity: PoiType
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                poi_type_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

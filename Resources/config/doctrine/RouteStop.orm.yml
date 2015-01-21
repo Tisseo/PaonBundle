@@ -1,0 +1,70 @@
+Tisseo\DatawarehouseBundle\Entity\RouteStop:
+    type: entity
+    table: route_stop
+    indexes:
+        route_stop_route_id_idx:
+            columns:
+                - route_id
+        route_stop_waypoint_id_idx:
+            columns:
+                - waypoint_id
+        IDX_14131733D654299D:
+            columns:
+                - route_section_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        rank:
+            type: integer
+            nullable: false
+            unsigned: false
+        scheduledStop:
+            type: boolean
+            nullable: false
+            column: scheduled_stop
+        pickup:
+            type: boolean
+            nullable: false
+        dropOff:
+            type: boolean
+            nullable: false
+            column: drop_off
+        reservationRequired:
+            type: boolean
+            nullable: false
+            column: reservation_required
+    manyToOne:
+        route:
+            targetEntity: Route
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                route_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        routeSection:
+            targetEntity: RouteSection
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                route_section_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        waypoint:
+            targetEntity: Waypoint
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                waypoint_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

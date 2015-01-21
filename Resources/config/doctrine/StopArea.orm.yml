@@ -1,0 +1,49 @@
+Tisseo\DatawarehouseBundle\Entity\StopArea:
+    type: entity
+    table: stop_area
+    indexes:
+        IDX_3D72FF778BAC62AF:
+            columns:
+                - city_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        shortName:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            column: short_name
+        longName:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            column: long_name
+        transferDuration:
+            type: integer
+            nullable: false
+            unsigned: false
+            column: transfer_duration
+        theGeom:
+            type: geometry
+            nullable: true
+            requireSQLConversion: true
+            column: the_geom
+    manyToOne:
+        city:
+            targetEntity: City
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                city_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

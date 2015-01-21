@@ -1,0 +1,12 @@
+Tisseo\DatawarehouseBundle\Entity\Waypoint:
+    type: entity
+    table: waypoint
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    lifecycleCallbacks: {  }

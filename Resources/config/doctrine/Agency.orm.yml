@@ -1,0 +1,38 @@
+Tisseo\DatawarehouseBundle\Entity\Agency:
+    type: entity
+    table: agency
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: true
+            length: 30
+            fixed: false
+        url:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+        timezone:
+            type: string
+            nullable: true
+            length: 30
+            fixed: false
+        lang:
+            type: string
+            nullable: true
+            length: 3
+            fixed: false
+        phone:
+            type: string
+            nullable: true
+            length: 20
+            fixed: false
+    lifecycleCallbacks: {  }

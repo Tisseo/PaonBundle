@@ -1,0 +1,48 @@
+Tisseo\DatawarehouseBundle\Entity\TripCalendar:
+    type: entity
+    table: trip_calendar
+    indexes:
+        IDX_C6F892567D504B03:
+            columns:
+                - grid_mask_type_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        monday:
+            type: boolean
+            nullable: false
+        tuesday:
+            type: boolean
+            nullable: false
+        wednesday:
+            type: boolean
+            nullable: false
+        thursday:
+            type: boolean
+            nullable: false
+        friday:
+            type: boolean
+            nullable: false
+        saturday:
+            type: boolean
+            nullable: false
+        sunday:
+            type: boolean
+            nullable: false
+    manyToOne:
+        gridMaskType:
+            targetEntity: GridMaskType
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grid_mask_type_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

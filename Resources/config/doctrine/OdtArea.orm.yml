@@ -1,0 +1,26 @@
+Tisseo\DatawarehouseBundle\Entity\OdtArea:
+    type: entity
+    table: odt_area
+    id: {  }
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 30
+            fixed: false
+        comment:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+    oneToOne:
+        id:
+            targetEntity: Waypoint
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

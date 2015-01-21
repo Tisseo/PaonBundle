@@ -1,0 +1,35 @@
+Tisseo\DatawarehouseBundle\Entity\GridMaskType:
+    type: entity
+    table: grid_mask_type
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+        color:
+            type: string
+            nullable: false
+            length: 20
+            fixed: false
+        calendarType:
+            type: string
+            nullable: true
+            length: 25
+            fixed: false
+            column: calendar_type
+        calendarPeriod:
+            type: string
+            nullable: true
+            length: 25
+            fixed: false
+            column: calendar_period
+    lifecycleCallbacks: {  }

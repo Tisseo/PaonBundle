@@ -1,0 +1,52 @@
+Tisseo\DatawarehouseBundle\Entity\RouteSection:
+    type: entity
+    table: route_section
+    indexes:
+        IDX_D5202777ACCD57D4:
+            columns:
+                - end_stop_id
+        IDX_D5202777C9C75AEE:
+            columns:
+                - start_stop_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        startDate:
+            type: date
+            nullable: false
+            column: start_date
+        endDate:
+            type: date
+            nullable: false
+            column: end_date
+        theGeom:
+            type: geometry
+            nullable: false
+            requireSQLConversion: true
+            column: the_geom
+    manyToOne:
+        endStop:
+            targetEntity: Stop
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                end_stop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        startStop:
+            targetEntity: Stop
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                start_stop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,47 @@
+Tisseo\DatawarehouseBundle\Entity\TripDatasource:
+    type: entity
+    table: trip_datasource
+    indexes:
+        trip_datasource_code_idx:
+            columns:
+                - code
+        trip_datasource_trip_id_idx:
+            columns:
+                - trip_id
+        IDX_6E1F8466712290DD:
+            columns:
+                - datasource_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        code:
+            type: string
+            nullable: true
+            length: 20
+            fixed: false
+    manyToOne:
+        datasource:
+            targetEntity: Datasource
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                datasource_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        trip:
+            targetEntity: Trip
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                trip_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

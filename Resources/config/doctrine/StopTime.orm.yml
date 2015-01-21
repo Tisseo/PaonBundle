@@ -1,0 +1,49 @@
+Tisseo\DatawarehouseBundle\Entity\StopTime:
+    type: entity
+    table: stop_time
+    indexes:
+        stop_time_route_stop_id_idx:
+            columns:
+                - route_stop_id
+        stop_time_trip_id_idx:
+            columns:
+                - trip_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        arrivalTime:
+            type: integer
+            nullable: true
+            unsigned: false
+            column: arrival_time
+        departureTime:
+            type: integer
+            nullable: true
+            unsigned: false
+            column: departure_time
+    manyToOne:
+        routeStop:
+            targetEntity: RouteStop
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                route_stop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        trip:
+            targetEntity: Trip
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                trip_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
