@@ -1,0 +1,3 @@
+tisseo_datawarehouse_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TisseoDatawarehouseBundle:Default:index }

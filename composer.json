@@ -1,0 +1,32 @@
+{
+    "name" : "tisseo/datawarehousebundle",
+    "description" : "An interface tool consisting in public transport data edition.",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Vincent Passama",
+        "email" : "vincent.passama@capgemini.com"
+    }],
+    "keywords" : [
+        "tisseo datawarehouse bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php": ">=5.4.3",
+        "creof/doctrine2-spatial": "dev-master"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Tisseo\\DatawarehouseBundle" : ""
+        }
+    },
+    "target-dir" : "Tisseo/DatawarehouseBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "0.1-dev"
+        }
+    }
+}
