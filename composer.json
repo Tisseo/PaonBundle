@@ -14,7 +14,7 @@
     ],
     "require" : {
         "php": ">=5.4.3",
-        "creof/doctrine2-spatial": "dev-master"
+        "creof/doctrine2-spatial": "0.0.1"
     },
     "autoload" : {
         "psr-0" : {
