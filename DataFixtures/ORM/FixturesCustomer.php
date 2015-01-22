@@ -33,6 +33,7 @@ class FixturesCustomer extends AbstractFixture implements OrderedFixtureInterfac
     {
         $navitiaToken = $this->container->getParameter('nmm.navitia.token');
         $samFixturePerimeters = $this->container->getParameter('sam_fixture_perimeters');
+        $this->createCustomer($om, 'Tisseo', 'nmm-ihm@tisseo.fr', 'tisseo');
 
         $this->addCustomerToApplication($om, 'app-datawarehouse', 'customer-tisseo', $navitiaToken);
 
