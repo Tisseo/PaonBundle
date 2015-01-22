@@ -1,0 +1,5 @@
+parameters:
+    datawarehouse.permissions:
+        BUSINESS_MANAGE_CUSTOMER:
+            label: Administrer les clients
+            description: Donner des droits aux clients.
