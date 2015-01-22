@@ -1,0 +1,12 @@
+{% set menuMode = "default" %}
+<ul id="lines-accordion" class="nav nav-pills nav-stacked">
+    {% for mode,lines in result %}
+        <li class="mode-wrapper">
+        </li>
+    {% endfor %}
+</ul>
+
+<script type="text/javascript">require(['mtt_left_menu'],function(menu){
+    menu.init($('#lines-accordion'), '{{ menuMode }}');
+});
+</script>

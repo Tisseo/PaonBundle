@@ -1,4 +1,11 @@
+parameters:
+    tisseo_datawarehouse.perimeter.class: Tisseo\DatawarehouseBundle\Services\PerimeterManager
+    tisseo_datawarehouse.user.class: CanalTP\MttBundle\Services\UserManager
+
 services:
-#    tisseo_datawarehouse.example:
-#        class: Tisseo\DatawarehouseBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    tisseo_datawarehouse.perimeter_manager:
+       class: %tisseo_datawarehouse.perimeter.class%
+       arguments: ['@doctrine.orm.default_entity_manager']
+    tisseo_datawarehouse.user_manager:
+       class: %tisseo_datawarehouse.user.class%
+       arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
