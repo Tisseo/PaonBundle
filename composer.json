@@ -9,17 +9,13 @@
     "keywords" : [
         "tisseo datawarehouse bundle"
     ],
-    "license" : [
-        "MIT"
-    ],
+    "license" : "MIT",
     "require" : {
         "php": ">=5.4.3",
         "creof/doctrine2-spatial": "0.0.1"
     },
     "autoload" : {
-        "psr-0" : {
-            "Tisseo\\DatawarehouseBundle" : ""
-        }
+        "psr-0" : { "Tisseo\\DatawarehouseBundle\\" : "" }
     },
     "target-dir" : "Tisseo/DatawarehouseBundle",
     "repositories" : [{
