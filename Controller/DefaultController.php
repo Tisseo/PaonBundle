@@ -2,6 +2,7 @@
 
 namespace Tisseo\DatawarehouseBundle\Controller;
 
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends AbstractController

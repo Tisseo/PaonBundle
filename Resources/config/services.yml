@@ -1,6 +1,6 @@
 parameters:
     tisseo_datawarehouse.perimeter.class: Tisseo\DatawarehouseBundle\Services\PerimeterManager
-    tisseo_datawarehouse.user.class: CanalTP\MttBundle\Services\UserManager
+    tisseo_datawarehouse.user.class: Tisseo\DatawarehouseBundle\Services\UserManager
 
 services:
     tisseo_datawarehouse.perimeter_manager:

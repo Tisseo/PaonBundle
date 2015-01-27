@@ -1,3 +1,10 @@
 tisseo_datawarehouse_homepage:
     pattern:  /{externalNetworkId}
     defaults: { _controller: TisseoDatawarehouseBundle:Default:index , externalNetworkId: null}
+
+#Customer administration
+tisseo_datawarehouse_customer_list:
+    pattern: /networks/{externalNetworkId}/customer/list
+    defaults: { _controller: TisseoDatawarehouseBundle:Customer:list }
+    requirements:
+        externalNetworkId: -?[a-zA-Z0-9_\-:]*
