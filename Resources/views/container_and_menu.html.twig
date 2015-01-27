@@ -3,16 +3,7 @@
 {% endset %}
 {% block container %}
     <div class="row">
-        <div class="col-md-4">
-            <div id="left-menu" role="navigation">
-                {% block left_menu %}
-                    {{ left_menu_html }}
-                {% endblock %}
-            </div>
-        </div>
-        <div class="col-md-8" role="main">
-            {% block main_content %}
-            {% endblock %}
-        </div>
+        {% block main_content %}
+        {% endblock %}
     </div>
 {% endblock %}
