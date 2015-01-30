@@ -1,10 +1,11 @@
 tisseo_datawarehouse_homepage:
-    pattern:  /{externalNetworkId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Default:index , externalNetworkId: null}
+    pattern:  /
+    defaults: { _controller: TisseoDatawarehouseBundle:Default:index }
 
-#Customer administration
-tisseo_datawarehouse_customer_list:
-    pattern: /networks/{externalNetworkId}/customer/list
-    defaults: { _controller: TisseoDatawarehouseBundle:Customer:list }
-    requirements:
-        externalNetworkId: -?[a-zA-Z0-9_\-:]*
+#Line administration
+tisseo_datawarehouse_line_list:
+    pattern: /lines/list
+    defaults: { _controller: TisseoDatawarehouseBundle:Line:list}
+tisseo_datawarehouse_line_edit:
+    pattern: /lines/edit/{lineId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Line:edit, lineId: null }

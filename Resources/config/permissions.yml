@@ -3,3 +3,10 @@ parameters:
         BUSINESS_MANAGE_CUSTOMER:
             label: Administrer les clients
             description: Donner des droits aux clients.
+        BUSINESS_LIST_LINE:
+            label: Afficher la liste des lignes
+            description: Afficher la liste des lignes.
+        BUSINESS_MANAGE_LINE:
+            label: Administrer les lignes
+            description: Administrer les lignes.
+

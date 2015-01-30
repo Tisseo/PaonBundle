@@ -1,0 +1,5 @@
+Tisseo\DatawarehouseBundle\Entity\Line:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [ number, physicalMode ]
+            message: error.line_number_exists 

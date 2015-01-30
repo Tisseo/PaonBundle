@@ -14,3 +14,12 @@ customer:
     no_item: Pas de périmètre
     actions:
         assign_twig: Assigner
+
+line:
+    list:
+        columns:
+            label: Numéro de ligne
+        title: Liste des lignes
+    title: Numéro de la ligne
+    edit: Editer une ligne
+    create: Créer une ligne

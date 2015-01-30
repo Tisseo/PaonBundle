@@ -46,7 +46,12 @@ menu:
     networks: Réseaux
     networks_manage: Gestion des réseaux
     customer_manage: Gestion des Clients
+    line_manage:    Gestion des lignes
 
+line:
+    labels:
+        number: Numéro de ligne
+        physical_mode: Mode de transport
 #should be in error namespace above
 network:
     error:

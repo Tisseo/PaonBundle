@@ -1,6 +1,8 @@
 parameters:
     tisseo_datawarehouse.perimeter.class: Tisseo\DatawarehouseBundle\Services\PerimeterManager
     tisseo_datawarehouse.user.class: Tisseo\DatawarehouseBundle\Services\UserManager
+    tisseo_datawarehouse.line_manager.class: Tisseo\DatawarehouseBundle\Services\LineManager
+    tisseo_datawarehouse.physical_mode_manager.class: Tisseo\DatawarehouseBundle\Services\PhysicalModeManager
 
 services:
     tisseo_datawarehouse.perimeter_manager:
@@ -9,3 +11,9 @@ services:
     tisseo_datawarehouse.user_manager:
        class: %tisseo_datawarehouse.user.class%
        arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
+    tisseo_datawarehouse.line_manager:
+        class: %tisseo_datawarehouse.line_manager.class%
+        arguments: ['@doctrine.orm.endiv_entity_manager']
+    tisseo_datawarehouse.physical_mode_manager:
+        class: %tisseo_datawarehouse.physical_mode_manager.class%
+        arguments: ['@doctrine.orm.endiv_entity_manager']
