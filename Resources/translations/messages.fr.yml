@@ -1,3 +1,5 @@
+welcome: "Bienvenue sur TID"
+
 global:
     actions: Actions
     edit: Éditer
@@ -9,13 +11,11 @@ global:
     cancel: Annuler
     status: Statut
     warning: Avertissement
-    generatePdf: Générer le PDF
     remove: Retirer
     add: Ajouter
     publish: Publier
     unpublish: Dépublier
     line_label: Ligne
-    downloadPdf: Télécharger le PDF
     upload: Téléverser
     network: Réseau
     direction: Direction
@@ -41,22 +41,36 @@ global:
 error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."
     greater_than_field: Ce champ doit être supérieur au champ %field%.
-    line_exists: Cette ligne existe déjà.
+    line_exists: Ce numéro de ligne est déja attribué.
 
 menu:
-    networks: Réseaux
-    networks_manage: Gestion des réseaux
-    customer_manage: Gestion des Clients
-    line_manage:    Gestion des lignes
+    line_manage: Gestion des lignes
+    offer_manage: Gestion des offres
+    calendar_manage: Gestion des calendriers
+    exception_type_manage: Gestion des exceptions
+    data_manage: Import Fiches Horaires
+    timetable_manage: Export Timetable
+    import_manage: Imports
+    export_manage: Exports
+    import_fichor: Fiches horaires Hastus
+    export_timetable: Timetable
 
 line:
     labels:
         number: Numéro de ligne
         physical_mode: Mode de transport
+offer:
+    labels:
+calendar:
+    labels:
+exception_type:
+    labels:
+
 datasource:
     labels:
         name: Datasource
         code: Code
+
 #should be in error namespace above
 network:
     error:

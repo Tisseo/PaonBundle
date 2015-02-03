@@ -9,3 +9,37 @@ tisseo_datawarehouse_line_list:
 tisseo_datawarehouse_line_edit:
     pattern: /lines/edit/{lineId}
     defaults: { _controller: TisseoDatawarehouseBundle:Line:edit, lineId: null }
+
+#Offer administration
+tisseo_datawarehouse_offer_list:
+    pattern: /offers/list
+    defaults: { _controller: TisseoDatawarehouseBundle:Offer:list}
+tisseo_datawarehouse_offer_edit:
+    pattern: /offers/edit/{offerId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Offer:edit, offerId: null }
+
+#Calendar administration
+tisseo_datawarehouse_calendar_list:
+    pattern: /calendars/list
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:list}
+tisseo_datawarehouse_calendar_edit:
+    pattern: /calendars/edit/{calendarId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:edit, calendarId: null }
+
+#ExceptionType administration
+tisseo_datawarehouse_exception_type_list:
+    pattern: /exceptions/list
+    defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:list}
+tisseo_datawarehouse_exception_type_edit:
+    pattern: /exceptions/edit/{exceptionTypeId}
+    defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:edit, exceptionTypeId: null }
+
+#Imports administration
+tisseo_datawarehouse_import_fichor:
+    pattern: /imports/fichor
+    defaults: { _controller: TisseoDatawarehouseBundle:Import:fichor}
+
+#Export administration
+tisseo_datawarehouse_export_timetable:
+    pattern: /exports/timetable
+    defaults: { _controller: TisseoDatawarehouseBundle:Export:timetable}

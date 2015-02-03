@@ -1,20 +1,5 @@
 welcome: "Bienvenue sur TID"
 
-network:
-    list: Liste des réseaux
-    add: Ajouter un réseau
-    external_coverage_id: Région
-    external_id: Réseau
-    token: Token
-
-customer:
-    list: Liste des clients
-    name: Nom du client
-    perimeters: Périmètre(s)
-    no_item: Pas de périmètre
-    actions:
-        assign_twig: Assigner
-
 line:
     list:
         columns:
@@ -23,3 +8,35 @@ line:
     title: Numéro de la ligne
     edit: Editer une ligne
     create: Créer une ligne
+    created: Ligne sauvegardée
+
+offer:
+    list:
+        columns:
+            label: Offre
+        title: Liste des offres
+    title: Offre
+    edit: Editer une offre
+    create: Créer une offre
+    created: Offre sauvegardée
+
+calendar:
+    list:
+        columns:
+            label: Calendrier
+        title: Liste des calendriers
+    title: Calendrier
+    edit: Editer un calendrier
+    create: Créer une calendrier
+    created: Calendrier sauvegardé
+
+exception:
+    list:
+        columns:
+            label: Exception
+        title: Liste des exceptions
+    title: Exception
+    edit: Editer une exception
+    create: Créer une exception
+    created: Exception sauvegardée
+

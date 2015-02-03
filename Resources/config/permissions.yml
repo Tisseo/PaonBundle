@@ -1,12 +1,38 @@
 parameters:
     datawarehouse.permissions:
-        BUSINESS_MANAGE_CUSTOMER:
-            label: Administrer les clients
-            description: Donner des droits aux clients.
         BUSINESS_LIST_LINE:
             label: Afficher la liste des lignes
             description: Afficher la liste des lignes.
         BUSINESS_MANAGE_LINE:
             label: Administrer les lignes
             description: Administrer les lignes.
-
+        BUSINESS_LIST_OFFER:
+            label: Afficher la liste des offres
+            description: Afficher la liste des offres.
+        BUSINESS_MANAGE_OFFER:
+            label: Administrer les offres
+            description: Administrer les offres.
+        BUSINESS_LIST_CALENDAR:
+            label: Afficher la liste des calendriers
+            description: Afficher la liste des calendriers.
+        BUSINESS_MANAGE_CALENDAR:
+            label: Administrer les calendriers
+            description: Administrer les calendriers.
+        BUSINESS_LIST_EXCEPTION:
+            label: Afficher la liste des exceptions
+            description: Afficher la liste des exceptions.
+        BUSINESS_MANAGE_EXCEPTION:
+            label: Administrer les exceptions
+            description: Administrer les exceptions.
+        BUSINESS_MANAGE_IMPORT:
+            label: Administrer les imports
+            description: Administrer les imports.
+        BUSINESS_MANAGE_EXPORT:
+            label: Administrer les exports
+            description: Administrer les exports.
+        BUSINESS_MANAGE_IMPORT_FICHOR:
+            label: Accès à l'import fiches horaires
+            description: Droit de lancer un import fiches horaires.
+        BUSINESS_MANAGE_EXPORT_TIMETABLE:
+            label: Accès à l'export vers timetable
+            description: Droit de lancer un export vers timetable.

@@ -2,8 +2,14 @@ Tisseo\DatawarehouseBundle\Entity\Line:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: number
+            errorPath: number
+            message: error.line_exists
     properties:
         number:
             - NotBlank: ~
             - Length:
                 max: 20
+Tisseo\DatawarehouseBundle\Entity\LineDatasource:
+    properties:
+        code:
+            - NotBlank: ~

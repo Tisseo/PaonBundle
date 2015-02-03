@@ -1,0 +1,43 @@
+{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+
+{% block list_title -%}
+    {{'exception.list.title'|trans({}, 'default')}}
+    {% if is_granted('BUSINESS_MANAGE_EXCEPTION') %}
+        -
+        <a href="{{ path('tisseo_datawarehouse_exception_type_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> {{'exception.create'|trans({}, 'default')}}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block table_head -%}
+    <th>{{'exception.list.columns.label'|trans({}, 'default')}}</th>
+    {% if is_granted('BUSINESS_MANAGE_EXCEPTION') %}
+        <th>{{'global.actions'|trans({}, 'messages')}}</th>
+    {% endif %}
+{% endblock %}
+
+{% block table_body -%}
+    {% if exceptions|length == 0 %}
+        <tr>
+            <td colspan="4">
+                {{'global.no_items'|trans}}
+            </td>
+        </tr>
+    {% else %}
+        {% for exception in exceptions %}
+            <tr>
+                <td>
+                    {{exception.number}}
+                </td>
+                <td>
+                    {% if is_granted('BUSINESS_MANAGE_EXCEPTION') %}                        
+                        <a class="btn btn-default" href="{{ path('tisseo_datawarehouse_exception_type_edit', {'exceptionId': exception.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
