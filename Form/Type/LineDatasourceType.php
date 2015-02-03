@@ -5,9 +5,8 @@ namespace Tisseo\DatawarehouseBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\DatawarehouseBundle\Form\Type\LineDatasourceType;
 
-class LineType extends AbstractType
+class LineDatasourceType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,26 +15,19 @@ class LineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'number',
-            'text',
-            array('label' => 'line.labels.number')
-        );
-        $builder->add(
-            'physicalMode',
+            'datasource',
             'entity',
             array(
-                'class' => 'TisseoDatawarehouseBundle:PhysicalMode',
+                'class' => 'TisseoDatawarehouseBundle:Datasource',
                 'property' => 'name',
-                'label' => 'line.labels.physical_mode'
+                'label' => 'datasource.labels.name'
             )
         );
         $builder->add(
-            'lineDatasources',
-            'collection',
+            'code',
+            'text',
             array(
-                'type' => new LineDatasourceType(),
-                'allow_add' => true,
-                'by_reference' => false
+                'label' => 'datasource.labels.code'
             )
         );
         $builder->setAction($options['action']);
@@ -48,7 +40,7 @@ class LineType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\Line'
+                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\LineDatasource'
             )
         );
     }
@@ -58,6 +50,6 @@ class LineType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_line';
+        return 'datawarehouse_line_datasource';
     }
 }

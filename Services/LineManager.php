@@ -26,6 +26,33 @@ class LineManager
         return empty($lineId) ? null : $this->repository->find($lineId);
     }
 
+    public function alreadyExists($number, $id = null) {
+        if ($id !== null)
+        {
+            $line = $this->findExistingNumber($number, $id);
+        }
+        else
+        {
+            $line = $this->repository->findBy(
+                array(
+                    'number' => $number
+                )
+            );
+        }
+        return empty($line) ? false : true;
+    }
+
+    public function findExistingNumber($number, $id)
+    {
+        $query = $this->repository->createQueryBuilder('l')
+            ->where('l.number = :number AND l.id != :id')
+            ->setParameter('number', $number)
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findAllLinesByMode()
     {
         $query = $this->repository->createQueryBuilder('l')

@@ -4,14 +4,29 @@ namespace Tisseo\DatawarehouseBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\DatawarehouseBundle\Form\Type\LineType;
+use Tisseo\DatawarehouseBundle\Entity\Line;
+use Tisseo\DatawarehouseBundle\Entity\LineDatasource;
 
 class LineController extends AbstractController
 {
-    private function buildForm($lineId)
+    private function buildForm($lineId, $lineManager)
     {
+        $line = $lineManager->find($lineId);
+        if (empty($line)) {
+            $line = new Line();
+            $lineDatasource = new LineDatasource();
+            $line->addLineDatasources($lineDatasource);
+        }
+        else {
+            $file = fopen('/tmp/test_tid.log','a+');
+            foreach($line->getLineDatasources() as $lineDatasource) {
+                fwrite($file, "\n".$lineDatasource->getCode()."\n");
+            }
+            fclose($file);
+        }
         $form = $this->createForm(
             new LineType(),
-            $this->get('tisseo_datawarehouse.line_manager')->find($lineId),
+            $line,
             array(
                 'action' => $this->generateUrl(
                     'tisseo_datawarehouse_line_edit',
@@ -48,7 +63,8 @@ class LineController extends AbstractController
     public function editAction(Request $request, $lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE');
-        $form = $this->buildForm($lineId);
+        $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+        $form = $this->buildForm($lineId, $lineManager);
         $render = $this->processForm($request, $form);
         if (!$render) {
             return $this->render(
@@ -65,11 +81,12 @@ class LineController extends AbstractController
     public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_LINE');
+        $lineManager = $this->get('tisseo_datawarehouse.line_manager');
         return $this->render(
             'TisseoDatawarehouseBundle:Line:list.html.twig',
             array(
                 'pageTitle' => 'menu.line_manage',
-                'lines' => $this->get('tisseo_datawarehouse.line_manager')->findAllLinesByMode()
+                'lines' => $lineManager->findAllLinesByMode()
             )
         );
     }

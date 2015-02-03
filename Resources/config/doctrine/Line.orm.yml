@@ -19,6 +19,11 @@ Tisseo\DatawarehouseBundle\Entity\Line:
             nullable: false
             length: 10
             fixed: false
+    oneToMany:
+        lineDatasources:
+            targetEntity: LineDatasource
+            cascade: ['persist', 'remove']
+            mappedBy: line
     manyToOne:
         physicalMode:
             targetEntity: PhysicalMode
@@ -29,12 +34,4 @@ Tisseo\DatawarehouseBundle\Entity\Line:
                 physical_mode_id:
                     referencedColumnName: id
             orphanRemoval: false
-    manyToMany:
-        priorityLine:
-            targetEntity: Line
-            cascade: {  }
-            mappedBy: nonPriorityLine
-            inversedBy: null
-            joinTable: null
-            orderBy: null
     lifecycleCallbacks: {  }

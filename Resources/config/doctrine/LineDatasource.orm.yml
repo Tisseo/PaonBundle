@@ -34,9 +34,9 @@ Tisseo\DatawarehouseBundle\Entity\LineDatasource:
             orphanRemoval: false
         line:
             targetEntity: Line
-            cascade: {  }
+            cascade: ['persist', 'remove']
             mappedBy: null
-            inversedBy: null
+            inversedBy: lineDatasources
             joinColumns:
                 line_id:
                     referencedColumnName: id

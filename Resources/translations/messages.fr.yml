@@ -41,6 +41,7 @@ global:
 error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."
     greater_than_field: Ce champ doit être supérieur au champ %field%.
+    line_exists: Cette ligne existe déjà.
 
 menu:
     networks: Réseaux
@@ -52,6 +53,10 @@ line:
     labels:
         number: Numéro de ligne
         physical_mode: Mode de transport
+datasource:
+    labels:
+        name: Datasource
+        code: Code
 #should be in error namespace above
 network:
     error:

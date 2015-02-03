@@ -3,6 +3,8 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Doctrine\Common\Collections\ArrayCollection;
+use \Doctrine\Common\Collections\Collection;
 
 /**
  * Line
@@ -27,14 +29,14 @@ class Line
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $priorityLine;
+    private $lineDatasources;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->priorityLine = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lineDatasources = new ArrayCollection();
     }
 
     /**
@@ -76,7 +78,7 @@ class Line
      * @param \Tisseo\DatawarehouseBundle\Entity\PhysicalMode $physicalMode
      * @return Line
      */
-    public function setPhysicalMode(\Tisseo\DatawarehouseBundle\Entity\PhysicalMode $physicalMode = null)
+    public function setPhysicalMode(PhysicalMode $physicalMode = null)
     {
         $this->physicalMode = $physicalMode;
 
@@ -94,35 +96,60 @@ class Line
     }
 
     /**
-     * Add priorityLine
+     * Get physicalMode
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\Line $priorityLine
+     * @return \Tisseo\DatawarehouseBundle\Entity\PhysicalMode 
+     */
+    public function getPhysicalModeId()
+    {
+        return $this->physicalMode->getId();
+    }
+
+    /**
+     * Add lineDatasources
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
      * @return Line
      */
-    public function addPriorityLine(\Tisseo\DatawarehouseBundle\Entity\Line $priorityLine)
+    public function addLineDatasources(LineDatasource $lineDatasources)
     {
-        $this->priorityLine[] = $priorityLine;
-
+        $this->lineDatasources[] = $lineDatasources;
+        $lineDatasources->setLine($this);
         return $this;
     }
 
     /**
-     * Remove priorityLine
+     * Set lineDatasources
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\Line $priorityLine
+     * @param \Doctrine\Common\Collections\Collection $lineDatasources
+     * @return Line
      */
-    public function removePriorityLine(\Tisseo\DatawarehouseBundle\Entity\Line $priorityLine)
+    public function setLineDatasources(Collection $lineDatasources)
     {
-        $this->priorityLine->removeElement($priorityLine);
+        $this->lineDatasources = $lineDatasources;
+        foreach ($this->lineDatasources as $lineDatasource) {
+            $lineDatasource->setLine($this);
+        }
+        return $this;
     }
 
     /**
-     * Get priorityLine
+     * Remove 
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
+     */
+    public function removeLineDatasources(LineDatasource $lineDatasources)
+    {
+        $this->lineDatasources->removeElement($lineDatasources);
+    }
+
+    /**
+     * Get lineDatasources
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPriorityLine()
+    public function getLineDatasources()
     {
-        return $this->priorityLine;
+        return $this->lineDatasources;
     }
 }
