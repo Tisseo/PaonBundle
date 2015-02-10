@@ -1,0 +1,56 @@
+{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+
+{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
+{% block list_title -%}
+    {{'line_version.list.title'|trans({}, 'default')}}
+    {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+        -
+        <a href="{{ path('tisseo_datawarehouse_line_version_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> {{'line_version.create'|trans({}, 'default')}}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block table_head -%}
+    <th>{{'line_version.list.columns.label'|trans({}, 'default')}}</th>
+    {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+        <th>{{'global.actions'|trans({}, 'messages')}}</th>
+    {% endif %}
+{% endblock %}
+
+{% block table_body -%}
+    {% if lineVersions|length == 0 %}
+        <tr>
+            <td colspan="4">
+                {{'global.no_items'|trans}}
+            </td>
+        </tr>
+    {% else %}
+        {% for lineVersion in lineVersions %}
+            <tr>
+                <td>
+                    {{ render.line_number(lineVersion, 'lineVersion', 'small') }} <span>{{ lineVersion.name }}</span>
+                </td>
+                <td>
+                    {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+                        <a class="btn btn-default line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_datawarehouse_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
+                        </a>
+                        <a class="btn btn-default" href="{{ path('tisseo_datawarehouse_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-edit"></span> {{'global.consult'|trans({}, 'messages')}}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        require(['textfill'], function(){
+            textfill(2, 15, '.line-small');
+        });
+    </script>
+{% endblock %}

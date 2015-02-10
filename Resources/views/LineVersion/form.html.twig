@@ -1,0 +1,127 @@
+{% extends "::modal.html.twig" %}
+
+{% form_theme form 'TisseoDatawarehouseBundle:Form:fields.html.twig' %}
+
+{% block open_form %}
+    {{ form_start(form) }}
+{% endblock %}
+
+{% block modal_title %}
+    {{ title|trans({}, 'default') }}
+{% endblock %}
+
+{% block modal_body %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ 'error.line_version_not_found'|trans }}
+        </div>
+    {% endif %}
+    {{ form_errors(form) }}
+    {% if new or not(new or stape) %}
+        {{ form_row(form.line) }}
+    {% endif %}
+    {% if not new or stape %}
+    <div class="form form-edit col-md-12">
+        <ul>
+            <li>{{ form_row(form.version) }}</li>
+            <li>
+                <div class="row {% if new == true %}input-range{% endif %}">
+                    <div class="col-md-6">
+                        {{ form_row(form.startDate) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.plannedEndDate) }}
+                    </div>
+                </div>
+            </li>
+            <li>{{ form_row(form.childLine) }}</li>
+        </ul>
+    </div>
+    <div class="form form-edit col-md-12">
+        <ul>
+            <li>{{ form_row(form.name) }}</li>
+            <li>{{ form_row(form.forwardDirection) }}</li>
+            <li>{{ form_row(form.backwardDirection) }}</li>
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.fgColor) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.fgHexaColor) }}
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.bgColor) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.bgHexaColor) }}
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ form_row(form.accessibility) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.airConditioned) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.certified) }}
+                    </div>
+                </div>
+            </li>
+            <li>{{ form_row(form.cartoFile) }}</li>
+            <li>{{ form_row(form.depot) }}</li>
+            <li>{{ form_row(form.comment) }}</li>
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block modal_actions %}
+    {% if new == true and stape == false %}
+    {{ form_end(form, {'render_rest': false}) }}
+    <script>
+        require(['datawarehouse/edit/offers']);
+    </script>
+    {% else %}
+    <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+    </button>
+    {{ form_end(form) }}
+    {% endif %}
+    <script>
+        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function(){
+            $('.input-range input').datepicker({
+                language: '{{ app.request.locale }}',
+                startView: 1,
+                autoclose: true
+            }).on(
+                'changeDate',
+                function(){
+                    if ($(this).data('fromDate') == 1) {
+                        var $endDateElem = $(this).parents('.input-range').find('input[data-to-date=1]');
+                        var date = $(this).datepicker('getDate');
+                        if (!isNaN(date.getTime())) {
+                            date.setDate(date.getDate() + 1);
+                            $endDateElem.datepicker('setStartDate', date);
+                            var endDate = $endDateElem.datepicker('getDate');
+                            if ($endDateElem.val() != '' && isNaN(endDate.getTime())) {
+                                $endDateElem.datepicker('update', date);
+                            }
+                        } else {
+                            $endDateElem.datepicker('setStartDate', new Date());
+                        }
+                    }
+                }
+            );
+            $('input[data-from-date=1]').datepicker('setStartDate', new Date()).trigger('changeDate');
+        });
+    </script>
+{% endblock %}

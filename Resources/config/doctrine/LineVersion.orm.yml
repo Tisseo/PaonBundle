@@ -30,11 +30,6 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
             type: date
             nullable: false
             column: planned_end_date
-        childLineId:
-            type: integer
-            nullable: true
-            unsigned: false
-            column: child_line_id
         name:
             type: string
             nullable: false
@@ -85,6 +80,9 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
         accessibility:
             type: boolean
             nullable: false
+        certified:
+            type: boolean
+            nullable: false
         airConditioned:
             type: boolean
             nullable: false
@@ -99,12 +97,22 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
             nullable: true
             length: 50
             fixed: false
+    oneToOne:
+        childLine:
+            targetEntity: Line
+            cascade: {   }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                child_line_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     manyToOne:
         line:
             targetEntity: Line
-            cascade: {  }
+            cascade: ['persist', 'remove']
             mappedBy: null
-            inversedBy: null
+            inversedBy: lineVersions
             joinColumns:
                 line_id:
                     referencedColumnName: id

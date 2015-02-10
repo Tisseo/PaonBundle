@@ -4,21 +4,24 @@ line:
     list:
         columns:
             label: Numéro de ligne
+            physical_mode: Mode de transport
         title: Liste des lignes
     title: Numéro de la ligne
     edit: Editer une ligne
     create: Créer une ligne
     created: Ligne sauvegardée
 
-offer:
+line_version:
     list:
         columns:
             label: Offre
         title: Liste des offres
     title: Offre
+    consult: Consultation d'une offre
     edit: Editer une offre
     create: Créer une offre
     created: Offre sauvegardée
+    not_found: Offre introuvable
 
 calendar:
     list:

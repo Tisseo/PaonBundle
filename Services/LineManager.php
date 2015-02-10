@@ -11,18 +11,18 @@ class LineManager
     private $repository = null;
 
     public function __construct(ObjectManager $om)
-    {   
+    {
         $this->om = $om;
         $this->repository = $om->getRepository('TisseoDatawarehouseBundle:Line');
-    }   
+    }
 
     public function findAll()
-    {   
+    {
         return ($this->repository->findAll());
-    }   
+    }
 
     public function find($lineId)
-    {   
+    {
         return empty($lineId) ? null : $this->repository->find($lineId);
     }
 

@@ -32,11 +32,17 @@ class Line
     private $lineDatasources;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $lineVersions;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->lineDatasources = new ArrayCollection();
+        $this->lineVersions = new ArrayCollection();
     }
 
     /**
@@ -134,7 +140,7 @@ class Line
     }
 
     /**
-     * Remove 
+     * Remove lineDatasources
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
      */
@@ -151,5 +157,78 @@ class Line
     public function getLineDatasources()
     {
         return $this->lineDatasources;
+    }
+
+    /**
+     * Add lineVersions
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersions
+     * @return Line
+     */
+    public function addLineVersions(LineVersion $lineVersions)
+    {
+        $this->lineVersions[] = $lineVersions;
+        $lineVersions->setLine($this);
+        return $this;
+    }
+
+    /**
+     * Set lineVersions
+     *
+     * @param \Doctrine\Common\Collections\Collection $lineVersions
+     * @return Line
+     */
+    public function setLineVersions(Collection $lineVersions)
+    {
+        $this->lineVersions = $lineVersions;
+        foreach ($this->lineVersions as $lineVersion) {
+            $lineVersion->setLine($this);
+        }
+        return $this;
+    }
+
+    /**
+     * Remove lineVersions 
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersions
+     */
+    public function removeLineVersions(LineVersion $lineVersions)
+    {
+        $this->lineVersions->removeElement($lineVersions);
+    }
+
+    /**
+     * Get lineVersions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLineVersions()
+    {
+        return $this->lineVersions;
+    }
+
+    /**
+     * Get lastVersionOfLineVersions
+     *
+     * @return integer
+     */
+    public function getLastVersionOfLineVersions()
+    {
+        foreach($this->lineVersions as $lineVersion)
+        {
+            if ($lineVersion->getEndDate() === null)
+                return $lineVersion->getVersion();
+        }
+        return 0;
+    }
+
+    public function getLastLineVersion()
+    {
+        foreach($this->lineVersions as $lineVersion)
+        {
+            if ($lineVersion->getEndDate() === null)
+                return $lineVersion;
+        }
+        return null;
     }
 }

@@ -6,10 +6,10 @@ parameters:
         BUSINESS_MANAGE_LINE:
             label: Administrer les lignes
             description: Administrer les lignes.
-        BUSINESS_LIST_OFFER:
+        BUSINESS_LIST_LINE_VERSION:
             label: Afficher la liste des offres
             description: Afficher la liste des offres.
-        BUSINESS_MANAGE_OFFER:
+        BUSINESS_MANAGE_LINE_VERSION:
             label: Administrer les offres
             description: Administrer les offres.
         BUSINESS_LIST_CALENDAR:

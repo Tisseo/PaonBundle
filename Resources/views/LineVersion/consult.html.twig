@@ -1,0 +1,52 @@
+{% extends "::modal.html.twig" %}
+
+{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
+{% block modal_title %}
+    {{ title|trans({}, 'default') }}
+{% endblock %}
+
+{% block modal_body %}
+    <div class="form form-consult">
+        <h3>{{ summary|trans({}, 'default') }}</h3>
+        <div class="left-summary">
+            <ul>
+                <li>{{ 'line_version.labels.version'|trans({}, 'messages') }} {{ lineVersion.version }}</li>
+                <li>{{ 'line_version.labels.start_date'|trans({}, 'messages') }} : {{ lineVersion.startDate|date('d/m/Y') }}</li>
+                <li>{{ 'line_version.labels.planned_end_date'|trans({}, 'messages') }} : {{ lineVersion.plannedEndDate|date('d/m/Y') }}</li>
+                <li>{{ 'line_version.labels.child_line'|trans({}, 'messages') }} : {% if lineVersion.childLineId != null %}{{ lineVersion.childLineId }}{% else %}Aucune{% endif %}</li>
+            </ul>   
+        </div>
+        <div class="right-summary">
+            {{ render.line_number(lineVersion, 'lineVersion', 'big') }}
+        </div>
+    </div>
+    <div class="form form-consult">
+        <h3>{{ properties|trans({}, 'default') }}</h3>
+        <ul>
+            <li>{{ 'line_version.labels.name'|trans({}, 'messages') }} : {{ lineVersion.name }}</li>
+            <li>{{ 'line_version.labels.forward'|trans({}, 'messages') }} : {{ lineVersion.forwardDirection }}</li>
+            <li>{{ 'line_version.labels.backward'|trans({}, 'messages') }} : {{ lineVersion.backwardDirection }}</li>
+            <br>
+            <li>{{ 'line_version.labels.bg_color'|trans({}, 'messages') }} : {{ lineVersion.bgColor }}</li>
+            <li>{{ 'line_version.labels.bg_hexa_color'|trans({}, 'messages') }} : #{{ lineVersion.bgHexaColor }}</li>
+            <li>{{ 'line_version.labels.fg_color'|trans({}, 'messages') }} : {{ lineVersion.fgColor }}</li>
+            <li>{{ 'line_version.labels.fg_hexa_color'|trans({}, 'messages') }} : #{{ lineVersion.fgHexaColor }}</li>
+            <br>
+            <li>{{ 'line_version.labels.accessibility'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.accessibility %}checked{% endif %}></li>
+            <li>{{ 'line_version.labels.air_conditioned'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.airContioned %}checked{% endif %}></li>
+            <li>{{ 'line_version.labels.certified'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.certified %}checked{% endif %}></li>
+            <br>
+            <li>{{ 'line_version.labels.depot'|trans({}, 'messages') }} : {{ lineVersion.depot|capitalize }}</li>
+            <li>{{ 'line_version.labels.carto_file'|trans({}, 'messages') }} : {{ lineVersion.cartoFile }}</li>
+            <li>{{ 'line_version.labels.comment'|trans({}, 'messages') }} : {{ lineVersion.comment }}</li>
+        </ul>
+    </div>
+{% endblock %}
+{% block modal_close_footer %}
+    <script>
+        require(['textfill'], function(){
+            textfill(15, 30, '.line-big');
+        });
+    </script>
+{% endblock %}

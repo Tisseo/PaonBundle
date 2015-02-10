@@ -17,13 +17,6 @@ class LineController extends AbstractController
             $lineDatasource = new LineDatasource();
             $line->addLineDatasources($lineDatasource);
         }
-        else {
-            $file = fopen('/tmp/test_tid.log','a+');
-            foreach($line->getLineDatasources() as $lineDatasource) {
-                fwrite($file, "\n".$lineDatasource->getCode()."\n");
-            }
-            fclose($file);
-        }
         $form = $this->createForm(
             new LineType(),
             $line,

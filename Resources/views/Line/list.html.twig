@@ -1,5 +1,7 @@
 {% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
 
+{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
 {% block list_title -%}
     {{'line.list.title'|trans({}, 'default')}}
     {% if is_granted('BUSINESS_MANAGE_LINE') %}
@@ -12,6 +14,7 @@
 
 {% block table_head -%}
     <th>{{'line.list.columns.label'|trans({}, 'default')}}</th>
+    <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE') %}
         <th>{{'global.actions'|trans({}, 'messages')}}</th>
     {% endif %}
@@ -20,7 +23,7 @@
 {% block table_body -%}
     {% if lines|length == 0 %}
         <tr>
-            <td colspan="4">
+            <td colspan="3">
                 {{'global.no_items'|trans}}
             </td>
         </tr>
@@ -28,7 +31,10 @@
         {% for line in lines %}
             <tr>
                 <td>
-                    {{line.number}}
+                    {{ render.line_number(line, 'line', 'small') }}
+                </td>
+                <td>
+                    {{ line.physicalMode.name }}
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_MANAGE_LINE') %}                        
@@ -40,4 +46,12 @@
             </tr>
         {% endfor %}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        require(['textfill'], function(){
+            textfill(2, 15, '.line-small');
+        });
+    </script>
 {% endblock %}

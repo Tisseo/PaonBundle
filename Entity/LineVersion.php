@@ -35,11 +35,6 @@ class LineVersion
     private $plannedEndDate;
 
     /**
-     * @var integer
-     */
-    private $childLineId;
-
-    /**
      * @var string
      */
     private $name;
@@ -90,6 +85,11 @@ class LineVersion
     private $airConditioned;
 
     /**
+     * @var boolean
+     */
+    private $certified;
+
+    /**
      * @var string
      */
     private $comment;
@@ -104,11 +104,48 @@ class LineVersion
      */
     private $line;
 
+    /**
+     * @var \Tisseo\DatawarehouseBundle\Entity\Line
+     */
+    private $childLine;
+
+
+    public function __construct(LineVersion $lineVersion = null)
+    {
+        if ($lineVersion !== null)
+        {
+            $this->version = $lineVersion->getVersion() + 1;
+            $this->name = $lineVersion->getName();
+            $this->forwardDirection = $lineVersion->getForwardDirection();
+            $this->backwardDirection = $lineVersion->getBackwardDirection();
+            $this->fgColor = $lineVersion->getFgColor();
+            $this->fgHexaColor = $lineVersion->getFgHexaColor();
+            $this->bgColor = $lineVersion->getBgColor();
+            $this->bgHexaColor = $lineVersion->getBgHexaColor();
+            $this->accessibility = $lineVersion->getAccessibility();
+            $this->airConditioned = $lineVersion->getAirConditioned();
+            $this->certified = $lineVersion->getCertified();
+            $this->depot = $lineVersion->getDepot();
+            $this->setLine($lineVersion->getLine());
+        }
+    }
+
+    public function isActive()
+    {
+        $now = new \Datetime();
+        return ($this->endDate === null) || ($this->startDate < $now && $this->endDate > $now);
+    }
+
+    public function isLocked()
+    {
+        $now = new \Datetime();
+        return ($this->startDate->diff($now)->format('%a') < 20);
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -131,7 +168,7 @@ class LineVersion
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -154,7 +191,7 @@ class LineVersion
     /**
      * Get startDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartDate()
     {
@@ -177,7 +214,7 @@ class LineVersion
     /**
      * Get endDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEndDate()
     {
@@ -200,7 +237,7 @@ class LineVersion
     /**
      * Get plannedEndDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPlannedEndDate()
     {
@@ -208,26 +245,26 @@ class LineVersion
     }
 
     /**
-     * Set childLineId
+     * Set childLine
      *
-     * @param integer $childLineId
+     * @param \Tisseo\DatawarehouseBundle\Entity\Line $childLine
      * @return LineVersion
      */
-    public function setChildLineId($childLineId)
+    public function setChildLine(Line $childLine = null)
     {
-        $this->childLineId = $childLineId;
+        $this->childLine = $childLine;
 
         return $this;
     }
 
     /**
-     * Get childLineId
+     * Get childLine
      *
-     * @return integer 
+     * @return \Tisseo\DatawarehouseBundle\Entity\Line
      */
-    public function getChildLineId()
+    public function getChildLine()
     {
-        return $this->childLineId;
+        return $this->childLine;
     }
 
     /**
@@ -246,7 +283,7 @@ class LineVersion
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -269,7 +306,7 @@ class LineVersion
     /**
      * Get forwardDirection
      *
-     * @return string 
+     * @return string
      */
     public function getForwardDirection()
     {
@@ -292,7 +329,7 @@ class LineVersion
     /**
      * Get backwardDirection
      *
-     * @return string 
+     * @return string
      */
     public function getBackwardDirection()
     {
@@ -315,7 +352,7 @@ class LineVersion
     /**
      * Get bgColor
      *
-     * @return string 
+     * @return string
      */
     public function getBgColor()
     {
@@ -338,7 +375,7 @@ class LineVersion
     /**
      * Get bgHexaColor
      *
-     * @return string 
+     * @return string
      */
     public function getBgHexaColor()
     {
@@ -361,7 +398,7 @@ class LineVersion
     /**
      * Get fgColor
      *
-     * @return string 
+     * @return string
      */
     public function getFgColor()
     {
@@ -384,7 +421,7 @@ class LineVersion
     /**
      * Get fgHexaColor
      *
-     * @return string 
+     * @return string
      */
     public function getFgHexaColor()
     {
@@ -407,7 +444,7 @@ class LineVersion
     /**
      * Get cartoFile
      *
-     * @return string 
+     * @return string
      */
     public function getCartoFile()
     {
@@ -430,11 +467,34 @@ class LineVersion
     /**
      * Get accessibility
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAccessibility()
     {
         return $this->accessibility;
+    }
+
+    /**
+     * Set certified
+     *
+     * @param boolean $certified
+     * @return LineVersion
+     */
+    public function setCertified($certified)
+    {
+        $this->certified = $certified;
+
+        return $this;
+    }
+
+    /**
+     * Get certified
+     *
+     * @return boolean
+     */
+    public function getCertified()
+    {
+        return $this->certified;
     }
 
     /**
@@ -453,7 +513,7 @@ class LineVersion
     /**
      * Get airConditioned
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAirConditioned()
     {
@@ -476,7 +536,7 @@ class LineVersion
     /**
      * Get comment
      *
-     * @return string 
+     * @return string
      */
     public function getComment()
     {
@@ -499,7 +559,7 @@ class LineVersion
     /**
      * Get depot
      *
-     * @return string 
+     * @return string
      */
     public function getDepot()
     {
@@ -512,7 +572,7 @@ class LineVersion
      * @param \Tisseo\DatawarehouseBundle\Entity\Line $line
      * @return LineVersion
      */
-    public function setLine(\Tisseo\DatawarehouseBundle\Entity\Line $line = null)
+    public function setLine(Line $line = null)
     {
         $this->line = $line;
 
@@ -522,10 +582,15 @@ class LineVersion
     /**
      * Get line
      *
-     * @return \Tisseo\DatawarehouseBundle\Entity\Line 
+     * @return \Tisseo\DatawarehouseBundle\Entity\Line
      */
     public function getLine()
     {
         return $this->line;
+    }
+
+    public function __toString()
+    {
+        return "LineVersion: ".$this->version."\nName: ".$this->name."\n";
     }
 }

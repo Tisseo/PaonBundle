@@ -3,6 +3,7 @@ welcome: "Bienvenue sur TID"
 global:
     actions: Actions
     edit: Éditer
+    consult: Consulter
     preview: Prévisualiser
     validate: Valider
     save: Enregistrer
@@ -42,10 +43,11 @@ error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."
     greater_than_field: Ce champ doit être supérieur au champ %field%.
     line_exists: Ce numéro de ligne est déja attribué.
+    line_version_not_found: Cette ligne ne possède aucune offre.
 
 menu:
     line_manage: Gestion des lignes
-    offer_manage: Gestion des offres
+    line_version_manage: Gestion des offres
     calendar_manage: Gestion des calendriers
     exception_type_manage: Gestion des exceptions
     data_manage: Import Fiches Horaires
@@ -59,8 +61,27 @@ line:
     labels:
         number: Numéro de ligne
         physical_mode: Mode de transport
-offer:
+line_version:
     labels:
+        name: Nom de la ligne
+        version: Version
+        start_date: Date de début
+        end_date: Date de fin
+        planned_end_date: Date de fin prévue
+        child_line: Ligne de soirée rattachée
+        forward: Direction aller
+        backward: Direction retour
+        fg_color: Couleur du texte
+        fg_hexa_color: Couleur hexa du texte
+        bg_color: Couleur du fond
+        bg_hexa_color: Couleur hexa du fond
+        carto_file: Fichier carto
+        accessibility: Accessibilité
+        air_conditioned: Air conditionné
+        certified: Ligne certifiée
+        depot: Dépôt
+        comment: Commentaire
+    locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
 calendar:
     labels:
 exception_type:

@@ -24,6 +24,12 @@ Tisseo\DatawarehouseBundle\Entity\Line:
             targetEntity: LineDatasource
             cascade: ['persist', 'remove']
             mappedBy: line
+            inversedBy: null
+        lineVersions:
+            targetEntity: LineVersion
+            cascade: ['persist', 'remove']
+            mappedBy: line
+            inversedBy: null
     manyToOne:
         physicalMode:
             targetEntity: PhysicalMode

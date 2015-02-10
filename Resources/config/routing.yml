@@ -10,13 +10,21 @@ tisseo_datawarehouse_line_edit:
     pattern: /lines/edit/{lineId}
     defaults: { _controller: TisseoDatawarehouseBundle:Line:edit, lineId: null }
 
-#Offer administration
-tisseo_datawarehouse_offer_list:
+#LineVersion administration
+tisseo_datawarehouse_line_version_list:
     pattern: /offers/list
-    defaults: { _controller: TisseoDatawarehouseBundle:Offer:list}
-tisseo_datawarehouse_offer_edit:
-    pattern: /offers/edit/{offerId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Offer:edit, offerId: null }
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:list}
+tisseo_datawarehouse_line_version_edit:
+    pattern: /offers/edit/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:edit, lineVersionId: null }
+tisseo_datawarehouse_line_version_consult:
+    pattern: /offers/consult/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:consult }
+tisseo_datawarehouse_select_line_version_by_line:
+    pattern: /offers/select_by_line
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:selectByLine }
+    options:
+        expose: true
 
 #Calendar administration
 tisseo_datawarehouse_calendar_list:
