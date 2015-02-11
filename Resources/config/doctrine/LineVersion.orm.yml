@@ -117,4 +117,10 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
                 line_id:
                     referencedColumnName: id
             orphanRemoval: false
+    oneToMany:
+        gridCalendars:
+            targetEntity: GridCalendar
+            cascade: ['persist', 'remove']
+            mappedBy: lineVersion
+            inversedBy: null
     lifecycleCallbacks: {  }

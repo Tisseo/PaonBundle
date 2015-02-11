@@ -109,9 +109,17 @@ class LineVersion
      */
     private $childLine;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $gridCalendars;
 
-    public function __construct(LineVersion $lineVersion = null)
+
+    public function __construct(LineVersion $lineVersion = null, Line $line = null)
     {
+        $this->gridCalendars = new ArrayCollection();
+        $this->version = 1;
+
         if ($lineVersion !== null)
         {
             $this->version = $lineVersion->getVersion() + 1;
@@ -128,18 +136,28 @@ class LineVersion
             $this->depot = $lineVersion->getDepot();
             $this->setLine($lineVersion->getLine());
         }
-    }
 
-    public function isActive()
-    {
-        $now = new \Datetime();
-        return ($this->endDate === null) || ($this->startDate < $now && $this->endDate > $now);
+        if ($line !== null)
+        {
+            $this->setLine($line);
+        }
     }
 
     public function isLocked()
     {
         $now = new \Datetime();
         return ($this->startDate->diff($now)->format('%a') < 20);
+    }
+
+    public function isNew()
+    {
+        return ($this->gridCalendars->isEmpty());
+    }
+
+    public function isActive()
+    {
+        $now = new \Datetime();
+        return ($this->endDate === null) || ($this->startDate < $now && $this->endDate > $now);
     }
 
     /**
@@ -589,8 +607,52 @@ class LineVersion
         return $this->line;
     }
 
-    public function __toString()
+    /**
+     * Add gridCalendars
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
+     * @return Line
+     */
+    public function addGridCalendars(GridCalendar $gridCalendars)
     {
-        return "LineVersion: ".$this->version."\nName: ".$this->name."\n";
+        $this->gridCalendars[] = $gridCalendars;
+        $gridCalendars->setLine($this);
+        return $this;
     }
+
+    /**
+     * Set gridCalendars
+     *
+     * @param \Doctrine\Common\Collections\Collection $gridCalendars
+     * @return Line
+     */
+    public function setGridCalendars(Collection $gridCalendars)
+    {
+        $this->gridCalendars = $gridCalendars;
+        foreach ($this->gridCalendars as $gridCalendar) {
+            $gridCalendar->setLine($this);
+        }
+        return $this;
+    }
+
+    /**
+     * Remove gridCalendars 
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
+     */
+    public function removeGridCalendars(GridCalendar $gridCalendars)
+    {
+        $this->gridCalendars->removeElement($gridCalendars);
+    }
+
+    /**
+     * Get gridCalendars
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGridCalendars()
+    {
+        return $this->gridCalendars;
+    }
+
 }

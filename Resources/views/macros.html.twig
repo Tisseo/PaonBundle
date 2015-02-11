@@ -22,3 +22,15 @@
         {% endif %}
     {% endif %}
 {% endmacro %}
+
+{% macro line_version_status(lineVersion) %}
+    {% if lineVersion.isNew() %}
+        <span class="label-info">Nouveau</span>
+    {% endif %}
+    {% if lineVersion.isLocked() %}
+        <span class="label-impotant">Verrouillé</span>
+    {% endif %}
+    {% if lineVersion.isActive() %}
+        <span class="label-success">Actif</span>
+    {% endif %}
+{% endmacro %}

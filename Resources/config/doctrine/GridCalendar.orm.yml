@@ -14,14 +14,15 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
             generator:
                 strategy: SEQUENCE
     fields:
-        active:
-            type: boolean
-            nullable: false
         name:
             type: string
             nullable: false
             length: 255
             fixed: false
+        color:
+            type: string
+            length: 7
+            nullable: false
         monday:
             type: boolean
             nullable: false
@@ -48,7 +49,7 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
             targetEntity: LineVersion
             cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: gridCalendars
             joinColumns:
                 line_version_id:
                     referencedColumnName: id

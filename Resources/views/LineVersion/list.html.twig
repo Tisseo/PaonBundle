@@ -14,6 +14,8 @@
 
 {% block table_head -%}
     <th>{{'line_version.list.columns.label'|trans({}, 'default')}}</th>
+    <th>{{'line_version.list.columns.version'|trans({}, 'default')}}</th>
+    <th>{{'line_version.list.columns.status'|trans({}, 'default')}}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
         <th>{{'global.actions'|trans({}, 'messages')}}</th>
     {% endif %}
@@ -31,6 +33,12 @@
             <tr>
                 <td>
                     {{ render.line_number(lineVersion, 'lineVersion', 'small') }} <span>{{ lineVersion.name }}</span>
+                </td>
+                <td>
+                    {{ lineVersion.version }}
+                </td>
+                <td>
+                    {% if lineVersion.isNew %}TOTO{%else%}TUTU{%endif%}
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}

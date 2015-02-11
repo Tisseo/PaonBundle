@@ -79,19 +79,22 @@ class LineVersionController extends AbstractController
 
     public function selectByLineAction(Request $request)
     {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
         $lineId = $request->request->get('line_id');
         $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
         $lineVersion = $lineVersionManager->findLineVersionByLine($lineId);
         if (empty($lineVersion))
         {
-            $form = $this->buildForm(new LineVersion(), true, false);
+            $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+            $line = $lineManager->find($lineId);
+            $lineVersion = new LineVersion(null, $line);
+            $form = $this->buildForm($lineVersion, true, true);
             return $this->render(
                 'TisseoDatawarehouseBundle:LineVersion:form.html.twig',
                 array(
                     'form' => $form->createView(),
                     'new' => true,
-                    'stape' => false,
-                    'error' => true,
+                    'stape' => true,
                     'title' => ('line_version.create')
                 )
             );       

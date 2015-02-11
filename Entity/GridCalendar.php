@@ -15,9 +15,9 @@ class GridCalendar
     private $id;
 
     /**
-     * @var boolean
+     * @var string
      */
-    private $active;
+    private $color;
 
     /**
      * @var string
@@ -76,26 +76,26 @@ class GridCalendar
     }
 
     /**
-     * Set active
+     * Set color
      *
-     * @param boolean $active
+     * @param string $color
      * @return GridCalendar
      */
-    public function setActive($active)
+    public function setColor($color)
     {
-        $this->active = $active;
+        $this->color = $color;
 
         return $this;
     }
 
     /**
-     * Get active
+     * Get color
      *
-     * @return boolean 
+     * @return string
      */
-    public function getActive()
+    public function getColor()
     {
-        return $this->active;
+        return $this->color;
     }
 
     /**
