@@ -21,20 +21,24 @@ Tisseo\DatawarehouseBundle\Entity\CalendarElement:
         startDate:
             type: date
             nullable: true
+            comment: ''
             column: start_date
         endDate:
             type: date
             nullable: true
+            comment: ''
             column: end_date
         positive:
             type: string
             nullable: false
             length: 1
             fixed: false
+            comment: 'agencement des calendar_element d''un meme calendrier : ajout, soustraction, intersection avec les precedents'
         interval:
             type: integer
             nullable: true
             unsigned: false
+            comment: 'intervalle de repetition en cas de calendrier recurrent (lundi)'
     manyToOne:
         calendar:
             targetEntity: Calendar

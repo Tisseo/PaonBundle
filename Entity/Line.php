@@ -22,6 +22,11 @@ class Line
     private $number;
 
     /**
+     * @var integer
+     */
+    private $priority;
+
+    /**
      * @var \Tisseo\DatawarehouseBundle\Entity\PhysicalMode
      */
     private $physicalMode;
@@ -79,6 +84,29 @@ class Line
     }
 
     /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return Line
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer 
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
      * Set physicalMode
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\PhysicalMode $physicalMode
@@ -112,16 +140,13 @@ class Line
     }
 
     /**
-     * Add lineDatasources
+     * Get lineDatasources
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
-     * @return Line
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function addLineDatasources(LineDatasource $lineDatasources)
+    public function getLineDatasources()
     {
-        $this->lineDatasources[] = $lineDatasources;
-        $lineDatasources->setLine($this);
-        return $this;
+        return $this->lineDatasources;
     }
 
     /**
@@ -140,6 +165,19 @@ class Line
     }
 
     /**
+     * Add lineDatasources
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
+     * @return Line
+     */
+    public function addLineDatasources(LineDatasource $lineDatasources)
+    {
+        $this->lineDatasources[] = $lineDatasources;
+        $lineDatasources->setLine($this);
+        return $this;
+    }
+
+    /**
      * Remove lineDatasources
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
@@ -150,26 +188,13 @@ class Line
     }
 
     /**
-     * Get lineDatasources
+     * Get lineVersions
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLineDatasources()
+    public function getLineVersions()
     {
-        return $this->lineDatasources;
-    }
-
-    /**
-     * Add lineVersions
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersions
-     * @return Line
-     */
-    public function addLineVersions(LineVersion $lineVersions)
-    {
-        $this->lineVersions[] = $lineVersions;
-        $lineVersions->setLine($this);
-        return $this;
+        return $this->lineVersions;
     }
 
     /**
@@ -188,23 +213,26 @@ class Line
     }
 
     /**
-     * Remove lineVersions 
+     * Add lineVersion
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersions
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersion
+     * @return Line
      */
-    public function removeLineVersions(LineVersion $lineVersions)
+    public function addLineVersion(LineVersion $lineVersion)
     {
-        $this->lineVersions->removeElement($lineVersions);
+        $this->lineVersions[] = $lineVersion;
+        $lineVersion->setLine($this);
+        return $this;
     }
 
     /**
-     * Get lineVersions
+     * Remove lineVersion
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersion
      */
-    public function getLineVersions()
+    public function removeLineVersion(LineVersion $lineVersion)
     {
-        return $this->lineVersions;
+        $this->lineVersions->removeElement($lineVersion);
     }
 
     /**
@@ -222,6 +250,11 @@ class Line
         return 0;
     }
 
+    /**
+     * Get lastLineVersion
+     *
+     * @return LineVersion
+     */
     public function getLastLineVersion()
     {
         foreach($this->lineVersions as $lineVersion)
@@ -230,5 +263,28 @@ class Line
                 return $lineVersion;
         }
         return null;
+    }
+
+    /**
+     * Add lineDatasources
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
+     * @return Line
+     */
+    public function addLineDatasource(\Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources)
+    {
+        $this->lineDatasources[] = $lineDatasources;
+
+        return $this;
+    }
+
+    /**
+     * Remove lineDatasources
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources
+     */
+    public function removeLineDatasource(\Tisseo\DatawarehouseBundle\Entity\LineDatasource $lineDatasources)
+    {
+        $this->lineDatasources->removeElement($lineDatasources);
     }
 }

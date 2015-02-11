@@ -16,6 +16,7 @@ Tisseo\DatawarehouseBundle\Entity\RouteStop:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -24,21 +25,31 @@ Tisseo\DatawarehouseBundle\Entity\RouteStop:
             type: integer
             nullable: false
             unsigned: false
+            comment: 'Ordre dans l''itineraire. Commence a 1.'
         scheduledStop:
             type: boolean
             nullable: false
+            comment: 'Indique s''il s''agit d''un waypoint qui comporte des horaires.'
             column: scheduled_stop
         pickup:
             type: boolean
             nullable: false
+            comment: ''
         dropOff:
             type: boolean
             nullable: false
+            comment: ''
             column: drop_off
         reservationRequired:
             type: boolean
             nullable: false
+            comment: ''
             column: reservation_required
+        internalService:
+            type: boolean
+            nullable: true
+            comment: 'Dans le cas d''une zone TAD, idique si la desserte interne de la zone est autorisee.'
+            column: internal_service
     manyToOne:
         route:
             targetEntity: Route

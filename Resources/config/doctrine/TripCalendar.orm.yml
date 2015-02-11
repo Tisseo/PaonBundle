@@ -10,6 +10,7 @@ Tisseo\DatawarehouseBundle\Entity\TripCalendar:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -17,24 +18,31 @@ Tisseo\DatawarehouseBundle\Entity\TripCalendar:
         monday:
             type: boolean
             nullable: false
+            comment: ''
         tuesday:
             type: boolean
             nullable: false
+            comment: ''
         wednesday:
             type: boolean
             nullable: false
+            comment: ''
         thursday:
             type: boolean
             nullable: false
+            comment: ''
         friday:
             type: boolean
             nullable: false
+            comment: ''
         saturday:
             type: boolean
             nullable: false
+            comment: ''
         sunday:
             type: boolean
             nullable: false
+            comment: ''
     manyToOne:
         gridMaskType:
             targetEntity: GridMaskType

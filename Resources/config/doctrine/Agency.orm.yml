@@ -6,6 +6,7 @@ Tisseo\DatawarehouseBundle\Entity\Agency:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -15,24 +16,29 @@ Tisseo\DatawarehouseBundle\Entity\Agency:
             nullable: true
             length: 30
             fixed: false
+            comment: ''
         url:
             type: string
             nullable: true
             length: 100
             fixed: false
+            comment: ''
         timezone:
             type: string
             nullable: true
             length: 30
             fixed: false
+            comment: ''
         lang:
             type: string
             nullable: true
             length: 3
             fixed: false
+            comment: ''
         phone:
             type: string
             nullable: true
             length: 20
             fixed: false
+            comment: ''
     lifecycleCallbacks: {  }

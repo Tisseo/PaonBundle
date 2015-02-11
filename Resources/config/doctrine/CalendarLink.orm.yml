@@ -2,20 +2,21 @@ Tisseo\DatawarehouseBundle\Entity\CalendarLink:
     type: entity
     table: calendar_link
     indexes:
-        calendar_link_trip_id_idx:
-            columns:
-                - trip_id
-        calendar_link_period_calendar_id_idx:
-            columns:
-                - period_calendar_id
         calendar_link_day_calendar_id_idx:
             columns:
                 - day_calendar_id
+        calendar_link_period_calendar_id_idx:
+            columns:
+                - period_calendar_id
+        calendar_link_trip_id_idx:
+            columns:
+                - trip_id
     id:
         id:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE

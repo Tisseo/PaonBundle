@@ -10,19 +10,23 @@ Tisseo\DatawarehouseBundle\Entity\City:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
     fields:
         insee:
-            type: integer
+            type: string
             nullable: false
-            unsigned: false
+            length: 5
+            fixed: false
+            comment: ''
         name:
             type: string
             nullable: false
             length: 255
             fixed: false
+            comment: ''
     manyToOne:
         mainStopArea:
             targetEntity: StopArea

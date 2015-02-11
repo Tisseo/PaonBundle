@@ -114,6 +114,11 @@ class LineVersion
      */
     private $gridCalendars;
 
+    /**
+     * @var integer
+     */
+    private $childLineId;
+
 
     public function __construct(LineVersion $lineVersion = null, Line $line = null)
     {
@@ -283,6 +288,29 @@ class LineVersion
     public function getChildLine()
     {
         return $this->childLine;
+    }
+
+    /**
+     * Set childLineId
+     *
+     * @param integer $childLineId
+     * @return LineVersion
+     */
+    public function setChildLineId($childLineId)
+    {
+        $this->childLineId = $childLineId;
+
+        return $this;
+    }
+
+    /**
+     * Get childLineId
+     *
+     * @return integer 
+     */
+    public function getChildLineId()
+    {
+        return $this->childLineId;
     }
 
     /**
@@ -655,4 +683,26 @@ class LineVersion
         return $this->gridCalendars;
     }
 
+    /**
+     * Add gridCalendars
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
+     * @return LineVersion
+     */
+    public function addGridCalendar(\Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars)
+    {
+        $this->gridCalendars[] = $gridCalendars;
+
+        return $this;
+    }
+
+    /**
+     * Remove gridCalendars
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
+     */
+    public function removeGridCalendar(\Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars)
+    {
+        $this->gridCalendars->removeElement($gridCalendars);
+    }
 }

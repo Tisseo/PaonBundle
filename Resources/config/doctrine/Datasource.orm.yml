@@ -10,6 +10,7 @@ Tisseo\DatawarehouseBundle\Entity\Datasource:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -19,6 +20,7 @@ Tisseo\DatawarehouseBundle\Entity\Datasource:
             nullable: false
             length: 30
             fixed: false
+            comment: ''
     manyToOne:
         agency:
             targetEntity: Agency

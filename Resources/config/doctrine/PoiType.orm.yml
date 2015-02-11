@@ -6,6 +6,7 @@ Tisseo\DatawarehouseBundle\Entity\PoiType:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -15,4 +16,5 @@ Tisseo\DatawarehouseBundle\Entity\PoiType:
             nullable: false
             length: 50
             fixed: false
+            comment: ''
     lifecycleCallbacks: {  }

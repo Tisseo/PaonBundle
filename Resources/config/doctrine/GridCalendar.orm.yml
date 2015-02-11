@@ -10,6 +10,7 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -19,31 +20,41 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
             nullable: false
             length: 255
             fixed: false
+            comment: ''
         color:
             type: string
-            length: 7
             nullable: false
+            length: 7
+            fixed: false
+            comment: ''
         monday:
             type: boolean
             nullable: false
+            comment: ''
         tuesday:
             type: boolean
             nullable: false
+            comment: ''
         wednesday:
             type: boolean
             nullable: false
+            comment: ''
         thursday:
             type: boolean
             nullable: false
+            comment: ''
         friday:
             type: boolean
             nullable: false
+            comment: ''
         saturday:
             type: boolean
             nullable: false
+            comment: ''
         sunday:
             type: boolean
             nullable: false
+            comment: ''
     manyToOne:
         lineVersion:
             targetEntity: LineVersion

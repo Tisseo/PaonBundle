@@ -5,9 +5,9 @@ namespace Tisseo\DatawarehouseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PoiAdress
+ * PoiAddress
  */
-class PoiAdress
+class PoiAddress
 {
     /**
      * @var integer
@@ -17,7 +17,7 @@ class PoiAdress
     /**
      * @var string
      */
-    private $adress;
+    private $address;
 
     /**
      * @var boolean
@@ -46,33 +46,33 @@ class PoiAdress
     }
 
     /**
-     * Set adress
+     * Set address
      *
-     * @param string $adress
-     * @return PoiAdress
+     * @param string $address
+     * @return PoiAddress
      */
-    public function setAdress($adress)
+    public function setAddress($address)
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get adress
+     * Get address
      *
      * @return string 
      */
-    public function getAdress()
+    public function getAddress()
     {
-        return $this->adress;
+        return $this->address;
     }
 
     /**
      * Set isEntrance
      *
      * @param boolean $isEntrance
-     * @return PoiAdress
+     * @return PoiAddress
      */
     public function setIsEntrance($isEntrance)
     {
@@ -95,7 +95,7 @@ class PoiAdress
      * Set theGeom
      *
      * @param geometry $theGeom
-     * @return PoiAdress
+     * @return PoiAddress
      */
     public function setTheGeom($theGeom)
     {
@@ -118,7 +118,7 @@ class PoiAdress
      * Set poi
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\Poi $poi
-     * @return PoiAdress
+     * @return PoiAddress
      */
     public function setPoi(\Tisseo\DatawarehouseBundle\Entity\Poi $poi = null)
     {

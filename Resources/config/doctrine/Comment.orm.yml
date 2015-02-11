@@ -6,6 +6,7 @@ Tisseo\DatawarehouseBundle\Entity\Comment:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -15,10 +16,12 @@ Tisseo\DatawarehouseBundle\Entity\Comment:
             nullable: true
             length: 5
             fixed: false
+            comment: 'Lettre servant a signer le commentaire.'
         commentText:
             type: string
             nullable: true
             length: 255
             fixed: false
+            comment: 'Description textuelle du commentaire.'
             column: comment_text
     lifecycleCallbacks: {  }

@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\CalendarDatasource:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -22,6 +23,7 @@ Tisseo\DatawarehouseBundle\Entity\CalendarDatasource:
             nullable: true
             length: 20
             fixed: false
+            comment: ''
     manyToOne:
         calendar:
             targetEntity: Calendar

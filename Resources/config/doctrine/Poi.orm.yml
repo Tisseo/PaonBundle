@@ -10,6 +10,7 @@ Tisseo\DatawarehouseBundle\Entity\Poi:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -19,11 +20,18 @@ Tisseo\DatawarehouseBundle\Entity\Poi:
             nullable: false
             length: 255
             fixed: false
+            comment: ''
         cityId:
             type: integer
             nullable: false
             unsigned: false
+            comment: 'Commune du POI.'
             column: city_id
+        priority:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: 'Importance du POI. 1 = prioritaire, 5 = peu important.'
     manyToOne:
         poiType:
             targetEntity: PoiType

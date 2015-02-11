@@ -6,6 +6,7 @@ Tisseo\DatawarehouseBundle\Entity\Waypoint:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE

@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\LineVersionNotExported:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE

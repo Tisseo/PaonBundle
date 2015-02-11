@@ -6,30 +6,23 @@ Tisseo\DatawarehouseBundle\Entity\GridMaskType:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
     fields:
-        name:
-            type: string
-            nullable: false
-            length: 255
-            fixed: false
-        color:
-            type: string
-            nullable: false
-            length: 20
-            fixed: false
         calendarType:
             type: string
             nullable: true
-            length: 25
+            length: 50
             fixed: false
+            comment: 'Type du calendrier. Semaine correspond à LaV si un type Samedi existe sur l''offre et à LaS sinon. Dimanche regroupe egalement les jours feries.'
             column: calendar_type
         calendarPeriod:
             type: string
             nullable: true
-            length: 25
+            length: 100
             fixed: false
+            comment: 'Periode d''application du calendrier. BASE correspond a la periode hors vacances si une periode vacance existe sur cette offre et a la periode hiver sinon.'
             column: calendar_period
     lifecycleCallbacks: {  }

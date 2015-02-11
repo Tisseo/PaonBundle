@@ -6,6 +6,7 @@ Tisseo\DatawarehouseBundle\Entity\Calendar:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -15,9 +16,11 @@ Tisseo\DatawarehouseBundle\Entity\Calendar:
             nullable: false
             length: 50
             fixed: false
+            comment: ''
         calendarType:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             column: calendar_type
     lifecycleCallbacks: {  }

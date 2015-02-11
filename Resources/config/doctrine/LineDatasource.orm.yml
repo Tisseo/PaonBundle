@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\LineDatasource:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -22,6 +23,7 @@ Tisseo\DatawarehouseBundle\Entity\LineDatasource:
             nullable: true
             length: 20
             fixed: false
+            comment: ''
     manyToOne:
         datasource:
             targetEntity: Datasource
@@ -34,7 +36,7 @@ Tisseo\DatawarehouseBundle\Entity\LineDatasource:
             orphanRemoval: false
         line:
             targetEntity: Line
-            cascade: ['persist', 'remove']
+            cascade: {  }
             mappedBy: null
             inversedBy: lineDatasources
             joinColumns:

@@ -10,6 +10,7 @@ Tisseo\DatawarehouseBundle\Entity\Printing:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -18,14 +19,17 @@ Tisseo\DatawarehouseBundle\Entity\Printing:
             type: integer
             nullable: true
             unsigned: false
+            comment: ''
         date:
             type: date
             nullable: true
+            comment: ''
         comment:
             type: text
             nullable: true
             length: null
             fixed: false
+            comment: 'Raison du tirage : initial, reassort ou correction.'
     manyToOne:
         lineVersion:
             targetEntity: LineVersion

@@ -29,6 +29,10 @@ class Poi
      */
     private $poiType;
 
+    /**
+     * @var integer
+     */
+    private $priority;
 
     /**
      * Get id
@@ -107,5 +111,28 @@ class Poi
     public function getPoiType()
     {
         return $this->poiType;
+    }
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return Poi
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer 
+     */
+    public function getPriority()
+    {
+        return $this->priority;
     }
 }

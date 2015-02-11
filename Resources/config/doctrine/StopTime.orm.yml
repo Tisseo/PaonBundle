@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\StopTime:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -21,11 +22,13 @@ Tisseo\DatawarehouseBundle\Entity\StopTime:
             type: integer
             nullable: true
             unsigned: false
+            comment: 'Temps en seconde apres minuit de la date. Peut depasser 23h59.'
             column: arrival_time
         departureTime:
             type: integer
             nullable: true
             unsigned: false
+            comment: 'Temps en seconde apres minuit de la date. Peut depasser 23h59.'
             column: departure_time
     manyToOne:
         routeStop:

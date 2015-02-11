@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\ChangeCauseLink:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE

@@ -54,6 +54,10 @@ class RouteStop
      */
     private $waypoint;
 
+    /**
+     * @var boolean
+     */
+    private $internalService;
 
     /**
      * Get id
@@ -247,5 +251,28 @@ class RouteStop
     public function getWaypoint()
     {
         return $this->waypoint;
+    }
+
+    /**
+     * Set internalService
+     *
+     * @param boolean $internalService
+     * @return RouteStop
+     */
+    public function setInternalService($internalService)
+    {
+        $this->internalService = $internalService;
+
+        return $this;
+    }
+
+    /**
+     * Get internalService
+     *
+     * @return boolean 
+     */
+    public function getInternalService()
+    {
+        return $this->internalService;
     }
 }

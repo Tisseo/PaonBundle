@@ -1,8 +1,8 @@
-Tisseo\DatawarehouseBundle\Entity\PoiAdress:
+Tisseo\DatawarehouseBundle\Entity\PoiAddress:
     type: entity
-    table: poi_adress
+    table: poi_address
     indexes:
-        poi_adress_poi_id_idx:
+        poi_address_poi_id_idx:
             columns:
                 - poi_id
     id:
@@ -15,19 +15,21 @@ Tisseo\DatawarehouseBundle\Entity\PoiAdress:
             generator:
                 strategy: SEQUENCE
     fields:
-        adress:
+        address:
             type: text
             nullable: true
             length: null
             fixed: false
-            comment: "\n"
+            comment: 'Adresse postale de la localisation du POI.'
         isEntrance:
             type: boolean
             nullable: false
+            comment: 'Indique sil la localisation est une entree du POI ou le barycentre du POI.'
             column: is_entrance
         theGeom:
             type: geometry
             nullable: false
+            comment: ''
             requireSQLConversion: true
             column: the_geom
     manyToOne:

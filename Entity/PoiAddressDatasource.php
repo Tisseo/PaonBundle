@@ -5,9 +5,9 @@ namespace Tisseo\DatawarehouseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PoiAdressDatasource
+ * PoiAddressDatasource
  */
-class PoiAdressDatasource
+class PoiAddressDatasource
 {
     /**
      * @var integer
@@ -25,9 +25,9 @@ class PoiAdressDatasource
     private $datasource;
 
     /**
-     * @var \Tisseo\DatawarehouseBundle\Entity\PoiAdress
+     * @var \Tisseo\DatawarehouseBundle\Entity\PoiAddress
      */
-    private $poiAdress;
+    private $poiAddress;
 
 
     /**
@@ -44,7 +44,7 @@ class PoiAdressDatasource
      * Set code
      *
      * @param string $code
-     * @return PoiAdressDatasource
+     * @return PoiAddressDatasource
      */
     public function setCode($code)
     {
@@ -67,7 +67,7 @@ class PoiAdressDatasource
      * Set datasource
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\Datasource $datasource
-     * @return PoiAdressDatasource
+     * @return PoiAddressDatasource
      */
     public function setDatasource(\Tisseo\DatawarehouseBundle\Entity\Datasource $datasource = null)
     {
@@ -87,25 +87,25 @@ class PoiAdressDatasource
     }
 
     /**
-     * Set poiAdress
+     * Set poiAddress
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\PoiAdress $poiAdress
-     * @return PoiAdressDatasource
+     * @param \Tisseo\DatawarehouseBundle\Entity\PoiAddress $poiAddress
+     * @return PoiAddressDatasource
      */
-    public function setPoiAdress(\Tisseo\DatawarehouseBundle\Entity\PoiAdress $poiAdress = null)
+    public function setPoiAddress(\Tisseo\DatawarehouseBundle\Entity\PoiAddress $poiAddress = null)
     {
-        $this->poiAdress = $poiAdress;
+        $this->poiAddress = $poiAddress;
 
         return $this;
     }
 
     /**
-     * Get poiAdress
+     * Get poiAddress
      *
-     * @return \Tisseo\DatawarehouseBundle\Entity\PoiAdress 
+     * @return \Tisseo\DatawarehouseBundle\Entity\PoiAddress 
      */
-    public function getPoiAdress()
+    public function getPoiAddress()
     {
-        return $this->poiAdress;
+        return $this->poiAddress;
     }
 }

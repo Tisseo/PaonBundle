@@ -12,19 +12,23 @@ Tisseo\DatawarehouseBundle\Entity\OdtStop:
         startDate:
             type: date
             nullable: false
+            comment: ''
             id: true
             column: start_date
     fields:
         endDate:
             type: date
             nullable: true
+            comment: ''
             column: end_date
         pickup:
             type: boolean
             nullable: false
+            comment: ''
         dropOff:
             type: boolean
             nullable: false
+            comment: ''
             column: drop_off
     oneToOne:
         odtArea:

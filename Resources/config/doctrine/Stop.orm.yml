@@ -15,7 +15,7 @@ Tisseo\DatawarehouseBundle\Entity\Stop:
             unsigned: false
             id: true
             generator:
-                strategy: SEQUENCE
+                strategy: SEQUENCE    
     oneToOne:
         waypoint:
             targetEntity: Waypoint

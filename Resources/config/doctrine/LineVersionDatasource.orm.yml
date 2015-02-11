@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\LineVersionDatasource:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -22,6 +23,7 @@ Tisseo\DatawarehouseBundle\Entity\LineVersionDatasource:
             nullable: true
             length: 20
             fixed: false
+            comment: ''
     manyToOne:
         datasource:
             targetEntity: Datasource

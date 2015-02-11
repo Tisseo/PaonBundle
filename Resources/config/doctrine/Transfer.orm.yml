@@ -13,6 +13,7 @@ Tisseo\DatawarehouseBundle\Entity\Transfer:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -21,23 +22,28 @@ Tisseo\DatawarehouseBundle\Entity\Transfer:
             type: integer
             nullable: false
             unsigned: false
+            comment: 'Temps de transfert en secondes.'
         distance:
             type: integer
             nullable: true
             unsigned: false
+            comment: 'Distance en metres de la correspondance.'
         theGeom:
             type: geometry
             nullable: true
+            comment: 'Trace de la correspondance. Inutilise pour le moment.'
             requireSQLConversion: true
             column: the_geom
         accessibility:
             type: boolean
             nullable: true
+            comment: 'Accessibilite de la correspondance. Inutilise pour le moment.'
         description:
             type: text
             nullable: true
             length: null
             fixed: false
+            comment: ''
     manyToOne:
         endStop:
             targetEntity: Stop

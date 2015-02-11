@@ -10,6 +10,7 @@ Tisseo\DatawarehouseBundle\Entity\Alias:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -19,6 +20,7 @@ Tisseo\DatawarehouseBundle\Entity\Alias:
             nullable: true
             length: 255
             fixed: false
+            comment: ''
     manyToOne:
         stopArea:
             targetEntity: StopArea

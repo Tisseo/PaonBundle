@@ -16,6 +16,7 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
             id: true
             generator:
                 strategy: SEQUENCE
@@ -25,6 +26,7 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             nullable: false
             length: 20
             fixed: false
+            comment: 'Nom de l''objet. Si vient d''Hastus, identiques a la datasource.'
     manyToOne:
         comment:
             targetEntity: Comment
