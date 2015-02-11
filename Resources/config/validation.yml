@@ -13,3 +13,26 @@ Tisseo\DatawarehouseBundle\Entity\LineDatasource:
     properties:
         code:
             - NotBlank: ~
+Tisseo\DatawarehouseBundle\Entity\LineVersion:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, version]
+            errorPath: name
+            message: error.line_version_exists
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                min: 4
+        startDate:
+            - DateTime: ~
+        plannedEndDate:
+            - DateTime: ~
+            - Tisseo\DatawarehouseBundle\Validator\Constraints\GreaterThanField:
+                field: startDate
+        fgHexaColor:
+            - NotBlank: ~
+            - Tisseo\DatawarehouseBundle\Validator\Constraints\HexaColor: ~
+        bgHexaColor:
+            - NotBlank: ~
+            - Tisseo\DatawarehouseBundle\Validator\Constraints\HexaColor: ~

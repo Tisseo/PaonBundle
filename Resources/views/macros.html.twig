@@ -2,9 +2,9 @@
     {% if type == 'lineVersion' %}
         {% if object.line.number is defined %}
             {% if size == 'small' %}
-        <div class="line-number line-small" style="color:#{{ object.fgHexaColor }}; background-color:#{{ object.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">
+        <div class="line-number line-small" style="color:{{ object.fgHexaColor }}; background-color:{{ object.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">
             {% elseif size == 'big' %}
-        <div class="line-number line-big" style="color:#{{ object.fgHexaColor }}; background-color:#{{ object.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">      
+        <div class="line-number line-big" style="color:{{ object.fgHexaColor }}; background-color:{{ object.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">      
             {% endif %}
             <span>{{ object.line.number }}</span>
         </div>
@@ -13,9 +13,9 @@
         {% if object.LastLineVersion is defined %}
             {% set lineVersion = object.LastLineVersion %}
             {% if size == 'small' %}
-        <div class="line-number line-small" style="color:#{{ lineVersion.fgHexaColor }}; background-color:#{{ lineVersion.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">
+        <div class="line-number line-small" style="color:{{ lineVersion.fgHexaColor }}; background-color:{{ lineVersion.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">
             {% elseif size == 'big' %}
-        <div class="line-number line-big" style="color:#{{ lineVersion.fgHexaColor }}; background-color:#{{ lineVersion.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">      
+        <div class="line-number line-big" style="color:{{ lineVersion.fgHexaColor }}; background-color:{{ lineVersion.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">      
             {% endif %}
             <span>{{ object.number }}</span>
         </div>
@@ -24,13 +24,14 @@
 {% endmacro %}
 
 {% macro line_version_status(lineVersion) %}
-    {% if lineVersion.isNew() %}
-        <span class="label-info">Nouveau</span>
+    {% if lineVersion.isNew %}
+        <span class="label label-info">{{ 'line_version.labels.new'|trans({}, 'messages') }}</span>
     {% endif %}
-    {% if lineVersion.isLocked() %}
-        <span class="label-impotant">Verrouillé</span>
-    {% endif %}
-    {% if lineVersion.isActive() %}
-        <span class="label-success">Actif</span>
+    {% if lineVersion.isActive %}
+        <span class="label label-success">{{ 'line_version.labels.active'|trans({}, 'messages') }}</span>
+    {% else %}
+        {% if lineVersion.isLocked %}
+            <span class="label label-danger">{{ 'line_version.labels.locked'|trans({}, 'messages') }}</span>
+        {% endif %}
     {% endif %}
 {% endmacro %}

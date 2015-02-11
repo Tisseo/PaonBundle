@@ -42,6 +42,7 @@ global:
 error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."
     greater_than_field: Ce champ doit être supérieur au champ %field%.
+    hexa_color: Ce champ doit être un code couleur en hexadécimal (ex: \#ffffff)
     line_exists: Ce numéro de ligne est déja attribué.
     line_version_not_found: Cette ligne ne possède aucune offre.
 
@@ -81,6 +82,9 @@ line_version:
         certified: Ligne certifiée
         depot: Dépôt
         comment: Commentaire
+        active: active
+        new: new
+        locked: locked
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
 calendar:
     labels:

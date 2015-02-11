@@ -15,7 +15,7 @@ class LineVersionType extends AbstractType
     private $secondStape;
     private $lineVersion;
 
-    public function __construct($new, $secondStape, $lineVersion)
+    public function __construct($lineVersion, $new, $secondStape)
     {
         $this->new = $new;
         $this->secondStape = $secondStape;
@@ -68,7 +68,7 @@ class LineVersionType extends AbstractType
                 array(
                     'label' => 'line_version.labels.start_date',
                     'attr' => array(
-                        'data-from-start' => true
+                        'data-from-date' => false
                     )
                 )
             );
@@ -78,7 +78,7 @@ class LineVersionType extends AbstractType
                 array(
                     'label' => 'line_version.labels.planned_end_date',
                     'attr' => array(
-                        'data-from-start' => true
+                        'data-to-date' => true
                     )
                 )
             );

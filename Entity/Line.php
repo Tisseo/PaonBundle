@@ -213,12 +213,12 @@ class Line
     }
 
     /**
-     * Add lineVersion
+     * Add lineVersions
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersion
      * @return Line
      */
-    public function addLineVersion(LineVersion $lineVersion)
+    public function addLineVersions(LineVersion $lineVersion)
     {
         $this->lineVersions[] = $lineVersion;
         $lineVersion->setLine($this);
@@ -226,11 +226,11 @@ class Line
     }
 
     /**
-     * Remove lineVersion
+     * Remove lineVersions
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersion
      */
-    public function removeLineVersion(LineVersion $lineVersion)
+    public function removeLineVersions(LineVersion $lineVersion)
     {
         $this->lineVersions->removeElement($lineVersion);
     }

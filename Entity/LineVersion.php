@@ -3,6 +3,8 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Doctrine\Common\Collections\ArrayCollection;
+use \Doctrine\Common\Collections\Collection;
 
 /**
  * LineVersion
@@ -151,7 +153,13 @@ class LineVersion
     public function isLocked()
     {
         $now = new \Datetime();
-        return ($this->startDate->diff($now)->format('%a') < 20);
+        if ($this->startDate < $now)
+            return true;
+        else
+        {
+            $diff = intval($this->startDate->diff($now)->format('%a'));
+            return ($diff < 20);
+        }
     }
 
     public function isNew()
@@ -162,7 +170,7 @@ class LineVersion
     public function isActive()
     {
         $now = new \Datetime();
-        return ($this->endDate === null) || ($this->startDate < $now && $this->endDate > $now);
+        return ($this->startDate < $now && ($this->endDate > $now || $this->endDate === null));
     }
 
     /**

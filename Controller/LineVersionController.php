@@ -9,14 +9,14 @@ use Tisseo\DatawarehouseBundle\Entity\LineVersion;
 
 class LineVersionController extends AbstractController
 {
-    private function buildForm($lineVersion, $new, $secondStape)
+    private function buildForm($lineVersion, $new, $secondStape, $url)
     {
         $form = $this->createForm(
-            new LineVersionType($new, $secondStape, $lineVersion),
+            new LineVersionType($lineVersion, $new, $secondStape),
             $lineVersion,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_datawarehouse_line_version_edit',
+                    $url,
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
@@ -50,7 +50,8 @@ class LineVersionController extends AbstractController
     public function editAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
-        if ($lineVersionId === null)
+
+        if (empty($lineVersionId))
         {
             $lineVersion = new LineVersion();
             $new = true;
@@ -61,8 +62,9 @@ class LineVersionController extends AbstractController
             $lineVersion = $lineVersionManager->find($lineVersionId);
             $new = false;
         }
-        $form = $this->buildForm($lineVersion, $new, false);
+        $form = $this->buildForm($lineVersion, $new, false, 'tisseo_datawarehouse_line_version_edit');
         $render = $this->processForm($request, $form);
+
         if (!$render) {
             return $this->render(
                 'TisseoDatawarehouseBundle:LineVersion:form.html.twig',
@@ -74,21 +76,39 @@ class LineVersionController extends AbstractController
                 )
             );
         }
+
         return ($render);
     }
 
     public function selectByLineAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        
         $lineId = $request->request->get('line_id');
-        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
-        $lineVersion = $lineVersionManager->findLineVersionByLine($lineId);
-        if (empty($lineVersion))
+        if (!empty($lineId))
         {
-            $lineManager = $this->get('tisseo_datawarehouse.line_manager');
-            $line = $lineManager->find($lineId);
-            $lineVersion = new LineVersion(null, $line);
-            $form = $this->buildForm($lineVersion, true, true);
+            $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+            $lineVersionResult = $lineVersionManager->findLineVersionByLine($lineId);
+            if (empty($lineVersionResult))
+            {
+                $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+                $line = $lineManager->find($lineId);
+                $lineVersion = new LineVersion(null, $line);
+            }
+            else
+            {
+                $lineVersion = new LineVersion($lineVersionResult);
+            }
+        }
+        else
+        {
+            $lineVersion = new LineVersion();
+        }
+
+        $form = $this->buildForm($lineVersion, true, true, 'tisseo_datawarehouse_select_line_version_by_line');
+        $render = $this->processForm($request, $form);
+        if (!$render)
+        {
             return $this->render(
                 'TisseoDatawarehouseBundle:LineVersion:form.html.twig',
                 array(
@@ -97,27 +117,9 @@ class LineVersionController extends AbstractController
                     'stape' => true,
                     'title' => ('line_version.create')
                 )
-            );       
+            );
         }
-        else
-        {
-            $newLineVersion = new LineVersion($lineVersion);
-            $form = $this->buildForm($newLineVersion, true, true);
-            $render = $this->processForm($request, $form);
-            if (!$render)
-            {
-                return $this->render(
-                    'TisseoDatawarehouseBundle:LineVersion:form.html.twig',
-                    array(
-                        'form' => $form->createView(),
-                        'new' => true,
-                        'stape' => true,
-                        'title' => ('line_version.create')
-                    )
-                );
-            }
-            return($render);
-        }
+        return($render);
     }
 
     public function listAction()
