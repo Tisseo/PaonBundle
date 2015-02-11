@@ -79,7 +79,7 @@ class LineController extends AbstractController
             'TisseoDatawarehouseBundle:Line:list.html.twig',
             array(
                 'pageTitle' => 'menu.line_manage',
-                'lines' => $lineManager->findAllLinesByMode()
+                'lines' => $lineManager->findAllLinesByPriority()
             )
         );
     }

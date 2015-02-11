@@ -5,6 +5,8 @@ namespace Tisseo\DatawarehouseBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityRepository;
 use Tisseo\DatawarehouseBundle\Entity\Line;
 use Tisseo\DatawarehouseBundle\Entity\LineVersion;
@@ -21,6 +23,15 @@ class LineVersionType extends AbstractType
         $this->secondStape = $secondStape;
         $this->lineVersion = $lineVersion;
     }
+
+    /** TODO: find a way to sort select entity in LineVersionType form
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        usort($view->children['select']->children, function(FormView $a, FormView $b) {
+            return strcasecmp($a->vars['value']->getNumber() - $b->vars['value']->getNumber());
+        });
+    }
+    */
 
     /**
      * @param FormBuilderInterface $builder
@@ -40,7 +51,7 @@ class LineVersionType extends AbstractType
                     'empty_value' => ($this->lineVersion->getLine() ? $this->lineVersion->getLine()->getNumber() : ''),
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('l')
-                            ->orderBy('l.number', 'ASC');
+                            ->orderBy('l.priority', 'ASC');
                     }
                 )
             );

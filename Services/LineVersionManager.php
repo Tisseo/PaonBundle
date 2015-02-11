@@ -34,13 +34,23 @@ class LineVersionManager
     public function findActiveLineVersions(\Datetime $now)
     {
         $query = $this->repository->createQueryBuilder('lv')
-            ->where('lv.endDate IS NULL')
+            ->where('lv.endDate is null')
             ->orWhere('lv.endDate < :now')
-            ->orderBy('lv.name', 'ASC')
             ->setParameter('now', $now)
             ->getQuery();
 
-        return $query->getResult();
+        $results = $query->getResult();
+        usort($results, function($val1, $val2) {
+            $line1 = $val1->getLine();
+            $line2 = $val2->getLine();
+            if ($line1->getPriority() == $line2->getPriority())
+                return strnatcmp($line1->getNumber(), $line2->getNumber());
+            if ($line1->getPriority() > $line2->getPriority())
+                return 1;
+            if ($line1->getPriority() < $line2->getPriority())
+                return -1;
+        });
+        return $results;
     }
 
     public function findLineVersionByLine($lineId) {

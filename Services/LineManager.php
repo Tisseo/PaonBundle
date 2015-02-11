@@ -53,14 +53,23 @@ class LineManager
         return $query->getResult();
     }
 
-    public function findAllLinesByMode()
+    public function findAllLinesByPriority()
     {
         $query = $this->repository->createQueryBuilder('l')
-            ->orderBy('l.number', 'ASC')
-            ->orderBy('l.physicalMode', 'DESC')
+            ->addOrderBy('l.priority', 'ASC')
             ->getQuery();
 
-        return $query->getResult();
+        $results = $query->getResult();
+        usort($results, function($val1, $val2) {
+            if ($val1->getPriority() == $val2->getPriority())
+                return strnatcmp($val1->getNumber(), $val2->getNumber());
+            if ($val1->getPriority() > $val2->getPriority())
+                return 1;
+            if ($val1->getPriority() < $val2->getPriority())
+                return -1;
+        });
+        
+        return $results;
     }
 
     public function save(Line $line)
