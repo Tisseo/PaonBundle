@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Doctrine\ORM\EntityRepository;
 use Tisseo\DatawarehouseBundle\Entity\Line;
 use Tisseo\DatawarehouseBundle\Entity\LineVersion;
@@ -24,14 +25,20 @@ class LineVersionType extends AbstractType
         $this->lineVersion = $lineVersion;
     }
 
-    /** TODO: find a way to sort select entity in LineVersionType form
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        usort($view->children['select']->children, function(FormView $a, FormView $b) {
-            return strcasecmp($a->vars['value']->getNumber() - $b->vars['value']->getNumber());
+        usort($view->children['line']->vars['choices'], function(ChoiceView $choice1, ChoiceView $choice2) {
+            $line1 = $choice1->data;
+            $line2 = $choice2->data;
+
+            if ($line1->getPriority() == $line2->getPriority())
+                return strnatcmp($line1->getNumber(), $line2->getNumber());
+            if ($line1->getPriority() > $line2->getPriority())
+                return 1;
+            if ($line1->getPriority() < $line2->getPriority())
+                return -1;
         });
     }
-    */
 
     /**
      * @param FormBuilderInterface $builder
