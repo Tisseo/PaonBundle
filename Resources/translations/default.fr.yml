@@ -5,6 +5,7 @@ line:
         columns:
             label: Numéro de ligne
             physical_mode: Mode de transport
+            offers: Offres
         title: Liste des lignes
     title: Numéro de la ligne
     edit: Editer une ligne
@@ -15,15 +16,22 @@ line_version:
     list:
         columns:
             label: Offre
+            printings: Tirages
             version: Version
             status: Statut
+            physical_mode: Mode de transport
         title: Liste des offres
+    history:
+        consult: Historique d'une offre
+        title: Historique des offres
     title: Offre
     consult: Consultation d'une offre
-    edit: Editer une offre
-    create: Créer une offre
+    edit: Edition d'une offre
+    create: Création d'une offre
     created: Offre sauvegardée
+    closure: Clôture d'une offre
     not_found: Offre introuvable
+    no_printings: Aucun tirage pour cette offre
 
 calendar:
     list:
@@ -45,3 +53,6 @@ exception:
     create: Créer une exception
     created: Exception sauvegardée
 
+printing:
+    title: Tirage
+    create: Nouvelle impression

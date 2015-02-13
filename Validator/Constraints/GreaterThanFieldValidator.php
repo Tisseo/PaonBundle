@@ -23,7 +23,7 @@ class GreaterThanFieldValidator extends ConstraintValidator
     {
         $field = $this->context->getRoot()->get($constraint->field);
 
-        if ($value <= $field->getData()) {
+        if ($value !== null && $value <= $field->getData()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%string%', $value->format('d/m/Y'))
                 ->setParameter('%field%', $constraint->field)

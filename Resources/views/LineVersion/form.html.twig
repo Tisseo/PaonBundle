@@ -35,9 +35,15 @@
                     </div>
                 </div>
             </li>
+            {% if close %}
+            <li><div class="input-range">{{ form_row(form.endDate) }}</div></li>
+            {% endif %}
+            {% if not close %}
             <li>{{ form_row(form.childLine) }}</li>
+            {% endif %}
         </ul>
     </div>
+        {% if not close %}
     <div class="form form-edit col-md-12">
         <ul>
             <li>{{ form_row(form.name) }}</li>
@@ -81,6 +87,7 @@
             <li>{{ form_row(form.comment) }}</li>
         </ul>
     </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
 

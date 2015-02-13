@@ -1,6 +1,9 @@
 welcome: "Bienvenue sur TID"
 
 global:
+    summary: Résumé
+    properties: Propriétés
+    printings: Tirages
     actions: Actions
     edit: Éditer
     consult: Consulter
@@ -8,6 +11,7 @@ global:
     validate: Valider
     save: Enregistrer
     close: Fermer
+    closure: Clôturer
     delete: Supprimer
     cancel: Annuler
     status: Statut
@@ -49,6 +53,8 @@ error:
 menu:
     line_manage: Gestion des lignes
     line_version_manage: Gestion des offres
+    line_version_history: Historique des offres
+    line_version_active: Offres actuelles
     calendar_manage: Gestion des calendriers
     exception_type_manage: Gestion des exceptions
     data_manage: Import Fiches Horaires
@@ -62,6 +68,13 @@ line:
     labels:
         number: Numéro de ligne
         physical_mode: Mode de transport
+
+printing:
+    labels:
+        quantity: Quantité
+        comment: Commentaire
+        date: Date
+
 line_version:
     labels:
         name: Nom de la ligne
@@ -86,8 +99,11 @@ line_version:
         new: new
         locked: locked
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
+    no_offers: Aucune offre cloturée pour cette ligne.
+
 calendar:
     labels:
+
 exception_type:
     labels:
 

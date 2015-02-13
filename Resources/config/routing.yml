@@ -14,12 +14,27 @@ tisseo_datawarehouse_line_edit:
 tisseo_datawarehouse_line_version_list:
     pattern: /offers/list
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:list}
+tisseo_datawarehouse_line_version_history:
+    pattern: /offers/history
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:history}
 tisseo_datawarehouse_line_version_edit:
     pattern: /offers/edit/{lineVersionId}
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:edit, lineVersionId: null }
 tisseo_datawarehouse_line_version_consult:
     pattern: /offers/consult/{lineVersionId}
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:consult }
+    options:
+        expose: true
+tisseo_datawarehouse_line_version_close:
+    pattern: /offers/close/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:close }
+    requirements:
+        lineVersionId: \d+
+tisseo_datawarehouse_printing_create:
+    pattern: /offers/add/printings/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Printing:create }
+    requirements:
+        lineVersionId: \d+
 tisseo_datawarehouse_select_line_version_by_line:
     pattern: /offers/select_by_line
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:selectByLine }

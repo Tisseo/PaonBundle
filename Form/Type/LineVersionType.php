@@ -17,11 +17,13 @@ class LineVersionType extends AbstractType
     private $new;
     private $secondStape;
     private $lineVersion;
+    private $close;
 
-    public function __construct($lineVersion, $new, $secondStape)
+    public function __construct($lineVersion, $new, $secondStape, $close)
     {
         $this->new = $new;
         $this->secondStape = $secondStape;
+        $this->close = $close;
         $this->lineVersion = $lineVersion;
     }
 
@@ -123,6 +125,19 @@ class LineVersionType extends AbstractType
                     'format' => 'dd/MM/yyyy'
                 )
             );
+            if ($this->close)
+            {
+                $builder->add(
+                    'endDate',
+                    'datepicker',
+                    array(
+                        'label' => 'line_version.labels.end_date',
+                        'attr' => array(
+                            'data-to-date' => true
+                        )
+                    )
+                );
+            }
         }
         $builder->add(
             'version',
@@ -133,118 +148,121 @@ class LineVersionType extends AbstractType
                 'read_only' => true
             )
         );
-        $builder->add(
-            'childLine',
-            'entity',
-            array(
-                'label' => 'line_version.labels.child_line',
-                'class' => 'TisseoDatawarehouseBundle:Line',
-                'property' => 'number',
-                'empty_value' => '',
-                'required' => false,
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('l')
-                        ->orderBy('l.number', 'ASC');
-                }
-            )
-        );
-        $builder->add(
-            'name',
-            'text',
-            array(
-                'label' => 'line_version.labels.name'
-            )
-        );
-        $builder->add(
-            'forwardDirection',
-            'text',
-            array(
-                'label' => 'line_version.labels.forward'
-            )
-        );
-        $builder->add(
-            'backwardDirection',
-            'text',
-            array(
-                'label' => 'line_version.labels.backward'
-            )
-        );
-        $builder->add(
-            'fgColor',
-            'text',
-            array(
-                'label' => 'line_version.labels.fg_color'
-            )
-        );
-        $builder->add(
-            'fgHexaColor',
-            'text',
-            array(
-                'label' => 'line_version.labels.fg_hexa_color'
-            )
-        );
-        $builder->add(
-            'bgColor',
-            'text',
-            array(
-                'label' => 'line_version.labels.bg_color'
-            )
-        );
-        $builder->add(
-            'bgHexaColor',
-            'text',
-            array(
-                'label' => 'line_version.labels.bg_hexa_color'
-            )
-        );
-        $builder->add(
-            'cartoFile',
-            'file',
-            array(
-                'label' => 'line_version.labels.carto_file',
-                'data_class' => null,
-                'required' => false
-            )
-        );
-        $builder->add(
-            'accessibility',
-            'checkbox',
-            array(
-                'label' => 'line_version.labels.accessibility',
-                'required' => false
-            )
-        );
-        $builder->add(
-            'airConditioned',
-            'checkbox',
-            array(
-                'label' => 'line_version.labels.air_conditioned',
-                'required' => false
-            )
-        );
-        $builder->add(
-            'certified',
-            'checkbox',
-            array(
-                'label' => 'line_version.labels.certified',
-                'required' => false
-            )
-        );
-        $builder->add(
-            'depot',
-            'text',
-            array(
-                'label' => 'line_version.labels.depot'
-            )
-        );
-        $builder->add(
-            'comment',
-            'textarea',
-            array(
-                'label' => 'line_version.labels.comment',
-                'required' => false
-            )
-        );
+        if (!$this->close)
+        {
+            $builder->add(
+                'childLine',
+                'entity',
+                array(
+                    'label' => 'line_version.labels.child_line',
+                    'class' => 'TisseoDatawarehouseBundle:Line',
+                    'property' => 'number',
+                    'empty_value' => '',
+                    'required' => false,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('l')
+                            ->orderBy('l.number', 'ASC');
+                    }
+                )
+            );
+            $builder->add(
+                'name',
+                'text',
+                array(
+                    'label' => 'line_version.labels.name'
+                )
+            );
+            $builder->add(
+                'forwardDirection',
+                'text',
+                array(
+                    'label' => 'line_version.labels.forward'
+                )
+            );
+            $builder->add(
+                'backwardDirection',
+                'text',
+                array(
+                    'label' => 'line_version.labels.backward'
+                )
+            );
+            $builder->add(
+                'fgColor',
+                'text',
+                array(
+                    'label' => 'line_version.labels.fg_color'
+                )
+            );
+            $builder->add(
+                'fgHexaColor',
+                'text',
+                array(
+                    'label' => 'line_version.labels.fg_hexa_color'
+                )
+            );
+            $builder->add(
+                'bgColor',
+                'text',
+                array(
+                    'label' => 'line_version.labels.bg_color'
+                )
+            );
+            $builder->add(
+                'bgHexaColor',
+                'text',
+                array(
+                    'label' => 'line_version.labels.bg_hexa_color'
+                )
+            );
+            $builder->add(
+                'cartoFile',
+                'file',
+                array(
+                    'label' => 'line_version.labels.carto_file',
+                    'data_class' => null,
+                    'required' => false
+                )
+            );
+            $builder->add(
+                'accessibility',
+                'checkbox',
+                array(
+                    'label' => 'line_version.labels.accessibility',
+                    'required' => false
+                )
+            );
+            $builder->add(
+                'airConditioned',
+                'checkbox',
+                array(
+                    'label' => 'line_version.labels.air_conditioned',
+                    'required' => false
+                )
+            );
+            $builder->add(
+                'certified',
+                'checkbox',
+                array(
+                    'label' => 'line_version.labels.certified',
+                    'required' => false
+                )
+            );
+            $builder->add(
+                'depot',
+                'text',
+                array(
+                    'label' => 'line_version.labels.depot'
+                )
+            );
+            $builder->add(
+                'comment',
+                'textarea',
+                array(
+                    'label' => 'line_version.labels.comment',
+                    'required' => false
+                )
+            );
+        }
         $builder->setAction($options['action']);
     }
 

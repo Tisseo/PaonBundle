@@ -1,0 +1,55 @@
+{% extends "::modal.html.twig" %}
+
+{% form_theme form 'TisseoDatawarehouseBundle:Form:fields.html.twig' %}
+
+{% block open_form %}
+    {{ form_start(form) }}
+{% endblock %}
+
+{% block modal_title %}
+    {{ title|trans({}, 'default') }}
+{% endblock %}
+
+{% block modal_body %}
+    {{ form_errors(form) }}
+    <div class="form form-edit col-md-12">
+        <ul>
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.quantity) }}
+                    </div>
+                    <div class="col-md-6 input-range">
+                        {{ form_row(form.date) }}
+                    </div>
+                </div>
+            </li>
+            <li>{{ form_row(form.comment) }}</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block modal_actions %}
+    {{ form_end(form) }}
+    <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+    </button>
+    <script>
+        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function(){
+            $('.input-range input').datepicker({
+                language: '{{ app.request.locale }}',
+                startView: 1,
+                autoclose: true
+            }).on(
+                'changeDate',
+                function(){
+                    var date = $(this).datepicker('getDate');
+                    if (!isNaN(date.getTime())) {
+                        date.setDate(date.getDate() + 1);
+                    }
+                }
+            );
+            $('input[data-from-date=1]').datepicker('setStartDate', new Date()).trigger('changeDate');
+        });
+    </script>
+{% endblock %}

@@ -51,6 +51,42 @@ class Line
     }
 
     /**
+     * getLastLineVersion
+     * 
+     * @return \Tisseo\DatawarehouseBundle\Entity\LineVersion
+     */
+    public function getLastLineVersion()
+    {
+        $result = null;
+        foreach($this->lineVersions as $lineVersion)
+        {
+            if ($lineVersion->getEndDate() === null)
+                return $lineVersion;
+            else if($result !== null && $lineVersion->getEndDate() < $result->getEndDate())
+                continue;
+            $result = $lineVersion;
+        }
+        return $result;
+    }
+
+    /**
+     * getHistoryLineVersions
+     * 
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistoryLineVersions()
+    {
+        $result = new ArrayCollection();
+        $now = new \Datetime();
+        foreach($this->lineVersions as $lineVersion)
+        {
+            if ($lineVersion->getEndDate() !== null and $lineVersion->getEndDate() < $now)
+                $result[] = $lineVersion;
+        }
+        return $result;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -233,36 +269,6 @@ class Line
     public function removeLineVersions(LineVersion $lineVersion)
     {
         $this->lineVersions->removeElement($lineVersion);
-    }
-
-    /**
-     * Get lastVersionOfLineVersions
-     *
-     * @return integer
-     */
-    public function getLastVersionOfLineVersions()
-    {
-        foreach($this->lineVersions as $lineVersion)
-        {
-            if ($lineVersion->getEndDate() === null)
-                return $lineVersion->getVersion();
-        }
-        return 0;
-    }
-
-    /**
-     * Get lastLineVersion
-     *
-     * @return LineVersion
-     */
-    public function getLastLineVersion()
-    {
-        foreach($this->lineVersions as $lineVersion)
-        {
-            if ($lineVersion->getEndDate() === null)
-                return $lineVersion;
-        }
-        return null;
     }
 
     /**

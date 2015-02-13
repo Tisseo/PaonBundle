@@ -288,7 +288,7 @@ class GridCalendar
      * @param \Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersion
      * @return GridCalendar
      */
-    public function setLineVersion(\Tisseo\DatawarehouseBundle\Entity\LineVersion $lineVersion = null)
+    public function setLineVersion(LineVersion $lineVersion = null)
     {
         $this->lineVersion = $lineVersion;
 

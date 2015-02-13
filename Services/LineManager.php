@@ -5,7 +5,7 @@ namespace Tisseo\DatawarehouseBundle\Services;
 use Doctrine\Common\Persistence\ObjectManager;
 use Tisseo\DatawarehouseBundle\Entity\Line;
 
-class LineManager
+class LineManager extends SortManager
 {
     private $om = null;
     private $repository = null;
@@ -59,17 +59,7 @@ class LineManager
             ->addOrderBy('l.priority', 'ASC')
             ->getQuery();
 
-        $results = $query->getResult();
-        usort($results, function($val1, $val2) {
-            if ($val1->getPriority() == $val2->getPriority())
-                return strnatcmp($val1->getNumber(), $val2->getNumber());
-            if ($val1->getPriority() > $val2->getPriority())
-                return 1;
-            if ($val1->getPriority() < $val2->getPriority())
-                return -1;
-        });
-        
-        return $results;
+        return $this->sortLinesByNumber($query->getResult());
     }
 
     public function save(Line $line)

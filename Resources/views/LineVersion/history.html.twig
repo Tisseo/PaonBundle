@@ -1,0 +1,48 @@
+{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+
+{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
+{% block list_title -%}
+    {{'line_version.history.title'|trans({}, 'default')}}
+{% endblock %}
+
+{% block table_head -%}
+    <th>{{'line.list.columns.label'|trans({}, 'default')}}</th>
+    <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
+    <th>{{'line.list.columns.offers'|trans({}, 'default')}}</th>
+{% endblock %}
+
+{% block table_body -%}
+    {% if lines|length == 0 %}
+        <tr>
+            <td colspan="3">
+                {{'global.no_items'|trans}}
+            </td>
+        </tr>
+    {% else %}
+        {% for line in lines %}
+            <tr>
+                <td>
+                    {{ render.line_number(line, 'line', 'small') }}
+                </td>
+                <td>
+                    {{ line.physicalMode.name }}
+                </td>
+                <td>
+                    {{ render.line_offers_history(line) }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        require(['textfill'], function(){
+            textfill(2, 15, '.line-small');
+        });
+    </script>
+    <script>
+        require(['datawarehouse/select/offer']);
+    </script>
+{% endblock %}

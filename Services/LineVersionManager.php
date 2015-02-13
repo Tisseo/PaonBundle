@@ -5,7 +5,7 @@ namespace Tisseo\DatawarehouseBundle\Services;
 use Doctrine\Common\Persistence\ObjectManager;
 use Tisseo\DatawarehouseBundle\Entity\LineVersion;
 
-class LineVersionManager
+class LineVersionManager extends SortManager
 {
     private $om = null;
     private $repository = null;
@@ -35,22 +35,11 @@ class LineVersionManager
     {
         $query = $this->repository->createQueryBuilder('lv')
             ->where('lv.endDate is null')
-            ->orWhere('lv.endDate < :now')
+            ->orWhere('lv.endDate > :now')
             ->setParameter('now', $now)
             ->getQuery();
 
-        $results = $query->getResult();
-        usort($results, function($val1, $val2) {
-            $line1 = $val1->getLine();
-            $line2 = $val2->getLine();
-            if ($line1->getPriority() == $line2->getPriority())
-                return strnatcmp($line1->getNumber(), $line2->getNumber());
-            if ($line1->getPriority() > $line2->getPriority())
-                return 1;
-            if ($line1->getPriority() < $line2->getPriority())
-                return -1;
-        });
-        return $results;
+        return $this->sortLineVersionsByNumber($query->getResult());
     }
 
     public function findLineVersionByLine($lineId) {
@@ -59,19 +48,29 @@ class LineVersionManager
 
         $query = $this->repository->createQueryBuilder('lv')
             ->where('lv.line = :line')
-            ->andWhere('lv.endDate IS NULL')
             ->setParameter('line', $lineId)
             ->getQuery();
 
         try
         {
-            $result = $query->getSingleResult();
+            $results = $query->getResult();
         }
         catch(\Exception $e)
         {
-            $result = null;
+            return null;
         }
-        return $result;
+
+        $finalResult = null;
+        foreach($results as $result)
+        {
+            if ($result->getEndDate() === null)
+                return $result;
+            else if ($finalResult !== null && ($finalResult->getEndDate() < $result->getEndDate()))
+                continue;
+            $finalResult = $result;
+        }
+
+        return $finalResult;
     }
 
     public function save(LineVersion $lineVersion)

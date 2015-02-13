@@ -9,10 +9,10 @@ use Tisseo\DatawarehouseBundle\Entity\LineVersion;
 
 class LineVersionController extends AbstractController
 {
-    private function buildForm($lineVersion, $new, $secondStape, $url)
+    private function buildForm($lineVersion, $new, $secondStape, $close = false, $url)
     {
         $form = $this->createForm(
-            new LineVersionType($lineVersion, $new, $secondStape),
+            new LineVersionType($lineVersion, $new, $secondStape, $close),
             $lineVersion,
             array(
                 'action' => $this->generateUrl(
@@ -62,7 +62,7 @@ class LineVersionController extends AbstractController
             $lineVersion = $lineVersionManager->find($lineVersionId);
             $new = false;
         }
-        $form = $this->buildForm($lineVersion, $new, false, 'tisseo_datawarehouse_line_version_edit');
+        $form = $this->buildForm($lineVersion, $new, false, false, 'tisseo_datawarehouse_line_version_edit');
         $render = $this->processForm($request, $form);
 
         if (!$render) {
@@ -78,6 +78,50 @@ class LineVersionController extends AbstractController
         }
 
         return ($render);
+    }
+
+    public function closeAction(Request $request, $lineVersionId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
+        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        $lineVersion = $lineVersionManager->find($lineVersionId);
+
+        if (empty($lineVersion))
+        {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                $this->get('translator')->trans(
+                    'line_version.not_found',
+                    array(),
+                    'default'
+                )
+            );
+
+            return $this->redirect(
+                $this->generateUrl('tisseo_datawarehouse_line_version_list')
+            );
+        }
+        else
+        {
+            $form = $this->buildForm($lineVersion, false, false, true, 'tisseo_datawarehouse_line_version_close');
+            $render = $this->processForm($request, $form);
+
+            if (!$render) {
+                return $this->render(
+                    'TisseoDatawarehouseBundle:LineVersion:form.html.twig',
+                    array(
+                        'form' => $form->createView(),
+                        'new' => false,
+                        'stape' => false,
+                        'close' => true,
+                        'title' => 'line_version.closure'
+                    )
+                );
+            }
+
+            return ($render);
+        }
     }
 
     public function selectByLineAction(Request $request)
@@ -105,7 +149,7 @@ class LineVersionController extends AbstractController
             $lineVersion = new LineVersion();
         }
 
-        $form = $this->buildForm($lineVersion, true, true, 'tisseo_datawarehouse_select_line_version_by_line');
+        $form = $this->buildForm($lineVersion, true, true, false, 'tisseo_datawarehouse_select_line_version_by_line');
         $render = $this->processForm($request, $form);
         if (!$render)
         {
@@ -122,7 +166,7 @@ class LineVersionController extends AbstractController
         return($render);
     }
 
-    public function listAction()
+    public function listAction(Request $request)
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
         $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
@@ -130,21 +174,47 @@ class LineVersionController extends AbstractController
         return $this->render(
             'TisseoDatawarehouseBundle:LineVersion:list.html.twig',
             array(
-                'pageTitle' => 'menu.line_version_manage',
+                'pageTitle' => 'menu.line_version_active',
                 'lineVersions' => $lineVersionManager->findActiveLineVersions($now)
             )
         );
     }
     
-    public function consultAction($lineVersionId)
+    public function consultAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
+        $history = false;
+        $title = 'line_version.consult';
+
+        if ($request->isXmlHttpRequest())
+        {
+            $history = $request->get('history');
+            if ($history)
+                $title = 'line_version.history.consult';
+        }
+
         $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
         return $this->render(
             'TisseoDatawarehouseBundle:LineVersion:consult.html.twig',
             array(
-                'title' => 'line_version.consult',
+                'title' => $title,
+                'history' => $history,
                 'lineVersion' => $lineVersionManager->find($lineVersionId)
+            )
+        );
+    }
+
+    public function historyAction(Request $request)
+    {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+        $lines = $lineManager->findAllLinesByPriority();
+        return $this->render(
+            'TisseoDatawarehouseBundle:LineVersion:history.html.twig',
+            array(
+                'pageTitle' => 'menu.line_version_history',
+                'lines' => $lines
             )
         );
     }

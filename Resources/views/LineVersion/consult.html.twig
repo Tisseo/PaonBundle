@@ -7,13 +7,16 @@
 {% endblock %}
 
 {% block modal_body %}
+    <h3>{{ 'global.summary'|trans({}, 'messages') }}</h3>
     <div class="form form-consult">
-        <h3>{{ summary|trans({}, 'default') }}</h3>
         <div class="left-summary">
             <ul>
                 <li>{{ 'line_version.labels.version'|trans({}, 'messages') }} {{ lineVersion.version }}</li>
                 <li>{{ 'line_version.labels.start_date'|trans({}, 'messages') }} : {{ lineVersion.startDate|date('d/m/Y') }}</li>
                 <li>{{ 'line_version.labels.planned_end_date'|trans({}, 'messages') }} : {{ lineVersion.plannedEndDate|date('d/m/Y') }}</li>
+                {% if history %}
+                <li style="font-weight:bold;">{{ 'line_version.labels.end_date'|trans({}, 'messages') }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
+                {% endif %}
                 <li>{{ 'line_version.labels.child_line'|trans({}, 'messages') }} : {% if lineVersion.childLineId != null %}{{ lineVersion.childLineId }}{% else %}Aucune{% endif %}</li>
             </ul>   
         </div>
@@ -21,8 +24,8 @@
             {{ render.line_number(lineVersion, 'lineVersion', 'big') }}
         </div>
     </div>
+    <h3>{{ 'global.properties'|trans({}, 'messages') }}</h3>
     <div class="form form-consult">
-        <h3>{{ properties|trans({}, 'default') }}</h3>
         <ul>
             <li>{{ 'line_version.labels.name'|trans({}, 'messages') }} : {{ lineVersion.name }}</li>
             <li>{{ 'line_version.labels.forward'|trans({}, 'messages') }} : {{ lineVersion.forwardDirection }}</li>
@@ -42,6 +45,22 @@
             <li>{{ 'line_version.labels.comment'|trans({}, 'messages') }} : {{ lineVersion.comment }}</li>
         </ul>
     </div>
+    {% if history %}
+    <h3>{{ 'global.printings'|trans({}, 'messages') }}</h3>
+    <div class="form form-consult">
+        {% if lineVersion.printings is empty %}
+            {{ 'line_version.no_printings'|trans({}, 'default') }}
+        {% else %}
+            {% for printing in lineVersion.printings %}
+        <ul>
+            <li>{{ 'printing.labels.quantity'|trans({}, 'messages') }} : {{ printing.quantity }}</li>
+            <li>{{ 'printing.labels.date'|trans({}, 'messages') }} : {{ printing.date|date('d/m/Y') }}</li>
+            <li>{{ 'printing.labels.comment'|trans({}, 'messages') }} : {{ printing.comment }}</li>
+        </ul>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
 {% endblock %}
 {% block modal_close_footer %}
     <script>

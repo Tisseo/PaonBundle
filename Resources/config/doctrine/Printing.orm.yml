@@ -35,7 +35,7 @@ Tisseo\DatawarehouseBundle\Entity\Printing:
             targetEntity: LineVersion
             cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: printings
             joinColumns:
                 line_version_id:
                     referencedColumnName: id

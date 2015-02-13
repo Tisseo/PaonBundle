@@ -117,14 +117,23 @@ class LineVersion
     private $gridCalendars;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $printings;
+
+    /**
      * @var integer
      */
     private $childLineId;
 
-
+    /**
+     * Constructor
+     */
     public function __construct(LineVersion $lineVersion = null, Line $line = null)
     {
         $this->gridCalendars = new ArrayCollection();
+        $this->printings = new ArrayCollection();
+
         $this->version = 1;
 
         if ($lineVersion !== null)
@@ -150,6 +159,11 @@ class LineVersion
         }
     }
 
+    /**
+     * isLocked
+     *
+     * @return boolean
+     */
     public function isLocked()
     {
         $now = new \Datetime();
@@ -162,15 +176,39 @@ class LineVersion
         }
     }
 
+    /**
+     * isNew
+     *
+     * @return boolean
+     */
     public function isNew()
     {
         return ($this->gridCalendars->isEmpty());
     }
 
+    /**
+     * isActive
+     *
+     * @return boolean
+     */
     public function isActive()
     {
         $now = new \Datetime();
         return ($this->startDate < $now && ($this->endDate > $now || $this->endDate === null));
+    }
+
+    /**
+     * totalPrintings
+     *
+     * @return integer
+     */
+    public function totalPrintings()
+    {
+        $printings = 0;
+        foreach($this->printings as $printing)
+            $printings += $printing->getQuantity();
+
+        return $printings;
     }
 
     /**
@@ -652,7 +690,7 @@ class LineVersion
     public function addGridCalendars(GridCalendar $gridCalendars)
     {
         $this->gridCalendars[] = $gridCalendars;
-        $gridCalendars->setLine($this);
+        $gridCalendars->setLineVersion($this);
         return $this;
     }
 
@@ -666,7 +704,7 @@ class LineVersion
     {
         $this->gridCalendars = $gridCalendars;
         foreach ($this->gridCalendars as $gridCalendar) {
-            $gridCalendar->setLine($this);
+            $gridCalendar->setLineVersion($this);
         }
         return $this;
     }
@@ -692,25 +730,97 @@ class LineVersion
     }
 
     /**
-     * Add gridCalendars
+     * Add gridCalendar
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendar
      * @return LineVersion
      */
-    public function addGridCalendar(\Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars)
+    public function addGridCalendar(GridCalendar $gridCalendar)
     {
-        $this->gridCalendars[] = $gridCalendars;
+        $this->gridCalendars[] = $gridCalendar;
 
         return $this;
     }
 
     /**
-     * Remove gridCalendars
+     * Remove gridCalendar
      *
-     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendar
      */
-    public function removeGridCalendar(\Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars)
+    public function removeGridCalendar(GridCalendar $gridCalendar)
     {
-        $this->gridCalendars->removeElement($gridCalendars);
+        $this->gridCalendars->removeElement($gridCalendar);
     }
+
+    /**
+     * Add printings
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Printing $printings
+     * @return Line
+     */
+    public function addPrintings(Printing $printings)
+    {
+        $this->printings[] = $printings;
+        $printings->setLineVersion($this);
+        return $this;
+    }
+
+    /**
+     * Set printings
+     *
+     * @param \Doctrine\Common\Collections\Collection $printings
+     * @return Line
+     */
+    public function setPrintings(Collection $printings)
+    {
+        $this->printings = $printings;
+        foreach ($this->printings as $gridCalendar) {
+            $gridCalendar->setLineVersion($this);
+        }
+        return $this;
+    }
+
+    /**
+     * Remove printings 
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Printing $printings
+     */
+    public function removePrintings(Printing $printings)
+    {
+        $this->printings->removeElement($printings);
+    }
+
+    /**
+     * Get printings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPrintings()
+    {
+        return $this->printings;
+    }
+
+    /**
+     * Add printing
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Printing $printing
+     * @return LineVersion
+     */
+    public function addPrinting(Printing $printing)
+    {
+        $this->printings[] = $printing;
+
+        return $this;
+    }
+
+    /**
+     * Remove printing
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Printing $printings
+     */
+    public function removePrinting(Printing $printing)
+    {
+        $this->printings->removeElement($printing);
+    }
+
 }

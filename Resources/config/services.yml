@@ -3,6 +3,7 @@ parameters:
     tisseo_datawarehouse.user.class: Tisseo\DatawarehouseBundle\Services\UserManager
     tisseo_datawarehouse.line_manager.class: Tisseo\DatawarehouseBundle\Services\LineManager
     tisseo_datawarehouse.physical_mode_manager.class: Tisseo\DatawarehouseBundle\Services\PhysicalModeManager
+    tisseo_datawarehouse.printing_manager.class: Tisseo\DatawarehouseBundle\Services\PrintingManager
     tisseo_datawarehouse.line_version_manager.class: Tisseo\DatawarehouseBundle\Services\LineVersionManager
     tisseo_datawarehouse.calendar_manager.class: Tisseo\DatawarehouseBundle\Services\CalendarManager
     tisseo_datawarehouse.exception_type_manager.class: Tisseo\DatawarehouseBundle\Services\ExceptionTypeManager
@@ -27,6 +28,9 @@ services:
         arguments: ['@doctrine.orm.endiv_entity_manager']
     tisseo_datawarehouse.calendar_manager:
         class: %tisseo_datawarehouse.calendar_manager.class%
+        arguments: ['@doctrine.orm.endiv_entity_manager']
+    tisseo_datawarehouse.printing_manager:
+        class: %tisseo_datawarehouse.printing_manager.class%
         arguments: ['@doctrine.orm.endiv_entity_manager']
     tisseo_datawarehouse.exception_type_manager:
         class: %tisseo_datawarehouse.exception_type_manager.class%

@@ -13,6 +13,14 @@ Tisseo\DatawarehouseBundle\Entity\LineDatasource:
     properties:
         code:
             - NotBlank: ~
+Tisseo\DatawarehouseBundle\Entity\Printing:
+    properties:
+        quantity:
+            - NotBlank: ~
+            - GreaterThan:
+                value: 1
+        date:
+            - DateTime: ~    
 Tisseo\DatawarehouseBundle\Entity\LineVersion:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
@@ -27,6 +35,10 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
         startDate:
             - DateTime: ~
         plannedEndDate:
+            - DateTime: ~
+            - Tisseo\DatawarehouseBundle\Validator\Constraints\GreaterThanField:
+                field: startDate
+        endDate:
             - DateTime: ~
             - Tisseo\DatawarehouseBundle\Validator\Constraints\GreaterThanField:
                 field: startDate

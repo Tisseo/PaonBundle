@@ -14,10 +14,12 @@
 
 {% block table_head -%}
     <th>{{ 'line_version.list.columns.label'|trans({}, 'default') }}</th>
+    <th colspan="2">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
+    <th>{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>
     <th>{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
     <th>{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-        <th style="min-width:300px;">{{ 'global.actions'|trans({}, 'messages') }}</th>
+        <th style="min-width:360px;">{{ 'global.actions'|trans({}, 'messages') }}</th>
     {% endif %}
 {% endblock %}
 
@@ -35,6 +37,17 @@
                     {{ render.line_number(lineVersion, 'lineVersion', 'small') }} <span>{{ lineVersion.name }}</span>
                 </td>
                 <td>
+                    {{ lineVersion.totalPrintings }}
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-success" href="{{ path('tisseo_datawarehouse_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <span style="font-size:8px;" class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </td>
+                <td>
+                    {{ lineVersion.line.physicalMode.name }}
+                </td>
+                <td>
                     {{ lineVersion.version }}
                 </td>
                 <td>
@@ -45,10 +58,14 @@
                         <a class="btn btn-default line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_datawarehouse_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
                         </a>
+                        <a class="btn btn-default line-version-edit" href="{{ path('tisseo_datawarehouse_line_version_close', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-edit"></span> {{'global.closure'|trans({}, 'messages')}}
+                        </a>
+
+                    {% endif %}
                         <a class="btn btn-default" href="{{ path('tisseo_datawarehouse_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-edit"></span> {{'global.consult'|trans({}, 'messages')}}
                         </a>
-                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
