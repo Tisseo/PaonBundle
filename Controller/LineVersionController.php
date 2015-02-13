@@ -127,7 +127,7 @@ class LineVersionController extends AbstractController
     public function selectByLineAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
-        
+
         $lineId = $request->request->get('line_id');
         if (!empty($lineId))
         {
@@ -179,7 +179,7 @@ class LineVersionController extends AbstractController
             )
         );
     }
-    
+
     public function consultAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');

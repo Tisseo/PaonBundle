@@ -4,16 +4,19 @@ namespace Tisseo\DatawarehouseBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Tisseo\DatawarehouseBundle\Entity\LineVersion;
+use Tisseo\DatawarehouseBundle\Services\TripManager;
 
 class LineVersionManager extends SortManager
 {
     private $om = null;
     private $repository = null;
+    private $tripManager = null;
 
-    public function __construct(ObjectManager $om)
+    public function __construct(ObjectManager $om, TripManager $tripManager)
     {
         $this->om = $om;
         $this->repository = $om->getRepository('TisseoDatawarehouseBundle:LineVersion');
+        $this->tripManager = $tripManager;
     }
 
     public function findAll()
@@ -65,7 +68,7 @@ class LineVersionManager extends SortManager
         {
             if ($result->getEndDate() === null)
                 return $result;
-            else if ($finalResult !== null && ($finalResult->getEndDate() < $result->getEndDate()))
+            else if ($finalResult !== null && ($finalResult->getEndDate() > $result->getEndDate()))
                 continue;
             $finalResult = $result;
         }
@@ -74,6 +77,21 @@ class LineVersionManager extends SortManager
     }
 
     public function save(LineVersion $lineVersion)
+    {
+        $oldLineVersion = $this->findLineVersionByLine($lineVersion->getLine()->getId());
+        if ($oldLineVersion->getEndDate === null)
+        {
+            $oldLineVersion->closeDate($lineVersion->getStartDate());
+            $this->persist($oldLineVersion);
+        }
+
+        $this->tripManager->deleteTrips($oldLineVersion);
+
+        $this->om->persist($lineVersion);
+        $this->om->flush();
+    }
+
+    public function persist(LineVersion $lineVersion)
     {
         $this->om->persist($lineVersion);
         $this->om->flush();

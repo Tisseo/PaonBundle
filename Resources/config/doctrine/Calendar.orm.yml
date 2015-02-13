@@ -23,4 +23,20 @@ Tisseo\DatawarehouseBundle\Entity\Calendar:
             unsigned: false
             comment: ''
             column: calendar_type
+    oneToMany:
+        calendarLinksPeriod:
+            targetEntity: CalendarLink
+            cascade: ['persist', 'remove']
+            mappedBy: periodCalendar
+            inversedBy: null
+        calendarLinksDay:
+            targetEntity: CalendarLink
+            cascade: ['persist', 'remove']
+            mappedBy: dayCalendar
+            inversedBy: null
+        calendarElements:
+            targetEntity: CalendarElement
+            cascade: ['persist', 'remove']
+            mappedBy: calendar
+            inversedBy: null
     lifecycleCallbacks: {  }

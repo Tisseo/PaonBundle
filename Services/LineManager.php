@@ -26,22 +26,6 @@ class LineManager extends SortManager
         return empty($lineId) ? null : $this->repository->find($lineId);
     }
 
-    public function alreadyExists($number, $id = null) {
-        if ($id !== null)
-        {
-            $line = $this->findExistingNumber($number, $id);
-        }
-        else
-        {
-            $line = $this->repository->findBy(
-                array(
-                    'number' => $number
-                )
-            );
-        }
-        return empty($line) ? false : true;
-    }
-
     public function findExistingNumber($number, $id)
     {
         $query = $this->repository->createQueryBuilder('l')

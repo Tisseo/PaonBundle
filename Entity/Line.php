@@ -80,7 +80,7 @@ class Line
         $now = new \Datetime();
         foreach($this->lineVersions as $lineVersion)
         {
-            if ($lineVersion->getEndDate() !== null and $lineVersion->getEndDate() < $now)
+            if ($lineVersion->getEndDate() !== null)
                 $result[] = $lineVersion;
         }
         return $result;

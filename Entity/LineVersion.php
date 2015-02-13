@@ -133,11 +133,17 @@ class LineVersion
     {
         $this->gridCalendars = new ArrayCollection();
         $this->printings = new ArrayCollection();
+        $this->startDate = new \Datetime();
 
         $this->version = 1;
 
         if ($lineVersion !== null)
         {
+            if ($lineVersion->getEndDate() !== null)
+            {
+                $this->startDate = $lineVersion->getEndDate();
+                $this->startDate->modify('+1 day');
+            }
             $this->version = $lineVersion->getVersion() + 1;
             $this->name = $lineVersion->getName();
             $this->forwardDirection = $lineVersion->getForwardDirection();
@@ -157,6 +163,12 @@ class LineVersion
         {
             $this->setLine($line);
         }
+    }
+
+    public function closeDate(\Datetime $date)
+    {
+        $date->modify('-1 day');
+        $this->endDate = $date;
     }
 
     /**
