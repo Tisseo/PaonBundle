@@ -46,7 +46,7 @@ class CalendarLink
      * @param \Tisseo\DatawarehouseBundle\Entity\Calendar $dayCalendar
      * @return CalendarLink
      */
-    public function setDayCalendar(\Tisseo\DatawarehouseBundle\Entity\Calendar $dayCalendar = null)
+    public function setDayCalendar(Calendar $dayCalendar = null)
     {
         $this->dayCalendar = $dayCalendar;
 
@@ -69,7 +69,7 @@ class CalendarLink
      * @param \Tisseo\DatawarehouseBundle\Entity\Calendar $periodCalendar
      * @return CalendarLink
      */
-    public function setPeriodCalendar(\Tisseo\DatawarehouseBundle\Entity\Calendar $periodCalendar = null)
+    public function setPeriodCalendar(Calendar $periodCalendar = null)
     {
         $this->periodCalendar = $periodCalendar;
 
@@ -92,7 +92,7 @@ class CalendarLink
      * @param \Tisseo\DatawarehouseBundle\Entity\Trip $trip
      * @return CalendarLink
      */
-    public function setTrip(\Tisseo\DatawarehouseBundle\Entity\Trip $trip = null)
+    public function setTrip(Trip $trip = null)
     {
         $this->trip = $trip;
 

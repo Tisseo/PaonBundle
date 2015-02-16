@@ -25,15 +25,14 @@ class StopTime
     private $departureTime;
 
     /**
-     * @var \Tisseo\DatawarehouseBundle\Entity\RouteStop
-     */
-    private $routeStop;
-
-    /**
      * @var \Tisseo\DatawarehouseBundle\Entity\Trip
      */
     private $trip;
 
+    /**
+     * @var \Tisseo\DatawarehouseBundle\Entity\RouteStop
+     */
+    private $route_stop;
 
     /**
      * Get id
@@ -92,35 +91,12 @@ class StopTime
     }
 
     /**
-     * Set routeStop
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\RouteStop $routeStop
-     * @return StopTime
-     */
-    public function setRouteStop(\Tisseo\DatawarehouseBundle\Entity\RouteStop $routeStop = null)
-    {
-        $this->routeStop = $routeStop;
-
-        return $this;
-    }
-
-    /**
-     * Get routeStop
-     *
-     * @return \Tisseo\DatawarehouseBundle\Entity\RouteStop 
-     */
-    public function getRouteStop()
-    {
-        return $this->routeStop;
-    }
-
-    /**
      * Set trip
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\Trip $trip
      * @return StopTime
      */
-    public function setTrip(\Tisseo\DatawarehouseBundle\Entity\Trip $trip = null)
+    public function setTrip(Trip $trip = null)
     {
         $this->trip = $trip;
 
@@ -135,5 +111,40 @@ class StopTime
     public function getTrip()
     {
         return $this->trip;
+    }
+
+    /**
+     * Get trip
+     *
+     * @return StopTime 
+     */
+    public function removeTrip()
+    {
+        $this->trip = null;
+        
+        return $this;
+    }
+
+    /**
+     * Set route_stop
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\RouteStop $routeStop
+     * @return StopTime
+     */
+    public function setRouteStop(RouteStop $routeStop = null)
+    {
+        $this->route_stop = $routeStop;
+
+        return $this;
+    }
+
+    /**
+     * Get route_stop
+     *
+     * @return \Tisseo\DatawarehouseBundle\Entity\RouteStop 
+     */
+    public function getRouteStop()
+    {
+        return $this->route_stop;
     }
 }

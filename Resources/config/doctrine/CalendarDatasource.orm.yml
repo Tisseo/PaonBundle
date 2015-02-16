@@ -27,20 +27,16 @@ Tisseo\DatawarehouseBundle\Entity\CalendarDatasource:
     manyToOne:
         calendar:
             targetEntity: Calendar
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: calendarDatasources
             joinColumns:
                 calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
         datasource:
             targetEntity: Datasource
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 datasource_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

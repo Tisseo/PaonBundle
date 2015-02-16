@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Trip
@@ -34,6 +35,30 @@ class Trip
      */
     private $tripCalendar;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tripDatasources;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $stopTimes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $calendarLinks;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->calendarLinks = new ArrayCollection();
+        $this->tripDatasources = new ArrayCollection();
+        $this->stopTimes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -74,7 +99,7 @@ class Trip
      * @param \Tisseo\DatawarehouseBundle\Entity\Comment $comment
      * @return Trip
      */
-    public function setComment(\Tisseo\DatawarehouseBundle\Entity\Comment $comment = null)
+    public function setComment(Comment $comment = null)
     {
         $this->comment = $comment;
 
@@ -97,7 +122,7 @@ class Trip
      * @param \Tisseo\DatawarehouseBundle\Entity\Route $route
      * @return Trip
      */
-    public function setRoute(\Tisseo\DatawarehouseBundle\Entity\Route $route = null)
+    public function setRoute(Route $route = null)
     {
         $this->route = $route;
 
@@ -120,7 +145,7 @@ class Trip
      * @param \Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendar
      * @return Trip
      */
-    public function setTripCalendar(\Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendar = null)
+    public function setTripCalendar(TripCalendar $tripCalendar = null)
     {
         $this->tripCalendar = $tripCalendar;
 
@@ -135,5 +160,127 @@ class Trip
     public function getTripCalendar()
     {
         return $this->tripCalendar;
+    }
+
+    /**
+     * Add calendarLinks
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinks
+     * @return Trip
+     */
+    public function addCalendarLink(CalendarLink $calendarLinks)
+    {
+        $this->calendarLinks[] = $calendarLinks;
+
+        return $this;
+    }
+
+    /**
+     * Remove calendarLinks
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinks
+     */
+    public function removeCalendarLink(CalendarLink $calendarLinks)
+    {
+        $this->calendarLinks->removeElement($calendarLinks);
+    }
+
+    /**
+     * Get calendarLinks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCalendarLinks()
+    {
+        return $this->calendarLinks;
+    }
+
+    /**
+     * Add stopTimes
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\StopTime $stopTimes
+     * @return Trip
+     */
+    public function addStopTime(StopTime $stopTimes)
+    {
+        $this->stopTimes[] = $stopTimes;
+
+        return $this;
+    }
+
+    /**
+     * Remove stopTimes
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\StopTime $stopTimes
+     */
+    public function removeStopTime(StopTime $stopTimes)
+    {
+        $this->stopTimes->removeElement($stopTimes);
+    }
+
+    /**
+     * Get stopTimes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStopTimes()
+    {
+        return $this->stopTimes;
+    }
+
+    /**
+     * Add tripDatasources
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\TripDatasource $tripDatasources
+     * @return Trip
+     */
+    public function addTripDatasource(TripDatasource $tripDatasources)
+    {
+        $this->tripDatasources[] = $tripDatasources;
+
+        return $this;
+    }
+
+    /**
+     * Remove tripDatasources
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\TripDatasource $tripDatasources
+     */
+    public function removeTripDatasource(TripDatasource $tripDatasources)
+    {
+        $this->tripDatasources->removeElement($tripDatasources);
+    }
+
+    /**
+     * Get tripDatasources
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTripDatasources()
+    {
+        return $this->tripDatasources;
+    }
+
+    public function __toString()
+    {
+        $trip = "id: ".strval($this->id)."\n";
+        $trip += "name: ".strval($this->name)."\n";
+        $trip += "route: ".($this->route !== null ? strval($this->route->getId()) : "None")."\n";
+        $trip += "calendar: ".($this->tripCalendar !== null ? strval($this->tripCalendar->getId()) : "None")."\n";
+        $trip += "comment: ".($this->comment !== null ? strval($this->comment->getId()) : "None")."\n";
+        $trip += "---- datasources ----\n";
+        foreach($this->tripDatasources as $datasource) {
+            $trip += "\t".strval($datasource->getId())." / ".strval($datasource->getCode())."\n";
+        }
+        $trip += "---- stoptimes ----\n";
+        foreach($this->stopTimes as $stopTime) {
+            $trip += "\t".strval($stopTime->getId())."\n";
+        }
+        $trip += "---- calendarlinks ----\n";
+        foreach($this->calendarLinks as $calendarLink) {
+            $trip += "\t".strval($calendarLink->getId())." / ".strval($calendarLink->getPeriodCalendar()->getId())."\n";
+        }
+
+        return strval($trip);
     }
 }

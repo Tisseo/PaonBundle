@@ -24,6 +24,7 @@ Tisseo\DatawarehouseBundle\Entity\Printing:
 Tisseo\DatawarehouseBundle\Entity\LineVersion:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            groups: [registration]
             fields: [name, version]
             errorPath: name
             message: error.line_version_exists

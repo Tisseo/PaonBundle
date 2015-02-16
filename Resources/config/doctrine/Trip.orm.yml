@@ -30,35 +30,39 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
     oneToMany:
         calendarLinks:
             targetEntity: CalendarLink
-            cascade: ['persist', 'remove']
             mappedBy: trip
-            inversedBy: null    
+            inversedBy: null
+            orphanRemoval: true
+        stopTimes:
+            targetEntity: StopTime
+            mappedBy: trip
+            inversedBy: null
+            orphanRemoval: true
+        tripDatasources:
+            targetEntity: TripDatasource
+            mappedBy: trip
+            inversedBy: null
+            orphanRemoval: true
     manyToOne:
         comment:
             targetEntity: Comment
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 comment_id:
                     referencedColumnName: id
-            orphanRemoval: false
         route:
             targetEntity: Route
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 route_id:
                     referencedColumnName: id
-            orphanRemoval: false
         tripCalendar:
             targetEntity: TripCalendar
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 trip_calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

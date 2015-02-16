@@ -275,4 +275,32 @@ class RouteStop
     {
         return $this->internalService;
     }
+    /**
+     * @var \Tisseo\DatawarehouseBundle\Entity\StopTime
+     */
+    private $stopTime;
+
+
+    /**
+     * Set stopTime
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\StopTime $stopTime
+     * @return RouteStop
+     */
+    public function setStopTime(\Tisseo\DatawarehouseBundle\Entity\StopTime $stopTime = null)
+    {
+        $this->stopTime = $stopTime;
+
+        return $this;
+    }
+
+    /**
+     * Get stopTime
+     *
+     * @return \Tisseo\DatawarehouseBundle\Entity\StopTime 
+     */
+    public function getStopTime()
+    {
+        return $this->stopTime;
+    }
 }

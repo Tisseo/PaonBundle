@@ -50,32 +50,32 @@ Tisseo\DatawarehouseBundle\Entity\RouteStop:
             nullable: true
             comment: 'Dans le cas d''une zone TAD, idique si la desserte interne de la zone est autorisee.'
             column: internal_service
+    oneToOne:
+        stopTime:
+            targetEntity: StopTime
+            mappedBy: route_stop
+            inversedBy: null
+            orphanRemoval: true
     manyToOne:
         route:
             targetEntity: Route
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 route_id:
                     referencedColumnName: id
-            orphanRemoval: false
         routeSection:
             targetEntity: RouteSection
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 route_section_id:
                     referencedColumnName: id
-            orphanRemoval: false
         waypoint:
             targetEntity: Waypoint
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 waypoint_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

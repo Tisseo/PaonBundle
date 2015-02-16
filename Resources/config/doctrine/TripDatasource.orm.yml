@@ -30,20 +30,16 @@ Tisseo\DatawarehouseBundle\Entity\TripDatasource:
     manyToOne:
         datasource:
             targetEntity: Datasource
-            cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
                 datasource_id:
                     referencedColumnName: id
-            orphanRemoval: false
         trip:
             targetEntity: Trip
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: tripDatasources
             joinColumns:
                 trip_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

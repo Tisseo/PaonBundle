@@ -50,6 +50,8 @@ class LineVersionType extends AbstractType
     {
         if ($this->new)
         {
+            $builder->add('extra', 'hidden', array('mapped' => false));
+
             $builder->add(
                 'line',
                 'entity',
@@ -273,7 +275,14 @@ class LineVersionType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\LineVersion'
+                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\LineVersion',
+                'validation_groups' => function(FormInterface $form) {
+                    $data = $form->getExtraData();
+                    if ($data) {
+                        return array('registration');
+                    }
+                    return array('Default');
+                }
             )
         );
     }

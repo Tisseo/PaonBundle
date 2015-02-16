@@ -30,23 +30,20 @@ Tisseo\DatawarehouseBundle\Entity\StopTime:
             unsigned: false
             comment: 'Temps en seconde apres minuit de la date. Peut depasser 23h59.'
             column: departure_time
-    manyToOne:
-        routeStop:
+    oneToOne:
+        route_stop:
             targetEntity: RouteStop
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
-            joinColumns:
+            inversedBy: stopTime
+            joinColumn:
                 route_stop_id:
                     referencedColumnName: id
-            orphanRemoval: false
+    manyToOne:
         trip:
             targetEntity: Trip
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: stopTimes
             joinColumns:
                 trip_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

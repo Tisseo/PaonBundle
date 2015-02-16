@@ -23,13 +23,11 @@ Tisseo\DatawarehouseBundle\Entity\CalendarLink:
     manyToOne:
         dayCalendar:
             targetEntity: Calendar
-            cascade: ['persist', 'remove']
             mappedBy: null
             inversedBy: calendarLinksDay
             joinColumns:
                 day_calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
         periodCalendar:
             targetEntity: Calendar
             cascade: ['persist', 'remove']
@@ -38,14 +36,11 @@ Tisseo\DatawarehouseBundle\Entity\CalendarLink:
             joinColumns:
                 period_calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
         trip:
             targetEntity: Trip
-            cascade: ['persist', 'remove']
             mappedBy: null
             inversedBy: calendarLinks
             joinColumns:
                 trip_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

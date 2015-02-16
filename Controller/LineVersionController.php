@@ -26,12 +26,17 @@ class LineVersionController extends AbstractController
         return ($form);
     }
 
-    private function processForm(Request $request, $form)
+    private function processForm(Request $request, $form, $closure = false, $create = false)
     {
         $form->handleRequest($request);
         $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
         if ($form->isValid()) {
-            $lineVersionManager->save($form->getData());
+            if ($closure)
+                $lineVersionManager->close($form->getData());
+            else if($create)
+                $lineVersionManager->save($form->getData());
+            else
+                $lineVersionManager->persist($form->getData());
             $this->get('session')->getFlashBag()->add(
                 'success',
                 $this->get('translator')->trans(
@@ -63,7 +68,7 @@ class LineVersionController extends AbstractController
             $new = false;
         }
         $form = $this->buildForm($lineVersion, $new, false, false, 'tisseo_datawarehouse_line_version_edit');
-        $render = $this->processForm($request, $form);
+        $render = $this->processForm($request, $form, false, $new);
 
         if (!$render) {
             return $this->render(
@@ -105,7 +110,7 @@ class LineVersionController extends AbstractController
         else
         {
             $form = $this->buildForm($lineVersion, false, false, true, 'tisseo_datawarehouse_line_version_close');
-            $render = $this->processForm($request, $form);
+            $render = $this->processForm($request, $form, true, false);
 
             if (!$render) {
                 return $this->render(
@@ -119,7 +124,6 @@ class LineVersionController extends AbstractController
                     )
                 );
             }
-
             return ($render);
         }
     }
@@ -150,7 +154,7 @@ class LineVersionController extends AbstractController
         }
 
         $form = $this->buildForm($lineVersion, true, true, false, 'tisseo_datawarehouse_select_line_version_by_line');
-        $render = $this->processForm($request, $form);
+        $render = $this->processForm($request, $form, false, true);
         if (!$render)
         {
             return $this->render(

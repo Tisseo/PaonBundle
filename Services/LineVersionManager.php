@@ -91,6 +91,13 @@ class LineVersionManager extends SortManager
         $this->om->flush();
     }
 
+    public function close(LineVersion $lineVersion)
+    {
+        $this->tripManager->deleteTrips($lineVersion);
+        $this->om->persist($lineVersion);
+        $this->om->flush();
+    }
+
     public function persist(LineVersion $lineVersion)
     {
         $this->om->persist($lineVersion);

@@ -42,20 +42,16 @@ Tisseo\DatawarehouseBundle\Entity\CalendarElement:
     manyToOne:
         calendar:
             targetEntity: Calendar
-            cascade: ['persist', 'remove']
             mappedBy: null
             inversedBy: calendarElements
             joinColumns:
                 calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
         includedCalendar:
             targetEntity: Calendar
-            cascade: ['persist', 'remove']
             mappedBy: null
             inversedBy: null
             joinColumns:
                 included_calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

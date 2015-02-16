@@ -26,17 +26,21 @@ Tisseo\DatawarehouseBundle\Entity\Calendar:
     oneToMany:
         calendarLinksPeriod:
             targetEntity: CalendarLink
-            cascade: ['persist', 'remove']
             mappedBy: periodCalendar
             inversedBy: null
         calendarLinksDay:
             targetEntity: CalendarLink
-            cascade: ['persist', 'remove']
             mappedBy: dayCalendar
             inversedBy: null
         calendarElements:
             targetEntity: CalendarElement
+            mappedBy: calendar
+            inversedBy: null
+            orphanRemoval: true
+        calendarDatasources:
+            targetEntity: CalendarDatasource
             cascade: ['persist', 'remove']
             mappedBy: calendar
             inversedBy: null
+            orphanRemoval: true
     lifecycleCallbacks: {  }
