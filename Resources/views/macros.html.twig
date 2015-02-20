@@ -49,3 +49,105 @@
         </select>
     {% endif %}
 {% endmacro %}
+
+{% macro grid_calendars(gridCalendars, lineVersionId) %}
+    <table id="grid-calendar" class="table table-hover">
+        <thead>
+            <tr>
+                <th colspan="2">{{ 'grid_calendar.list.columns.label'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.monday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.tuesday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.wednesday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.thursday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.friday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.saturday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.sunday'|trans({}, 'default') }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for gridCalendar in gridCalendars %}
+        <tbody class="grid-calendar">
+            <tr class="active">
+                <input type="hidden" class="grid-calendar-row" value="{{ gridCalendar.id }}"></input>
+                <td>{{ gridCalendar.name }}</td>
+                <td><div class="calendar-color" style="background-color:{{ gridCalendar.color }};"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if gridCalendar.sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td></td>
+            </tr>
+        </tbody>
+            {% for gridLinkCalendarMaskType in gridCalendar.gridLinkCalendarMaskTypes %}
+        <tbody class="grid-mask-type">
+            <tr class="warning">
+                <input type="hidden" class="grid-mask-type-row" value="{{ gridLinkCalendarMaskType.gridMaskType.id }}"></input>
+                <td colspan="2"><span style="padding-left:5px;">&bull; {{ gridLinkCalendarMaskType.gridMaskType.calendarPeriod }} {{ gridLinkCalendarMaskType.gridMaskType.calendarType }}</span></td>
+                <td colspan="8"></td>
+            </tr>
+            {% for tripCalendar in gridLinkCalendarMaskType.gridMaskType.RelatedTripCalendars(lineVersionId) %}
+            <tr>
+                <td colspan="2"><span style="padding-left:10px;">&bull; {{ tripCalendar.TripsNumber(lineVersionId) }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
+                <td><div class="calendar-day {% if tripCalendar.monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td></td>
+            </tr>
+            {% endfor %}      
+        </tbody>
+            {% endfor %}
+        {% endfor %}
+        <tbody>
+            <tr id="new-grid-calendar"></tr>
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro grid_mask_types(gridMaskTypes, lineVersionId) %}
+    {% if gridMaskTypes|length == 0 %}
+    <span>{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>
+    {% else %}
+    <table class="table table-hover grid-mask-type-table">
+        <thead>
+            <tr>
+                <th>{{ 'grid_mask_type.list.columns.label'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.monday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.tuesday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.wednesday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.thursday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.friday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.saturday'|trans({}, 'default') }}</th>
+                <th>{{ 'calendar.list.columns.sunday'|trans({}, 'default') }}</th>
+            </tr>
+        </thead>
+        {% for gridMaskType in gridMaskTypes %}
+        <tbody class="grid-mask-type">
+            <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType.id }}"></input>
+            <tr class="warning">
+                <td>{{ gridMaskType.calendarPeriod }} {{ gridMaskType.calendarType }}</td>
+                <td colspan="7"></td>
+            </tr>
+            {% for tripCalendar in gridMaskType.RelatedTripCalendars(lineVersionId) %}
+            <tr>
+                <td><span style="padding-left:5px;">&bull; {{ tripCalendar.TripsNumber(lineVersionId) }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
+                <td><div class="calendar-day {% if tripCalendar.monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                <td><div class="calendar-day {% if tripCalendar.sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endmacro %}

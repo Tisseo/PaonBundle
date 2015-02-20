@@ -42,13 +42,15 @@ global:
         start: du
         end: au
         and: et
+    edit_calendar: Calendriers
 
 error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."
     greater_than_field: Ce champ doit être supérieur au champ %field%.
     hexa_color: Ce champ doit être un code couleur en hexadécimal (ex: \#ffffff)
     line_exists: Ce numéro de ligne est déja attribué.
-    line_version_not_found: Cette ligne ne possède aucune offre.
+    line_version:
+        not_found: Cette ligne ne possède aucune offre.
 
 menu:
     line_manage: Gestion des lignes
@@ -63,6 +65,7 @@ menu:
     export_manage: Exports
     import_fichor: Fiches horaires Hastus
     export_timetable: Timetable
+    grid_calendar_manage: Edition des calendriers
 
 line:
     labels:
@@ -102,6 +105,11 @@ line_version:
     no_offers: Aucune offre cloturée pour cette ligne.
 
 calendar:
+    labels:
+        services: services
+        no_data: Aucune donnée présente en base qui ne soit pas encore associée au calendrier de l'offre.
+
+grid_calendar:
     labels:
 
 exception_type:

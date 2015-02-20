@@ -20,7 +20,15 @@ Tisseo\DatawarehouseBundle\Entity\Printing:
             - GreaterThan:
                 value: 1
         date:
-            - DateTime: ~    
+            - DateTime: ~
+
+Tisseo\DatawarehouseBundle\Entity\GridCalendar:
+    properties:
+        name:
+            - NotBlank: ~
+        color:
+            - NotBlank: ~
+            - Tisseo\DatawarehouseBundle\Validator\Constraints\HexaColor: ~
 Tisseo\DatawarehouseBundle\Entity\LineVersion:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

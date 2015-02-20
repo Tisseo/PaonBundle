@@ -48,9 +48,14 @@ Tisseo\DatawarehouseBundle\Entity\TripCalendar:
             targetEntity: GridMaskType
             cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: tripCalendars
             joinColumns:
                 grid_mask_type_id:
                     referencedColumnName: id
-            orphanRemoval: false
+    oneToMany:
+        trips:
+            targetEntity: Trip
+            cascade: ['persist', 'remove']
+            mappedBy: tripCalendar
+            inversedBy: null
     lifecycleCallbacks: {  }

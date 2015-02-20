@@ -3,20 +3,24 @@
 namespace Tisseo\DatawarehouseBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\JsonDecode;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Tisseo\DatawarehouseBundle\Form\Type\GridCalendarType;
+use Tisseo\DatawarehouseBundle\Entity\GridCalendar;
 
 class CalendarController extends AbstractController
 {
-    private function buildForm($calendarId, $calendarManager)
+    private function buildForm($lineVersion)
     {
-        $calendar = $calendarManager->find($calendarId);
+        $gridCalendar = new GridCalendar($lineVersion);
         $form = $this->createForm(
-            new LineVersionType(),
-            $calendar,
+            new GridCalendarType(),
+            $gridCalendar,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_datawarehouse_calendar_edit',
+                    'tisseo_datawarehouse_grid_calendar_create',
                     array(
-                        'calendarId' => $calendarId
+                        'lineVersionId' => $lineVersion->getId()
                     )
                 )
             )
@@ -24,55 +28,92 @@ class CalendarController extends AbstractController
         return ($form);
     }
 
-    private function processForm(Request $request, $form)
+    private function processForm(Request $request, $form, $lineVersionId)
     {
         $form->handleRequest($request);
-        $calendarManager = $this->get('tisseo_datawarehouse.calendar_manager');
-        if ($form->isValid()) {
-            $calendarManager->save($form->getData());
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans(
-                    'calendar.created',
-                    array(),
-                    'default'
+        if ($form->isValid())
+        {
+            $gridCalendarManager = $this->get('tisseo_datawarehouse.grid_calendar_manager');
+            $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+            $lineVersion = $lineVersionManager->find($lineVersionId);
+            $gridCalendar = $form->getData();
+            $gridCalendar->setLineVersion($lineVersion);
+            $gridCalendarManager->persist($gridCalendar);
+
+            return $this->render(
+                'TisseoDatawarehouseBundle:LineVersion:calendars.html.twig',
+                array(
+                    'title' => 'menu.grid_calendar_manage',
+                    'lineVersion' => $lineVersion,
+                    'gridCalendars' => $lineVersion->getGridCalendars(),
+                    'gridMaskTypes' => $lineVersionManager->findGridMaskTypes($lineVersion)
                 )
-            );
-            return $this->redirect(
-                $this->generateUrl('tisseo_datawarehouse_calendar_list')
             );
         }
         return (null);
     }
 
-    public function editAction(Request $request, $calendarId)
+    public function editAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_CALENDAR');
-        $calendarManager = $this->get('tisseo_datawarehouse.calendar_manager');
-        $form = $this->buildForm($calendarId, $calendarManager);
-        $render = $this->processForm($request, $form);
-        if (!$render) {
+        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
+        {
+            $gridCalendarManager = $this->get('tisseo_datawarehouse.grid_calendar_manager');
+            $jsonDecode = new JsonDecode();
+            $data = $jsonDecode->decode($request->getContent(), JsonEncoder::FORMAT);
+            $gridCalendarManager->attachGridCalendars($data);
+            return $this->redirect(
+                $this->generateUrl('tisseo_datawarehouse_calendar_list')
+            );
+        }
+        else
+        {
+            $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+            $lineVersion = $lineVersionManager->findCalendars($lineVersionId);
             return $this->render(
-                'TisseoDatawarehouseBundle:Calendar:form.html.twig',
+                'TisseoDatawarehouseBundle:LineVersion:calendars.html.twig',
                 array(
-                    'form' => $form->createView(),
-                    'title' => ($calendarId ? 'calendar.edit' : 'calendar.create')
+                    'title' => 'menu.grid_calendar_manage',
+                    'lineVersion' => $lineVersion,
+                    'gridCalendars' => $lineVersion->getGridCalendars(),
+                    'gridMaskTypes' => $lineVersionManager->findGridMaskTypes($lineVersion)
                 )
             );
         }
-        return ($render);
     }
 
     public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_CALENDAR');
-        $calendarManager = $this->get('tisseo_datawarehouse.calendar_manager');
+        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
         return $this->render(
             'TisseoDatawarehouseBundle:Calendar:list.html.twig',
             array(
                 'pageTitle' => 'menu.calendar_manage',
-                'calendars' => $calendarManager->findAll()
+                'lineVersions' => $lineVersionManager->findLineVersionsWithoutCalendars(new \Datetime())
             )
         );
+    }
+
+    public function createAction(Request $request, $lineVersionId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_CALENDAR');
+        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        $lineVersion = $lineVersionManager->findCalendars($lineVersionId);
+
+        $form = $this->buildForm($lineVersion);
+        $render = $this->processForm($request, $form, $lineVersion->getId());
+        if (!$render)
+        {
+            return $this->render(
+                'TisseoDatawarehouseBundle:GridCalendar:form.html.twig',
+                array(
+                    'form' => $form->createView()
+                )
+            );
+        }
+        else {
+            return($render);
+        }
     }
 }

@@ -54,6 +54,36 @@ class TripCalendar
      */
     private $gridMaskType;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $trips;
+
+    private $tripsNumber;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trips = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    function getTripsNumber($lineVersionId = null)
+    {
+        if ($lineVersionId == null)
+            return count($this->trips);
+        else
+        {
+            $count = 0;
+            foreach ($this->trips as $trip)
+            {
+                if ($trip->getLineVersionId() == $lineVersionId)
+                    $count++;
+            }
+            return $count;
+        }
+    }
 
     /**
      * Get id
@@ -247,5 +277,43 @@ class TripCalendar
     public function getGridMaskType()
     {
         return $this->gridMaskType;
+    }
+
+    /**
+     * Add trips
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Trip $trips
+     * @return TripCalendar
+     */
+    public function addTrip(\Tisseo\DatawarehouseBundle\Entity\Trip $trips)
+    {
+        $this->trips[] = $trips;
+
+        return $this;
+    }
+
+    /**
+     * Remove trips
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\Trip $trips
+     */
+    public function removeTrip(\Tisseo\DatawarehouseBundle\Entity\Trip $trips)
+    {
+        $this->trips->removeElement($trips);
+    }
+
+    /**
+     * Get trips
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrips()
+    {
+        return $this->trips;
+    }
+
+    public function __toString()
+    {
+        return strval($this->id);
     }
 }

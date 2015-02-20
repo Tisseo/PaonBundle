@@ -165,10 +165,26 @@ class LineVersion
         }
     }
 
+    /**
+     * mergeGridCalendars
+     */
+    public function mergeGridCalendars($lineVersion)
+    {
+        foreach($lineVersion->getGridCalendars() as $gridCalendar)
+        {
+            $newGridCalendar = new GridCalendar();
+            $newGridCalendar->merge($gridCalendar);
+            $this->addGridCalendar($newGridCalendar);
+        }
+    }
+
+    /**
+     * closeDate
+     */
     public function closeDate(\Datetime $date)
     {
-        $date->modify('-1 day');
-        $this->endDate = $date;
+        $this->endDate = new \Datetime($date->format('Y-m-d'));
+        $this->endDate->modify('-1 day');
     }
 
     /**
@@ -715,9 +731,6 @@ class LineVersion
     public function setGridCalendars(Collection $gridCalendars)
     {
         $this->gridCalendars = $gridCalendars;
-        foreach ($this->gridCalendars as $gridCalendar) {
-            $gridCalendar->setLineVersion($this);
-        }
         return $this;
     }
 

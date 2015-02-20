@@ -61,6 +61,16 @@ class Trip
     }
 
     /**
+     * getLineVersionId
+     *
+     * @return integer
+     */
+    public function getLineVersionId()
+    {
+        return $this->route->getLineVersion()->getId();
+    }
+
+    /**
      * Get id
      *
      * @return integer 

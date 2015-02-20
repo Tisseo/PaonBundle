@@ -58,11 +58,16 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
     manyToOne:
         lineVersion:
             targetEntity: LineVersion
-            cascade: {  }
             mappedBy: null
             inversedBy: gridCalendars
             joinColumns:
                 line_version_id:
                     referencedColumnName: id
-            orphanRemoval: false
+    oneToMany:
+        gridLinkCalendarMaskTypes:
+            targetEntity: GridLinkCalendarMaskType
+            cascade: ['persist', 'remove']
+            mappedBy: gridCalendar
+            inversedBy: null
+            orphanRemoval: true
     lifecycleCallbacks: {  }

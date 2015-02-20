@@ -29,6 +29,15 @@ class GridLinkCalendarMaskType
      */
     private $gridMaskType;
 
+    public function __construct(GridCalendar $gridCalendar = null, GridMaskType $gridMaskType = null, $active = null)
+    {
+        if ($gridCalendar !== null)
+            $this->gridCalendar = $gridCalendar;
+        if ($gridMaskType !== null)
+            $this->gridMaskType = $gridMaskType;
+        if ($active !== null)
+            $this->active = $active;
+    }
 
     /**
      * Get id

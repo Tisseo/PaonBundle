@@ -5,7 +5,7 @@ tisseo_datawarehouse_homepage:
 #Line administration
 tisseo_datawarehouse_line_list:
     pattern: /lines/list
-    defaults: { _controller: TisseoDatawarehouseBundle:Line:list}
+    defaults: { _controller: TisseoDatawarehouseBundle:Line:list }
 tisseo_datawarehouse_line_edit:
     pattern: /lines/edit/{lineId}
     defaults: { _controller: TisseoDatawarehouseBundle:Line:edit, lineId: null }
@@ -13,10 +13,10 @@ tisseo_datawarehouse_line_edit:
 #LineVersion administration
 tisseo_datawarehouse_line_version_list:
     pattern: /offers/list
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:list}
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:list }
 tisseo_datawarehouse_line_version_history:
     pattern: /offers/history
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:history}
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:history }
 tisseo_datawarehouse_line_version_edit:
     pattern: /offers/edit/{lineVersionId}
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:edit, lineVersionId: null }
@@ -40,19 +40,28 @@ tisseo_datawarehouse_select_line_version_by_line:
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:selectByLine }
     options:
         expose: true
+tisseo_datawarehouse_grid_calendar_create:
+    pattern: /offers/add/calendar/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:create }
+    options:
+        expose: true
 
 #Calendar administration
 tisseo_datawarehouse_calendar_list:
     pattern: /calendars/list
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:list}
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:list }
 tisseo_datawarehouse_calendar_edit:
-    pattern: /calendars/edit/{calendarId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:edit, calendarId: null }
+    pattern: /calendars/edit/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:edit }
+    requirements:
+        lineVersionId: \d+
+    options:
+        expose: true
 
 #ExceptionType administration
 tisseo_datawarehouse_exception_type_list:
     pattern: /exceptions/list
-    defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:list}
+    defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:list }
 tisseo_datawarehouse_exception_type_edit:
     pattern: /exceptions/edit/{exceptionTypeId}
     defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:edit, exceptionTypeId: null }
@@ -60,9 +69,9 @@ tisseo_datawarehouse_exception_type_edit:
 #Imports administration
 tisseo_datawarehouse_import_fichor:
     pattern: /imports/fichor
-    defaults: { _controller: TisseoDatawarehouseBundle:Import:fichor}
+    defaults: { _controller: TisseoDatawarehouseBundle:Import:fichor }
 
 #Export administration
 tisseo_datawarehouse_export_timetable:
     pattern: /exports/timetable
-    defaults: { _controller: TisseoDatawarehouseBundle:Export:timetable}
+    defaults: { _controller: TisseoDatawarehouseBundle:Export:timetable }

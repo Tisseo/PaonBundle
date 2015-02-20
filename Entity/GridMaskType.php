@@ -34,6 +34,21 @@ class GridMaskType
      */
     private $calendarPeriod;
 
+    public function getRelatedTripCalendars($lineVersionId)
+    {
+        $tempCalendars = array();
+        foreach ($this->tripCalendars as $tripCalendar)
+        {
+            foreach ($tripCalendar->getTrips() as $trip)
+            {
+                if ($trip->getLineVersionId() == $lineVersionId)
+                    $tempCalendars[] = $tripCalendar;
+            }
+        }
+        $tripCalendars = array_unique($tempCalendars);
+
+        return $tripCalendars;
+    }
 
     /**
      * Get id
@@ -135,5 +150,89 @@ class GridMaskType
     public function getCalendarPeriod()
     {
         return $this->calendarPeriod;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $gridLinkCalendarMaskTypes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tripCalendars;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gridLinkCalendarMaskTypes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tripCalendars = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add gridLinkCalendarMaskTypes
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
+     * @return GridMaskType
+     */
+    public function addGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    {
+        $this->gridLinkCalendarMaskTypes[] = $gridLinkCalendarMaskTypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove gridLinkCalendarMaskTypes
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
+     */
+    public function removeGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    {
+        $this->gridLinkCalendarMaskTypes->removeElement($gridLinkCalendarMaskTypes);
+    }
+
+    /**
+     * Get gridLinkCalendarMaskTypes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGridLinkCalendarMaskTypes()
+    {
+        return $this->gridLinkCalendarMaskTypes;
+    }
+
+    /**
+     * Add tripCalendars
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars
+     * @return GridMaskType
+     */
+    public function addTripCalendar(\Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars)
+    {
+        $this->tripCalendars[] = $tripCalendars;
+
+        return $this;
+    }
+
+    /**
+     * Remove tripCalendars
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars
+     */
+    public function removeTripCalendar(\Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars)
+    {
+        $this->tripCalendars->removeElement($tripCalendars);
+    }
+
+    /**
+     * Get tripCalendars
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTripCalendars()
+    {
+        return $this->tripCalendars;
     }
 }

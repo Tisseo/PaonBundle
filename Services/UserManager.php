@@ -8,7 +8,7 @@
 namespace Tisseo\DatawarehouseBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\Translation\LoggingTranslator;
 
 class UserManager
 {
@@ -18,7 +18,7 @@ class UserManager
 
     public function __construct(
         ObjectManager $om,
-        Translator $translator,
+        LoggingTranslator $translator,
         $container
     )
     {

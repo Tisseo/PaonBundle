@@ -20,7 +20,7 @@ class HexaColorValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!preg_match('/^#[a-zA-Za0-9]{6}$/', $value, $matches))
+        if (!preg_match('/^#(([0-9a-fA-F]){2}){3}$/', $value, $matches))
         {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%string%', $value)

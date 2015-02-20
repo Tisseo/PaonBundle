@@ -1,43 +1,55 @@
 {% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
 
+{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
 {% block list_title -%}
     {{'calendar.list.title'|trans({}, 'default')}}
-    {% if is_granted('BUSINESS_MANAGE_CALENDAR') %}
-        -
-        <a href="{{ path('tisseo_datawarehouse_calendar_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span> {{'calendar.create'|trans({}, 'default')}}
-        </a>
-    {% endif %}
 {% endblock %}
 
 {% block table_head -%}
-    <th>{{'calendar.list.columns.label'|trans({}, 'default')}}</th>
+    <th>{{ 'line_version.list.columns.label'|trans({}, 'default') }}</th>
+    <th>{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>
+    <th>{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
     {% if is_granted('BUSINESS_MANAGE_CALENDAR') %}
         <th>{{'global.actions'|trans({}, 'messages')}}</th>
     {% endif %}
 {% endblock %}
 
 {% block table_body -%}
-    {% if calendars|length == 0 %}
+    {% if lineVersions|length == 0 %}
         <tr>
             <td colspan="4">
                 {{'global.no_items'|trans}}
             </td>
         </tr>
     {% else %}
-        {% for calendar in calendars %}
+        {% for lineVersion in lineVersions %}
             <tr>
                 <td>
-                    {{calendar.number}}
+                    {{ render.line_number(lineVersion, 'lineVersion', 'small') }} <span>{{ lineVersion.name }}</span>
                 </td>
                 <td>
-                    {% if is_granted('BUSINESS_MANAGE_CALENDAR') %}                        
-                        <a class="btn btn-default" href="{{ path('tisseo_datawarehouse_calendar_edit', {'calendarId': calendar.id}) }}" data-toggle="modal" data-target="#base-modal">
-                            <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
+                    {{ lineVersion.line.physicalMode.name }}
+                </td>
+                <td>
+                    {{ lineVersion.version }}
+                </td>
+                <td>
+                    {% if is_granted('BUSINESS_MANAGE_CALENDAR') %}
+                        <a class="btn btn-default calendar-edit" href="{{ path('tisseo_datawarehouse_calendar_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-edit"></span> {{'global.edit_calendar'|trans({}, 'messages')}}
                         </a>
                     {% endif %}
                 </td>
             </tr>
         {% endfor %}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        require(['textfill'], function(){
+            textfill(2, 15, '.line-small');
+        });
+    </script>
 {% endblock %}

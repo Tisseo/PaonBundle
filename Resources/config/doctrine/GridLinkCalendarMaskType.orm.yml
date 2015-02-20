@@ -25,20 +25,16 @@ Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType:
     manyToOne:
         gridCalendar:
             targetEntity: GridCalendar
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: gridLinkCalendarMaskTypes
             joinColumns:
                 grid_calendar_id:
                     referencedColumnName: id
-            orphanRemoval: false
         gridMaskType:
             targetEntity: GridMaskType
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: gridLinkCalendarMaskTypes
             joinColumns:
                 grid_mask_type_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

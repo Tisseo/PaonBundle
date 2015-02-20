@@ -1,0 +1,71 @@
+{% extends "::modal.html.twig" %}
+
+{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
+{% block modal_title %}
+    {{ title|trans({}, 'messages') }}
+{% endblock %}
+
+{% block modal_body %}
+<div style="display:inline-block;">
+    <div class="col-md-6">
+        <h3>{{ 'calendar.grid_calendar_table'|trans({}, 'default') }}</h3>
+        <div class="table-responsive">
+            {{ render.grid_calendars(gridCalendars, lineVersion.id) }}
+        </div>
+        <button id="add-calendar" class="btn btn-xs btn-success">
+            <input type="hidden" value="{{ lineVersion.id }}"></input>
+            <span style="font-size:8px;" class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="col-md-6">
+        <h3>{{ 'calendar.grid_mask_table'|trans({}, 'default') }}</h3>
+        <div class="table-responsive">
+            {{ render.grid_mask_types(gridMaskTypes, lineVersion.id) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal_close_footer %}
+    <button id="submit-calendars" type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+    </button>
+    <script>
+        require(['datawarehouse/create/calendar']);
+    </script>
+    <script>
+        require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {
+            $(document).find(".grid-calendar").droppable({
+                over: function(event, ui) {
+                    $(this).find("tr:first").addClass("success");
+                },
+                out: function(event, ui) {
+                    $(this).find("tr:first").removeClass("success");
+                },     
+                drop: function(event, ui) {
+                    if ($(ui.draggable).find("tr:first td").length == 2) {
+                        $(ui.draggable).find("tr").find("td:first").attr('colspan',2);
+                        $(ui.draggable).find("tr").append("<td></td>");
+                    }
+                    $(this).find("tr:first").removeClass("success");
+                    $(this).after(ui.draggable);
+                }
+            });
+            $(document).find(".grid-mask-type-table").droppable({
+                drop: function(event, ui) {
+                    if ($(ui.draggable).find("tr:first td").length == 3) {
+                        $(ui.draggable).find("tr").find("td:first").attr('colspan',1);
+                        $(ui.draggable).find("tr").find("td:last").remove();
+                    }
+                    $(this).find("thead").after(ui.draggable);
+                }
+            });
+
+            $(document).find(".grid-mask-type").draggable({
+                revert: 'invalid',
+                helper: 'clone'    
+            });
+        });
+    </script>
+{% endblock %}

@@ -152,9 +152,11 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
             cascade: ['persist', 'remove']
             mappedBy: lineVersion
             inversedBy: null
+            orphanRemoval: true
         printings:
             targetEntity: Printing
             cascade: ['persist', 'remove']
             mappedBy: lineVersion
             inversedBy: null
+            orphanRemoval: true
     lifecycleCallbacks: {  }

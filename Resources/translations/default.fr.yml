@@ -29,6 +29,9 @@ line_version:
     edit: Edition d'une offre
     create: Création d'une offre
     created: Offre sauvegardée
+    persisted: Offre sauvegardée
+    closed: Offre clôturée
+    closure_error: La date de début d'offre doit être supérieure à la date de fin de l'offre précédente.
     closure: Clôture d'une offre
     not_found: Offre introuvable
     no_printings: Aucun tirage pour cette offre
@@ -36,7 +39,25 @@ line_version:
 calendar:
     list:
         columns:
-            label: Calendrier
+            monday: L
+            tuesday: M
+            wednesday: M
+            thursday: J
+            friday: V
+            saturday: S
+            sunday: D
+    grid_calendar_table: Grilles présentes sur la fiche horaire
+    grid_mask_table: Calendriers disponibles dans les données
+
+grid_mask_type:
+    list:
+        columns:
+            label: Calendrier Hastus
+
+grid_calendar:
+    list:
+        columns:
+             label: Grilles horaires          
         title: Liste des calendriers
     title: Calendrier
     edit: Editer un calendrier

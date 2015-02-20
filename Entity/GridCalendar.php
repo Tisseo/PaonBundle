@@ -64,6 +64,19 @@ class GridCalendar
      */
     private $lineVersion;
 
+    public function merge(GridCalendar $gridCalendar)
+    {
+        $this->name = $gridCalendar->getName();
+        $this->color = $gridCalendar->getColor();
+        $this->monday = $gridCalendar->getMonday();
+        $this->tuesday = $gridCalendar->getTuesday();
+        $this->wednesday = $gridCalendar->getWednesday();
+        $this->thursday = $gridCalendar->getThursday();
+        $this->friday = $gridCalendar->getFriday();
+        $this->saturday = $gridCalendar->getSaturday();
+        $this->sunday = $gridCalendar->getSunday();
+        $this->lineVersion = $gridCalendar->getLineVersion();
+    }
 
     /**
      * Get id
@@ -291,6 +304,7 @@ class GridCalendar
     public function setLineVersion(LineVersion $lineVersion = null)
     {
         $this->lineVersion = $lineVersion;
+        $this->lineVersion->addGridCalendar($this);
 
         return $this;
     }
@@ -303,5 +317,50 @@ class GridCalendar
     public function getLineVersion()
     {
         return $this->lineVersion;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $gridLinkCalendarMaskTypes;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gridLinkCalendarMaskTypes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add gridLinkCalendarMaskTypes
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
+     * @return GridCalendar
+     */
+    public function addGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    {
+        $this->gridLinkCalendarMaskTypes[] = $gridLinkCalendarMaskTypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove gridLinkCalendarMaskTypes
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
+     */
+    public function removeGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    {
+        $this->gridLinkCalendarMaskTypes->removeElement($gridLinkCalendarMaskTypes);
+    }
+
+    /**
+     * Get gridLinkCalendarMaskTypes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGridLinkCalendarMaskTypes()
+    {
+        return $this->gridLinkCalendarMaskTypes;
     }
 }

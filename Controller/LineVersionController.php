@@ -3,7 +3,6 @@
 namespace Tisseo\DatawarehouseBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Tisseo\DatawarehouseBundle\Form\Type\LineVersionType;
 use Tisseo\DatawarehouseBundle\Entity\LineVersion;
 
@@ -30,21 +29,23 @@ class LineVersionController extends AbstractController
     {
         $form->handleRequest($request);
         $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
-        if ($form->isValid()) {
+        if ($form->isValid()) {            
             if ($closure)
-                $lineVersionManager->close($form->getData());
+                $write = $lineVersionManager->close($form->getData());
             else if($create)
-                $lineVersionManager->save($form->getData());
+                $write = $lineVersionManager->save($form->getData());
             else
-                $lineVersionManager->persist($form->getData());
+                $write = $lineVersionManager->persist($form->getData());
+
             $this->get('session')->getFlashBag()->add(
-                'success',
+                ($write[0] ? 'success' : 'danger'),
                 $this->get('translator')->trans(
-                    'line_version.created',
+                    $write[1],
                     array(),
                     'default'
                 )
             );
+
             return $this->redirect(
                 $this->generateUrl('tisseo_datawarehouse_line_version_list')
             );

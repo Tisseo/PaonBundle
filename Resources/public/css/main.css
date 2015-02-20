@@ -1,6 +1,9 @@
 #application-navbar.container .navbar.navbar-default .navbar-brand a {
     font-size:1em;
 }
+.modal-dialog {
+    width:1000px;
+}
 div.form {
     border-radius:5px;
     border:1px solid #ccc;
@@ -42,5 +45,26 @@ div.form-consult .right-summary {
     padding-left:20px;
 }
 .form ul li {
-    line-height: 1.5em;
+    line-height:1.5em;
+}
+.calendar-day {
+    display:inline-block;
+    width:10px;
+    height:10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+.calendar-color {
+    display:inline-block;
+    width:20px;
+    height:10px;
+}
+.green-day {
+    background-color:green;
+}
+.red-day {
+    background-color:red;
+}
+table .grid-mask-type {
+    cursor:pointer;
 }
