@@ -31,8 +31,12 @@ class GridLinkCalendarMaskType
 
     /**
      * Constructor
+     * @param GridCalendar $gridCalendar
+     * @param GridMaskType $gridMaskType
+     * @param boolean active
+     *
+     * Create a new GridLinkCalendarMaskType.
      */
-    // TODO:CHECK CALL TO THIS CONSTRUCTOR THEN DELETE/COMMENT IT
     public function __construct(GridCalendar $gridCalendar = null, GridMaskType $gridMaskType = null, $active = null)
     {
         if ($gridCalendar !== null)

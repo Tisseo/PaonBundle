@@ -99,7 +99,16 @@ class GridCalendar
         $this->lineVersion = $lineVersion;
     }
 
-    //TODO:RENAME/CHECK THESE TWO FUNCTIONS
+    /*
+     * hasLinkToGridMaskType
+     * @param integer $gridMaskTypeId
+     * @return boolean
+     * 
+     * Check this GridCalendar is linked to a GridMaskType using GMT's id passed 
+     * as parameter and checking it is present in its GLCMTs.
+     *
+     * return true if linked, false otherwise.
+     */
     public function hasLinkToGridMaskType($gridMaskTypeId)
     {
         foreach ($this->gridLinkCalendarMaskTypes as $gridLinkCalendarMaskType)
@@ -110,7 +119,17 @@ class GridCalendar
         return false;
     }
 
-    //TODO:RENAME/CHECK THESE TWO FUNCTIONS
+    /*
+     * updateLinks
+     * @param array $gridMaskTypesIds
+     * @return boolean
+     *
+     * Synchronize relation between the GridCalendar and its 
+     * GridLinkCalendarMaskTypes. (i.e. delete GLCMT which aren't present in the 
+     * array passed as parameter)
+     *
+     * return true if some GLCMT have been deleted, false otherwise.
+     */
     public function updateLinks($gridMaskTypeIds)
     {
         $sync = false;
