@@ -1,30 +1,63 @@
+/* link displayed in all nmm views (navbar) */
 #application-navbar.container .navbar.navbar-default .navbar-brand a {
     font-size:1em;
 }
+/* general */
+.bold {
+    font-weight:bold;
+}
+/* modal popup rendering */
 .modal-dialog {
     width:1000px;
 }
-div.form {
+/* general forms rendering */
+.form {
     border-radius:5px;
     border:1px solid #ccc;
 }
-div.form-consult {
+.form ul {
+    list-style:none;
+    padding-left:20px;
+}
+.form ul li {
+    line-height:1.5em;
+}
+.form-consult {
     padding:10px 0;
     margin:10px 0;
 }
-div.form-edit {
+.form-edit {
     padding:10px 10px 10px 0;
     margin:10px 0;
 }
-div.form-consult .left-summary {
+.form-consult .left-summary {
     width:70%;
     display:inline-block;
 }
-div.form-consult .right-summary {
+.form-consult .right-summary {
     width:20%;
     float:right;
     display:inline-block;
 }
+.small-button {
+    width:20px;
+    height:20px;
+    line-height:0px;
+    padding: 1px 5px;
+}
+.small-link {
+    width:20px;
+    height:20px;
+    line-height:13px;
+    padding: 1px 5px;
+}
+.small-button span, .small-link span {
+    font-size:8px;
+}
+.message {
+    padding-left:20px;
+}
+/* line number rendering */
 .line-small {
     height:30px;
     width:30px;
@@ -40,12 +73,14 @@ div.form-consult .right-summary {
     text-align:center;
     padding:0 5px;
 }
-.form ul {
-    list-style:none;
-    padding-left:20px;
+/* calendar form rendering */
+.calendar-container {
+    display:inline-block;
 }
-.form ul li {
-    line-height:1.5em;
+.calendar-color {
+    display:inline-block;
+    width:20px;
+    height:10px;
 }
 .calendar-day {
     display:inline-block;
@@ -53,11 +88,6 @@ div.form-consult .right-summary {
     height:10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-}
-.calendar-color {
-    display:inline-block;
-    width:20px;
-    height:10px;
 }
 .green-day {
     background-color:green;
@@ -67,4 +97,7 @@ div.form-consult .right-summary {
 }
 table .grid-mask-type {
     cursor:pointer;
+}
+.trip-calendar {
+    padding-left:5px;
 }

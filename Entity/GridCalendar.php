@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * GridCalendar
@@ -64,7 +65,27 @@ class GridCalendar
      */
     private $lineVersion;
 
-    public function merge(GridCalendar $gridCalendar)
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $gridLinkCalendarMaskTypes;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gridLinkCalendarMaskTypes = new ArrayCollection();
+    }
+
+    /**
+     * merge
+     * @param GridCalendar
+     * @param LineVersion
+     *
+     * Fill GridCalendar attributes using another GridCalendar
+     */
+    public function merge(GridCalendar $gridCalendar, LineVersion $lineVersion)
     {
         $this->name = $gridCalendar->getName();
         $this->color = $gridCalendar->getColor();
@@ -75,7 +96,33 @@ class GridCalendar
         $this->friday = $gridCalendar->getFriday();
         $this->saturday = $gridCalendar->getSaturday();
         $this->sunday = $gridCalendar->getSunday();
-        $this->lineVersion = $gridCalendar->getLineVersion();
+        $this->lineVersion = $lineVersion;
+    }
+
+    //TODO:RENAME/CHECK THESE TWO FUNCTIONS
+    public function hasLinkToGridMaskType($gridMaskTypeId)
+    {
+        foreach ($this->gridLinkCalendarMaskTypes as $gridLinkCalendarMaskType)
+        {
+            if ($gridLinkCalendarMaskType->getGridMaskType()->getId() == $gridMaskTypeId)
+                return true;
+        }
+        return false;
+    }
+
+    //TODO:RENAME/CHECK THESE TWO FUNCTIONS
+    public function updateLinks($gridMaskTypeIds)
+    {
+        $sync = false;
+        foreach($this->gridLinkCalendarMaskTypes as $gridLinkCalendarMaskType)
+        {
+            if (!in_array($gridLinkCalendarMaskType->getGridMaskType()->getId(), $gridMaskTypeIds))
+            {
+                $this->removeGridLinkCalendarMaskType($gridLinkCalendarMaskType);
+                $sync = true;
+            }
+        }
+        return $sync;
     }
 
     /**
@@ -318,18 +365,6 @@ class GridCalendar
     {
         return $this->lineVersion;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $gridLinkCalendarMaskTypes;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->gridLinkCalendarMaskTypes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add gridLinkCalendarMaskTypes
@@ -337,7 +372,7 @@ class GridCalendar
      * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
      * @return GridCalendar
      */
-    public function addGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    public function addGridLinkCalendarMaskType(GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
     {
         $this->gridLinkCalendarMaskTypes[] = $gridLinkCalendarMaskTypes;
 
@@ -349,7 +384,7 @@ class GridCalendar
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
      */
-    public function removeGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    public function removeGridLinkCalendarMaskType(GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
     {
         $this->gridLinkCalendarMaskTypes->removeElement($gridLinkCalendarMaskTypes);
     }

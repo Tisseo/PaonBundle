@@ -3,9 +3,9 @@
 namespace Tisseo\DatawarehouseBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 use Tisseo\DatawarehouseBundle\Entity\LineVersion;
 use Tisseo\DatawarehouseBundle\Services\TripManager;
-use \Doctrine\Common\Collections\ArrayCollection;
 
 class LineVersionManager extends SortManager
 {
@@ -35,54 +35,30 @@ class LineVersionManager extends SortManager
         return empty($lineVersionId) ? null : $this->repository->findOne($lineVersionId);
     }
 
-    public function findActiveLineVersions(\Datetime $now)
-    {
-        $query = $this->repository->createQueryBuilder('lv')
-            ->where('lv.endDate is null')
-            ->orWhere('lv.endDate > :now')
-            ->setParameter('now', $now)
-            ->getQuery();
+    /**
+     * findLastLineVersionOfLine
+     * @param integer $lineId
+     * @return LineVersion or null
+     *
+     * Return the last version of LineVersion associated to the Line
+     */
+    public function findLastLineVersionOfLine($lineId) {
+        $finalResult = null;
 
-        return $this->sortLineVersionsByNumber($query->getResult());
-    }
-
-    public function findLineVersionsWithoutCalendars(\Datetime $now)
-    {
-        $query = $this->repository->createQueryBuilder('lv')
-            ->where('lv.endDate is null')
-            ->orWhere('lv.endDate > :now')
-            ->setParameter('now', $now)
-            ->getQuery();
-
-        $lineVersions = new ArrayCollection($query->getResult());
-        /*foreach($lineVersions as $lineVersion)
-        {
-            if (!$lineVersion->isNew())
-                $lineVersions->removeElement($lineVersion);
-        }*/
-
-        return $this->sortLineVersionsByNumber($lineVersions->toArray());
-    }
-
-    public function findLineVersionByLine($lineId) {
         if ($lineId == null)
-            return null;
+            return $finalResult;
 
         $query = $this->repository->createQueryBuilder('lv')
             ->where('lv.line = :line')
             ->setParameter('line', $lineId)
             ->getQuery();
 
-        try
-        {
+        try {
             $results = $query->getResult();
-        }
-        catch(\Exception $e)
-        {
-            return null;
+        } catch(\Exception $e) {
+            return $finalResult;
         }
 
-        $finalResult = null;
         foreach($results as $result)
         {
             if ($result->getEndDate() === null)
@@ -95,7 +71,15 @@ class LineVersionManager extends SortManager
         return $finalResult;
     }
 
-    public function findPreviousLineVersion($lineVersion)
+    /**
+     * findPreviousLineVersion
+     * @param LineVersion $lineVersion
+     * @return LineVersion or null
+     *
+     * Find an hypothetical previous version of the LineVersion passed in 
+     * parameter.
+     */
+    public function findPreviousLineVersion(LineVersion $lineVersion)
     {
         $query = $this->om->createQuery("
             SELECT lv FROM Tisseo\DatawarehouseBundle\Entity\LineVersion lv
@@ -121,25 +105,72 @@ class LineVersionManager extends SortManager
         return $result;
     }
 
-    public function findCalendars($lineVersionId)
+    /**
+     * findWithPreviousCalendars 
+     * @param integer $lineVersionId
+     * @return LineVersion
+     *
+     * Find a LineVersion using lineVersionId.
+     * If the returned LineVersion is new (i.e. no gridCalendars):
+     *  - get its hypothetical previous LineVersion from database
+     *  - if found, create new gridCalendars using previous LineVersion gridCalendars
+     */
+    public function findWithPreviousCalendars($lineVersionId)
     {
         $lineVersion = $this->find($lineVersionId);
-
         if ($lineVersion->isNew())
         {
             $previousLineVersion = $this->findPreviousLineVersion($lineVersion);
-            if (!empty($previousLineVersion))
+            if ($previousLineVersion !== null)
             {
                 $lineVersion->mergeGridCalendars($previousLineVersion);
+                $this->om->persist($lineVersion);
+                $this->om->flush();
             }
         }
 
         return $lineVersion;
     }
 
-    public function findGridMaskTypes($lineVersion)
+    /*
+     * findActiveLineVersions
+     * @param Datetime $now
+     * @return Collection $lineVersions
+     *
+     * Find LineVersion which are considered as active according to the current 
+     * date passed as parameter.
+     */
+    public function findActiveLineVersions(\Datetime $now)
     {
-        if ($lineVersion->getGridCalendars()->isEmpty())
+        $query = $this->repository->createQueryBuilder('lv')
+            ->where('lv.endDate is null')
+            ->orWhere('lv.endDate > :now')
+            ->setParameter('now', $now)
+            ->getQuery();
+
+        return $this->sortLineVersionsByNumber($query->getResult());
+    }
+
+    /*
+     * findUnlinkedGridMaskTypes
+     * @param LineVersion $lineVersion
+     *
+     * Find GridMaskTypes and their TripCalendars/Trips related to one 
+     * LineVersion.
+     */
+    public function findUnlinkedGridMaskTypes(LineVersion $lineVersion)
+    {
+        /* if no gridCalendars linked to this lineVersion, search only for all related gridMaskTypes */
+        $notLinked = true;
+        foreach($lineVersion->getGridCalendars() as $gridCalendar)
+        {
+            if (!$gridCalendar->getGridLinkCalendarMaskTypes()->isEmpty())
+            {
+                $notLinked = false;
+                break;
+            }
+        }
+        if ($notLinked)
         {
             $query = $this->om->createQuery("
                 SELECT gmt FROM Tisseo\DatawarehouseBundle\Entity\GridMaskType gmt
@@ -149,56 +180,102 @@ class LineVersionManager extends SortManager
                 JOIN r.lineVersion lv
                 WHERE lv.id = ?1
                 GROUP BY gmt.id
+                ORDER BY gmt.id
             ");
         }
+        /* else, search for all related gridMaskTypes which aren't already linked to a gridCalendar */
         else
         {
-            /* 
-             * SELECT GMT.* from grid_mask_type GMT 
-             * JOIN trip_calendar TC ON TC.grid_mask_type_id = GMT.id 
-             * JOIN trip T ON T.trip_calendar_id = TC.id 
-             * JOIN route R ON R.id = T.route_id
-             * JOIN line_version LV ON LV.id = R.line_version_id
-             * JOIN grid_calendar GC ON GC.line_version_id = LV.id 
-             * WHERE LV.id = 135
-             * AND GMT.id NOT IN(
-             *      SELECT GLCMT.grid_mask_type_id FROM grid_link_calendar_mask_type GLCMT
-             *      JOIN grid_calendar GC ON GC.id = GLCMT.grid_calendar_id 
-             *      WHERE GC.id IN(
-             *          SELECT GC.id FROM grid_calendar GC WHERE GC.line_version_id = 135
-             *      )
-             * )
-             * GROUP BY GMT.id
-             */
             $query = $this->om->createQuery("
                 SELECT gmt FROM Tisseo\DatawarehouseBundle\Entity\GridMaskType gmt
                 JOIN gmt.tripCalendars tc
                 JOIN tc.trips t
                 JOIN t.route r
-                JOIN r.lineVersion lv
-                JOIN lv.gridCalendars gc
-                WHERE lv.id = ?1
+                WHERE IDENTITY(r.lineVersion) = ?1
                 AND gmt.id NOT IN(
-                    SELECT IDENTITY(glcmt.gridMaskType) FROM Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType glcmt 
-                    JOIN glcmt.gridCalendar sub_gc
-                    WHERE sub_gc.id IN(
-                        SELECT sub_sub_gc.id FROM Tisseo\DatawarehouseBundle\Entity\GridCalendar sub_sub_gc
-                        JOIN sub_sub_gc.lineVersion sub_lv
-                        WHERE sub_lv.id = ?1
-                    )
+                    SELECT IDENTITY(glcmt.gridMaskType) FROM Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType glcmt
+                    JOIN glcmt.gridCalendar gc
+                    WHERE IDENTITY(gc.lineVersion) = ?1
                 )
                 GROUP BY gmt.id
+                ORDER BY gmt.id
             ");
         }
         $query->setParameter(1, $lineVersion->getId());
 
-        return $query->getResult();
+        $gmts = $query->getResult();
+        $result = array();
+        $cpt = 0;
+
+        foreach($gmts as $gmt)
+        {
+            $result[$cpt] = array($gmt, array());
+            
+            $query = $this->om->createQuery("
+                SELECT tc, count(t) FROM Tisseo\DatawarehouseBundle\Entity\TripCalendar tc
+                JOIN tc.trips t
+                JOIN t.route r
+                JOIN r.lineVersion lv
+                JOIN tc.gridMaskType gmt
+                WHERE lv.id = ?1
+                AND gmt.id = ?2
+                GROUP BY tc.id
+            ");
+            
+            $query->setParameter(1, $lineVersion->getId());
+            $query->setParameter(2, $gmt->getId());
+
+            $tripCalendars = $query->getResult();
+            foreach($tripCalendars as $tripCalendar)
+            {
+                $result[$cpt][1][] = $tripCalendar;
+            }
+            $cpt++;
+        }
+
+        return $result;
     }
 
-    public function save(LineVersion $lineVersion)
+    /*
+     * updateGridCalendars
+     * @param array $gridCalendarIds
+     * @param integer $lineVersionId
+     *
+     * Synchronize GridCalendars to a specific LineVersion according to values 
+     * returned from calendars form view. (i.e. delete GridCalendars if their id 
+     * is not present in $gridCalendarsIds)
+     */
+    public function updateGridCalendars($gridCalendarIds, $lineVersionId)
     {
-        $oldLineVersion = $this->findLineVersionByLine($lineVersion->getLine()->getId());
-        if ($oldLineVersion->getEndDate === null)
+        $lineVersion = $this->find($lineVersionId);
+        $sync = false;
+        foreach($lineVersion->getGridCalendars() as $gridCalendar)
+        {
+            if (!in_array($gridCalendar->getId(), $gridCalendarIds))
+            {
+                $sync = true;
+                $lineVersion->removeGridCalendar($gridCalendar);
+            }
+        }
+
+        if ($sync)
+            $this->om->persist($lineVersion);
+    }
+
+    /*
+     * create
+     * @param LineVersion $lineVersion
+     *
+     * Save a LineVersion after :
+     *  - closing previous LineVersion if it exists (using current LineVersion 
+     *  startDate
+     *  - deleting all trips which don't belong anymore to the previous 
+     *  LineVersion
+     */
+    public function create(LineVersion $lineVersion)
+    {
+        $oldLineVersion = $this->findLastLineVersionOfLine($lineVersion->getLine()->getId());
+        if ($oldLineVersion->getEndDate() === null)
             $oldLineVersion->closeDate($lineVersion->getStartDate());
         else if ($oldLineVersion->getEndDate() > $lineVersion->getStartDate())
             return array(false,'line_version.closure_error');
@@ -212,6 +289,13 @@ class LineVersionManager extends SortManager
         return array(true,'line_version.persisted');
     }
 
+    /*
+     * close
+     * @param LineVersion $lineVersion
+     * @return array(boolean, string)
+     * Save a LineVersion into database after all trips which don't belong to it 
+     * anymore have been deleted.
+     */
     public function close(LineVersion $lineVersion)
     {
         $this->tripManager->deleteTrips($lineVersion);
@@ -221,7 +305,14 @@ class LineVersionManager extends SortManager
         return array(true,'line_version.closed');
     }
 
-    public function persist(LineVersion $lineVersion)
+    /*
+     * save
+     * @param LineVersion $lineVersion
+     * @return array(boolean, string)
+     *
+     * Persist and save a LineVersion into database.
+     */
+    public function save(LineVersion $lineVersion)
     {
         $this->om->persist($lineVersion);
         $this->om->flush();

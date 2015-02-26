@@ -52,10 +52,12 @@ Tisseo\DatawarehouseBundle\Entity\TripCalendar:
             joinColumns:
                 grid_mask_type_id:
                     referencedColumnName: id
+            fetch: "EXTRA_LAZY"
     oneToMany:
         trips:
             targetEntity: Trip
             cascade: ['persist', 'remove']
             mappedBy: tripCalendar
             inversedBy: null
+            fetch: "EXTRA_LAZY"
     lifecycleCallbacks: {  }

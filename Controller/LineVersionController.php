@@ -33,9 +33,9 @@ class LineVersionController extends AbstractController
             if ($closure)
                 $write = $lineVersionManager->close($form->getData());
             else if($create)
-                $write = $lineVersionManager->save($form->getData());
+                $write = $lineVersionManager->create($form->getData());
             else
-                $write = $lineVersionManager->persist($form->getData());
+                $write = $lineVersionManager->save($form->getData());
 
             $this->get('session')->getFlashBag()->add(
                 ($write[0] ? 'success' : 'danger'),
@@ -137,7 +137,7 @@ class LineVersionController extends AbstractController
         if (!empty($lineId))
         {
             $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
-            $lineVersionResult = $lineVersionManager->findLineVersionByLine($lineId);
+            $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);
             if (empty($lineVersionResult))
             {
                 $lineManager = $this->get('tisseo_datawarehouse.line_manager');

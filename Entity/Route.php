@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Route
@@ -39,6 +40,23 @@ class Route
      */
     private $lineVersion;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $trips;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trips = new ArrayCollection();
+    }
+
+    public function getLineVersionId()
+    {
+        return $this->lineVersion->getId();
+    }
 
     /**
      * Get id

@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * GridMaskType
@@ -17,16 +18,6 @@ class GridMaskType
     /**
      * @var string
      */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var string
-     */
     private $calendarType;
 
     /**
@@ -34,20 +25,23 @@ class GridMaskType
      */
     private $calendarPeriod;
 
-    public function getRelatedTripCalendars($lineVersionId)
-    {
-        $tempCalendars = array();
-        foreach ($this->tripCalendars as $tripCalendar)
-        {
-            foreach ($tripCalendar->getTrips() as $trip)
-            {
-                if ($trip->getLineVersionId() == $lineVersionId)
-                    $tempCalendars[] = $tripCalendar;
-            }
-        }
-        $tripCalendars = array_unique($tempCalendars);
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $gridLinkCalendarMaskTypes;
 
-        return $tripCalendars;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tripCalendars;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gridLinkCalendarMaskTypes = new ArrayCollection();
+        $this->tripCalendars = new ArrayCollection();
     }
 
     /**
@@ -58,52 +52,6 @@ class GridMaskType
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return GridMaskType
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set color
-     *
-     * @param string $color
-     * @return GridMaskType
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * Get color
-     *
-     * @return string 
-     */
-    public function getColor()
-    {
-        return $this->color;
     }
 
     /**
@@ -151,24 +99,6 @@ class GridMaskType
     {
         return $this->calendarPeriod;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $gridLinkCalendarMaskTypes;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $tripCalendars;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->gridLinkCalendarMaskTypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tripCalendars = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add gridLinkCalendarMaskTypes
@@ -176,7 +106,7 @@ class GridMaskType
      * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
      * @return GridMaskType
      */
-    public function addGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    public function addGridLinkCalendarMaskType(GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
     {
         $this->gridLinkCalendarMaskTypes[] = $gridLinkCalendarMaskTypes;
 
@@ -188,7 +118,7 @@ class GridMaskType
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes
      */
-    public function removeGridLinkCalendarMaskType(\Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
+    public function removeGridLinkCalendarMaskType(GridLinkCalendarMaskType $gridLinkCalendarMaskTypes)
     {
         $this->gridLinkCalendarMaskTypes->removeElement($gridLinkCalendarMaskTypes);
     }
@@ -209,7 +139,7 @@ class GridMaskType
      * @param \Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars
      * @return GridMaskType
      */
-    public function addTripCalendar(\Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars)
+    public function addTripCalendar(TripCalendar $tripCalendars)
     {
         $this->tripCalendars[] = $tripCalendars;
 
@@ -221,7 +151,7 @@ class GridMaskType
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars
      */
-    public function removeTripCalendar(\Tisseo\DatawarehouseBundle\Entity\TripCalendar $tripCalendars)
+    public function removeTripCalendar(TripCalendar $tripCalendars)
     {
         $this->tripCalendars->removeElement($tripCalendars);
     }

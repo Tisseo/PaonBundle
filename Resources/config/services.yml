@@ -7,7 +7,6 @@ parameters:
     tisseo_datawarehouse.line_version_manager.class: Tisseo\DatawarehouseBundle\Services\LineVersionManager
     tisseo_datawarehouse.trip_manager.class: Tisseo\DatawarehouseBundle\Services\TripManager
     tisseo_datawarehouse.grid_calendar_manager.class: Tisseo\DatawarehouseBundle\Services\GridCalendarManager
-    tisseo_datawarehouse.calendar_manager.class: Tisseo\DatawarehouseBundle\Services\CalendarManager
     tisseo_datawarehouse.exception_type_manager.class: Tisseo\DatawarehouseBundle\Services\ExceptionTypeManager
     tisseo_datawarehouse.import_manager.class: Tisseo\DatawarehouseBundle\Services\ImportManager
     tisseo_datawarehouse.export_manager.class: Tisseo\DatawarehouseBundle\Services\ExportManager
@@ -34,9 +33,6 @@ services:
         arguments: ['@doctrine.orm.endiv_entity_manager', '@tisseo_datawarehouse.trip_manager']
     tisseo_datawarehouse.grid_calendar_manager:
         class: %tisseo_datawarehouse.grid_calendar_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-    tisseo_datawarehouse.calendar_manager:
-        class: %tisseo_datawarehouse.calendar_manager.class%
         arguments: ['@doctrine.orm.endiv_entity_manager']
     tisseo_datawarehouse.printing_manager:
         class: %tisseo_datawarehouse.printing_manager.class%

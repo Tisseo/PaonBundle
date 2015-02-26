@@ -3,8 +3,8 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use \Doctrine\Common\Collections\ArrayCollection;
-use \Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * LineVersion
@@ -128,8 +128,14 @@ class LineVersion
 
     /**
      * Constructor
+     * @param LineVersion $previousLineVersion = null
+     * @param Line $line = null
+     *
+     * Build a LineVersion with default values
+     * Add information from $previousLineVersion if not null
+     * Link to a specific Line if $line is not null
      */
-    public function __construct(LineVersion $lineVersion = null, Line $line = null)
+    public function __construct(LineVersion $previousLineVersion = null, Line $line = null)
     {
         $this->gridCalendars = new ArrayCollection();
         $this->printings = new ArrayCollection();
@@ -137,26 +143,26 @@ class LineVersion
 
         $this->version = 1;
 
-        if ($lineVersion !== null)
+        if ($previousLineVersion !== null)
         {
-            if ($lineVersion->getEndDate() !== null)
+            if ($previousLineVersion->getEndDate() !== null)
             {
-                $this->startDate = $lineVersion->getEndDate();
+                $this->startDate = $previousLineVersion->getEndDate();
                 $this->startDate->modify('+1 day');
             }
-            $this->version = $lineVersion->getVersion() + 1;
-            $this->name = $lineVersion->getName();
-            $this->forwardDirection = $lineVersion->getForwardDirection();
-            $this->backwardDirection = $lineVersion->getBackwardDirection();
-            $this->fgColor = $lineVersion->getFgColor();
-            $this->fgHexaColor = $lineVersion->getFgHexaColor();
-            $this->bgColor = $lineVersion->getBgColor();
-            $this->bgHexaColor = $lineVersion->getBgHexaColor();
-            $this->accessibility = $lineVersion->getAccessibility();
-            $this->airConditioned = $lineVersion->getAirConditioned();
-            $this->certified = $lineVersion->getCertified();
-            $this->depot = $lineVersion->getDepot();
-            $this->setLine($lineVersion->getLine());
+            $this->version = $previousLineVersion->getVersion() + 1;
+            $this->name = $previousLineVersion->getName();
+            $this->forwardDirection = $previousLineVersion->getForwardDirection();
+            $this->backwardDirection = $previousLineVersion->getBackwardDirection();
+            $this->fgColor = $previousLineVersion->getFgColor();
+            $this->fgHexaColor = $previousLineVersion->getFgHexaColor();
+            $this->bgColor = $previousLineVersion->getBgColor();
+            $this->bgHexaColor = $previousLineVersion->getBgHexaColor();
+            $this->accessibility = $previousLineVersion->getAccessibility();
+            $this->airConditioned = $previousLineVersion->getAirConditioned();
+            $this->certified = $previousLineVersion->getCertified();
+            $this->depot = $previousLineVersion->getDepot();
+            $this->setLine($previousLineVersion->getLine());
         }
 
         if ($line !== null)
@@ -167,19 +173,25 @@ class LineVersion
 
     /**
      * mergeGridCalendars
+     * @param LineVersion $lineVersion
+     *
+     * Attach gridCalendars passed from another LineVersion
      */
-    public function mergeGridCalendars($lineVersion)
+    public function mergeGridCalendars(LineVersion $lineVersion)
     {
         foreach($lineVersion->getGridCalendars() as $gridCalendar)
         {
             $newGridCalendar = new GridCalendar();
-            $newGridCalendar->merge($gridCalendar);
+            $newGridCalendar->merge($gridCalendar, $this);
             $this->addGridCalendar($newGridCalendar);
         }
     }
 
     /**
      * closeDate
+     * @param Datetime $date
+     *
+     * Set the endDate with the date passed as parameter
      */
     public function closeDate(\Datetime $date)
     {
@@ -189,8 +201,11 @@ class LineVersion
 
     /**
      * isLocked
-     *
      * @return boolean
+     *
+     * A LineVersion is locked if :
+     *  - it has started (i.e. startDate < now)
+     *  - startDate is less than 20 days left
      */
     public function isLocked()
     {
@@ -208,6 +223,8 @@ class LineVersion
      * isNew
      *
      * @return boolean
+     *
+     * A LineVersion is new if no gridCalendars are linked to it
      */
     public function isNew()
     {
@@ -218,6 +235,8 @@ class LineVersion
      * isActive
      *
      * @return boolean
+     *
+     * A LineVersion is active if now is between its startDate/endDate
      */
     public function isActive()
     {
@@ -226,11 +245,13 @@ class LineVersion
     }
 
     /**
-     * totalPrintings
+     * getTotalPrintings
      *
      * @return integer
+     *
+     * Return the total amount of printings (i.e. printing.quantity)
      */
-    public function totalPrintings()
+    public function getTotalPrintings()
     {
         $printings = 0;
         foreach($this->printings as $printing)

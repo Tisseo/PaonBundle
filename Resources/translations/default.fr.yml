@@ -38,6 +38,7 @@ line_version:
 
 calendar:
     list:
+        title: Edition des calendriers d'offres
         columns:
             monday: L
             tuesday: M

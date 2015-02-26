@@ -15,7 +15,7 @@
                 <li>{{ 'line_version.labels.start_date'|trans({}, 'messages') }} : {{ lineVersion.startDate|date('d/m/Y') }}</li>
                 <li>{{ 'line_version.labels.planned_end_date'|trans({}, 'messages') }} : {{ lineVersion.plannedEndDate|date('d/m/Y') }}</li>
                 {% if history %}
-                <li style="font-weight:bold;">{{ 'line_version.labels.end_date'|trans({}, 'messages') }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
+                <li class="bold">{{ 'line_version.labels.end_date'|trans({}, 'messages') }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
                 {% endif %}
                 <li>{{ 'line_version.labels.child_line'|trans({}, 'messages') }} : {% if lineVersion.childLineId != null %}{{ lineVersion.childLineId }}{% else %}Aucune{% endif %}</li>
             </ul>   
@@ -49,7 +49,7 @@
     <h3>{{ 'global.printings'|trans({}, 'messages') }}</h3>
     <div class="form form-consult">
         {% if lineVersion.printings is empty %}
-            {{ 'line_version.no_printings'|trans({}, 'default') }}
+        <span class="message">{{ 'line_version.no_printings'|trans({}, 'default') }}</span>
         {% else %}
             {% for printing in lineVersion.printings %}
         <ul>

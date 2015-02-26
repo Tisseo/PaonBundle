@@ -61,16 +61,6 @@ class Trip
     }
 
     /**
-     * getLineVersionId
-     *
-     * @return integer
-     */
-    public function getLineVersionId()
-    {
-        return $this->route->getLineVersion()->getId();
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -269,28 +259,5 @@ class Trip
     public function getTripDatasources()
     {
         return $this->tripDatasources;
-    }
-
-    public function __toString()
-    {
-        $trip = "id: ".strval($this->id)."\n";
-        $trip += "name: ".strval($this->name)."\n";
-        $trip += "route: ".($this->route !== null ? strval($this->route->getId()) : "None")."\n";
-        $trip += "calendar: ".($this->tripCalendar !== null ? strval($this->tripCalendar->getId()) : "None")."\n";
-        $trip += "comment: ".($this->comment !== null ? strval($this->comment->getId()) : "None")."\n";
-        $trip += "---- datasources ----\n";
-        foreach($this->tripDatasources as $datasource) {
-            $trip += "\t".strval($datasource->getId())." / ".strval($datasource->getCode())."\n";
-        }
-        $trip += "---- stoptimes ----\n";
-        foreach($this->stopTimes as $stopTime) {
-            $trip += "\t".strval($stopTime->getId())."\n";
-        }
-        $trip += "---- calendarlinks ----\n";
-        foreach($this->calendarLinks as $calendarLink) {
-            $trip += "\t".strval($calendarLink->getId())." / ".strval($calendarLink->getPeriodCalendar()->getId())."\n";
-        }
-
-        return strval($trip);
     }
 }

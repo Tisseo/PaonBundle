@@ -1,27 +1,118 @@
 {% extends "::modal.html.twig" %}
 
-{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
-
 {% block modal_title %}
     {{ title|trans({}, 'messages') }}
 {% endblock %}
 
 {% block modal_body %}
-<div style="display:inline-block;">
+<div class="calendar-container">
     <div class="col-md-6">
         <h3>{{ 'calendar.grid_calendar_table'|trans({}, 'default') }}</h3>
         <div class="table-responsive">
-            {{ render.grid_calendars(gridCalendars, lineVersion.id) }}
+            <table id="grid-calendar" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2">{{ 'grid_calendar.list.columns.label'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.monday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.tuesday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.wednesday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.thursday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.friday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.saturday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.sunday'|trans({}, 'default') }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% for gridCalendar in gridCalendars %}
+                <tbody class="grid-calendar">
+                    <tr class="active">
+                        <input type="hidden" class="grid-calendar-row" value="{{ gridCalendar[0].id }}"></input>
+                        <td>{{ gridCalendar[0].name }}</td>
+                        <td><div class="calendar-color" style="background-color:{{ gridCalendar[0].color }};"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if gridCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><button class="btn btn-xs btn-danger small-button delete-calendar"><span class="glyphicon glyphicon-minus"></span></button></td>
+                    </tr>
+                </tbody>
+                    {% for gridMaskType in gridCalendar[1] %}
+                <tbody class="grid-mask-type">
+                    <tr class="warning">
+                        <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType[0].id }}"></input>
+                        <td colspan="2"><span>{{ gridMaskType[0].calendarPeriod }} {{ gridMaskType[0].calendarType }}</span></td>
+                        <td colspan="7"></td>
+                        <td></td>
+                    </tr>
+                    {% for tripCalendar in gridMaskType[1] %}
+                    <tr>
+                        <td colspan="2"><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                    {% endfor %}
+                {% endfor %}
+                <tbody>
+                    <input type="hidden" id="line-version-id" value="{{ lineVersionId }}"></input>
+                    <tr id="new-grid-calendar">
+                        {{ render(controller('TisseoDatawarehouseBundle:Calendar:renderForm', {'lineVersionId': lineVersionId } )) }}
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <button id="add-calendar" class="btn btn-xs btn-success">
-            <input type="hidden" value="{{ lineVersion.id }}"></input>
-            <span style="font-size:8px;" class="glyphicon glyphicon-plus"></span>
-        </button>
     </div>
     <div class="col-md-6">
         <h3>{{ 'calendar.grid_mask_table'|trans({}, 'default') }}</h3>
         <div class="table-responsive">
-            {{ render.grid_mask_types(gridMaskTypes, lineVersion.id) }}
+            <table class="table table-hover grid-mask-type-table">
+                <thead>
+                    <tr>
+                        <th>{{ 'grid_mask_type.list.columns.label'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.monday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.tuesday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.wednesday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.thursday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.friday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.saturday'|trans({}, 'default') }}</th>
+                        <th>{{ 'calendar.list.columns.sunday'|trans({}, 'default') }}</th>
+                    </tr>
+                </thead>
+                {% for gridMaskType in gridMaskTypes %}
+                <tbody class="grid-mask-type">
+                    <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType[0].id }}"></input>
+                    <tr class="warning">
+                        <td>{{ gridMaskType[0].calendarPeriod }} {{ gridMaskType[0].calendarType }}</td>
+                        <td colspan="7"></td>
+                    </tr>
+                    {% for tripCalendar in gridMaskType[1] %}
+                    <tr>
+                        <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td><div class="calendar-day {% if tripCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endfor %}
+            </table>
+            {% if gridMaskTypes|length == 0 %}
+            <span class="no-data">{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -36,29 +127,63 @@
     </script>
     <script>
         require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {
-            $(document).find(".grid-calendar").droppable({
+            
+            $.fn.liveDroppable = function() {
+                $(this).droppable({
+                    over: function(event, ui) {
+                        $(this).find("tr:first").addClass("success");
+                    },
+                    out: function(event, ui) {
+                        $(this).find("tr:first").removeClass("success");
+                    },     
+                    drop: function(event, ui) {
+                        if ($(ui.draggable).find("tr:first td").length == 2) {
+                            $(ui.draggable).find("tr").find("td:first").attr('colspan',2);
+                            $(ui.draggable).find("tr").append("<td></td>");
+                        }
+                        $(this).find("tr:first").removeClass("success");
+                        $(this).after(ui.draggable);
+                        if ($(".grid-mask-type-table").children().length == 2)
+                        {
+                            $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>");
+                            $(".grid-mask-type-table").next().fadeIn();
+                        }
+                    }
+                });
+            };
+
+            $(document).on("mouseover", ".new-droppable", function() {
+                $(this).removeClass("new-droppable");
+                $(this).liveDroppable();
+            });
+
+            $(document).find(".grid-calendar").liveDroppable();
+
+            $(document).find(".grid-mask-type-table").droppable({
                 over: function(event, ui) {
-                    $(this).find("tr:first").addClass("success");
+                    $(this).find("thead tr:first").addClass("success");
                 },
                 out: function(event, ui) {
-                    $(this).find("tr:first").removeClass("success");
+                    $(this).find("thead tr:first").removeClass("success");
                 },     
-                drop: function(event, ui) {
-                    if ($(ui.draggable).find("tr:first td").length == 2) {
-                        $(ui.draggable).find("tr").find("td:first").attr('colspan',2);
-                        $(ui.draggable).find("tr").append("<td></td>");
-                    }
-                    $(this).find("tr:first").removeClass("success");
-                    $(this).after(ui.draggable);
-                }
-            });
-            $(document).find(".grid-mask-type-table").droppable({
                 drop: function(event, ui) {
                     if ($(ui.draggable).find("tr:first td").length == 3) {
                         $(ui.draggable).find("tr").find("td:first").attr('colspan',1);
                         $(ui.draggable).find("tr").find("td:last").remove();
                     }
-                    $(this).find("thead").after(ui.draggable);
+                    if ($(this).next().hasClass("no-data"))
+                    {
+                        var noData = $(this).next();
+                        var dropTarget = $(this).find("thead");
+                        noData.fadeOut(300, function() {
+                            noData.remove();
+                            dropTarget.after(ui.draggable);
+                        });
+                    }
+                    else
+                        $(this).find("thead").after(ui.draggable);
+    
+                    $(this).find("thead tr:first").removeClass("success");
                 }
             });
 

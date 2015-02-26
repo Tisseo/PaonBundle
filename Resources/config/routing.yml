@@ -40,11 +40,6 @@ tisseo_datawarehouse_select_line_version_by_line:
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:selectByLine }
     options:
         expose: true
-tisseo_datawarehouse_grid_calendar_create:
-    pattern: /offers/add/calendar/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:create }
-    options:
-        expose: true
 
 #Calendar administration
 tisseo_datawarehouse_calendar_list:
@@ -53,6 +48,20 @@ tisseo_datawarehouse_calendar_list:
 tisseo_datawarehouse_calendar_edit:
     pattern: /calendars/edit/{lineVersionId}
     defaults: { _controller: TisseoDatawarehouseBundle:Calendar:edit }
+    requirements:
+        lineVersionId: \d+
+    options:
+        expose: true
+tisseo_datawarehouse_calendar_form:
+    pattern: /offers/add/calendar/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:renderForm }
+    requirements:
+        lineVersionId: \d+
+    options:
+        expose: true
+tisseo_datawarehouse_calendar_create:
+    pattern: /offers/create/calendar/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:create }
     requirements:
         lineVersionId: \d+
     options:

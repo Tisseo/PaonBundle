@@ -55,4 +55,11 @@ Tisseo\DatawarehouseBundle\Entity\Route:
                 line_version_id:
                     referencedColumnName: id
             orphanRemoval: false
+    oneToMany:
+        trips:
+            targetEntity: Trip
+            mappedBy: route
+            inversedBy: null
+            orphanRemoval: true
+            fetch: "EXTRA_LAZY"
     lifecycleCallbacks: {  }

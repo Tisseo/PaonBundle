@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * TripCalendar
@@ -59,30 +60,12 @@ class TripCalendar
      */
     private $trips;
 
-    private $tripsNumber;
-
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->trips = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    function getTripsNumber($lineVersionId = null)
-    {
-        if ($lineVersionId == null)
-            return count($this->trips);
-        else
-        {
-            $count = 0;
-            foreach ($this->trips as $trip)
-            {
-                if ($trip->getLineVersionId() == $lineVersionId)
-                    $count++;
-            }
-            return $count;
-        }
+        $this->trips = new ArrayCollection();
     }
 
     /**
@@ -262,7 +245,7 @@ class TripCalendar
      * @param \Tisseo\DatawarehouseBundle\Entity\GridMaskType $gridMaskType
      * @return TripCalendar
      */
-    public function setGridMaskType(\Tisseo\DatawarehouseBundle\Entity\GridMaskType $gridMaskType = null)
+    public function setGridMaskType(GridMaskType $gridMaskType = null)
     {
         $this->gridMaskType = $gridMaskType;
 
@@ -285,7 +268,7 @@ class TripCalendar
      * @param \Tisseo\DatawarehouseBundle\Entity\Trip $trips
      * @return TripCalendar
      */
-    public function addTrip(\Tisseo\DatawarehouseBundle\Entity\Trip $trips)
+    public function addTrip(Trip $trips)
     {
         $this->trips[] = $trips;
 
@@ -297,7 +280,7 @@ class TripCalendar
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\Trip $trips
      */
-    public function removeTrip(\Tisseo\DatawarehouseBundle\Entity\Trip $trips)
+    public function removeTrip(Trip $trips)
     {
         $this->trips->removeElement($trips);
     }
@@ -310,10 +293,5 @@ class TripCalendar
     public function getTrips()
     {
         return $this->trips;
-    }
-
-    public function __toString()
-    {
-        return strval($this->id);
     }
 }

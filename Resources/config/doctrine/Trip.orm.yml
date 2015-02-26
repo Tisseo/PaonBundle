@@ -33,16 +33,19 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             mappedBy: trip
             inversedBy: null
             orphanRemoval: true
+            fetch: "EXTRA_LAZY"
         stopTimes:
             targetEntity: StopTime
             mappedBy: trip
             inversedBy: null
             orphanRemoval: true
+            fetch: "EXTRA_LAZY"
         tripDatasources:
             targetEntity: TripDatasource
             mappedBy: trip
             inversedBy: null
             orphanRemoval: true
+            fetch: "EXTRA_LAZY"
     manyToOne:
         comment:
             targetEntity: Comment
@@ -54,14 +57,14 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
         route:
             targetEntity: Route
             mappedBy: null
-            inversedBy: null
+            inversedBy: trips
             joinColumns:
                 route_id:
                     referencedColumnName: id
         tripCalendar:
             targetEntity: TripCalendar
             mappedBy: null
-            inversedBy: null
+            inversedBy: trips
             joinColumns:
                 trip_calendar_id:
                     referencedColumnName: id

@@ -32,9 +32,11 @@ Tisseo\DatawarehouseBundle\Entity\GridMaskType:
             mappedBy: gridMaskType
             inversedBy: null
             orphanRemoval: true
+            fetch: "EXTRA_LAZY"
         tripCalendars:
             targetEntity: TripCalendar
             cascade: ['persist', 'remove']
             mappedBy: gridMaskType
             inversedBy: null
+            fetch: "EXTRA_LAZY"
     lifecycleCallbacks: {  }
