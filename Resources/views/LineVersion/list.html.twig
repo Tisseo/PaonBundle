@@ -1,4 +1,4 @@
-{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+{% extends "TisseoDatawarehouseBundle::datatable_list.html.twig" %}
 
 {% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
 
@@ -11,15 +11,20 @@
         </a>
     {% endif %}
 {% endblock %}
+{% block list_menu -%}
+    <div id="pager" class="pager">
+    </div>
+{% endblock %}
 
 {% block table_head -%}
-    <th>{{ 'line_version.list.columns.label'|trans({}, 'default') }}</th>
-    <th colspan="2">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
-    <th>{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>
-    <th>{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
-    <th>{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
+    <th class="col-sm-1">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
+    <th class="col-sm-4">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
+    <th class="col-sm-1">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
+    <th class="col-sm-1">{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>
+    <th class="col-sm-1">{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
+    <th class="col-sm-1">{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-        <th style="min-width:360px;">{{ 'global.actions'|trans({}, 'messages') }}</th>
+        <th class="col-sm-3 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
     {% endif %}
 {% endblock %}
 
@@ -34,13 +39,14 @@
         {% for lineVersion in lineVersions %}
             <tr>
                 <td>
-                    {{ render.line_number(lineVersion, 'lineVersion', 'small') }} <span>{{ lineVersion.name }}</span>
+                    {{ render.line_number(lineVersion, 'lineVersion', 'small') }}
+                </td>
+                <td>
+                    <span>{{ lineVersion.name }}</span>
                 </td>
                 <td>
                     {{ lineVersion.totalPrintings }}
-                </td>
-                <td>
-                    <a class="btn btn-xs btn-success small-link" href="{{ path('tisseo_datawarehouse_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                    <a style="float:right;" class="btn btn-xs btn-success small-link" href="{{ path('tisseo_datawarehouse_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </td>
@@ -70,12 +76,4 @@
             </tr>
         {% endfor %}
     {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        require(['textfill'], function() {
-            textfill(2, 15, '.line-small');
-        });
-    </script>
 {% endblock %}

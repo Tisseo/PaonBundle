@@ -6,9 +6,19 @@
 .bold {
     font-weight:bold;
 }
+/* datatables plugin */
+#datatable_length {
+    margin-left:20px;
+}
+#datatable_filter {
+    margin-right:20px;
+}
 /* modal popup rendering */
 .modal-dialog {
     width:1000px;
+}
+.table-actions {
+    min-width:360px;
 }
 /* general forms rendering */
 .form {

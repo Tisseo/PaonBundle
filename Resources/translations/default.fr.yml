@@ -16,6 +16,8 @@ line_version:
     list:
         columns:
             label: Offre
+            number: Numéro
+            name: Nom de ligne
             printings: Tirages
             version: Version
             status: Statut
