@@ -29,10 +29,11 @@ Tisseo\DatawarehouseBundle\Entity\CalendarElement:
             comment: ''
             column: end_date
         positive:
-            type: string
+            type: calendar_operator
             nullable: false
             length: 1
             fixed: false
+            requireSQLConversion: true
             comment: 'agencement des calendar_element d''un meme calendrier : ajout, soustraction, intersection avec les precedents'
         interval:
             type: integer

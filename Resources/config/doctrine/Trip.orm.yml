@@ -28,12 +28,6 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             fixed: false
             comment: 'Nom de l''objet. Si vient d''Hastus, identiques a la datasource.'
     oneToMany:
-        calendarLinks:
-            targetEntity: CalendarLink
-            mappedBy: trip
-            inversedBy: null
-            orphanRemoval: true
-            fetch: "EXTRA_LAZY"
         stopTimes:
             targetEntity: StopTime
             mappedBy: trip
@@ -47,6 +41,12 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             orphanRemoval: true
             fetch: "EXTRA_LAZY"
     manyToOne:
+        periodCalendar:
+            targetEntity: Calendar
+            mappedBy: null 
+            inversedBy: trips
+            orphanRemoval: true
+            fetch: "EXTRA_LAZY"
         comment:
             targetEntity: Comment
             mappedBy: null

@@ -102,6 +102,16 @@ class LineVersion
     private $depot;
 
     /**
+     * @var integer
+     */
+    private $childLineId;
+
+    /**
+     * @var status
+     */
+    private $status;
+
+    /**
      * @var \Tisseo\DatawarehouseBundle\Entity\Line
      */
     private $line;
@@ -122,9 +132,9 @@ class LineVersion
     private $printings;
 
     /**
-     * @var integer
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $childLineId;
+    private $changeCauseLinks;
 
     /**
      * Constructor
@@ -139,6 +149,7 @@ class LineVersion
     {
         $this->gridCalendars = new ArrayCollection();
         $this->printings = new ArrayCollection();
+        $this->changeCauseLinks = new ArrayCollection();
         $this->startDate = new \Datetime();
 
         $this->version = 1;
@@ -731,6 +742,30 @@ class LineVersion
     }
 
     /**
+     * Set status
+     *
+     * @param string
+     * @return LineVersion
+     */
+    public function setStatus($satus)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+
+    /**
      * Add gridCalendars
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\GridCalendar $gridCalendars
@@ -868,5 +903,4 @@ class LineVersion
     {
         $this->printings->removeElement($printing);
     }
-
 }

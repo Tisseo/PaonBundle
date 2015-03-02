@@ -87,6 +87,15 @@ class Line
     }
 
     /**
+     * Define priority
+     */
+    public function definePriority()
+    {
+        $priorities = array("Métro" => 1, "Tramway" => 2, "Bus" => 3, "TAD" => 4);
+        $this->priority = $priorities[$this->getPhysicalMode()->getName()];
+    }
+
+    /**
      * Get id
      *
      * @return integer 

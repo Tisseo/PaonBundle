@@ -16,13 +16,6 @@ class GridCalendarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'color',
-            'text',
-            array(
-                'label' => ' ',
-            )
-        );
-        $builder->add(
             'name',
             'text',
             array(

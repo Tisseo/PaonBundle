@@ -53,6 +53,9 @@ class LineVersionController extends AbstractController
         return (null);
     }
 
+    /**
+     *
+     */
     public function editAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');

@@ -14,8 +14,11 @@
     margin-right:20px;
 }
 /* modal popup rendering */
-.modal-dialog {
+.modal-dialog-large {
     width:1000px;
+}
+.modal-dialog-small {
+    width:600px;
 }
 .table-actions {
     min-width:360px;
@@ -35,10 +38,14 @@
 .form-consult {
     padding:10px 0;
     margin:10px 0;
+    display:inline-block;
+    width:100%;
 }
 .form-edit {
     padding:10px 10px 10px 0;
     margin:10px 0;
+    display:inline-block;
+    width:100%;
 }
 .form-consult .left-summary {
     width:70%;
@@ -48,6 +55,9 @@
     width:20%;
     float:right;
     display:inline-block;
+}
+#datawarehouse_line_version_line {
+    width:20%;
 }
 .small-button {
     width:20px;
@@ -77,6 +87,7 @@
     height:60px;
     width:60px;
     line-height:62px;
+    margin:10px 0;
 }
 .line-number {
     border-radius:3px;
@@ -110,4 +121,7 @@ table .grid-mask-type {
 }
 .trip-calendar {
     padding-left:5px;
+}
+.title {
+    min-height:55px;
 }

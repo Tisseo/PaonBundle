@@ -2,7 +2,6 @@
     <tr class="active">
         <input type="hidden" class="grid-calendar-row" value="{{ gridCalendar.id }}"></input>
         <td>{{ gridCalendar.name }}</td>
-        <td><div class="calendar-color" style="background-color:{{ gridCalendar.color }};"></div></td>
         <td><div class="calendar-day {% if gridCalendar.monday %} green-day {% else %} red-day {% endif %}"></div></td>
         <td><div class="calendar-day {% if gridCalendar.tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
         <td><div class="calendar-day {% if gridCalendar.wednesday %} green-day {% else %} red-day {% endif %}"></div></td>

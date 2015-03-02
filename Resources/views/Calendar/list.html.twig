@@ -1,6 +1,10 @@
-{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+{% extends "TisseoDatawarehouseBundle::datatable_list.html.twig" %}
 
 {% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+
+{% block modal_dialog_classes %}
+    modal-dialog-large
+{% endblock %}
 
 {% block list_title -%}
     {{'calendar.list.title'|trans({}, 'default')}}
@@ -11,7 +15,7 @@
     <th>{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>
     <th>{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
     {% if is_granted('BUSINESS_MANAGE_CALENDAR') %}
-        <th>{{'global.actions'|trans({}, 'messages')}}</th>
+        <th class="no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
     {% endif %}
 {% endblock %}
 
@@ -44,12 +48,4 @@
             </tr>
         {% endfor %}
     {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        require(['textfill'], function(){
-            textfill(2, 15, '.line-small');
-        });
-    </script>
 {% endblock %}

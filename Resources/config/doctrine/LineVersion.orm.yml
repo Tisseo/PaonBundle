@@ -126,6 +126,10 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
             length: 50
             fixed: false
             comment: ''
+        status:
+            type: line_version_status
+            requireSQLConversion: true
+            comment: ''
     oneToOne:
         childLine:
             targetEntity: Line
@@ -153,6 +157,14 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
             mappedBy: lineVersion
             inversedBy: null
             orphanRemoval: true
+            fetch: 'EXTRA_LAZY'
+        changeCauseLinks:
+            targetEntity: ChangeCauseLink
+            cascade: ['persist', 'remove']
+            mappedBy: lineVersion
+            inversedBy: null
+            orphanRemoval: true
+            fetch: 'EXTRA_LAZY'
         printings:
             targetEntity: Printing
             cascade: ['persist', 'remove']

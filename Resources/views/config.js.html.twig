@@ -7,6 +7,7 @@ requirejs.config({
         jquery_ui_draggable:                'components/jquery-ui/ui/minified/jquery.ui.draggable.min',
         jquery_ui_droppable:                'components/jquery-ui/ui/minified/jquery.ui.droppable.min',
         datatables:                         'bundles/tisseodatawarehouse/js/jquery.dataTables.min',
+        natural:                            'bundles/tisseodatawarehouse/js/natural',
         datawarehouse_datatables:           'bundles/tisseodatawarehouse/js/list/dataTables',
         datawarehouse_left_menu:            'bundles/tisseodatawarehouse/js/left_menu',
         'datawarehouse/list/offers':        'bundles/tisseodatawarehouse/js/list/lineVersions',
@@ -21,6 +22,9 @@ requirejs.config({
         },
         textfill: {
             deps: ['jquery/textfill']
+        },
+        natural: {
+            deps: ['datatables']
         },
         datatables: {
             deps: ['jquery']

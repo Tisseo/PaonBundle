@@ -17,4 +17,12 @@ Tisseo\DatawarehouseBundle\Entity\ChangeCause:
             length: 255
             fixed: false
             comment: ''
+    oneToMany:
+        changeCauseLinks:
+            targetEntity: ChangeCauseLink
+            cascade: {  }
+            mappedBy: changeCause
+            inversedBy: null
+            orphanRemoval: false
+            fetch: 'EXTRA_LAZY'
     lifecycleCallbacks: {  }

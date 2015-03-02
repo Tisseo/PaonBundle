@@ -12,19 +12,42 @@
 
 {% block modal_body %}
     {% if error %}
-        <div class="alert alert-danger alert-dismissable danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ 'error.line_version_not_found'|trans }}
-        </div>
+    <div class="alert alert-danger alert-dismissable danger">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ 'error.line_version_not_found'|trans }}
+    </div>
     {% endif %}
     {{ form_errors(form) }}
     {% if new or not(new or stape) %}
         {{ form_row(form.line) }}
     {% endif %}
     {% if not new or stape %}
-    <div class="form form-edit col-md-12">
+    <div class="form form-edit">
+        <div class="col-md-12">
         <ul>
-            <li>{{ form_row(form.version) }}</li>
+            {% if close %}
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.version) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.endDate) }}
+                    </div>
+                </div>
+            </li>
+            {% else %}
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.version) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.childLine) }}
+                    </div>
+                </div>
+            </li>
+            {% endif %}
             <li>
                 <div class="row {% if new == true %}input-range{% endif %}">
                     <div class="col-md-6">
@@ -42,13 +65,23 @@
             <li>{{ form_row(form.childLine) }}</li>
             {% endif %}
         </ul>
+        </div>
     </div>
-        {% if not close %}
-    <div class="form form-edit col-md-12">
+    {% if not close %}
+    <div class="form form-edit">
+        <div class="col-md-12">
         <ul>
             <li>{{ form_row(form.name) }}</li>
-            <li>{{ form_row(form.forwardDirection) }}</li>
-            <li>{{ form_row(form.backwardDirection) }}</li>
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.forwardDirection) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.backwardDirection) }}
+                    </div>
+                </div>
+            </li>
             <li>
                 <div class="row">
                     <div class="col-md-6">
@@ -82,10 +115,19 @@
                     </div>
                 </div>
             </li>
-            <li>{{ form_row(form.cartoFile) }}</li>
-            <li>{{ form_row(form.depot) }}</li>
+            <li>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.depot) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.cartoFile) }}
+                    </div>
+                </div>
+            </li>
             <li>{{ form_row(form.comment) }}</li>
         </ul>
+        </div>
     </div>
         {% endif %}
     {% endif %}

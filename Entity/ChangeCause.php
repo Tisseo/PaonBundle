@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ChangeCause
@@ -19,6 +20,18 @@ class ChangeCause
      */
     private $description;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $changeCauseLinks;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->changeCauseLinks = new ArrayCollection();
+    }
 
     /**
      * Get id

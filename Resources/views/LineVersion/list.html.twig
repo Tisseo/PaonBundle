@@ -2,6 +2,10 @@
 
 {% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
 
+{% block modal_dialog_classes %}
+    modal-dialog-small
+{% endblock %}
+
 {% block list_title -%}
     {{ 'line_version.list.title'|trans({}, 'default') }}
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
@@ -11,13 +15,9 @@
         </a>
     {% endif %}
 {% endblock %}
-{% block list_menu -%}
-    <div id="pager" class="pager">
-    </div>
-{% endblock %}
 
 {% block table_head -%}
-    <th class="col-sm-1">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
+    <th class="col-sm-1 nat-sort">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
     <th class="col-sm-4">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
     <th class="col-sm-1">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
     <th class="col-sm-1">{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>

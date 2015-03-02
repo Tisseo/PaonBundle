@@ -1,4 +1,4 @@
-{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+{% extends "TisseoDatawarehouseBundle::datatable_list.html.twig" %}
 
 {% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
 
@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block table_head -%}
-    <th>{{'line.list.columns.label'|trans({}, 'default')}}</th>
+    <th class="nat-sort">{{'line.list.columns.label'|trans({}, 'default')}}</th>
     <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE') %}
-        <th>{{'global.actions'|trans({}, 'messages')}}</th>
+        <th class="no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
     {% endif %}
 {% endblock %}
 
@@ -46,12 +46,4 @@
             </tr>
         {% endfor %}
     {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        require(['textfill'], function(){
-            textfill(2, 15, '.line-small');
-        });
-    </script>
 {% endblock %}

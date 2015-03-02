@@ -18,25 +18,20 @@ Tisseo\DatawarehouseBundle\Entity\Calendar:
             fixed: false
             comment: ''
         calendarType:
-            type: integer
-            nullable: false
-            unsigned: false
+            type: calendar_type
+            requireSQLConversion: true
             comment: ''
             column: calendar_type
     oneToMany:
-        calendarLinksPeriod:
-            targetEntity: CalendarLink
-            mappedBy: periodCalendar
-            inversedBy: null
-        calendarLinksDay:
-            targetEntity: CalendarLink
-            mappedBy: dayCalendar
-            inversedBy: null
         calendarElements:
             targetEntity: CalendarElement
             mappedBy: calendar
             inversedBy: null
             orphanRemoval: true
+        trips:
+            targetEntity: Trip
+            mappedBy: periodCalendar
+            inversedBy: null
         calendarDatasources:
             targetEntity: CalendarDatasource
             cascade: ['persist', 'remove']

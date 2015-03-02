@@ -3,6 +3,7 @@
 namespace Tisseo\DatawarehouseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Calendar
@@ -20,10 +21,14 @@ class Calendar
     private $name;
 
     /**
-     * @var integer
+     * @var string
      */
     private $calendarType;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $trips;
 
     /**
      * Get id
@@ -61,7 +66,7 @@ class Calendar
     /**
      * Set calendarType
      *
-     * @param integer $calendarType
+     * @param string $calendarType
      * @return Calendar
      */
     public function setCalendarType($calendarType)
@@ -74,7 +79,7 @@ class Calendar
     /**
      * Get calendarType
      *
-     * @return integer 
+     * @return string 
      */
     public function getCalendarType()
     {
@@ -100,75 +105,7 @@ class Calendar
      */
     public function __construct()
     {
-        $this->calendarLinksPeriod = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->calendarLinksDay = new \Doctrine\Common\Collections\ArrayCollection();
         $this->calendarElements = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add calendarLinksPeriod
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksPeriod
-     * @return Calendar
-     */
-    public function addCalendarLinksPeriod(\Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksPeriod)
-    {
-        $this->calendarLinksPeriod[] = $calendarLinksPeriod;
-
-        return $this;
-    }
-
-    /**
-     * Remove calendarLinksPeriod
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksPeriod
-     */
-    public function removeCalendarLinksPeriod(\Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksPeriod)
-    {
-        $this->calendarLinksPeriod->removeElement($calendarLinksPeriod);
-    }
-
-    /**
-     * Get calendarLinksPeriod
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCalendarLinksPeriod()
-    {
-        return $this->calendarLinksPeriod;
-    }
-
-    /**
-     * Add calendarLinksDay
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksDay
-     * @return Calendar
-     */
-    public function addCalendarLinksDay(\Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksDay)
-    {
-        $this->calendarLinksDay[] = $calendarLinksDay;
-
-        return $this;
-    }
-
-    /**
-     * Remove calendarLinksDay
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksDay
-     */
-    public function removeCalendarLinksDay(\Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinksDay)
-    {
-        $this->calendarLinksDay->removeElement($calendarLinksDay);
-    }
-
-    /**
-     * Get calendarLinksDay
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCalendarLinksDay()
-    {
-        return $this->calendarLinksDay;
     }
 
     /**

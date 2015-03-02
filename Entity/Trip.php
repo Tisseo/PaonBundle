@@ -36,6 +36,11 @@ class Trip
     private $tripCalendar;
 
     /**
+     * @var \Tisseo\DatawarehouseBundle\Entity\Calendar
+     */
+    private $periodCalendar;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $tripDatasources;
@@ -46,16 +51,10 @@ class Trip
     private $stopTimes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $calendarLinks;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->calendarLinks = new ArrayCollection();
         $this->tripDatasources = new ArrayCollection();
         $this->stopTimes = new ArrayCollection();
     }
@@ -160,39 +159,6 @@ class Trip
     public function getTripCalendar()
     {
         return $this->tripCalendar;
-    }
-
-    /**
-     * Add calendarLinks
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinks
-     * @return Trip
-     */
-    public function addCalendarLink(CalendarLink $calendarLinks)
-    {
-        $this->calendarLinks[] = $calendarLinks;
-
-        return $this;
-    }
-
-    /**
-     * Remove calendarLinks
-     *
-     * @param \Tisseo\DatawarehouseBundle\Entity\CalendarLink $calendarLinks
-     */
-    public function removeCalendarLink(CalendarLink $calendarLinks)
-    {
-        $this->calendarLinks->removeElement($calendarLinks);
-    }
-
-    /**
-     * Get calendarLinks
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCalendarLinks()
-    {
-        return $this->calendarLinks;
     }
 
     /**

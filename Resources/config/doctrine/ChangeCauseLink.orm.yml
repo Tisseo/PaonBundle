@@ -22,16 +22,15 @@ Tisseo\DatawarehouseBundle\Entity\ChangeCauseLink:
             targetEntity: ChangeCause
             cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: changeCauseLinks
             joinColumns:
                 change_cause_id:
                     referencedColumnName: id
-            orphanRemoval: false
+            orphanRemoval: true
         lineVersion:
             targetEntity: LineVersion
-            cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: changeCauseLinks
             joinColumns:
                 line_version_id:
                     referencedColumnName: id

@@ -48,6 +48,8 @@ class LineManager extends SortManager
 
     public function save(Line $line)
     {
+        if ($line->getPriority() == null)
+            $line->definePriority();
         $this->om->persist($line);
         $this->om->flush();
     }

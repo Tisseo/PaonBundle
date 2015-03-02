@@ -1,4 +1,4 @@
-{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+{% extends "TisseoDatawarehouseBundle::datatable_list.html.twig" %}
 
 {% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
 
@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block table_head -%}
-    <th>{{'line.list.columns.label'|trans({}, 'default')}}</th>
+    <th class="nat-sort">{{'line.list.columns.label'|trans({}, 'default')}}</th>
     <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
-    <th>{{'line.list.columns.offers'|trans({}, 'default')}}</th>
+    <th class="no-sort">{{'line.list.columns.offers'|trans({}, 'default')}}</th>
 {% endblock %}
 
 {% block table_body -%}
@@ -37,11 +37,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        require(['textfill'], function(){
-            textfill(2, 15, '.line-small');
-        });
-    </script>
+    {{ parent() }}
     <script>
         require(['datawarehouse/select/offer']);
     </script>

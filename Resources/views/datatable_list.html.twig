@@ -32,7 +32,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        require(['jquery', 'textfill', 'datatables'], function($) {
+        require(['jquery', 'textfill', 'datatables', 'natural'], function($) {
             $(document).ready(function() {
                 var table = $("#datatable").DataTable({
                     "aaSorting": [],
@@ -43,6 +43,10 @@
                             maxFontPixels: 15
                         });
                     },
+                    columnDefs: [ {
+                        type: 'natural', 
+                        targets: 0
+                    } ],
                     "aoColumnDefs" : [ {
                         "bSortable" : false,
                         "aTargets" : [ "no-sort" ]

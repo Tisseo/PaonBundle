@@ -21,12 +21,6 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
             length: 255
             fixed: false
             comment: ''
-        color:
-            type: string
-            nullable: false
-            length: 7
-            fixed: false
-            comment: ''
         monday:
             type: boolean
             nullable: false

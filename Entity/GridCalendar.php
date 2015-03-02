@@ -18,11 +18,6 @@ class GridCalendar
     /**
      * @var string
      */
-    private $color;
-
-    /**
-     * @var string
-     */
     private $name;
 
     /**
@@ -88,7 +83,6 @@ class GridCalendar
     public function merge(GridCalendar $gridCalendar, LineVersion $lineVersion)
     {
         $this->name = $gridCalendar->getName();
-        $this->color = $gridCalendar->getColor();
         $this->monday = $gridCalendar->getMonday();
         $this->tuesday = $gridCalendar->getTuesday();
         $this->wednesday = $gridCalendar->getWednesday();
@@ -152,29 +146,6 @@ class GridCalendar
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set color
-     *
-     * @param string $color
-     * @return GridCalendar
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * Get color
-     *
-     * @return string
-     */
-    public function getColor()
-    {
-        return $this->color;
     }
 
     /**
