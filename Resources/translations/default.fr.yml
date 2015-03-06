@@ -21,6 +21,7 @@ line_version:
             printings: Tirages
             version: Version
             status: Statut
+            start_date: Date de début
             physical_mode: Mode de transport
         title: Liste des offres
     history:
@@ -80,3 +81,4 @@ exception:
 printing:
     title: Tirage
     create: Nouvelle impression
+    created: Nouveau tirage ajouté

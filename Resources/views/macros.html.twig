@@ -23,17 +23,25 @@
     {% endif %}
 {% endmacro %}
 
+{% macro line_version_startDate(lineVersion) %}
+    {% if not lineVersion.status %}
+        {{ lineVersion.processStatus }}
+    {% endif %}
+
+    {% if lineVersion.status == "new" %}
+        <span class="label label-info">{{ lineVersion.startDate|date('d/m/Y') }}</span>
+    {% elseif lineVersion.status == "wip" %}
+        <span class="label label-warning">{{ lineVersion.startDate|date('d/m/Y') }}</span>
+    {% elseif lineVersion.status == "published" %}
+        <span class="label label-success">{{ lineVersion.startDate|date('d/m/Y') }}</span>
+    {% endif %}
+{% endmacro %}
+
 {% macro line_version_status(lineVersion) %}
-    {% if lineVersion.isNew %}
-        <span class="label label-info">{{ 'line_version.labels.new'|trans({}, 'messages') }}</span>
+    {% if not lineVersion.status %}
+        {{ lineVersion.processStatus }}
     {% endif %}
-    {% if lineVersion.isActive %}
-        <span class="label label-success">{{ 'line_version.labels.active'|trans({}, 'messages') }}</span>
-    {% else %}
-        {% if lineVersion.isLocked %}
-            <span class="label label-danger">{{ 'line_version.labels.locked'|trans({}, 'messages') }}</span>
-        {% endif %}
-    {% endif %}
+    {{ ("line_version.labels." ~ lineVersion.status)|trans({}, 'messages') }}
 {% endmacro %}
 
 {% macro line_offers_history(line) %}

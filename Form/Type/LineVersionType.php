@@ -264,6 +264,16 @@ class LineVersionType extends AbstractType
                     'required' => false
                 )
             );
+            $builder->add(
+                'modificationLinks',
+                'collection',
+                array(
+                    'type' => new ModificationLinkType(),
+                    'allow_add' => true,
+                    'by_reference' => false
+                )
+        );
+
         }
         $builder->setAction($options['action']);
     }

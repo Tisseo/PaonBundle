@@ -76,7 +76,9 @@
         <ul>
             <li>{{ 'printing.labels.quantity'|trans({}, 'messages') }} : {{ printing.quantity }}</li>
             <li>{{ 'printing.labels.date'|trans({}, 'messages') }} : {{ printing.date|date('d/m/Y') }}</li>
+            {% if printing.comment %}
             <li>{{ 'printing.labels.comment'|trans({}, 'messages') }} : {{ printing.comment }}</li>
+            {% endif %}
         </ul>
             {% endfor %}
         {% endif %}

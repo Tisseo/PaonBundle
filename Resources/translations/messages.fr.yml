@@ -98,9 +98,9 @@ line_version:
         certified: Ligne certifiée
         depot: Dépôt
         comment: Commentaire
-        active: active
-        new: new
-        locked: locked
+        published: publiée
+        new: nouvelle
+        wip: work in progress
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
 
@@ -119,6 +119,14 @@ datasource:
     labels:
         name: Datasource
         code: Code
+
+modification_link:
+    labels:
+        date: Date
+
+modification:
+    labels:
+        description: Description
 
 #should be in error namespace above
 network:

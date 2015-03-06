@@ -18,13 +18,14 @@
 
 {% block table_head -%}
     <th class="col-sm-1 nat-sort">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
-    <th class="col-sm-4">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
+    <th class="col-sm-5">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
     <th class="col-sm-1">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
     <th class="col-sm-1">{{ 'line_version.list.columns.physical_mode'|trans({}, 'default') }}</th>
     <th class="col-sm-1">{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
+    <th class="col-sm-1">{{ 'line_version.list.columns.start_date'|trans({}, 'default') }}</th>
     <th class="col-sm-1">{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-        <th class="col-sm-3 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
+        <th class="col-sm-1 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
     {% endif %}
 {% endblock %}
 
@@ -57,21 +58,34 @@
                     {{ lineVersion.version }}
                 </td>
                 <td>
+                    {{ render.line_version_startDate(lineVersion) }}
+                </td>
+                <td>
                     {{ render.line_version_status(lineVersion) }}
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                        <a class="btn btn-default line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_datawarehouse_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                            <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
-                        </a>
-                        <a class="btn btn-default line-version-edit" href="{{ path('tisseo_datawarehouse_line_version_close', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                            <span class="glyphicon glyphicon-edit"></span> {{'global.closure'|trans({}, 'messages')}}
-                        </a>
-
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'global.actions'|trans({}, 'messages')}} <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_datawarehouse_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                            {{'global.edit'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="line-version-edit" href="{{ path('tisseo_datawarehouse_line_version_close', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                            {{'global.closure'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('tisseo_datawarehouse_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                            {{'global.consult'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
+                                </ul>
+                        </div>
                     {% endif %}
-                        <a class="btn btn-default" href="{{ path('tisseo_datawarehouse_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                            <span class="glyphicon glyphicon-edit"></span> {{'global.consult'|trans({}, 'messages')}}
-                        </a>
                 </td>
             </tr>
         {% endfor %}

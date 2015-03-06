@@ -38,8 +38,7 @@ class TripManager
             SELECT t, MIN(ce.startDate) as min_start_date FROM Tisseo\DatawarehouseBundle\Entity\Trip t
             JOIN t.route r
             JOIN r.lineVersion lv
-            JOIN t.calendarLinks cl
-            JOIN cl.periodCalendar pc
+            JOIN t.periodCalendar pc
             JOIN pc.calendarElements ce
             WHERE lv.id = ?1
             GROUP BY t.id
