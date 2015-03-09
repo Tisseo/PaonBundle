@@ -1,0 +1,56 @@
+Tisseo\DatawarehouseBundle\Entity\ModificationLink:
+    type: entity
+    table: modification_link
+    indexes:
+        modification_link_line_version_id_idx:
+            columns:
+                - line_version_id
+        modification_link_modification_id_idx:
+            columns:
+                - modification_id
+        modification_link_resolved_idx:
+            columns:
+                - resolved_in
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        date:
+            type: date
+            nullable: false
+            comment: 'Date de la prise d effet de la modification.'
+    manyToOne:
+        modification:
+            targetEntity: Modification
+            cascade: {  }
+            mappedBy: null
+            inversedBy: modificationLinks
+            joinColumns:
+                modification_id:
+                    referencedColumnName: id
+            orphanRemoval: true
+        resolvedIn:
+            targetEntity: Modification
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                resolved_in:
+                    referencedColumnName: id
+            orphanRemoval: false
+        lineVersion:
+            targetEntity: LineVersion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: modificationLinks
+            joinColumns:
+                line_version_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -25,10 +25,14 @@ class City
     private $name;
 
     /**
+     * @var geometry
+     */
+    private $theGeom;
+
+    /**
      * @var \Tisseo\DatawarehouseBundle\Entity\StopArea
      */
     private $mainStopArea;
-
 
     /**
      * Get id
@@ -84,6 +88,29 @@ class City
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set theGeom
+     *
+     * @param geometry $theGeom
+     * @return City
+     */
+    public function setTheGeom($theGeom)
+    {
+        $this->theGeom = $theGeom;
+
+        return $this;
+    }
+
+    /**
+     * Get theGeom
+     *
+     * @return geometry 
+     */
+    public function getTheGeom()
+    {
+        return $this->theGeom;
     }
 
     /**

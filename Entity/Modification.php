@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * ChangeCause
+ * Modification
  */
-class ChangeCause
+class Modification
 {
     /**
      * @var integer
@@ -23,14 +23,14 @@ class ChangeCause
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $changeCauseLinks;
+    private $modificationLinks;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->changeCauseLinks = new ArrayCollection();
+        $this->modificationLinks = new ArrayCollection();
     }
 
     /**
@@ -47,7 +47,7 @@ class ChangeCause
      * Set description
      *
      * @param string $description
-     * @return ChangeCause
+     * @return Modification
      */
     public function setDescription($description)
     {

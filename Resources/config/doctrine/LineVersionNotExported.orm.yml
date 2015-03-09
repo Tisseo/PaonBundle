@@ -2,12 +2,12 @@ Tisseo\DatawarehouseBundle\Entity\LineVersionNotExported:
     type: entity
     table: line_version_not_exported
     indexes:
+        line_version_not_exported_line_version_id_idx:
+            columns:
+                - line_version_id
         IDX_17585275A574F401:
             columns:
                 - export_destination_id
-        IDX_17585275F50734EE:
-            columns:
-                - line_version_id
     id:
         id:
             type: integer

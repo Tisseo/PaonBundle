@@ -86,7 +86,7 @@ class LineVersionType extends AbstractType
         {
             $builder->add(
                 'startDate',
-                'datepicker',
+                'datepicker_tid',
                 array(
                     'label' => 'line_version.labels.start_date',
                     'attr' => array(
@@ -96,7 +96,7 @@ class LineVersionType extends AbstractType
             );
             $builder->add(
                 'plannedEndDate',
-                'datepicker',
+                'datepicker_tid',
                 array(
                     'label' => 'line_version.labels.planned_end_date',
                     'attr' => array(
@@ -131,7 +131,7 @@ class LineVersionType extends AbstractType
             {
                 $builder->add(
                     'endDate',
-                    'datepicker',
+                    'datepicker_tid',
                     array(
                         'label' => 'line_version.labels.end_date',
                         'attr' => array(

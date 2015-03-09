@@ -2,7 +2,7 @@ Tisseo\DatawarehouseBundle\Entity\GridCalendar:
     type: entity
     table: grid_calendar
     indexes:
-        IDX_E17079D0F50734EE:
+        grid_calendar_line_version_id_idx:
             columns:
                 - line_version_id
     id:

@@ -31,6 +31,26 @@ class Calendar
     private $trips;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $calendarElements;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $calendarDatasources;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->calendarElements = new ArrayCollection();
+        $this->calendarDatasources = new ArrayCollection();
+        $this->trips = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -85,36 +105,14 @@ class Calendar
     {
         return $this->calendarType;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $calendarLinksPeriod;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $calendarLinksDay;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $calendarElements;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->calendarElements = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
+    
     /**
      * Add calendarElements
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\CalendarElement $calendarElements
      * @return Calendar
      */
-    public function addCalendarElement(\Tisseo\DatawarehouseBundle\Entity\CalendarElement $calendarElements)
+    public function addCalendarElement(CalendarElement $calendarElements)
     {
         $this->calendarElements[] = $calendarElements;
 
@@ -126,7 +124,7 @@ class Calendar
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\CalendarElement $calendarElements
      */
-    public function removeCalendarElement(\Tisseo\DatawarehouseBundle\Entity\CalendarElement $calendarElements)
+    public function removeCalendarElement(CalendarElement $calendarElements)
     {
         $this->calendarElements->removeElement($calendarElements);
     }
@@ -140,11 +138,6 @@ class Calendar
     {
         return $this->calendarElements;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $calendarDatasources;
-
 
     /**
      * Add calendarDatasources
@@ -152,7 +145,7 @@ class Calendar
      * @param \Tisseo\DatawarehouseBundle\Entity\CalendarDatasource $calendarDatasources
      * @return Calendar
      */
-    public function addCalendarDatasource(\Tisseo\DatawarehouseBundle\Entity\CalendarDatasource $calendarDatasources)
+    public function addCalendarDatasource(CalendarDatasource $calendarDatasources)
     {
         $this->calendarDatasources[] = $calendarDatasources;
 
@@ -164,7 +157,7 @@ class Calendar
      *
      * @param \Tisseo\DatawarehouseBundle\Entity\CalendarDatasource $calendarDatasources
      */
-    public function removeCalendarDatasource(\Tisseo\DatawarehouseBundle\Entity\CalendarDatasource $calendarDatasources)
+    public function removeCalendarDatasource(CalendarDatasource $calendarDatasources)
     {
         $this->calendarDatasources->removeElement($calendarDatasources);
     }

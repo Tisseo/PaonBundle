@@ -5,6 +5,9 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
         trip_route_id_idx:
             columns:
                 - route_id
+        trip_period_calendar_id_idx:
+            columns:
+                - period_calendar_id
         IDX_7656F53BF8697D13:
             columns:
                 - comment_id
@@ -27,6 +30,11 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             length: 20
             fixed: false
             comment: 'Nom de l''objet. Si vient d''Hastus, identiques a la datasource.'
+        isPattern:
+            type: boolean
+            nullable: true
+            comment: ''
+            column: is_pattern
     oneToMany:
         stopTimes:
             targetEntity: StopTime
@@ -45,6 +53,9 @@ Tisseo\DatawarehouseBundle\Entity\Trip:
             targetEntity: Calendar
             mappedBy: null 
             inversedBy: trips
+            joinColumns:
+                period_calendar_id:
+                    referencedColumnName: id
             orphanRemoval: true
             fetch: "EXTRA_LAZY"
         comment:

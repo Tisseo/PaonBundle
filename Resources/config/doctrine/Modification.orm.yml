@@ -1,6 +1,6 @@
-Tisseo\DatawarehouseBundle\Entity\ChangeCause:
+Tisseo\DatawarehouseBundle\Entity\Modification:
     type: entity
-    table: change_cause
+    table: modification
     id:
         id:
             type: integer
@@ -18,10 +18,10 @@ Tisseo\DatawarehouseBundle\Entity\ChangeCause:
             fixed: false
             comment: ''
     oneToMany:
-        changeCauseLinks:
-            targetEntity: ChangeCauseLink
+        modificationLinks:
+            targetEntity: ModificationLink
             cascade: {  }
-            mappedBy: changeCause
+            mappedBy: modification
             inversedBy: null
             orphanRemoval: false
             fetch: 'EXTRA_LAZY'

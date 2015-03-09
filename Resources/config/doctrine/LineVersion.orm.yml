@@ -158,8 +158,8 @@ Tisseo\DatawarehouseBundle\Entity\LineVersion:
             inversedBy: null
             orphanRemoval: true
             fetch: 'EXTRA_LAZY'
-        changeCauseLinks:
-            targetEntity: ChangeCauseLink
+        modificationLinks:
+            targetEntity: ModificationLink
             cascade: ['persist', 'remove']
             mappedBy: lineVersion
             inversedBy: null

@@ -11,6 +11,10 @@ use Doctrine\Common\Collections\Collection;
  */
 class LineVersion
 {
+    const NW = "new";
+    const WP = "wip";
+    const PB = "published";
+
     /**
      * @var integer
      */
@@ -134,7 +138,7 @@ class LineVersion
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $changeCauseLinks;
+    private $modificationLinks;
 
     /**
      * Constructor
@@ -149,7 +153,7 @@ class LineVersion
     {
         $this->gridCalendars = new ArrayCollection();
         $this->printings = new ArrayCollection();
-        $this->changeCauseLinks = new ArrayCollection();
+        $this->modificationLinks = new ArrayCollection();
         $this->startDate = new \Datetime();
 
         $this->version = 1;
@@ -180,10 +184,12 @@ class LineVersion
         {
             $this->setLine($line);
         }
+
+        $this->processStatus();
     }
 
     /**
-     * mergeGridCalendars
+     * Merge GridCalendars
      * @param LineVersion $lineVersion
      *
      * Attach gridCalendars passed from another LineVersion
@@ -199,7 +205,32 @@ class LineVersion
     }
 
     /**
-     * closeDate
+     * Process Status
+     *
+     * Set status according to startDate and gridCalendars values
+     */
+    public function processStatus()
+    {
+        $now = new \Datetime();
+        if ($this->startDate < $now)
+            $this->status = self::PB;
+        else if ($this->gridCalendars->isEmpty())
+            $this->status = self::NW;
+        else
+        {
+            foreach($this->gridCalendars as $gridCalendar)
+            {
+                if ($gridCalendar->getGridLinkCalendarMaskTypes()->isEmpty())
+                {
+                    $this->status = self::WP;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Close Date
      * @param Datetime $date
      *
      * Set the endDate with the date passed as parameter
@@ -831,6 +862,51 @@ class LineVersion
     public function removeGridCalendar(GridCalendar $gridCalendar)
     {
         $this->gridCalendars->removeElement($gridCalendar);
+    }
+
+    /**
+     * Add modificationLinks
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\ModificationLink $modificationLinks
+     * @return Line
+     */
+    public function addModificationLinks(ModificationLink $modificationLinks)
+    {
+        $this->modificationLinks[] = $modificationLinks;
+        $modificationLinks->setLineVersion($this);
+        return $this;
+    }
+
+    /**
+     * Set modificationLinks
+     *
+     * @param \Doctrine\Common\Collections\Collection $modificationLinks
+     * @return Line
+     */
+    public function setModificationLinks(Collection $modificationLinks)
+    {
+        $this->modificationLinks = $modificationLinks;
+        return $this;
+    }
+
+    /**
+     * Remove modificationLinks 
+     *
+     * @param \Tisseo\DatawarehouseBundle\Entity\ModificationLink $modificationLinks
+     */
+    public function removeModificationLinks(ModificationLink $modificationLinks)
+    {
+        $this->modificationLinks->removeElement($modificationLinks);
+    }
+
+    /**
+     * Get modificationLinks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModificationLinks()
+    {
+        return $this->modificationLinks;
     }
 
     /**

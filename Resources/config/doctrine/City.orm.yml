@@ -2,9 +2,12 @@ Tisseo\DatawarehouseBundle\Entity\City:
     type: entity
     table: city
     indexes:
-        IDX_2D5B0234368E303:
+        city_geom_idx:
             columns:
-                - main_stop_area_id
+                - the_geom
+        city_main_stop_area_id_idx:
+            columns:
+                - main_stop_area_id 
     id:
         id:
             type: integer
@@ -27,6 +30,12 @@ Tisseo\DatawarehouseBundle\Entity\City:
             length: 255
             fixed: false
             comment: ''
+        theGeom:
+            type: geometry
+            nullable: true
+            comment: ''
+            requireSQLConversion: true
+            column: the_geom
     manyToOne:
         mainStopArea:
             targetEntity: StopArea

@@ -2,10 +2,10 @@ Tisseo\DatawarehouseBundle\Entity\GridLinkCalendarMaskType:
     type: entity
     table: grid_link_calendar_mask_type
     indexes:
-        IDX_71F474A245304362:
+        grid_link_calendar_mask_type_grid_calendar_id_idx:
             columns:
                 - grid_calendar_id
-        IDX_71F474A27D504B03:
+        grid_link_calendar_mask_type_grid_mask_type_id_idx:
             columns:
                 - grid_mask_type_id
     id:

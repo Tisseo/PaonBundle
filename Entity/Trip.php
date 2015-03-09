@@ -21,6 +21,11 @@ class Trip
     private $name;
 
     /**
+     * @var boolean
+     */
+    private $isPattern;
+
+    /**
      * @var \Tisseo\DatawarehouseBundle\Entity\Comment
      */
     private $comment;
@@ -90,6 +95,29 @@ class Trip
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set isPattern
+     *
+     * @param boolean $isPattern
+     * @return Trip
+     */
+    public function setIsPattern($isPattern)
+    {
+        $this->isPattern = $isPattern;
+
+        return $this;
+    }
+
+    /**
+     * Get isPattern
+     *
+     * @return boolean 
+     */
+    public function getIsPattern()
+    {
+        return $this->isPattern;
     }
 
     /**

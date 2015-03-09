@@ -45,11 +45,11 @@ services:
     tisseo_datawarehouse.export_manager:
         class: %tisseo_datawarehouse.export_manager.class%
 
-    form.type.datepicker:
+    form.type.datepicker_tid:
         class: Tisseo\DatawarehouseBundle\Form\Type\DatepickerType
         tags:
-            - { name: form.type, alias: datepicker }
-    tisseo.datawarehouse.ajax_form_listener:
+            - { name: form.type, alias: datepicker_tid }
+    tisseo_datawarehouse.ajax_form_listener:
         class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
