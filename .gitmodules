@@ -1,0 +1,3 @@
+[submodule "Entity"]
+	path = Entity
+	url = ../endiv-doctrine
