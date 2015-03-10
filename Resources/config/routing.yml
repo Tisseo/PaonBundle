@@ -76,9 +76,12 @@ tisseo_datawarehouse_exception_type_edit:
     defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:edit, exceptionTypeId: null }
 
 #Imports administration
-tisseo_datawarehouse_import_fichor:
-    pattern: /imports/fichor
-    defaults: { _controller: TisseoDatawarehouseBundle:Import:fichor }
+tisseo_datawarehouse_import:
+    pattern: /imports
+    defaults: { _controller: TisseoDatawarehouseBundle:Import:import }
+tisseo_datawarehouse_import_edit:
+    pattern: /imports/{jobName}
+    defaults: { _controller: TisseoDatawarehouseBundle:Import:edit, jobName: null }
 
 #Export administration
 tisseo_datawarehouse_export_timetable:

@@ -1,0 +1,27 @@
+{% extends "TisseoDatawarehouseBundle::base.html.twig" %}
+
+
+{% block container %}
+	{% if running == true %}
+		Job en cours, lancement de traitement impossible...<br>
+	{% endif %}
+	<br>
+
+	{% for job in jobs %}
+		{% if running == true %}
+			{% set bg_color = "gray" %}
+			{% set style_color = "background-color:gray;color:white" %}			
+			{% set link = "" %}
+		{% else %}
+			{% set bg_color = job.color %}
+			{% set style_color = "background-color:"~job.color~";color:white" %}
+			{% set link =  path('tisseo_datawarehouse_import_edit', {'jobName': job.name})  %}
+		{% endif %}
+		
+		<a class="btn btn-default" style={{style_color}} href={{link}}> {{ job.name }} </a>
+		{% if "launcher" in job|keys %}
+			<span style="margin-left: 10px">lancé par {{ job.launcher }}</span> 
+		{% endif %}
+		<br><br>	
+	{% endfor %}
+{% endblock %}

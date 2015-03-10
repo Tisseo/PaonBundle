@@ -30,9 +30,7 @@ parameters:
         BUSINESS_MANAGE_EXPORT:
             label: Administrer les exports
             description: Administrer les exports.
-        BUSINESS_MANAGE_IMPORT_FICHOR:
-            label: Accès à l'import fiches horaires
-            description: Droit de lancer un import fiches horaires.
-        BUSINESS_MANAGE_EXPORT_TIMETABLE:
-            label: Accès à l'export vers timetable
-            description: Droit de lancer un export vers timetable.
+        BUSINESS_MANAGE_IMPORTS_EXPORTS:
+            label: Accès aux imports/exports
+            description: Droit de lancer des imports ou exports.
+        
