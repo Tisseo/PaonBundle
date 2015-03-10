@@ -83,6 +83,11 @@
                                             {{'global.consult'|trans({}, 'messages')}}
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="line-version-edit" href="{{ path('tisseo_datawarehouse_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
+                                            {{'global.purge'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
                                 </ul>
                         </div>
                     {% endif %}

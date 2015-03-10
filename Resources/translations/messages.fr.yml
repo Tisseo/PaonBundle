@@ -43,6 +43,7 @@ global:
         end: au
         and: et
     edit_calendar: Calendriers
+    purge: Purger
 
 error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."

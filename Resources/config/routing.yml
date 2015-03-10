@@ -30,6 +30,11 @@ tisseo_datawarehouse_line_version_close:
     defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:close }
     requirements:
         lineVersionId: \d+
+tisseo_datawarehouse_line_version_purge:
+    pattern: /offers/purge/{lineVersionId}
+    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:purge }
+    requirements:
+        lineVersionId: \d+
 tisseo_datawarehouse_printing_create:
     pattern: /offers/add/printings/{lineVersionId}
     defaults: { _controller: TisseoDatawarehouseBundle:Printing:create }
