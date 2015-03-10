@@ -13,14 +13,25 @@ class ImportController extends AbstractController
     public function editAction(Request $request, $jobName)
     {
         $this->isGranted('BUSINESS_MANAGE_IMPORTS_EXPORTS');
-
-		$run_job_url = self::server."job/".str_replace(" ", "%20", self::job_prefix.$jobName)."/build";
+		
+		//running jobs ?
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $run_job_url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POST, 1);
-		
 		curl_setopt($ch, CURLOPT_USERPWD, self::jenkins_user);
+		$flux_url = self::server."view/IV%20-%20FLUX%20DE%20DONNEE/api/json?tree=jobs[name,color,lastBuild[number]]";
+		curl_setopt($ch, CURLOPT_URL,$flux_url);
+		$flux_json = curl_exec($ch);
+		$flux_data = json_decode($flux_json, true);
+		foreach($flux_data["jobs"] as $key=>$val){
+			if($val["color"] == "blue_anime") {
+				return $this->redirect($this->generateUrl('tisseo_datawarehouse_import'));
+			}
+		}
+		
+		//run selected job
+		$run_job_url = self::server."job/".str_replace(" ", "%20", self::job_prefix.$jobName)."/build";
+		curl_setopt($ch, CURLOPT_URL, $run_job_url);
 		$json=curl_exec($ch);
 		curl_close($ch);
 
@@ -42,12 +53,9 @@ class ImportController extends AbstractController
 		$json = curl_exec($ch);
 		$data = json_decode($json, true);
 		
-		
-		//http://srv-dev03:7070/
-
+		//running jobs ?
 		$running = false;
 		$running_job = "";
-		curl_setopt($ch, CURLOPT_URL,$json_jobs_url);
 		$flux_url = self::server."view/IV%20-%20FLUX%20DE%20DONNEE/api/json?tree=jobs[name,color,lastBuild[number]]";
 		curl_setopt($ch, CURLOPT_URL,$flux_url);
 		$flux_json = curl_exec($ch);
@@ -59,11 +67,7 @@ class ImportController extends AbstractController
 			}
 		}
 		
-		
-		
-		
-		
-		
+		//create job list
 		$jobs = array();
 		foreach($data["jobs"] as $key=>$val){
 			$job = array(
