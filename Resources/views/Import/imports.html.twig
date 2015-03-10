@@ -3,7 +3,7 @@
 
 {% block container %}
 	{% if running == true %}
-		Job en cours, lancement de traitement impossible...<br>
+		Job "{{ running_job }}" en cours, lancement de traitement impossible...<br>
 	{% endif %}
 	<br>
 
@@ -12,16 +12,18 @@
 			{% set bg_color = "gray" %}
 			{% set style_color = "background-color:gray;color:white" %}			
 			{% set link = "" %}
+			<span class="btn btn-default" style={{style_color}} > {{ job.name }} </span>
+			{% if "launcher" in job|keys %}
+				<span style="margin-left: 10px">lancé par {{ job.launcher }}</span> 
+			{% endif %}
 		{% else %}
 			{% set bg_color = job.color %}
 			{% set style_color = "background-color:"~job.color~";color:white" %}
 			{% set link =  path('tisseo_datawarehouse_import_edit', {'jobName': job.name})  %}
+			<a class="btn btn-default" style={{style_color}} href={{link}}> {{ job.name }} </a>
 		{% endif %}
 		
-		<a class="btn btn-default" style={{style_color}} href={{link}}> {{ job.name }} </a>
-		{% if "launcher" in job|keys %}
-			<span style="margin-left: 10px">lancé par {{ job.launcher }}</span> 
-		{% endif %}
+			
 		<br><br>	
 	{% endfor %}
 {% endblock %}

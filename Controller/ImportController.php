@@ -14,7 +14,6 @@ class ImportController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_IMPORTS_EXPORTS');
 
-		$jobs_url = 'view/TID/api/json?tree=jobs[name,color,lastBuild[number]]';;
 		$run_job_url = self::server."job/".str_replace(" ", "%20", self::job_prefix.$jobName)."/build";
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $run_job_url);
@@ -25,7 +24,6 @@ class ImportController extends AbstractController
 		$json=curl_exec($ch);
 		curl_close($ch);
 
-        //return ($this->importAction($request));
 		 return $this->redirect($this->generateUrl('tisseo_datawarehouse_import'));
     }
 
@@ -33,8 +31,7 @@ class ImportController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_IMPORTS_EXPORTS');
         $importManager = $this->get('tisseo_datawarehouse.import_manager');
-		
-		
+				
 		// get jobs list
 		$jobs_url = 'view/TID/api/json?tree=jobs[name,color,lastBuild[number]]';;
 		$json_jobs_url = self::server.$jobs_url;
@@ -42,10 +39,32 @@ class ImportController extends AbstractController
 		curl_setopt($ch, CURLOPT_URL,$json_jobs_url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_USERPWD, self::jenkins_user);
-		$json=curl_exec($ch);
+		$json = curl_exec($ch);
 		$data = json_decode($json, true);
-		$jobs = array();
+		
+		
+		//http://srv-dev03:7070/
+
 		$running = false;
+		$running_job = "";
+		curl_setopt($ch, CURLOPT_URL,$json_jobs_url);
+		$flux_url = self::server."view/IV%20-%20FLUX%20DE%20DONNEE/api/json?tree=jobs[name,color,lastBuild[number]]";
+		curl_setopt($ch, CURLOPT_URL,$flux_url);
+		$flux_json = curl_exec($ch);
+		$flux_data = json_decode($flux_json, true);
+		foreach($flux_data["jobs"] as $key=>$val){
+			if($val["color"] == "blue_anime") {
+				$running = true;
+				$running_job = str_replace ( "IV - ATOMIC JOB - ", "" ,  $val["name"]);
+			}
+		}
+		
+		
+		
+		
+		
+		
+		$jobs = array();
 		foreach($data["jobs"] as $key=>$val){
 			$job = array(
 				"name"=> str_replace ( self::job_prefix, "" ,  $val["name"]),
@@ -79,6 +98,7 @@ class ImportController extends AbstractController
             array(
                 'pageTitle' => 'menu.import_manage',
                 'jobs' => $jobs,
+				'running_job' => $running_job,
 				'running' => $running
             )
         );
