@@ -1,6 +1,6 @@
 parameters:
-    tisseo_tid.perimeter.class: Tisseo\DatawarehouseBundle\Services\PerimeterManager
-    tisseo_tid.user.class: Tisseo\DatawarehouseBundle\Services\UserManager
+    tisseo_tid.perimeter.class: Tisseo\TidBundle\Services\PerimeterManager
+    tisseo_tid.user.class: Tisseo\TidBundle\Services\UserManager
     tisseo_tid.import_manager.class: Tisseo\EndivBundle\Services\ImportManager
     tisseo_tid.export_manager.class: Tisseo\EndivBundle\Services\ExportManager
 
