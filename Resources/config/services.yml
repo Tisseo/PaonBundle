@@ -1,8 +1,16 @@
 parameters:
+    tisseo_tid.perimeter.class: Tisseo\DatawarehouseBundle\Services\PerimeterManager
+    tisseo_tid.user.class: Tisseo\DatawarehouseBundle\Services\UserManager
     tisseo_tid.import_manager.class: Tisseo\EndivBundle\Services\ImportManager
     tisseo_tid.export_manager.class: Tisseo\EndivBundle\Services\ExportManager
 
 services:
+    tisseo_tid.perimeter_manager:
+       class: %tisseo_tid.perimeter.class%
+       arguments: ['@doctrine.orm.default_entity_manager']
+    tisseo_tid.user_manager:
+       class: %tisseo_tid.user.class%
+       arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
     tisseo_tid.import_manager:
         class: %tisseo_tid.import_manager.class%
     tisseo_tid.export_manager:
