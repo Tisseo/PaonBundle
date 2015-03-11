@@ -26,14 +26,14 @@ class ImportController extends AbstractController
 		//search for master job running
 		foreach($flux_data["jobs"] as $key=>$val){
 			if (strpos($val["name"], self::p_job) !== false) {
-				if($val["color"] == "blue_anime") {
+				if(strpos($val["color"], "_anime") !== false) {
 					return $val;
 				}
 			}
 		}
 		//if no master job founded, search for any running job
 		foreach($flux_data["jobs"] as $key=>$val){
-			if($val["color"] == "blue_anime") {
+			if(strpos($val["color"], "_anime") !== false) {
 				return $val;
 			}
 		}
@@ -124,7 +124,7 @@ class ImportController extends AbstractController
 				"color" => $val["color"],
 				);
 			
-			if($job["color"] == "blue_anime") {
+			if(strpos($job["color"], "_anime") !== false) {
 				$job["number"] = $val["lastBuild"]["number"];
 				
 				//get launcher
