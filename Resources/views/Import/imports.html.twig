@@ -1,4 +1,4 @@
-{% extends "TisseoDatawarehouseBundle::base.html.twig" %}
+{% extends "TisseoTidBundle::base.html.twig" %}
 
 
 {% block container %}
@@ -21,7 +21,7 @@
 		{% else %}
 			{% set bg_color = job.color %}
 			{% set style_color = "background-color:"~job.color~";color:white" %}
-			{% set link =  path('tisseo_datawarehouse_import_edit', {'jobName': job.name})  %}
+			{% set link =  path('tisseo_tid_import_edit', {'jobName': job.name})  %}
 			<a class="btn btn-default" style={{style_color}} href={{link}}> {{ job.name }} </a>
 		{% endif %}
 		

@@ -1,56 +1,26 @@
 parameters:
-    tisseo_datawarehouse.perimeter.class: Tisseo\DatawarehouseBundle\Services\PerimeterManager
-    tisseo_datawarehouse.user.class: Tisseo\DatawarehouseBundle\Services\UserManager
-    tisseo_datawarehouse.line_manager.class: Tisseo\DatawarehouseBundle\Services\LineManager
-    tisseo_datawarehouse.physical_mode_manager.class: Tisseo\DatawarehouseBundle\Services\PhysicalModeManager
-    tisseo_datawarehouse.printing_manager.class: Tisseo\DatawarehouseBundle\Services\PrintingManager
-    tisseo_datawarehouse.line_version_manager.class: Tisseo\DatawarehouseBundle\Services\LineVersionManager
-    tisseo_datawarehouse.trip_manager.class: Tisseo\DatawarehouseBundle\Services\TripManager
-    tisseo_datawarehouse.grid_calendar_manager.class: Tisseo\DatawarehouseBundle\Services\GridCalendarManager
-    tisseo_datawarehouse.exception_type_manager.class: Tisseo\DatawarehouseBundle\Services\ExceptionTypeManager
-    tisseo_datawarehouse.import_manager.class: Tisseo\DatawarehouseBundle\Services\ImportManager
-    tisseo_datawarehouse.export_manager.class: Tisseo\DatawarehouseBundle\Services\ExportManager
+    tisseo_tid.perimeter.class: Tisseo\TidBundle\Services\PerimeterManager
+    tisseo_tid.user.class: Tisseo\TidBundle\Services\UserManager
+    tisseo_tid.import_manager.class: Tisseo\EndivBundle\Services\ImportManager
+    tisseo_tid.export_manager.class: Tisseo\EndivBundle\Services\ExportManager
 
 services:
-    tisseo_datawarehouse.perimeter_manager:
-       class: %tisseo_datawarehouse.perimeter.class%
+    tisseo_tid.perimeter_manager:
+       class: %tisseo_tid.perimeter.class%
        arguments: ['@doctrine.orm.default_entity_manager']
-    tisseo_datawarehouse.user_manager:
-       class: %tisseo_datawarehouse.user.class%
+    tisseo_tid.user_manager:
+       class: %tisseo_tid.user.class%
        arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
-    tisseo_datawarehouse.line_manager:
-        class: %tisseo_datawarehouse.line_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-    tisseo_datawarehouse.trip_manager:
-        class: %tisseo_datawarehouse.trip_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-        lazy: true
-    tisseo_datawarehouse.physical_mode_manager:
-        class: %tisseo_datawarehouse.physical_mode_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-    tisseo_datawarehouse.line_version_manager:
-        class: %tisseo_datawarehouse.line_version_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager', '@tisseo_datawarehouse.trip_manager']
-    tisseo_datawarehouse.grid_calendar_manager:
-        class: %tisseo_datawarehouse.grid_calendar_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-    tisseo_datawarehouse.printing_manager:
-        class: %tisseo_datawarehouse.printing_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-    tisseo_datawarehouse.exception_type_manager:
-        class: %tisseo_datawarehouse.exception_type_manager.class%
-        arguments: ['@doctrine.orm.endiv_entity_manager']
-    tisseo_datawarehouse.import_manager:
-        class: %tisseo_datawarehouse.import_manager.class%
-    tisseo_datawarehouse.export_manager:
-        class: %tisseo_datawarehouse.export_manager.class%
+    tisseo_tid.import_manager:
+        class: %tisseo_tid.import_manager.class%
+    tisseo_tid.export_manager:
+        class: %tisseo_tid.export_manager.class%
 
     form.type.datepicker_tid:
-        class: Tisseo\DatawarehouseBundle\Form\Type\DatepickerType
+        class: Tisseo\TidBundle\Form\Type\DatepickerType
         tags:
             - { name: form.type, alias: datepicker_tid }
-    tisseo_datawarehouse.ajax_form_listener:
+    tisseo_tid.ajax_form_listener:
         class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-

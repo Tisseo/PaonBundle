@@ -1,13 +1,14 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Form\Type;
+namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-use Tisseo\DatawarehouseBundle\Entity\LineVersion;
-use Tisseo\DatawarehouseBundle\Form\DataTransformer\EntityToIntTransformer;
+
+use Tisseo\EndivBundle\Entity\LineVersion;
+use Tisseo\EndivBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class PrintingType extends AbstractType
 {
@@ -18,8 +19,8 @@ class PrintingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $entityTransformer = new EntityToIntTransformer($options["em"]);
-        $entityTransformer->setEntityClass("Tisseo\\DatawarehouseBundle\\Entity\\LineVersion");
-        $entityTransformer->setEntityRepository("TisseoDatawarehouseBundle:LineVersion");
+        $entityTransformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\LineVersion");
+        $entityTransformer->setEntityRepository("TisseoEndivBundle:LineVersion");
         $entityTransformer->setEntityType("lineVersion");
 
         $builder->add(
@@ -64,7 +65,7 @@ class PrintingType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\Printing'
+                'data_class' => 'Tisseo\EndivBundle\Entity\Printing'
             ))
             ->setRequired(array(
                 'em',
@@ -79,6 +80,6 @@ class PrintingType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_printing';
+        return 'tid_printing';
     }
 }

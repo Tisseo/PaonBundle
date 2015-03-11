@@ -44,7 +44,7 @@ define(['jquery', 'fosjsrouting'], function($) {
             });
             var getForm = false;
             $.ajax({
-                url : Routing.generate('tisseo_datawarehouse_calendar_create')+"/"+line_id,
+                url : Routing.generate('tisseo_tid_calendar_create')+"/"+line_id,
                 type: 'POST',
                 data : data,
                 success: function(data) {
@@ -63,7 +63,7 @@ define(['jquery', 'fosjsrouting'], function($) {
                 if (getForm === true)
                 {
                     $.ajax({
-                        url : Routing.generate('tisseo_datawarehouse_calendar_form')+"/"+line_id,
+                        url : Routing.generate('tisseo_tid_calendar_form')+"/"+line_id,
                         type: 'GET',
                         success: function(data) {
                             $("#new-grid-calendar").html(data);
@@ -91,7 +91,7 @@ define(['jquery', 'fosjsrouting'], function($) {
                     data[temp_grid].push($(this).val());
             });
             $.ajax({
-                url : Routing.generate('tisseo_datawarehouse_calendar_edit')+"/"+line_id,
+                url : Routing.generate('tisseo_tid_calendar_edit')+"/"+line_id,
                 type: 'POST',
                 data : JSON.stringify(data),
                 success: function(data) {

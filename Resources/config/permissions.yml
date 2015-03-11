@@ -1,5 +1,5 @@
 parameters:
-    datawarehouse.permissions:
+    tid.permissions:
         BUSINESS_LIST_LINE:
             label: Afficher la liste des lignes
             description: Afficher la liste des lignes.

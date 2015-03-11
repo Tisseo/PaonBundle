@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Validator\Constraints;
+namespace Tisseo\TidBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 

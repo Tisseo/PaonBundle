@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;

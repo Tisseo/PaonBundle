@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Form\Type;
+namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ class LineDatasourceType extends AbstractType
             'datasource',
             'entity',
             array(
-                'class' => 'TisseoDatawarehouseBundle:Datasource',
+                'class' => 'TisseoTidBundle:Datasource',
                 'property' => 'name',
                 'label' => 'datasource.labels.name'
             )
@@ -40,7 +40,7 @@ class LineDatasourceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\LineDatasource'
+                'data_class' => 'Tisseo\EndivBundle\Entity\LineDatasource'
             )
         );
     }
@@ -50,6 +50,6 @@ class LineDatasourceType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_line_datasource';
+        return 'tid_line_datasource';
     }
 }

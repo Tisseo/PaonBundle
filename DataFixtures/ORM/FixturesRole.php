@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\DataFixtures\ORM;
+namespace Tisseo\TidBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -16,15 +16,15 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
     private $roles = array(
         array(
             'name'          => 'User TID',
-            'reference'     => 'user-datawarehouse',
-            'application'   => 'app-datawarehouse',
+            'reference'     => 'user-tid',
+            'application'   => 'app-tid',
             'isEditable'    => true,
             'permissions'   => array()
         ),
         array(
             'name'          => 'Admin TID',
-            'reference'     => 'admin-datawarehouse',
-            'application'   => 'app-datawarehouse',
+            'reference'     => 'admin-tid',
+            'application'   => 'app-tid',
             'isEditable'    => true,
             'permissions'  => array(
                 'BUSINESS_MANAGE_CUSTOMER'

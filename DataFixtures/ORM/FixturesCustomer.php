@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\DataFixtures\ORM;
+namespace Tisseo\TidBundle\DataFixtures\ORM;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,7 +34,7 @@ class FixturesCustomer extends AbstractFixture implements OrderedFixtureInterfac
         $navitiaToken = $this->container->getParameter('nmm.navitia.token');
         $samFixturePerimeters = $this->container->getParameter('sam_fixture_perimeters');
 
-        $this->addCustomerToApplication($om, 'app-datawarehouse', 'customer-tisseo', $navitiaToken);
+        $this->addCustomerToApplication($om, 'app-tid', 'customer-tisseo', $navitiaToken);
 
         foreach($samFixturePerimeters as $key => $value) {
             $this->addPerimeterToCustomer($om, $value['coverage'], $value['network'], 'customer-tisseo');

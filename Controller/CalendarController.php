@@ -1,14 +1,14 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-use Tisseo\DatawarehouseBundle\Form\Type\GridCalendarType;
-use Tisseo\DatawarehouseBundle\Entity\GridCalendar;
-use Tisseo\DatawarehouseBundle\Entity\LineVersion;
+use Tisseo\TidBundle\Form\Type\GridCalendarType;
+use Tisseo\EndivBundle\Entity\GridCalendar;
+use Tisseo\EndivBundle\Entity\LineVersion;
 
 class CalendarController extends AbstractController
 {
@@ -27,7 +27,7 @@ class CalendarController extends AbstractController
             $gridCalendar,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_datawarehouse_calendar_edit',
+                    'tisseo_tid_calendar_edit',
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
@@ -51,8 +51,8 @@ class CalendarController extends AbstractController
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $gridCalendarManager = $this->get('tisseo_datawarehouse.grid_calendar_manager');
-            $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+            $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
+            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
     
             $lineVersion = $lineVersionManager->find($lineVersionId);
             $gridCalendar = $form->getData();
@@ -60,7 +60,7 @@ class CalendarController extends AbstractController
             $gridCalendarManager->save($gridCalendar);
             
             return $this->render(
-                'TisseoDatawarehouseBundle:GridCalendar:calendar.html.twig',
+                'TisseoTidBundle:GridCalendar:calendar.html.twig',
                 array(
                     'gridCalendar' => $gridCalendar
                 )
@@ -68,7 +68,7 @@ class CalendarController extends AbstractController
         }
 
         return $this->render(
-            'TisseoDatawarehouseBundle:GridCalendar:form.html.twig',
+            'TisseoTidBundle:GridCalendar:form.html.twig',
             array(
                 'form' => $form->createView()
             )
@@ -86,12 +86,12 @@ class CalendarController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_CALENDAR');
 
-        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         $form = $this->buildForm($lineVersion);
         return $this->render(
-            'TisseoDatawarehouseBundle:GridCalendar:form.html.twig',
+            'TisseoTidBundle:GridCalendar:form.html.twig',
             array(
                 'form' => $form->createView()
             )
@@ -113,8 +113,8 @@ class CalendarController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_CALENDAR');
 
-        $gridCalendarManager = $this->get('tisseo_datawarehouse.grid_calendar_manager');
-        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
@@ -124,7 +124,7 @@ class CalendarController extends AbstractController
             $gridCalendarManager->attachGridCalendars($data);
 
             return $this->redirect(
-                $this->generateUrl('tisseo_datawarehouse_calendar_list')
+                $this->generateUrl('tisseo_tid_calendar_list')
             );
         }
 
@@ -133,7 +133,7 @@ class CalendarController extends AbstractController
         $gridMaskTypes = $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion);
 
         return $this->render(
-            'TisseoDatawarehouseBundle:LineVersion:calendars.html.twig',
+            'TisseoTidBundle:LineVersion:calendars.html.twig',
             array(
                 'title' => 'menu.grid_calendar_manage',
                 'lineVersionId' => $lineVersion->getId(),
@@ -157,7 +157,7 @@ class CalendarController extends AbstractController
 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
-            $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
             $lineVersion = $lineVersionManager->find($lineVersionId);
 
             return $this->processForm($request, $this->buildForm($lineVersion), $lineVersion->getId());
@@ -176,9 +176,9 @@ class CalendarController extends AbstractController
     {
         $this->isGranted('BUSINESS_LIST_CALENDAR');
       
-        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         return $this->render(
-            'TisseoDatawarehouseBundle:Calendar:list.html.twig',
+            'TisseoTidBundle:Calendar:list.html.twig',
             array(
                 'pageTitle' => 'menu.calendar_manage',
                 'lineVersions' => $lineVersionManager->findActiveLineVersions(new \Datetime())

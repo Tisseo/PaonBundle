@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Form\Type;
+namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -88,7 +88,7 @@ class GridCalendarType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\GridCalendar'
+                'data_class' => 'Tisseo\EndivBundle\Entity\GridCalendar'
             )
         );
     }
@@ -98,6 +98,6 @@ class GridCalendarType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_grid_calendar';
+        return 'tid_grid_calendar';
     }
 }

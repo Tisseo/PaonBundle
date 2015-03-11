@@ -1,12 +1,12 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Tisseo\DatawarehouseBundle\Form\Type\PrintingType;
-use Tisseo\DatawarehouseBundle\Entity\Printing;
-use Tisseo\DatawarehouseBundle\Entity\LineVersion;
+use Tisseo\TidBundle\Form\Type\PrintingType;
+use Tisseo\TidBundle\Entity\Printing;
+use Tisseo\TidBundle\Entity\LineVersion;
 
 class PrintingController extends AbstractController
 {
@@ -17,7 +17,7 @@ class PrintingController extends AbstractController
             $printing,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_datawarehouse_printing_create',
+                    'tisseo_tid_printing_create',
                     array(
                         'lineVersionId' => $printing->getLineVersion()->getId()
                     )
@@ -31,7 +31,7 @@ class PrintingController extends AbstractController
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
-        $printingManager = $this->get('tisseo_datawarehouse.printing_manager');
+        $printingManager = $this->get('tisseo_tid.printing_manager');
         if ($form->isValid()) {
             $printingManager->save($form->getData());
             $this->get('session')->getFlashBag()->add(
@@ -43,7 +43,7 @@ class PrintingController extends AbstractController
                 )
             );
             return $this->redirect(
-                $this->generateUrl('tisseo_datawarehouse_line_version_list')
+                $this->generateUrl('tisseo_tid_line_version_list')
             );
         }
         return (null);
@@ -53,7 +53,7 @@ class PrintingController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_tid.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         if (empty($lineVersion))
@@ -68,7 +68,7 @@ class PrintingController extends AbstractController
             );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_datawarehouse_line_version_list')
+                $this->generateUrl('tisseo_tid_line_version_list')
             );
         }
         else
@@ -80,7 +80,7 @@ class PrintingController extends AbstractController
 
             if (!$render) {
                 return $this->render(
-                    'TisseoDatawarehouseBundle:Printing:form.html.twig',
+                    'TisseoTidBundle:Printing:form.html.twig',
                     array(
                         'form' => $form->createView(),
                         'title' => 'printing.create'
