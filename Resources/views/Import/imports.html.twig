@@ -3,14 +3,16 @@
 
 {% block container %}
 	{% if running == true %}
-		Job "{{ running_job }}" en cours, lancement de traitement impossible...<br>
+		{#Job "{{ running_job.name }}"(n°{{ running_job.number }}) lancé par "{{ running_job.user}}" en cours de traitement...<br>#}
+		Job "{{ running_job.name }}" lancé par "{{ running_job.user}}" en cours de traitement...<br>
+		lancement de nouveau traitement impossible...<br>
 	{% endif %}
 	<br>
 
 	{% for job in jobs %}
 		{% if running == true %}
 			{% set bg_color = "gray" %}
-			{% set style_color = "background-color:gray;color:white" %}			
+			{% set style_color = "background-color:gray;color:white" %}	
 			{% set link = "" %}
 			<span class="btn btn-default" style={{style_color}} > {{ job.name }} </span>
 			{% if "launcher" in job|keys %}
@@ -23,7 +25,7 @@
 			<a class="btn btn-default" style={{style_color}} href={{link}}> {{ job.name }} </a>
 		{% endif %}
 		
-			
+		
 		<br><br>	
 	{% endfor %}
 {% endblock %}
