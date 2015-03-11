@@ -226,4 +226,35 @@ class LineVersionController extends AbstractController
             )
         );
     }
+
+    public function purgeAction(Request $request, $lineVersionId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $lineVersionManager = $this->get('tisseo_datawarehouse.line_version_manager');
+        if ($lineVersionManager->purge($lineVersionId))
+        {
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans(
+                    'line_version.purge',
+                    array(),
+                    'default'
+                )
+            );
+        }
+        else
+        {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                $this->get('translator')->trans(
+                    'line_version.not_purge',
+                    array(),
+                    'default'
+                )
+            );
+        }
+        return $this->redirect(
+            $this->generateUrl('tisseo_datawarehouse_line_version_list')
+        );
+    }
 }
