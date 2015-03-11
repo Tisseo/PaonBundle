@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\DataFixtures\ORM;
+namespace Tisseo\TidBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -20,7 +20,7 @@ class FixturesUser extends AbstractFixture implements OrderedFixtureInterface
             'lastname'  => 'TID',
             'email'     => 'user-tid@tisseo.fr',
             'password'  => 'tid',
-            'roles'     => array('role-user-datawarehouse'),
+            'roles'     => array('role-user-tid'),
             'customer'  => 'customer-tisseo'
         ),
         array(
@@ -30,7 +30,7 @@ class FixturesUser extends AbstractFixture implements OrderedFixtureInterface
             'lastname'  => 'TID',
             'email'     => 'admin-tid@tisseo.fr',
             'password'  => 'admin',
-            'roles'     => array('role-admin-datawarehouse'),
+            'roles'     => array('role-admin-tid'),
             'customer'  => 'customer-tisseo'
         )
     );

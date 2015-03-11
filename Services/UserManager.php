@@ -5,7 +5,7 @@
  *
  * @author vdegroote
  */
-namespace Tisseo\DatawarehouseBundle\Services;
+namespace Tisseo\TidBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Translation\TranslatorInterface;

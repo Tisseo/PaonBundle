@@ -1,6 +1,6 @@
-{% extends "TisseoDatawarehouseBundle::datatable_list.html.twig" %}
+{% extends "TisseoTidBundle::datatable_list.html.twig" %}
 
-{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+{% import "TisseoTidBundle::macros.html.twig" as render %}
 
 {% block modal_dialog_classes %}
     modal-dialog-small
@@ -10,7 +10,7 @@
     {{ 'line_version.list.title'|trans({}, 'default') }}
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
         -
-        <a href="{{ path('tisseo_datawarehouse_line_version_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+        <a href="{{ path('tisseo_tid_line_version_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span> {{ 'line_version.create'|trans({}, 'default') }}
         </a>
     {% endif %}
@@ -47,7 +47,7 @@
                 </td>
                 <td>
                     {{ lineVersion.totalPrintings }}
-                    <a style="float:right;" class="btn btn-xs btn-success small-link" href="{{ path('tisseo_datawarehouse_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                    <a style="float:right;" class="btn btn-xs btn-success small-link" href="{{ path('tisseo_tid_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </td>
@@ -69,22 +69,22 @@
                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'global.actions'|trans({}, 'messages')}} <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_datawarehouse_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                        <a class="line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                                             {{'global.edit'|trans({}, 'messages')}}
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="line-version-edit" href="{{ path('tisseo_datawarehouse_line_version_close', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                        <a class="line-version-edit" href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                                             {{'global.closure'|trans({}, 'messages')}}
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('tisseo_datawarehouse_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                        <a href="{{ path('tisseo_tid_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                                             {{'global.consult'|trans({}, 'messages')}}
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="line-version-edit" href="{{ path('tisseo_datawarehouse_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
+                                        <a class="line-version-edit" href="{{ path('tisseo_tid_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
                                             {{'global.purge'|trans({}, 'messages')}}
                                         </a>
                                     </li>

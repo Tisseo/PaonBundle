@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Form\Type;
+namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,8 +9,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Doctrine\ORM\EntityRepository;
-use Tisseo\DatawarehouseBundle\Entity\Line;
-use Tisseo\DatawarehouseBundle\Entity\LineVersion;
+
+use Tisseo\EndivBundle\Entity\Line;
+use Tisseo\EndivBundle\Entity\LineVersion;
 
 class LineVersionType extends AbstractType
 {
@@ -56,7 +57,7 @@ class LineVersionType extends AbstractType
                 'line',
                 'entity',
                 array(
-                    'class' => 'TisseoDatawarehouseBundle:Line',
+                    'class' => 'TisseoTidBundle:Line',
                     'property' => 'number',
                     'label' => 'line.labels.number',
                     'empty_value' => ($this->lineVersion->getLine() ? $this->lineVersion->getLine()->getNumber() : ''),
@@ -73,7 +74,7 @@ class LineVersionType extends AbstractType
                 'line',
                 'entity',
                 array(
-                    'class' => 'TisseoDatawarehouseBundle:Line',
+                    'class' => 'TisseoTidBundle:Line',
                     'property' => 'number',
                     'label' => 'line.labels.number',
                     'empty_value' => ($this->lineVersion->getLine() ? $this->lineVersion->getLine()->getNumber() : ''),
@@ -157,7 +158,7 @@ class LineVersionType extends AbstractType
                 'entity',
                 array(
                     'label' => 'line_version.labels.child_line',
-                    'class' => 'TisseoDatawarehouseBundle:Line',
+                    'class' => 'TisseoTidBundle:Line',
                     'property' => 'number',
                     'empty_value' => '',
                     'required' => false,
@@ -285,7 +286,7 @@ class LineVersionType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\LineVersion',
+                'data_class' => 'Tisseo\EndivBundle\Entity\LineVersion',
                 'validation_groups' => function(FormInterface $form) {
                     $data = $form->getExtraData();
                     if ($data) {
@@ -302,6 +303,6 @@ class LineVersionType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_line_version';
+        return 'tid_line_version';
     }
 }

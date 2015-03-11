@@ -1,11 +1,11 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Form\Type;
+namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\DatawarehouseBundle\Form\Type\LineDatasourceType;
+use Tisseo\TidBundle\Form\Type\LineDatasourceType;
 
 class LineType extends AbstractType
 {
@@ -24,7 +24,7 @@ class LineType extends AbstractType
             'physicalMode',
             'entity',
             array(
-                'class' => 'TisseoDatawarehouseBundle:PhysicalMode',
+                'class' => 'TisseoTidBundle:PhysicalMode',
                 'property' => 'name',
                 'label' => 'line.labels.physical_mode'
             )
@@ -48,7 +48,7 @@ class LineType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\Line'
+                'data_class' => 'Tisseo\EndivBundle\Entity\Line'
             )
         );
     }
@@ -58,6 +58,6 @@ class LineType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_line';
+        return 'tid_line';
     }
 }

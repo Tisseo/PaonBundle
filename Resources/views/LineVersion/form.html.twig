@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% form_theme form 'TisseoDatawarehouseBundle:Form:fields.html.twig' %}
+{% form_theme form 'TisseoTidBundle:Form:fields.html.twig' %}
 
 {% block open_form %}
     {{ form_start(form) }}
@@ -137,7 +137,7 @@
     {% if new == true and stape == false %}
     {{ form_end(form, {'render_rest': false}) }}
     <script>
-        require(['datawarehouse/edit/offers']);
+        require(['tid/edit/offers']);
     </script>
     {% else %}
     <button type="submit" class="btn btn-success">

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\DatawarehouseBundle\Form\Type\LineType;
-use Tisseo\DatawarehouseBundle\Entity\Line;
-use Tisseo\DatawarehouseBundle\Entity\LineDatasource;
+use Tisseo\TidBundle\Form\Type\LineType;
+use Tisseo\EndivBundle\Entity\Line;
+use Tisseo\EndivBundle\Entity\LineDatasource;
 
 class LineController extends AbstractController
 {
@@ -22,7 +22,7 @@ class LineController extends AbstractController
             $line,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_datawarehouse_line_edit',
+                    'tisseo_tid_line_edit',
                     array(
                         'lineId' => $lineId
                     )
@@ -35,7 +35,7 @@ class LineController extends AbstractController
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
-        $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+        $lineManager = $this->get('tisseo_endiv.line_manager');
         if ($form->isValid()) {
             $lineManager->save($form->getData());
             $this->get('session')->getFlashBag()->add(
@@ -47,7 +47,7 @@ class LineController extends AbstractController
                 )
             );
             return $this->redirect(
-                $this->generateUrl('tisseo_datawarehouse_line_list')
+                $this->generateUrl('tisseo_tid_line_list')
             );
         }
         return (null);
@@ -56,12 +56,12 @@ class LineController extends AbstractController
     public function editAction(Request $request, $lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE');
-        $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+        $lineManager = $this->get('tisseo_endiv.line_manager');
         $form = $this->buildForm($lineId, $lineManager);
         $render = $this->processForm($request, $form);
         if (!$render) {
             return $this->render(
-                'TisseoDatawarehouseBundle:Line:form.html.twig',
+                'TisseoTidBundle:Line:form.html.twig',
                 array(
                     'form' => $form->createView(),
                     'title' => ($lineId ? 'line.edit' : 'line.create')
@@ -74,9 +74,9 @@ class LineController extends AbstractController
     public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_LINE');
-        $lineManager = $this->get('tisseo_datawarehouse.line_manager');
+        $lineManager = $this->get('tisseo_endiv.line_manager');
         return $this->render(
-            'TisseoDatawarehouseBundle:Line:list.html.twig',
+            'TisseoTidBundle:Line:list.html.twig',
             array(
                 'pageTitle' => 'menu.line_manage',
                 'lines' => $lineManager->findAllLinesByPriority()

@@ -2,31 +2,31 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/tisseodatawarehouse/css/main.css'
-                   filter='cssrewrite' output='css/full_datawarehouse.css' %}
+    {% stylesheets 'bundles/tisseotid/css/main.css'
+                   filter='cssrewrite' output='css/full_tid.css' %}
         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
     {% endstylesheets %}
 {% endblock %}
 
 {% block head_config %}
     {{ parent() }}
-    {% include 'TisseoDatawarehouseBundle::config.js.html.twig' %}
+    {% include 'TisseoTidBundle::config.js.html.twig' %}
 {% endblock %}
 
 {% block title -%}
 {{ parent() }}
-- DATAWAREHOUSE
+- TID
     {% if pageTitle %}
     - {{ pageTitle|trans }}
     {% endif %}
 {% endblock %}
-{% block navbar_brand %}<a href="{% if externalNetworkId %}{{ path('tisseo_datawarehouse_homepage', {'externalNetworkId':externalNetworkId }) }}{% else %}{{ path('tisseo_datawarehouse_homepage') }}{% endif %}">DATAWAREHOUSE</a>{% endblock %}
+{% block navbar_brand %}<a href="{% if externalNetworkId %}{{ path('tisseo_tid_homepage', {'externalNetworkId':externalNetworkId }) }}{% else %}{{ path('tisseo_tid_homepage') }}{% endif %}">TID</a>{% endblock %}
 
 {% block root_breadcrumb %}
     <ol class="breadcrumb">
         {% if currentNetwork %}
             <li>
-                <a href="{{ path('tisseo_datawarehouse_homepage', {'externalNetworkId':currentNetwork.externalId }) }}">
+                <a href="{{ path('tisseo_tid_homepage', {'externalNetworkId':currentNetwork.externalId }) }}">
                     {{ currentNetwork.name }}
                 </a>
             </li>

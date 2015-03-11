@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -67,7 +67,7 @@ class ImportController extends AbstractController
 
 		//running jobs ?
 		if($this->_getRunningJob() !==null) {
-			return $this->redirect($this->generateUrl('tisseo_datawarehouse_import'));
+			return $this->redirect($this->generateUrl('tisseo_tid_import'));
 		}
 
 		$ch = curl_init();
@@ -81,13 +81,13 @@ class ImportController extends AbstractController
 		$json=curl_exec($ch);
 		curl_close($ch);
 
-		 return $this->redirect($this->generateUrl('tisseo_datawarehouse_import'));
+		 return $this->redirect($this->generateUrl('tisseo_tid_import'));
     }
 
     public function importAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_IMPORTS_EXPORTS');
-        $importManager = $this->get('tisseo_datawarehouse.import_manager');
+        $importManager = $this->get('tisseo_tid.import_manager');
 
 		// get jobs list
 		$jobs_url = 'view/TID/api/json?tree=jobs[name,color,lastBuild[number]]';;
@@ -139,7 +139,7 @@ class ImportController extends AbstractController
 		
 		curl_close($ch);
         return $this->render(
-            'TisseoDatawarehouseBundle:Import:imports.html.twig',
+            'TisseoTidBundle:Import:imports.html.twig',
             array(
                 'pageTitle' => 'menu.import_manage',
                 'jobs' => $jobs,

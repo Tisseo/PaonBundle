@@ -67,7 +67,7 @@
                 <tbody>
                     <input type="hidden" id="line-version-id" value="{{ lineVersionId }}"></input>
                     <tr id="new-grid-calendar">
-                        {{ render(controller('TisseoDatawarehouseBundle:Calendar:renderForm', {'lineVersionId': lineVersionId } )) }}
+                        {{ render(controller('TisseoTidBundle:Calendar:renderForm', {'lineVersionId': lineVersionId } )) }}
                     </tr>
                 </tbody>
             </table>
@@ -126,7 +126,7 @@
         <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
     </button>
     <script>
-        require(['datawarehouse/create/calendar']);
+        require(['tid/create/calendar']);
     </script>
     <script>
         require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {

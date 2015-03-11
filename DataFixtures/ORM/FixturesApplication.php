@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\DataFixtures\ORM;
+namespace Tisseo\TidBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -14,7 +14,7 @@ class FixturesApplication extends AbstractFixture implements OrderedFixtureInter
 
     public function load(ObjectManager $om)
     {
-        $this->createApplication($om, 'Datawarehouse', '/datawarehouse', 'datawarehouse');
+        $this->createApplication($om, 'Tid', '/tid', 'tid');
         $om->flush();
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Form\Type;
+namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,7 +31,7 @@ class ModificationType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\DatawarehouseBundle\Entity\Modification'
+                'data_class' => 'Tisseo\EndivBundle\Entity\Modification'
             )
         );
     }
@@ -41,6 +41,6 @@ class ModificationType extends AbstractType
      */
     public function getName()
     {
-        return 'datawarehouse_modification';
+        return 'tid_modification';
     }
 }

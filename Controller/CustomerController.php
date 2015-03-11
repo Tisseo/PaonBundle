@@ -1,9 +1,9 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\DatawarehouseBundle\Form\Type\CustomerType;
+use Tisseo\TidBundle\Form\Type\CustomerType;
 
 /*
  * CalendarController
@@ -23,7 +23,7 @@ class CustomerController extends AbstractController
         }
 
         return $this->render(
-            'TisseoDatawarehouseBundle:Customer:list.html.twig',
+            'TisseoTidBundle:Customer:list.html.twig',
             array(
                 'externalNetworkId' => $externalNetworkId,
                 'customers' => $customers

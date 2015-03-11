@@ -1,94 +1,94 @@
-tisseo_datawarehouse_homepage:
+tisseo_tid_homepage:
     pattern:  /
-    defaults: { _controller: TisseoDatawarehouseBundle:Default:index }
+    defaults: { _controller: TisseoTidBundle:Default:index }
 
 #Line administration
-tisseo_datawarehouse_line_list:
+tisseo_tid_line_list:
     pattern: /lines/list
-    defaults: { _controller: TisseoDatawarehouseBundle:Line:list }
-tisseo_datawarehouse_line_edit:
+    defaults: { _controller: TisseoTidBundle:Line:list }
+tisseo_tid_line_edit:
     pattern: /lines/edit/{lineId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Line:edit, lineId: null }
+    defaults: { _controller: TisseoTidBundle:Line:edit, lineId: null }
 
 #LineVersion administration
-tisseo_datawarehouse_line_version_list:
+tisseo_tid_line_version_list:
     pattern: /offers/list
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:list }
-tisseo_datawarehouse_line_version_history:
+    defaults: { _controller: TisseoTidBundle:LineVersion:list }
+tisseo_tid_line_version_history:
     pattern: /offers/history
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:history }
-tisseo_datawarehouse_line_version_edit:
+    defaults: { _controller: TisseoTidBundle:LineVersion:history }
+tisseo_tid_line_version_edit:
     pattern: /offers/edit/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:edit, lineVersionId: null }
-tisseo_datawarehouse_line_version_consult:
+    defaults: { _controller: TisseoTidBundle:LineVersion:edit, lineVersionId: null }
+tisseo_tid_line_version_consult:
     pattern: /offers/consult/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:consult }
+    defaults: { _controller: TisseoTidBundle:LineVersion:consult }
     options:
         expose: true
-tisseo_datawarehouse_line_version_close:
+tisseo_tid_line_version_close:
     pattern: /offers/close/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:close }
+    defaults: { _controller: TisseoTidBundle:LineVersion:close }
     requirements:
         lineVersionId: \d+
-tisseo_datawarehouse_line_version_purge:
+tisseo_tid_line_version_purge:
     pattern: /offers/purge/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:purge }
+    defaults: { _controller: TisseoTidBundle:LineVersion:purge }
     requirements:
         lineVersionId: \d+
-tisseo_datawarehouse_printing_create:
+tisseo_tid_printing_create:
     pattern: /offers/add/printings/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Printing:create }
+    defaults: { _controller: TisseoTidBundle:Printing:create }
     requirements:
         lineVersionId: \d+
-tisseo_datawarehouse_select_line_version_by_line:
+tisseo_tid_select_line_version_by_line:
     pattern: /offers/select_by_line
-    defaults: { _controller: TisseoDatawarehouseBundle:LineVersion:selectByLine }
+    defaults: { _controller: TisseoTidBundle:LineVersion:selectByLine }
     options:
         expose: true
 
 #Calendar administration
-tisseo_datawarehouse_calendar_list:
+tisseo_tid_calendar_list:
     pattern: /calendars/list
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:list }
-tisseo_datawarehouse_calendar_edit:
+    defaults: { _controller: TisseoTidBundle:Calendar:list }
+tisseo_tid_calendar_edit:
     pattern: /calendars/edit/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:edit }
+    defaults: { _controller: TisseoTidBundle:Calendar:edit }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
-tisseo_datawarehouse_calendar_form:
+tisseo_tid_calendar_form:
     pattern: /offers/add/calendar/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:renderForm }
+    defaults: { _controller: TisseoTidBundle:Calendar:renderForm }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
-tisseo_datawarehouse_calendar_create:
+tisseo_tid_calendar_create:
     pattern: /offers/create/calendar/{lineVersionId}
-    defaults: { _controller: TisseoDatawarehouseBundle:Calendar:create }
+    defaults: { _controller: TisseoTidBundle:Calendar:create }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
 
 #ExceptionType administration
-tisseo_datawarehouse_exception_type_list:
+tisseo_tid_exception_type_list:
     pattern: /exceptions/list
-    defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:list }
-tisseo_datawarehouse_exception_type_edit:
+    defaults: { _controller: TisseoTidBundle:ExceptionType:list }
+tisseo_tid_exception_type_edit:
     pattern: /exceptions/edit/{exceptionTypeId}
-    defaults: { _controller: TisseoDatawarehouseBundle:ExceptionType:edit, exceptionTypeId: null }
+    defaults: { _controller: TisseoTidBundle:ExceptionType:edit, exceptionTypeId: null }
 
 #Imports administration
-tisseo_datawarehouse_import:
+tisseo_tid_import:
     pattern: /imports
-    defaults: { _controller: TisseoDatawarehouseBundle:Import:import }
-tisseo_datawarehouse_import_edit:
+    defaults: { _controller: TisseoTidBundle:Import:import }
+tisseo_tid_import_edit:
     pattern: /imports/{jobName}
-    defaults: { _controller: TisseoDatawarehouseBundle:Import:edit, jobName: null }
+    defaults: { _controller: TisseoTidBundle:Import:edit, jobName: null }
 
 #Export administration
-tisseo_datawarehouse_export_timetable:
+tisseo_tid_export_timetable:
     pattern: /exports/timetable
-    defaults: { _controller: TisseoDatawarehouseBundle:Export:timetable }
+    defaults: { _controller: TisseoTidBundle:Export:timetable }

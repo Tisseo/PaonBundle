@@ -1,10 +1,10 @@
-{% extends "TisseoDatawarehouseBundle::generic_list.html.twig" %}
+{% extends "TisseoTidBundle::generic_list.html.twig" %}
 
 {% block list_title -%}
     {{'exception.list.title'|trans({}, 'default')}}
     {% if is_granted('BUSINESS_MANAGE_EXCEPTION') %}
         -
-        <a href="{{ path('tisseo_datawarehouse_exception_type_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+        <a href="{{ path('tisseo_tid_exception_type_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span> {{'exception.create'|trans({}, 'default')}}
         </a>
     {% endif %}
@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_MANAGE_EXCEPTION') %}                        
-                        <a class="btn btn-default" href="{{ path('tisseo_datawarehouse_exception_type_edit', {'exceptionId': exception.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a class="btn btn-default" href="{{ path('tisseo_tid_exception_type_edit', {'exceptionId': exception.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
                         </a>
                     {% endif %}

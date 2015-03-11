@@ -2,19 +2,19 @@
 requirejs.config({
     urlArgs: '{{ assets_version }}',
     paths: {
-        'jquery/textfill':                  'bundles/tisseodatawarehouse/js/jquery.textfill.min',
-        textfill:                           'bundles/tisseodatawarehouse/js/textfill',
+        'jquery/textfill':                  'bundles/tisseotid/js/jquery.textfill.min',
+        textfill:                           'bundles/tisseotid/js/textfill',
         jquery_ui_draggable:                'components/jquery-ui/ui/minified/jquery.ui.draggable.min',
         jquery_ui_droppable:                'components/jquery-ui/ui/minified/jquery.ui.droppable.min',
-        datatables:                         'bundles/tisseodatawarehouse/js/jquery.dataTables.min',
-        natural:                            'bundles/tisseodatawarehouse/js/natural',
-        datawarehouse_datatables:           'bundles/tisseodatawarehouse/js/list/dataTables',
-        datawarehouse_left_menu:            'bundles/tisseodatawarehouse/js/left_menu',
-        'datawarehouse/list/offers':        'bundles/tisseodatawarehouse/js/list/lineVersions',
-        'datawarehouse/select/offer':       'bundles/tisseodatawarehouse/js/select/lineVersion',
-        'datawarehouse/edit/offers':        'bundles/tisseodatawarehouse/js/edit/lineVersions',
-        'datawarehouse/create/calendar':    'bundles/tisseodatawarehouse/js/create/gridCalendar',
-        'datawarehouse/form':               'bundles/tisseodatawarehouse/js/form'
+        datatables:                         'bundles/tisseotid/js/jquery.dataTables.min',
+        natural:                            'bundles/tisseotid/js/natural',
+        tid_datatables:           'bundles/tisseotid/js/list/dataTables',
+        tid_left_menu:            'bundles/tisseotid/js/left_menu',
+        'tid/list/offers':        'bundles/tisseotid/js/list/lineVersions',
+        'tid/select/offer':       'bundles/tisseotid/js/select/lineVersion',
+        'tid/edit/offers':        'bundles/tisseotid/js/edit/lineVersions',
+        'tid/create/calendar':    'bundles/tisseotid/js/create/gridCalendar',
+        'tid/form':               'bundles/tisseotid/js/form'
     },
     shim: {
         'jquery/textfill': {
@@ -29,7 +29,7 @@ requirejs.config({
         datatables: {
             deps: ['jquery']
         },
-        datawarehouse_datatables: {
+        tid_datatables: {
             deps: ['datatables']
         },
         jquery_ui_droppable: {
@@ -41,6 +41,6 @@ requirejs.config({
             exports: "jQuery"
         }
     },
-    deps: ['utils', 'jquery', 'datawarehouse/form']
+    deps: ['utils', 'jquery', 'tid/form']
 });
 </script>

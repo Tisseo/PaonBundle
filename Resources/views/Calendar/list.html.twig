@@ -1,6 +1,6 @@
-{% extends "TisseoDatawarehouseBundle::datatable_list.html.twig" %}
+{% extends "TisseoTidBundle::datatable_list.html.twig" %}
 
-{% import "TisseoDatawarehouseBundle::macros.html.twig" as render %}
+{% import "TisseoTidBundle::macros.html.twig" as render %}
 
 {% block modal_dialog_classes %}
     modal-dialog-large
@@ -40,7 +40,7 @@
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_MANAGE_CALENDAR') %}
-                        <a class="btn btn-default calendar-edit" href="{{ path('tisseo_datawarehouse_calendar_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a class="btn btn-default calendar-edit" href="{{ path('tisseo_tid_calendar_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-edit"></span> {{'global.edit_calendar'|trans({}, 'messages')}}
                         </a>
                     {% endif %}

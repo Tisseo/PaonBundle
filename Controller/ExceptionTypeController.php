@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\DatawarehouseBundle\Controller;
+namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,7 +14,7 @@ class ExceptionTypeController extends AbstractController
             $exceptionType,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_datawarehouse_exception_type_edit',
+                    'tisseo_tid_exception_type_edit',
                     array(
                         'exceptionTypeId' => $exceptionTypeId
                     )
@@ -27,7 +27,7 @@ class ExceptionTypeController extends AbstractController
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
-        $exceptionTypeManager = $this->get('tisseo_datawarehouse.exception_type_manager');
+        $exceptionTypeManager = $this->get('tisseo_endiv.exception_type_manager');
         if ($form->isValid()) {
             $exceptionTypeManager->save($form->getData());
             $this->get('session')->getFlashBag()->add(
@@ -39,7 +39,7 @@ class ExceptionTypeController extends AbstractController
                 )
             );
             return $this->redirect(
-                $this->generateUrl('tisseo_datawarehouse_exception_type_list')
+                $this->generateUrl('tisseo_tid_exception_type_list')
             );
         }
         return (null);
@@ -48,12 +48,12 @@ class ExceptionTypeController extends AbstractController
     public function editAction(Request $request, $exceptionTypeId)
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
-        $exceptionTypeManager = $this->get('tisseo_datawarehouse.exception_type_manager');
+        $exceptionTypeManager = $this->get('tisseo_endiv.exception_type_manager');
         $form = $this->buildForm($exceptionTypeId, $exceptionTypeManager);
         $render = $this->processForm($request, $form);
         if (!$render) {
             return $this->render(
-                'TisseoDatawarehouseBundle:ExceptionType:form.html.twig',
+                'TisseoTidBundle:ExceptionType:form.html.twig',
                 array(
                     'form' => $form->createView(),
                     'title' => ($exceptionTypeId ? 'exception_type.edit' : 'exception_type.create')
@@ -66,9 +66,9 @@ class ExceptionTypeController extends AbstractController
     public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_EXCEPTION');
-        $exceptionTypeManager = $this->get('tisseo_datawarehouse.exception_type_manager');
+        $exceptionTypeManager = $this->get('tisseo_endiv.exception_type_manager');
         return $this->render(
-            'TisseoDatawarehouseBundle:ExceptionType:list.html.twig',
+            'TisseoTidBundle:ExceptionType:list.html.twig',
             array(
                 'pageTitle' => 'menu.exception_type_manage',
                 'exceptions' => $exceptionTypeManager->findAll()

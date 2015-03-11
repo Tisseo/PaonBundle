@@ -1,5 +1,5 @@
 {
-    "name" : "tisseo/datawarehouse-bundle",
+    "name" : "tisseo/tid-bundle",
     "description" : "An interface tool consisting in public transport data edition.",
     "type" : "symfony-bundle",
     "authors" : [{
@@ -7,21 +7,21 @@
         "email" : "vincent.passama@capgemini.com"
     }],
     "keywords" : [
-        "tisseo datawarehouse bundle"
+        "tisseo tid bundle"
     ],
     "license" : "MIT",
     "require" : {
         "php": ">=5.4.3",
-        "creof/doctrine2-spatial": "0.0.1"
+        "endiv-bundle": "dev-master"
     },
     "autoload" : {
-        "psr-0" : { "Tisseo\\DatawarehouseBundle\\" : "" }
+        "psr-0" : { "Tisseo\\TidBundle\\" : "" }
     },
-    "target-dir" : "Tisseo/DatawarehouseBundle",
+    "target-dir" : "Tisseo/TidBundle",
     "repositories" : [{
     }],
     "extra" : {
-    "branch-alias" : {
+        "branch-alias" : {
             "dev-master" : "0.1-dev"
         }
     }
