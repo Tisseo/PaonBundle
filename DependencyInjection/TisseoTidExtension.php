@@ -25,5 +25,11 @@ class TisseoTidExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('permissions.yml');
+
+        # DataExchange configuration
+        $container->setParameter('tisseo_tid.jenkins_server', $config['data_exchange']['jenkins_server']);
+        $container->setParameter('tisseo_tid.jenkins_user', $config['data_exchange']['jenkins_user']);
+        $container->setParameter('tisseo_tid.master_job_prefix', $config['data_exchange']['jobs']['master_prefix']);
+        $container->setParameter('tisseo_tid.atomic_job_prefix', $config['data_exchange']['jobs']['atomic_prefix']);
     }
 }

@@ -1,20 +1,18 @@
 parameters:
     tisseo_tid.perimeter.class: Tisseo\TidBundle\Services\PerimeterManager
     tisseo_tid.user.class: Tisseo\TidBundle\Services\UserManager
-    tisseo_tid.import_manager.class: Tisseo\EndivBundle\Services\ImportManager
-    tisseo_tid.export_manager.class: Tisseo\EndivBundle\Services\ExportManager
+    tisseo_tid.data_exchange_manager.class: Tisseo\TidBundle\Services\DataExchangeManager
 
 services:
     tisseo_tid.perimeter_manager:
-       class: %tisseo_tid.perimeter.class%
-       arguments: ['@doctrine.orm.default_entity_manager']
+        class: %tisseo_tid.perimeter.class%
+        arguments: ['@doctrine.orm.default_entity_manager']
     tisseo_tid.user_manager:
-       class: %tisseo_tid.user.class%
-       arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
-    tisseo_tid.import_manager:
-        class: %tisseo_tid.import_manager.class%
-    tisseo_tid.export_manager:
-        class: %tisseo_tid.export_manager.class%
+        class: %tisseo_tid.user.class%
+        arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
+    tisseo_tid.data_exchange_manager:
+        class: %tisseo_tid.data_exchange_manager.class%
+        arguments: ['%tisseo_tid.jenkins_server%', '%tisseo_tid.jenkins_user%', '%tisseo_tid.master_job_prefix%', '%tisseo_tid.atomic_job_prefix%']
 
     form.type.datepicker_tid:
         class: Tisseo\TidBundle\Form\Type\DatepickerType

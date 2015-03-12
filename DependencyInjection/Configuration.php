@@ -18,7 +18,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('tisseo_tid');
+        $rootNode = $treeBuilder->root('tisseo_tid', 'array')
+            ->children() 
+            ->arrayNode('data_exchange')
+                ->info('Configuration des imports/exports')
+                ->children()
+                    ->scalarNode('jenkins_server')->isRequired()->end()
+                    ->scalarNode('jenkins_user')->isRequired()->end()
+                    ->arrayNode('jobs')
+                        ->children()
+                        ->scalarNode('master_prefix')->isRequired()->end()
+                        ->scalarNode('atomic_prefix')->isRequired()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

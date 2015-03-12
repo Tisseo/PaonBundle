@@ -81,12 +81,12 @@ tisseo_tid_exception_type_edit:
     defaults: { _controller: TisseoTidBundle:ExceptionType:edit, exceptionTypeId: null }
 
 #Imports administration
-tisseo_tid_import:
-    pattern: /imports
-    defaults: { _controller: TisseoTidBundle:Import:import }
-tisseo_tid_import_edit:
-    pattern: /imports/{jobName}
-    defaults: { _controller: TisseoTidBundle:Import:edit, jobName: null }
+tisseo_tid_data_exchange_import:
+    pattern: /data-exchange
+    defaults: { _controller: TisseoTidBundle:DataExchange:import }
+tisseo_tid_data_exchange_edit:
+    pattern: /data-exchange/{jobName}
+    defaults: { _controller: TisseoTidBundle:DataExchange:edit, jobName: null }
 
 #Export administration
 tisseo_tid_export_timetable:
