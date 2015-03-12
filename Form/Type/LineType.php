@@ -24,7 +24,7 @@ class LineType extends AbstractType
             'physicalMode',
             'entity',
             array(
-                'class' => 'TisseoTidBundle:PhysicalMode',
+                'class' => 'TisseoEndivBundle:PhysicalMode',
                 'property' => 'name',
                 'label' => 'line.labels.physical_mode'
             )

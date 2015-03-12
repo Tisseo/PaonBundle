@@ -57,7 +57,7 @@ class LineVersionType extends AbstractType
                 'line',
                 'entity',
                 array(
-                    'class' => 'TisseoTidBundle:Line',
+                    'class' => 'TisseoEndivBundle:Line',
                     'property' => 'number',
                     'label' => 'line.labels.number',
                     'empty_value' => ($this->lineVersion->getLine() ? $this->lineVersion->getLine()->getNumber() : ''),
@@ -74,7 +74,7 @@ class LineVersionType extends AbstractType
                 'line',
                 'entity',
                 array(
-                    'class' => 'TisseoTidBundle:Line',
+                    'class' => 'TisseoEndivBundle:Line',
                     'property' => 'number',
                     'label' => 'line.labels.number',
                     'empty_value' => ($this->lineVersion->getLine() ? $this->lineVersion->getLine()->getNumber() : ''),
@@ -158,7 +158,7 @@ class LineVersionType extends AbstractType
                 'entity',
                 array(
                     'label' => 'line_version.labels.child_line',
-                    'class' => 'TisseoTidBundle:Line',
+                    'class' => 'TisseoEndivBundle:Line',
                     'property' => 'number',
                     'empty_value' => '',
                     'required' => false,

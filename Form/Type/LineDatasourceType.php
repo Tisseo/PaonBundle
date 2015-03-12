@@ -18,7 +18,7 @@ class LineDatasourceType extends AbstractType
             'datasource',
             'entity',
             array(
-                'class' => 'TisseoTidBundle:Datasource',
+                'class' => 'TisseoEndivBundle:Datasource',
                 'property' => 'name',
                 'label' => 'datasource.labels.name'
             )
