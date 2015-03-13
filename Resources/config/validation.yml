@@ -47,9 +47,3 @@ Tisseo\EndivBundle\Entity\LineVersion:
             - DateTime: ~
             - Tisseo\TidBundle\Validator\Constraints\GreaterThanField:
                 field: startDate
-        fgHexaColor:
-            - NotBlank: ~
-            - Tisseo\TidBundle\Validator\Constraints\HexaColor: ~
-        bgHexaColor:
-            - NotBlank: ~
-            - Tisseo\TidBundle\Validator\Constraints\HexaColor: ~

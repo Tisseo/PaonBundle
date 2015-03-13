@@ -4,6 +4,7 @@ global:
     summary: Résumé
     properties: Propriétés
     printings: Tirages
+    modifications: Modifications
     actions: Actions
     edit: Éditer
     consult: Consulter
@@ -90,9 +91,7 @@ line_version:
         forward: Direction aller
         backward: Direction retour
         fg_color: Couleur du texte
-        fg_hexa_color: Couleur hexa du texte
         bg_color: Couleur du fond
-        bg_hexa_color: Couleur hexa du fond
         carto_file: Fichier carto
         accessibility: Accessibilité
         air_conditioned: Air conditionné
@@ -102,6 +101,7 @@ line_version:
         published: publiée
         new: nouvelle
         wip: work in progress
+        modification_link: Modifications
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
 
@@ -124,6 +124,8 @@ datasource:
 modification_link:
     labels:
         date: Date
+        description: Description
+        resolved_in: Résolue sur
 
 modification:
     labels:

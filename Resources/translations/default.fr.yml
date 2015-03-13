@@ -38,6 +38,7 @@ line_version:
     closure: Clôture d'une offre
     not_found: Offre introuvable
     no_printings: Aucun tirage pour cette offre
+    no_modifications: Aucune modification apportée à cette offre
     purge: Offre purgée des données "fiche horaire".
 
 calendar:

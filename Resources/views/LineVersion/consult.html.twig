@@ -36,26 +36,8 @@
             <li>{{ 'line_version.labels.forward'|trans({}, 'messages') }} : {{ lineVersion.forwardDirection }}</li>
             <li>{{ 'line_version.labels.backward'|trans({}, 'messages') }} : {{ lineVersion.backwardDirection }}</li>
             <br>
-            <li>
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ 'line_version.labels.bg_color'|trans({}, 'messages') }} : {{ lineVersion.bgColor }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ 'line_version.labels.bg_hexa_color'|trans({}, 'messages') }} : {{ lineVersion.bgHexaColor }}
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ 'line_version.labels.fg_color'|trans({}, 'messages') }} : {{ lineVersion.fgColor }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ 'line_version.labels.fg_hexa_color'|trans({}, 'messages') }} : {{ lineVersion.fgHexaColor }}
-                    </div>
-                </div>
-            </li>
+            <li>{{ 'line_version.labels.fg_color'|trans({}, 'messages') }} : {{ lineVersion.fgColor.name }}</li>
+            <li>{{ 'line_version.labels.bg_color'|trans({}, 'messages') }} : {{ lineVersion.bgColor.name }}</li>
             <br>
             <li>{{ 'line_version.labels.accessibility'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.accessibility %}checked{% endif %}></li>
             <li>{{ 'line_version.labels.air_conditioned'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.airContioned %}checked{% endif %}></li>
@@ -79,6 +61,20 @@
             {% if printing.comment %}
             <li>{{ 'printing.labels.comment'|trans({}, 'messages') }} : {{ printing.comment }}</li>
             {% endif %}
+        </ul>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <h3>{{ 'global.modifications'|trans({}, 'messages') }}</h3>
+    <div class="form form-consult">
+        {% if lineVersion.modificationLinks is empty %}
+        <span class="message">{{ 'line_version.no_modifications'|trans({}, 'default') }}</span>
+        {% else %}
+            {% for modificationLink in lineVersion.modificationLinks %}
+        <ul>
+            <li>{{ 'modification_link.labels.description'|trans({}, 'messages') }} : {{ modificationLink.modification.description }}</li>
+            <li>{{ 'modification_link.labels.date'|trans({}, 'messages') }} : {{ modificationLink.date|date('d/m/Y') }}</li>
+            <li>{{ 'modification_link.labels.resolved_in'|trans({}, 'messages') }} : {{ modificationLink.resolvedIn }}</li>
         </ul>
             {% endfor %}
         {% endif %}

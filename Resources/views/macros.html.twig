@@ -2,9 +2,9 @@
     {% if type == 'lineVersion' %}
         {% if object.line.number is defined %}
             {% if size == 'small' %}
-        <div class="line-number line-small" style="color:{{ object.fgHexaColor }}; background-color:{{ object.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">
+        <div class="line-number line-small" style="color:{{ object.fgColor.html }}; background-color:{{ object.bgColor.html }}; font-family:sans-serif; font-weight: bold;">
             {% elseif size == 'big' %}
-        <div class="line-number line-big" style="color:{{ object.fgHexaColor }}; background-color:{{ object.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">      
+        <div class="line-number line-big" style="color:{{ object.fgColor.html }}; background-color:{{ object.bgColor.html }}; font-family:sans-serif; font-weight: bold;">      
             {% endif %}
             <span>{{ object.line.number }}</span>
         </div>
@@ -13,9 +13,9 @@
         {% if object.LastLineVersion is defined %}
             {% set lineVersion = object.LastLineVersion %}
             {% if size == 'small' %}
-        <div class="line-number line-small" style="color:{{ lineVersion.fgHexaColor }}; background-color:{{ lineVersion.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">
+        <div class="line-number line-small" style="color:{{ lineVersion.fgColor.html }}; background-color:{{ lineVersion.bgColor.html }}; font-family:sans-serif; font-weight: bold;">
             {% elseif size == 'big' %}
-        <div class="line-number line-big" style="color:{{ lineVersion.fgHexaColor }}; background-color:{{ lineVersion.bgHexaColor}}; font-family:sans-serif; font-weight: bold;">      
+        <div class="line-number line-big" style="color:{{ lineVersion.fgColor.html }}; background-color:{{ lineVersion.bgColor.html }}; font-family:sans-serif; font-weight: bold;">      
             {% endif %}
             <span>{{ object.number }}</span>
         </div>

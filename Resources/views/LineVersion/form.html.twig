@@ -88,17 +88,7 @@
                         {{ form_row(form.fgColor) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(form.fgHexaColor) }}
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="row">
-                    <div class="col-md-6">
                         {{ form_row(form.bgColor) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.bgHexaColor) }}
                     </div>
                 </div>
             </li>
@@ -125,6 +115,7 @@
                     </div>
                 </div>
             </li>
+            <li>{{ form_row(form.modificationLinks) }}</li>
             <li>{{ form_row(form.comment) }}</li>
         </ul>
         </div>

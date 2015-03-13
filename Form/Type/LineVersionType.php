@@ -191,30 +191,28 @@ class LineVersionType extends AbstractType
             );
             $builder->add(
                 'fgColor',
-                'text',
+                'entity',
                 array(
-                    'label' => 'line_version.labels.fg_color'
-                )
-            );
-            $builder->add(
-                'fgHexaColor',
-                'text',
-                array(
-                    'label' => 'line_version.labels.fg_hexa_color'
+                    'label' => 'line_version.labels.fg_color',
+                    'class' => 'TisseoEndivBundle:Color',
+                    'property' => 'name',
+                    'empty_value' => '',
+                    'required' => true,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('c')
+                            ->where("c.name IN ('Blanc','Noir')");
+                    }
                 )
             );
             $builder->add(
                 'bgColor',
-                'text',
+                'entity',
                 array(
-                    'label' => 'line_version.labels.bg_color'
-                )
-            );
-            $builder->add(
-                'bgHexaColor',
-                'text',
-                array(
-                    'label' => 'line_version.labels.bg_hexa_color'
+                    'label' => 'line_version.labels.bg_color',
+                    'class' => 'TisseoEndivBundle:Color',
+                    'property' => 'name',
+                    'empty_value' => '',
+                    'required' => true
                 )
             );
             $builder->add(
@@ -269,6 +267,7 @@ class LineVersionType extends AbstractType
                 'modificationLinks',
                 'collection',
                 array(
+                    'label' => 'line_version.labels.modification_link',
                     'type' => new ModificationLinkType(),
                     'allow_add' => true,
                     'by_reference' => false

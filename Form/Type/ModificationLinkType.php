@@ -25,7 +25,7 @@ class ModificationLinkType extends AbstractType
         );
         $builder->add(
             'date',
-            'datepicker',
+            'datepicker_tid',
             array(
                 'label' => 'modification_link.labels.date',
                 'attr' => array(
