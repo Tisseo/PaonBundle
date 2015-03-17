@@ -49,7 +49,7 @@
             </li>
             {% endif %}
             <li>
-                <div class="row {% if new == true %}input-range{% endif %}">
+                <div class="row {% if new %}input-range{% endif %}">
                     <div class="col-md-6">
                         {{ form_row(form.startDate) }}
                     </div>
@@ -115,9 +115,36 @@
                     </div>
                 </div>
             </li>
-            <li>{{ form_row(form.modificationLinks) }}</li>
             <li>{{ form_row(form.comment) }}</li>
         </ul>
+        <ul>
+            <li>{{ form_label(form.modifications) }}</li>
+            {% for modification in lineVersion.modifications %}
+            <li>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ 'modification.labels.date'|trans({}, 'messages') }} : {{ modification.date|date('d/m/Y') }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ 'modification.labels.author'|trans({}, 'messages') }} : {{ modification.author }}
+                    </div>
+                    <div class="col-md-4">
+                        {% if modification.resolvedIn %}
+                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn }}
+                        {% else %}
+                        {{ 'modification.labels.not_resolved'|trans({},'messages') }}
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            <li>{{ 'modification.labels.description'|trans({}, 'messages') }} : {{ modification.description }}</li>
+            {% endfor %}
+        </ul>
+        {% if not new or (new and stape) %}
+        <ul class="modifications" data-prototype="{% filter escape %}{% include 'TisseoTidBundle:Modification:form.html.twig' with {'form': form.modifications.vars.prototype} %}{% endfilter %}">
+            <div style="display:none;">{{ form_row(form.modifications) }}</div>
+        </ul>
+        {% endif %}
         </div>
     </div>
         {% endif %}
@@ -125,7 +152,7 @@
 {% endblock %}
 
 {% block modal_actions %}
-    {% if new == true and stape == false %}
+    {% if new and not stape %}
     {{ form_end(form, {'render_rest': false}) }}
     <script>
         require(['tid/edit/offers']);
@@ -136,8 +163,10 @@
     </button>
     {{ form_end(form) }}
     {% endif %}
+
+    {% if new and stape %}
     <script>
-        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function(){
+        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
             $('.input-range input').datepicker({
                 language: '{{ app.request.locale }}',
                 startView: 1,
@@ -164,4 +193,47 @@
             $('input[data-from-date=1]').datepicker('setStartDate', new Date()).trigger('changeDate');
         });
     </script>
+    {% endif %}
+    {% if stape or not(new and stape) %}
+    <script>
+        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
+            var $collectionHolder;
+            var $addModificationLink = $('<button type="submit" class="btn btn-success small-button"><span class="glyphicon glyphicon-plus"></span></button>');
+            var $newLinkLi = $('<li></li>').append($addModificationLink);
+
+            $(document).ready(function() {
+                $collectionHolder = $('ul.modifications');
+                $collectionHolder.append($newLinkLi);
+                $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+                $addModificationLink.on('click', function(e) {
+                    e.preventDefault();
+                    var $newFormLi = addModificationLinkForm($collectionHolder, $newLinkLi);
+                    $newFormLi.find('.input-range').datepicker({
+                        language: '{{ app.request.locale }}',
+                        startView: 1,
+                        autoclose: true
+                    });
+                });
+            });
+
+            function addModificationLinkForm($collectionHolder, $newLinkLi) {
+                var prototype = $collectionHolder.data('prototype');
+                var index = $collectionHolder.data('index');
+                var newForm = prototype.replace(/__name__/g, index);
+                $collectionHolder.data('index', index + 1);
+                
+                var $newFormLi = $('<li></li>').append(newForm);
+                $newFormLi.append('<button class="btn btn-xs btn-danger small-button remove-modification"><span class="glyphicon glyphicon-minus"></span></button>');                
+                $newLinkLi.before($newFormLi);
+                $('.remove-modification').click(function(e) {
+                    e.preventDefault();
+                    $(this).parent().remove();
+                    return false;
+                });
+                return $newFormLi;
+            }
+        });
+    </script>
+    {% endif %}
 {% endblock %}

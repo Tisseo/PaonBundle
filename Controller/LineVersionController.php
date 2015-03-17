@@ -81,6 +81,7 @@ class LineVersionController extends AbstractController
                     'form' => $form->createView(),
                     'new' => $new,
                     'stape' => false,
+                    'lineVersion' => $lineVersion,
                     'title' => ($lineVersionId ? 'line_version.edit' : 'line_version.create')
                 )
             );

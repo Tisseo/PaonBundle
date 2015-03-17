@@ -30,8 +30,7 @@
     </div>
     <h3>{{ 'global.properties'|trans({}, 'messages') }}</h3>
     <div class="form form-consult">
-        <div class="col-md-12">
-        <ul style="padding-left:5px;">
+        <ul style="padding-left:20px;">
             <li>{{ 'line_version.labels.name'|trans({}, 'messages') }} : {{ lineVersion.name }}</li>
             <li>{{ 'line_version.labels.forward'|trans({}, 'messages') }} : {{ lineVersion.forwardDirection }}</li>
             <li>{{ 'line_version.labels.backward'|trans({}, 'messages') }} : {{ lineVersion.backwardDirection }}</li>
@@ -47,7 +46,6 @@
             <li>{{ 'line_version.labels.carto_file'|trans({}, 'messages') }} : {% if lineVersion.cartoFile %}{{ lineVersion.cartoFile }}{% else %}Aucun{% endif %}</li>
             <li>{{ 'line_version.labels.comment'|trans({}, 'messages') }} : {{ lineVersion.comment }}</li>
         </ul>
-        </div>
     </div>
     <h3>{{ 'global.printings'|trans({}, 'messages') }}</h3>
     <div class="form form-consult">
@@ -67,14 +65,29 @@
     </div>
     <h3>{{ 'global.modifications'|trans({}, 'messages') }}</h3>
     <div class="form form-consult">
-        {% if lineVersion.modificationLinks is empty %}
+        {% if lineVersion.modifications is empty %}
         <span class="message">{{ 'line_version.no_modifications'|trans({}, 'default') }}</span>
         {% else %}
-            {% for modificationLink in lineVersion.modificationLinks %}
+            {% for modification in lineVersion.modifications %}
         <ul>
-            <li>{{ 'modification_link.labels.description'|trans({}, 'messages') }} : {{ modificationLink.modification.description }}</li>
-            <li>{{ 'modification_link.labels.date'|trans({}, 'messages') }} : {{ modificationLink.date|date('d/m/Y') }}</li>
-            <li>{{ 'modification_link.labels.resolved_in'|trans({}, 'messages') }} : {{ modificationLink.resolvedIn }}</li>
+            <li>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ 'modification.labels.date'|trans({}, 'messages') }} : {{ modification.date|date('d/m/Y') }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ 'modification.labels.author'|trans({}, 'messages') }} : {{ modification.author }}
+                    </div>
+                    <div class="col-md-4">
+                        {% if modification.resolvedIn %}
+                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn }}
+                        {% else %}
+                        {{ 'modification.labels.not_resolved'|trans({},'messages') }}
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            <li>{{ 'modification.labels.description'|trans({}, 'messages') }} : {{ modification.description }}</li>
         </ul>
             {% endfor %}
         {% endif %}

@@ -264,16 +264,15 @@ class LineVersionType extends AbstractType
                 )
             );
             $builder->add(
-                'modificationLinks',
+                'modifications',
                 'collection',
                 array(
-                    'label' => 'line_version.labels.modification_link',
-                    'type' => new ModificationLinkType(),
+                    'label' => 'line_version.labels.modifications',
+                    'type' => new ModificationType(),
                     'allow_add' => true,
                     'by_reference' => false
                 )
-        );
-
+            );
         }
         $builder->setAction($options['action']);
     }

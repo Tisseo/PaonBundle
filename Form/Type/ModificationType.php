@@ -15,10 +15,31 @@ class ModificationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'desciption',
+            'date',
+            'datepicker_tid',
+            array(
+                'label' => 'modification.labels.date',
+                'required' => true,
+                'attr' => array(
+                    'data-from-date' => false,
+                    'class' => 'input-range'
+                )
+            )
+        );
+        $builder->add(
+            'author',
+            'text',
+            array(
+                'label' => 'modification.labels.author',
+                'required' => true
+            )
+        );
+        $builder->add(
+            'description',
             'textarea',
             array(
-                'label' => 'modification.labels.description'
+                'label' => 'modification.labels.description',
+                'required' => true
             )
         );
         $builder->setAction($options['action']);

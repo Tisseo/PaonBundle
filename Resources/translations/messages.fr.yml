@@ -101,7 +101,7 @@ line_version:
         published: publiée
         new: nouvelle
         wip: work in progress
-        modification_link: Modifications
+        modifications: Modifications
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
 
@@ -121,15 +121,13 @@ datasource:
         name: Datasource
         code: Code
 
-modification_link:
-    labels:
-        date: Date
-        description: Description
-        resolved_in: Résolue sur
-
 modification:
     labels:
         description: Description
+        date: Date
+        author: Auteur
+        resolved_in: Résolue
+        not_resolved: Non résolue
 
 #should be in error namespace above
 network:
