@@ -60,7 +60,7 @@ class CalendarController extends AbstractController
             $gridCalendarManager->save($gridCalendar);
 
             return $this->render(
-                'TisseoTidBundle:GridCalendar:calendar.html.twig',
+                'TisseoTidBundle:GridCalendar:new.html.twig',
                 array(
                     'gridCalendar' => $gridCalendar
                 )
@@ -133,7 +133,7 @@ class CalendarController extends AbstractController
         $gridMaskTypes = $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion);
 
         return $this->render(
-            'TisseoTidBundle:LineVersion:calendars.html.twig',
+            'TisseoTidBundle:Calendar:edit.html.twig',
             array(
                 'title' => 'menu.grid_calendar_manage',
                 'lineVersionId' => $lineVersion->getId(),
