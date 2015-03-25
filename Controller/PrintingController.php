@@ -31,7 +31,7 @@ class PrintingController extends AbstractController
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
-        $printingManager = $this->get('tisseo_tid.printing_manager');
+        $printingManager = $this->get('tisseo_endiv.printing_manager');
         if ($form->isValid()) {
             $printingManager->save($form->getData());
             $this->get('session')->getFlashBag()->add(
@@ -53,7 +53,7 @@ class PrintingController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineVersionManager = $this->get('tisseo_tid.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         if (empty($lineVersion))
