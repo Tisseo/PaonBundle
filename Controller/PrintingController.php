@@ -5,8 +5,8 @@ namespace Tisseo\TidBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tisseo\TidBundle\Form\Type\PrintingType;
-use Tisseo\TidBundle\Entity\Printing;
-use Tisseo\TidBundle\Entity\LineVersion;
+use Tisseo\EndivBundle\Entity\Printing;
+use Tisseo\EndivBundle\Entity\LineVersion;
 
 class PrintingController extends AbstractController
 {
