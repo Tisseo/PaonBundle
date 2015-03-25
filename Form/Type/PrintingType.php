@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
 use Tisseo\EndivBundle\Entity\LineVersion;
-use Tisseo\EndivBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class PrintingType extends AbstractType
 {
@@ -33,7 +33,7 @@ class PrintingType extends AbstractType
         );
         $builder->add(
             'date',
-            'datepicker',
+            'datepicker_tid',
             array(
                 'label' => 'printing.labels.date',
                 'attr' => array(
