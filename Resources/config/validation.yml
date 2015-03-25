@@ -47,3 +47,20 @@ Tisseo\EndivBundle\Entity\LineVersion:
             - DateTime: ~
             - Tisseo\TidBundle\Validator\Constraints\GreaterThanField:
                 field: startDate
+Tisseo\EndivBundle\Entity\Comment:
+    properties:
+        label:
+            - NotBlank:
+                message: error.blank_value
+            - Length:
+                min: 2
+                max: 2
+                exactMessage: error.comment.label_length
+            - Type:
+                type: alpha
+                message: error.comment.label_type
+        commentText:
+            - NotBlank:
+                message: error.blank_value
+            - Type:
+                type: string

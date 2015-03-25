@@ -3,34 +3,33 @@ requirejs.config({
     urlArgs: '{{ assets_version }}',
     paths: {
         'jquery/textfill':                  'bundles/tisseotid/js/jquery.textfill.min',
-        textfill:                           'bundles/tisseotid/js/textfill',
+        'jquery/datatables':                'bundles/tisseotid/js/jquery.dataTables.min',
         jquery_ui_draggable:                'components/jquery-ui/ui/minified/jquery.ui.draggable.min',
         jquery_ui_droppable:                'components/jquery-ui/ui/minified/jquery.ui.droppable.min',
-        datatables:                         'bundles/tisseotid/js/jquery.dataTables.min',
-        natural:                            'bundles/tisseotid/js/natural',
-        tid_datatables:           'bundles/tisseotid/js/list/dataTables',
-        tid_left_menu:            'bundles/tisseotid/js/left_menu',
-        'tid/list/offers':        'bundles/tisseotid/js/list/lineVersions',
-        'tid/select/offer':       'bundles/tisseotid/js/select/lineVersion',
-        'tid/edit/offers':        'bundles/tisseotid/js/edit/lineVersions',
-        'tid/create/calendar':    'bundles/tisseotid/js/create/gridCalendar',
-        'tid/form':               'bundles/tisseotid/js/form'
+        'tid/textfill':                     'bundles/tisseotid/js/textfill',
+        'tid/form':                         'bundles/tisseotid/js/form',
+        'tid/datatables':                   'bundles/tisseotid/js/datatables',
+        'tid/list/offers':                  'bundles/tisseotid/js/LineVersion/list_line_versions',
+        'tid/select/offer':                 'bundles/tisseotid/js/LineVersion/select_line_versions',
+        'tid/edit/offers':                  'bundles/tisseotid/js/LineVersion/edit_line_versions',
+        'tid/create/calendar':              'bundles/tisseotid/js/Calendar/create_grid_calendar',
+        'tid/exceptions':                   'bundles/tisseotid/js/Exception/edit_exceptions'
     },
     shim: {
         'jquery/textfill': {
             deps: ['jquery']
         },
+        'jquery/datatables': {
+            deps: ['jquery']
+        },
         textfill: {
             deps: ['jquery/textfill']
         },
-        natural: {
-            deps: ['datatables']
+        'tid/datatables': {
+            deps: ['jquery/datatables', 'jquery/textfill']
         },
-        datatables: {
-            deps: ['jquery']
-        },
-        tid_datatables: {
-            deps: ['datatables']
+        'tid/exceptions': {
+            deps: ['jquery/datatables', 'jquery/textfill']
         },
         jquery_ui_droppable: {
             deps: ['jquery', 'jquery_ui_core', 'jquery_ui_mouse', 'jquery_ui_widget'],

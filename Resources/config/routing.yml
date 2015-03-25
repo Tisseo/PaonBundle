@@ -72,13 +72,20 @@ tisseo_tid_calendar_create:
     options:
         expose: true
 
-#ExceptionType administration
-tisseo_tid_exception_type_list:
+#Exception administration
+tisseo_tid_exception_list:
     pattern: /exceptions/list
-    defaults: { _controller: TisseoTidBundle:ExceptionType:list }
-tisseo_tid_exception_type_edit:
-    pattern: /exceptions/edit/{exceptionTypeId}
-    defaults: { _controller: TisseoTidBundle:ExceptionType:edit, exceptionTypeId: null }
+    defaults: { _controller: TisseoTidBundle:Exception:list }
+tisseo_tid_exception_edit:
+    pattern: /exceptions/edit/{lineVersionId}
+    defaults: { _controller: TisseoTidBundle:Exception:edit }
+    requirements:
+        lineVersionId: \d+
+tisseo_tid_exception_comment:
+    pattern: /exceptions/create/comment
+    defaults: { _controller: TisseoTidBundle:Exception:comment }
+    options:
+        expose: true
 
 #Imports administration
 tisseo_tid_data_exchange_import:

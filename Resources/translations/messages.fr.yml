@@ -44,7 +44,24 @@ global:
         end: au
         and: et
     edit_calendar: Calendriers
+    edit_exception: Exceptions
     purge: Purger
+    short_days:
+        1: L
+        2: M
+        3: M
+        4: J
+        5: V
+        6: S
+        7: D
+    long_days:
+        1: Lundi
+        2: Mardi
+        3: Mercredi
+        4: Jeudi
+        5: Vendredi
+        6: Samedi
+        7: Dimanche
 
 error:
     navitia_network_id: "%string% n'est pas conforme au format navitia."
@@ -53,6 +70,10 @@ error:
     line_exists: Ce numéro de ligne est déja attribué.
     line_version:
         not_found: Cette ligne ne possède aucune offre.
+    comment:
+        label_length: Le label doit comporter exactement 2 caractères.
+        label_type: Le label doit être composé de lettres.
+    blank_value: Veuillez renseigner ce champs.
 
 menu:
     line_manage: Gestion des lignes
@@ -60,7 +81,7 @@ menu:
     line_version_history: Historique des offres
     line_version_active: Offres actuelles
     calendar_manage: Gestion des calendriers
-    exception_type_manage: Gestion des exceptions
+    exception_manage: Gestion des exceptions
     data_manage: Import Fiches Horaires
     timetable_manage: Export Timetable
     import_manage: Imports/Exports
@@ -110,12 +131,6 @@ calendar:
         services: services
         no_data: Aucune donnée présente en base qui ne soit pas encore associée au calendrier de l'offre.
 
-grid_calendar:
-    labels:
-
-exception_type:
-    labels:
-
 datasource:
     labels:
         name: Datasource
@@ -128,6 +143,11 @@ modification:
         author: Auteur
         resolved_in: Résolue
         not_resolved: Non résolue
+
+comment:
+    labels:
+        label: Renvoi
+        comment_text: Texte
 
 #should be in error namespace above
 network:

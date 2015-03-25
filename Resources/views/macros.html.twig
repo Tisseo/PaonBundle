@@ -57,3 +57,11 @@
         </select>
     {% endif %}
 {% endmacro %}
+
+{% macro pattern(pattern) %}
+    <span>
+        {% for day in pattern %}
+        <span class="{% if day %}green-fg-day{% else %}red-fg-day{% endif %}">{{ ('global.short_days.'~loop.index)|trans({}, 'messages') }}</span>
+        {% endfor %}
+    </span>
+{% endmacro %}

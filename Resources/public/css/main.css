@@ -116,6 +116,14 @@
 .red-day {
     background-color:red;
 }
+.green-fg-day {
+    color:green;
+    font-weight:bold;
+}
+.red-fg-day {
+    color:red;
+    font-weight:bold;
+}
 table .grid-mask-type {
     cursor:pointer;
 }
@@ -124,4 +132,55 @@ table .grid-mask-type {
 }
 .title {
     min-height:55px;
+}
+/* exception list/form rendering */
+.exception-calendar {
+    display:none;
+}
+.exception-calendar tr {
+    cursor:pointer;
+}
+.exception-calendar tr.edit-comment,
+.exception-calendar tr.edit-comment:hover {
+    background-color:#A9D0F5;
+}
+.head-info {
+    display:inline-block;
+    margin-bottom:20px;
+}
+.head-info .head-menu,
+.head-info .head-number {
+    display:inline-block;
+}
+.head-number {
+    float:right;
+}
+.head-number div {
+    display:inline-block;
+}
+.head-number .line-big {
+    float:right;
+    margin-bottom:5px;
+}
+.head-menu {
+    float:left;
+    text-align:left;
+    width:40%;
+}
+.head-menu .choice {
+    display:inline;
+}
+.head-menu .choice select,
+.head-menu .choice a {
+    display:block;
+    float:left;
+}
+.head-menu .choice select {
+    width:60%;
+    margin-right:10px;
+}
+.head-menu .title-choice {
+    font-weight:bold;
+    font-size:1.2em;
+    margin-bottom:10px;
 }

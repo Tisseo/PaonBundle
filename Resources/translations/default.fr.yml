@@ -1,4 +1,5 @@
 tid_welcome: "Bienvenue sur TID"
+app_name: TID
 
 line:
     list:
@@ -44,14 +45,6 @@ line_version:
 calendar:
     list:
         title: Edition des calendriers d'offres
-        columns:
-            monday: L
-            tuesday: M
-            wednesday: M
-            thursday: J
-            friday: V
-            saturday: S
-            sunday: D
     grid_calendar_table: Grilles présentes sur la fiche horaire
     grid_mask_table: Calendriers disponibles dans les données
 
@@ -63,7 +56,7 @@ grid_mask_type:
 grid_calendar:
     list:
         columns:
-             label: Grilles horaires          
+             label: Grilles horaires
         title: Liste des calendriers
     title: Calendrier
     edit: Editer un calendrier
@@ -74,11 +67,31 @@ exception:
     list:
         columns:
             label: Exception
-        title: Liste des exceptions
+        title: Edition des exceptions d'offres
     title: Exception
     edit: Editer une exception
     create: Créer une exception
     created: Exception sauvegardée
+    choice: Choix de la grille horaire
+
+trip:
+    list:
+        columns:
+            name: Service
+            days: Jours de circulation
+            start_stop: Arrêt de départ
+            start_time: Heure de départ
+            end_stop: Arrêt d'arrivée
+            end_time: Heure d'arrivée
+
+comment:
+    list:
+        columns:
+            label: Renvoi
+            comment_text: Texte
+            edit: Editer
+    edit: Editer le(s) exception(s)
+    create: Création d'une exception
 
 printing:
     title: Tirage

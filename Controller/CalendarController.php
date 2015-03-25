@@ -53,12 +53,12 @@ class CalendarController extends AbstractController
         {
             $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
             $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-    
+
             $lineVersion = $lineVersionManager->find($lineVersionId);
             $gridCalendar = $form->getData();
             $gridCalendar->setLineVersion($lineVersion);
             $gridCalendarManager->save($gridCalendar);
-            
+
             return $this->render(
                 'TisseoTidBundle:GridCalendar:calendar.html.twig',
                 array(
@@ -79,7 +79,7 @@ class CalendarController extends AbstractController
      * renderFormAction
      * @param integer $lineVersionId
      *
-     * This method is called through ajax request in order to display a new 
+     * This method is called through ajax request in order to display a new
      * fresh form when a previous one had just been submitted and validated.
      */
     public function renderFormAction($lineVersionId)
@@ -101,12 +101,12 @@ class CalendarController extends AbstractController
     /**
      * editAction
      * @param Request $request
-     * @param inetger $lineVersionId
+     * @param integer $lineVersionId
      *
-     * If request's method is GET, display a pseudo-form (ajax/json) which 
+     * If request's method is GET, display a pseudo-form (ajax/json) which
      * purpose is to create/delete GridCalendar and link GridMaskType to them.
-     * 
-     * Otherwise, the pseudo-form data is sent as AJAX POST request and is 
+     *
+     * Otherwise, the pseudo-form data is sent as AJAX POST request and is
      * decoded then will be used for database update.
      */
     public function editAction(Request $request, $lineVersionId)
@@ -128,7 +128,7 @@ class CalendarController extends AbstractController
             );
         }
 
-        $lineVersion = $lineVersionManager->findWithPreviousCalendars($lineVersionId);       
+        $lineVersion = $lineVersionManager->findWithPreviousCalendars($lineVersionId);
         $gridCalendars = $gridCalendarManager->findRelatedGridMaskTypes($lineVersion->getGridCalendars(), $lineVersion->getId());
         $gridMaskTypes = $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion);
 
@@ -148,7 +148,7 @@ class CalendarController extends AbstractController
      * @param Request $request
      * @param ineteger $lineVersionId
      *
-     * This function is called though ajax request and will launch GridCalendarType 
+     * This function is called though ajax request and will launch GridCalendarType
      * form validation process.
      */
     public function createAction(Request $request, $lineVersionId)
@@ -169,19 +169,19 @@ class CalendarController extends AbstractController
      * listAction
      * @param Request $request
      *
-     * This function render the list of LineVersions which GridCalendars can be 
+     * This function render the list of LineVersions which GridCalendars can be
      * edited.
      */
     public function listAction(Request $request)
     {
         $this->isGranted('BUSINESS_LIST_CALENDAR');
-      
+
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         return $this->render(
             'TisseoTidBundle:Calendar:list.html.twig',
             array(
                 'pageTitle' => 'menu.calendar_manage',
-                'lineVersions' => $lineVersionManager->findActiveLineVersions(new \Datetime())
+                'lineVersions' => $lineVersionManager->findActiveLineVersions(new \Datetime(), false, true)
             )
         );
     }
