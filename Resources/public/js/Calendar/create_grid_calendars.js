@@ -81,14 +81,14 @@ define(['jquery', 'fosjsrouting'], function($) {
             var line_id = $("#line-version-id").val();
             var $inputs = $("#grid-calendar :input.grid-calendar-row, #grid-calendar :input.grid-mask-type-row");
             var data = {};
-            var temp_grid;
+            var gridCalendar;
             $inputs.each(function() {
                 if ($(this).hasClass('grid-calendar-row')) {
-                    data[$(this).val()] = [];
-                    temp_grid = $(this).val();
+                    gridCalendar = $(this).val();
+                    data[gridCalendar] = [];
                 }
                 else
-                    data[temp_grid].push($(this).val());
+                    data[gridCalendar].push($(this).val());
             });
             $.ajax({
                 url : Routing.generate('tisseo_tid_calendar_edit')+"/"+line_id,

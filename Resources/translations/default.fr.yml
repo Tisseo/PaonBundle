@@ -73,6 +73,7 @@ exception:
     create: Créer une exception
     created: Exception sauvegardée
     choice: Choix de la grille horaire
+    comments_updated: Les commentaires ont bien été mis à jour.
 
 trip:
     list:

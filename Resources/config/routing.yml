@@ -78,9 +78,9 @@ tisseo_tid_exception_list:
     defaults: { _controller: TisseoTidBundle:Exception:list }
 tisseo_tid_exception_edit:
     pattern: /exceptions/edit/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Exception:edit }
-    requirements:
-        lineVersionId: \d+
+    defaults: { _controller: TisseoTidBundle:Exception:edit, lineVersionId: null }
+    options:
+        expose: true
 tisseo_tid_exception_comment:
     pattern: /exceptions/create/comment
     defaults: { _controller: TisseoTidBundle:Exception:comment }

@@ -144,6 +144,9 @@ modification:
         resolved_in: Résolue
         not_resolved: Non résolue
 
+exception:
+    invalid_alert: Les modifications effectuées ne peuvent être validées car il reste des labels automatiques 'zz' dans les grilles horaires.
+
 comment:
     labels:
         label: Renvoi

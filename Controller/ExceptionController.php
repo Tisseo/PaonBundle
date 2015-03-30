@@ -4,6 +4,9 @@ namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonDecode;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
 use Tisseo\TidBundle\Form\Type\CommentType;
 
 class ExceptionController extends AbstractController
@@ -46,7 +49,7 @@ class ExceptionController extends AbstractController
      * @param integer $lineVersionId
      *
      * If request's method is GET, display a pseudo-form (ajax/json) which
-     * purpose is to create/delete comments and link on trips.
+     * purpose is to create/delete comments and link them to trips.
      *
      * Otherwise, the pseudo-form data is sent as AJAX POST request and is
      * decoded then will be used for database update.
@@ -55,22 +58,31 @@ class ExceptionController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
 
-        $tripManager = $this->get('tisseo_endiv.trip_manager');
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
-
+        // POST data from pseudo-form 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
-            $jsonDecode = new JsonDecode();
-            $data = $jsonDecode->decode($request->getContent(), JsonEncoder::FORMAT);
-            $lineVersionManager->updateGridCalendars(array_keys(get_object_vars($data)), $lineVersionId);
-            $gridCalendarManager->attachGridCalendars($data);
+            $data = json_decode($request->getContent(), true);
+
+            $tripManager = $this->get('tisseo_endiv.trip_manager');
+            $tripManager->updateComments($data);
+
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans(
+                    'exception.comments_updated',
+                    array(),
+                    'default'
+                )
+            );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_calendar_list')
+                $this->generateUrl('tisseo_tid_exception_list')
             );
         }
 
+        // GET pseudo-form view
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         return $this->render(

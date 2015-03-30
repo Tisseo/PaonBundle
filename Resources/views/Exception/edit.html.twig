@@ -17,12 +17,12 @@
             <div class="choice">
                 <select id="grid-calendar" class="form-control">
                     {% for gridCalendar in data %}
-                    <option value="{{ loop.index }}">{{ gridCalendar[0].name }}</option>
+                    <option value="{{ loop.index - 1 }}">{{ gridCalendar[0].name }}</option>
                     {% endfor %}
                 </select>
-                <a href="" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span> {{ 'global.save'|trans({}, 'messages') }}
-                </a>
+                <button id="submit-exceptions" type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span> {{'global.save'|trans}}
+                </button>
             </div>
         </div>
         <div class="head-number">
@@ -33,7 +33,7 @@
     </div>
 
     {% for gridCalendar in data %}
-    <div id="{{ loop.index }}" class="exception-calendar">
+    <div id="{{ loop.index - 1 }}" class="exception-calendar">
         <h3>{{ gridCalendar[0].name }}</h3>
 
         <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_tid_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
@@ -62,11 +62,11 @@
                     <td>{{ tripData['end_name'] }}</td>
                     <td>{{ tripData['end_time'] }}</td>
                     {% if tripData['trip'].comment %}
-                    <td>{{ tripData['trip'].comment.label }}</td>
-                    <td>{{ tripData['trip'].comment.commentText }}</td>
+                    <td class="exception-label">{{ tripData['trip'].comment.label }}</td>
+                    <td class="exception-comment">{{ tripData['trip'].comment.commentText }}</td>
                     {% else %}
-                    <td></td>
-                    <td></td>
+                    <td class="exception-label">&nbsp;</td>
+                    <td class="exception-comment">&nbsp;</td>
                     {% endif %}
                 </tr>
                 {% endfor %}
