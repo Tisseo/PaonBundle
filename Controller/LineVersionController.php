@@ -184,7 +184,7 @@ class LineVersionController extends AbstractController
             'TisseoTidBundle:LineVersion:list.html.twig',
             array(
                 'pageTitle' => 'menu.line_version_active',
-                'lineVersions' => $lineVersionManager->findActiveLineVersions($now)
+                'data' => $lineVersionManager->findActiveLineVersions($now, false, false, true)
             )
         );
     }

@@ -184,3 +184,18 @@ table .grid-mask-type {
     font-size:1.2em;
     margin-bottom:10px;
 }
+/* line version list */
+.physical-mode {
+    background-color:#343434;
+    padding:10px 50px;
+    width:100%;
+    border-radius:5px;
+    display:inline-block;
+    color:white;
+    margin-bottom:10px;
+}
+.mode-icon {
+    position:absolute;
+    top:5px;
+    left:20px;
+}

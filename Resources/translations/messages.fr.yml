@@ -125,6 +125,14 @@ line_version:
         modifications: Modifications
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
+    actions:
+        publication: Publication
+        offer: Offre
+        consult: Consulter
+        purge: Purger
+        close: Clôturer
+        calendar: Calendriers
+        exception: Exceptions
 
 calendar:
     labels:
