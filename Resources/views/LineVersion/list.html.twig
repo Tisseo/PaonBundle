@@ -10,10 +10,6 @@
     {% endstylesheets %}
 {% endblock %}
 
-{% block modal_dialog_classes %}
-    modal-dialog-small
-{% endblock %}
-
 {% block list_title -%}
     {{ 'line_version.list.title'|trans({}, 'default') }}
     {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
@@ -27,8 +23,8 @@
 {% block main_content -%}
     {% for physicalMode, lineVersions in data %}
         {% if lineVersions|length > 0 %}
-        <a class="physical-mode"><span class="mode-icon mode-id-{{loop.index}}"></span>{{ physicalMode }}</a>
-        <table class="table datatable">
+        <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
+        <table id="{{loop.index}}" class="table datatable">
             <thead>
                 <th class="col-sm-1 nat-sort">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
                 <th class="col-sm-5">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
@@ -37,93 +33,83 @@
                 <th class="col-sm-1">{{ 'line_version.list.columns.start_date'|trans({}, 'default') }}</th>
                 <th class="col-sm-1">{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
                 {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                    <th colspan="2" class="col-sm-1 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
+                    <th class="col-sm-2 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
                 {% else %}
-                    <th colspan="2"></th>
+                    <th class="no-sort"></th>
                 {% endif %}
             </thead>
             <tbody>
-            {% if lineVersions|length == 0 %}
+            {% for lineVersion in lineVersions %}
                 <tr>
-                    <td colspan="4">
-                        {{ 'global.no_items'|trans }}
+                    <td>
+                        {{ render.line_number(lineVersion, 'lineVersion', 'small') }}
+                    </td>
+                    <td>
+                        <span>{{ lineVersion.name }}</span>
+                    </td>
+                    <td>
+                        {{ lineVersion.totalPrintings }}
+                        <a style="float:right;" class="btn btn-xs btn-success small-link" href="{{ path('tisseo_tid_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </td>
+                    <td>
+                        {{ lineVersion.version }}
+                    </td>
+                    <td>
+                        {{ render.line_version_startDate(lineVersion) }}
+                    </td>
+                    <td>
+                        {{ render.line_version_status(lineVersion) }}
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'line_version.actions.offer'|trans({}, 'messages')}} <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('tisseo_tid_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                        {{'line_version.actions.consult'|trans({}, 'messages')}}
+                                    </a>
+                                </li>
+                                {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+                                <li>
+                                    <a href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                        {{'global.edit'|trans({}, 'messages')}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                        {{'line_version.actions.close'|trans({}, 'messages')}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('tisseo_tid_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
+                                        {{'line_version.actions.purge'|trans({}, 'messages')}}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'line_version.actions.publication'|trans({}, 'messages')}} <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="line-version-edit" href="{{ path('tisseo_tid_calendar_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').addClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                        {{'line_version.actions.calendar'|trans({}, 'messages')}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="line-version-edit" href="{{ path('tisseo_tid_exception_edit', {'lineVersionId': lineVersion.id}) }}">
+                                        {{'line_version.actions.exception'|trans({}, 'messages')}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
                     </td>
                 </tr>
-            {% else %}
-                {% for lineVersion in lineVersions %}
-                    <tr>
-                        <td>
-                            {{ render.line_number(lineVersion, 'lineVersion', 'small') }}
-                        </td>
-                        <td>
-                            <span>{{ lineVersion.name }}</span>
-                        </td>
-                        <td>
-                            {{ lineVersion.totalPrintings }}
-                            <a style="float:right;" class="btn btn-xs btn-success small-link" href="{{ path('tisseo_tid_printing_create', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </td>
-                        <td>
-                            {{ lineVersion.version }}
-                        </td>
-                        <td>
-                            {{ render.line_version_startDate(lineVersion) }}
-                        </td>
-                        <td>
-                            {{ render.line_version_status(lineVersion) }}
-                        </td>
-                        <td>
-                            {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'line_version.actions.offer'|trans({}, 'messages')}} <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="line-version-edit {% if lineVersion.isLocked %}line-version-locked{% endif %}" href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                            {{'global.edit'|trans({}, 'messages')}}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="line-version-edit" href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                            {{'line_version.actions.close'|trans({}, 'messages')}}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('tisseo_tid_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                            {{'line_version.actions.consult'|trans({}, 'messages')}}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="line-version-edit" href="{{ path('tisseo_tid_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
-                                            {{'line_version.actions.purge'|trans({}, 'messages')}}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'line_version.actions.publication'|trans({}, 'messages')}} <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="line-version-edit" href="{{ path('tisseo_tid_calendar_edit', {'lineVersionId': lineVersion.id}) }}">
-                                            {{'line_version.actions.calendar'|trans({}, 'messages')}}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="line-version-edit" href="{{ path('tisseo_tid_exception_edit', {'lineVersionId': lineVersion.id}) }}">
-                                            {{'line_version.actions.exception'|trans({}, 'messages')}}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
             </tbody>
         </table>
         </ul>
@@ -137,5 +123,17 @@
     {{ parent() }}
     <script>
         require(['tid/datatables']);
+    </script>
+    <script>
+        require(['jquery'], function() {
+            $(document).on("click", ".physical-mode", function() {
+                console.log("CLICK");
+                var id = $(this).attr('id');
+                console.log(id);
+                var datatable =  $('#'+id+".datatable");
+                datatable.toggle();
+                datatable.parent().toggle();
+            });
+        });
     </script>
 {% endblock %}

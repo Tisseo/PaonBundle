@@ -76,7 +76,7 @@ class ExceptionController extends AbstractController
             );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_exception_list')
+                $this->generateUrl('tisseo_tid_line_version_list')
             );
         }
 
@@ -91,26 +91,6 @@ class ExceptionController extends AbstractController
                 'title' => 'menu.comment_manage',
                 'lineVersion' => $lineVersion,
                 'data' => $gridCalendarManager->findRelatedTrips($lineVersion->getGridCalendars())
-            )
-        );
-    }
-
-    /*
-     * listAction
-     * @param Request $request
-     *
-     * This function render the list of LineVersions with GridCalendars.
-     */
-    public function listAction(Request $request)
-    {
-        $this->isGranted('BUSINESS_LIST_EXCEPTION');
-
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        return $this->render(
-            'TisseoTidBundle:Exception:list.html.twig',
-            array(
-                'pageTitle' => 'menu.exception_manage',
-                'lineVersions' => $lineVersionManager->findActiveLineVersions(new \Datetime(), true)
             )
         );
     }

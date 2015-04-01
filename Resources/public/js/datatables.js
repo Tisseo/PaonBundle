@@ -1,8 +1,7 @@
 define(['jquery', 'tid/textfill', 'datatables'], function($) {
+    datatables = [];
     $(document).ready(function() {
-        datatables = [];
         $(".datatable").each(function(index) {
-            var self = this;
             var datatable = $(this).DataTable({
                 "aaSorting": [],
                 "iDisplayLength": 25,
@@ -54,5 +53,6 @@ define(['jquery', 'tid/textfill', 'datatables'], function($) {
             });
             datatables[index] = datatable;
         });
+        $('.datatable').parent().css('margin-bottom', '50px');
     });
 });

@@ -23,9 +23,10 @@
 {% block table_body -%}
     {% if lines|length == 0 %}
         <tr>
-            <td colspan="3">
+            <td>
                 {{'global.no_items'|trans}}
             </td>
+            <td></td><td></td>
         </tr>
     {% else %}
         {% for line in lines %}
