@@ -10,8 +10,12 @@
     {% endstylesheets %}
 {% endblock %}
 
+{% block breadcrumb %}
+    <a href="{{ path('tisseo_tid_line_version_list') }}" role="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {{ 'global.previous'|trans({}, 'messages') }}</a>
+{% endblock %}
+
 {% block main_content -%}
-    <div class="head-info col-md-12">
+    <div class="head-info col-md-12">               
         <div class="head-menu">
             <div class="title-choice">{{ 'exception.choice'|trans({}, 'default') }}</div>
             <div class="choice">

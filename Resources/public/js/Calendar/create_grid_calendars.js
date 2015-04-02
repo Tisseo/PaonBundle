@@ -1,4 +1,4 @@
-define(['jquery', 'fosjsrouting'], function($) {
+define(['jquery', 'jquery_ui_droppable', 'fosjsrouting'], function($) {
     $(document).ready(function() {
         /*
          * delete calendar button removes gridCalendar's <tbody> from left table in
@@ -26,7 +26,7 @@ define(['jquery', 'fosjsrouting'], function($) {
                 $(this).closest('tbody').remove();
             });
         });
-
+        
         /*
          * submit button for gridCalendar form validation. If the validation
          * fails, the called controller will resend the same form with errors
@@ -56,6 +56,29 @@ define(['jquery', 'fosjsrouting'], function($) {
                         {
                             getForm = true;
                             $(data.content).insertBefore("#grid-calendar tbody:last-child");
+                            /* This function is called in Calendar/edit.html
+                             * view, so it could be great to declare it and
+                             * call it from only one source */
+                            $(".new-droppable").droppable({
+                                over: function(event, ui) {
+                                    $(this).find("tr:first").addClass("success");
+                                },
+                                out: function(event, ui) {
+                                    $(this).find("tr:first").removeClass("success");
+                                },
+                                drop: function(event, ui) {
+                                    if ($(ui.draggable).find("tr:first td").length == 2) {
+                                        $(ui.draggable).find("tr").append("<td></td>");
+                                    }
+                                    $(this).find("tr:first").removeClass("success");
+                                    $(this).after(ui.draggable);
+                                    if ($(".grid-mask-type-table").children().length == 2)
+                                    {
+                                        $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>");
+                                        $(".grid-mask-type-table").next().fadeIn();
+                                    }
+                                }
+                            }).removeClass("new-droppable");
                         }
                     }
                 }

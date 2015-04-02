@@ -10,17 +10,17 @@
     {% endstylesheets %}
 {% endblock %}
 
-{% block list_title -%}
-    {{ 'line_version.list.title'|trans({}, 'default') }}
-    {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-        -
-        <a href="{{ path('tisseo_tid_line_version_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span> {{ 'line_version.create'|trans({}, 'default') }}
-        </a>
-    {% endif %}
-{% endblock %}
-
 {% block main_content -%}
+    <h1>
+        {{ 'line_version.list.title'|trans({}, 'default') }}
+        {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+            -
+            <a href="{{ path('tisseo_tid_line_version_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus"></span> {{ 'line_version.create'|trans({}, 'default') }}
+            </a>
+        {% endif %}
+    </h1>
+
     {% for physicalMode, lineVersions in data %}
         {% if lineVersions|length > 0 %}
         <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>

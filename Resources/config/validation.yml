@@ -53,9 +53,10 @@ Tisseo\EndivBundle\Entity\Comment:
             - NotBlank:
                 message: error.blank_value
             - Length:
-                min: 2
-                max: 2
-                exactMessage: error.comment.label_length
+                min: 1
+                max: 4
+                minMessage: error.comment.label_length
+                maxMessage: error.comment.label_length
             - Type:
                 type: alpha
                 message: error.comment.label_type

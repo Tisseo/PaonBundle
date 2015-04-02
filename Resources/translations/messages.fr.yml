@@ -1,6 +1,7 @@
 welcome: "Bienvenue sur TID"
 
 global:
+    previous: Précédent
     summary: Résumé
     properties: Propriétés
     printings: Tirages
@@ -71,7 +72,7 @@ error:
     line_version:
         not_found: Cette ligne ne possède aucune offre.
     comment:
-        label_length: Le label doit comporter exactement 2 caractères.
+        label_length: Le label doit comporter 1 à 4 caractères.
         label_type: Le label doit être composé de lettres.
     blank_value: Veuillez renseigner ce champs.
 

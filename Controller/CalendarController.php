@@ -86,7 +86,7 @@ class CalendarController extends AbstractController
      */
     public function renderFormAction($lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_CALENDAR');
+        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
@@ -113,7 +113,7 @@ class CalendarController extends AbstractController
      */
     public function editAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_CALENDAR');
+        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
         $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
@@ -164,7 +164,7 @@ class CalendarController extends AbstractController
      */
     public function createAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_CALENDAR');
+        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
