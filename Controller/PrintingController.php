@@ -10,7 +10,14 @@ use Tisseo\EndivBundle\Entity\LineVersion;
 
 class PrintingController extends AbstractController
 {
-    private function buildForm($printing)
+    /*
+     * Build Form
+     * @param Printing $printing
+     * @return Form $form
+     *
+     * Build a new PrintingType form.
+     */
+    private function buildForm(Printing $printing)
     {
         $form = $this->createForm(
             new PrintingType(),
@@ -28,6 +35,13 @@ class PrintingController extends AbstractController
         return ($form);
     }
 
+    /**
+     * Process form
+     * @param Request $request
+     * @param Form $form
+     *
+     * Handle Form display / Form validation.
+     */
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
@@ -49,6 +63,13 @@ class PrintingController extends AbstractController
         return (null);
     }
 
+    /**
+     * Create
+     * @param Request $request
+     * @param integer $lineVersionId
+     *
+     * Display a new Printing form.
+     */
     public function createAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');

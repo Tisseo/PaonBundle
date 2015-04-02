@@ -13,7 +13,7 @@ use Tisseo\EndivBundle\Entity\LineVersion;
 class CalendarController extends AbstractController
 {
     /*
-     * buildForm
+     * Build Form
      * @param LineVersion $lineVersion
      * @return Form $form
      *
@@ -38,12 +38,13 @@ class CalendarController extends AbstractController
     }
 
     /*
-     * processForm
+     * Process Form
      * @param Request $request
      * @param Form $form
      * @param integer $lineVersionId
      *
-     * If form is valid, return a new gridCalendar rendered in a specific view.
+     * If form is valid, return a new gridCalendar rendered in a specific view
+     * (as html table for view integration).
      * Else, return the actual form view with errors.
      */
     private function processForm(Request $request, $form, $lineVersionId)
@@ -76,11 +77,12 @@ class CalendarController extends AbstractController
     }
 
     /*
-     * renderFormAction
+     * Render Form
      * @param integer $lineVersionId
      *
      * This method is called through ajax request in order to display a new
-     * fresh form when a previous one had just been submitted and validated.
+     * fresh GridCalendarType form when a previous one has just been
+     * submitted and validated.
      */
     public function renderFormAction($lineVersionId)
     {
@@ -99,7 +101,7 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * editAction
+     * Edit
      * @param Request $request
      * @param integer $lineVersionId
      *
@@ -123,8 +125,17 @@ class CalendarController extends AbstractController
             $lineVersionManager->updateGridCalendars(array_keys(get_object_vars($data)), $lineVersionId);
             $gridCalendarManager->attachGridCalendars($data);
 
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans(
+                    'calendar.grid_calendars_updated',
+                    array(),
+                    'default'
+                )
+            );
+
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_calendar_list')
+                $this->generateUrl('tisseo_tid_line_version_list')
             );
         }
 
@@ -144,7 +155,7 @@ class CalendarController extends AbstractController
     }
 
     /*
-     * createAction
+     * Create
      * @param Request $request
      * @param ineteger $lineVersionId
      *
@@ -163,26 +174,5 @@ class CalendarController extends AbstractController
             return $this->processForm($request, $this->buildForm($lineVersion), $lineVersion->getId());
         }
         return (null);
-    }
-
-    /*
-     * listAction
-     * @param Request $request
-     *
-     * This function render the list of LineVersions which GridCalendars can be
-     * edited.
-     */
-    public function listAction(Request $request)
-    {
-        $this->isGranted('BUSINESS_LIST_CALENDAR');
-
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        return $this->render(
-            'TisseoTidBundle:Calendar:list.html.twig',
-            array(
-                'pageTitle' => 'menu.calendar_manage',
-                'lineVersions' => $lineVersionManager->findActiveLineVersions(new \Datetime(), false, true)
-            )
-        );
     }
 }

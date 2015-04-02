@@ -6,10 +6,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Tisseo\TidBundle\Form\Type\LineType;
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineDatasource;
+use Tisseo\EndivBundle\Services\LineManager;
 
 class LineController extends AbstractController
 {
-    private function buildForm($lineId, $lineManager)
+    /*
+     * Build Form
+     * @param integer $lineId
+     * @param LineManager $lineManager
+     * @return Form $form
+     *
+     * Build a new LineType form.
+     */
+    private function buildForm($lineId, LineManager $lineManager)
     {
         $line = $lineManager->find($lineId);
         if (empty($line)) {
@@ -32,6 +41,15 @@ class LineController extends AbstractController
         return ($form);
     }
 
+    /*
+     * Process Form
+     * @param Request $request
+     * @param Form $form
+     *
+     * If form is valid, save Line in database, then redirect to LineVersion
+     * list view.
+     * Else, return the actual form view with errors.
+     */
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
@@ -53,6 +71,13 @@ class LineController extends AbstractController
         return (null);
     }
 
+    /**
+     * Edit
+     * @param Request $request
+     * @param integer $lineId
+     *
+     * Build a new form view or validate the sent form.
+     */
     public function editAction(Request $request, $lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE');
@@ -71,6 +96,11 @@ class LineController extends AbstractController
         return ($render);
     }
 
+    /**
+     * List
+     *
+     * Render the Lines list view.
+     */
     public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_LINE');

@@ -19,7 +19,10 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             'reference'     => 'user-tid',
             'application'   => 'app-tid',
             'isEditable'    => true,
-            'permissions'   => array()
+            'permissions'   => array(
+                'BUSINESS_LIST_LINE',
+                'BUSINESS_LIST_LINE_VERSION'
+            )
         ),
         array(
             'name'          => 'Admin TID',
@@ -27,7 +30,13 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             'application'   => 'app-tid',
             'isEditable'    => true,
             'permissions'  => array(
-                'BUSINESS_MANAGE_CUSTOMER'
+                'BUSINESS_LIST_LINE',
+                'BUSINESS_MANAGE_LINE',
+                'BUSINESS_LIST_LINE_VERSION',
+                'BUSINESS_MANAGE_LINE_VERSION',
+                'BUSINESS_MANAGE_GRID_CALENDAR',
+                'BUSINESS_MANAGE_EXCEPTION',
+                'BUSINESS_MANAGE_DATA_EXCHANGE'
             )
         )
     );

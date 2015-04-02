@@ -12,7 +12,7 @@
 
 {% block modal_body %}
     <h3>{{ 'global.summary'|trans({}, 'messages') }}</h3>
-    <div class="form form-consult">
+    <div class="form form-show">
         <div class="left-summary">
             <ul>
                 <li>{{ 'line_version.labels.version'|trans({}, 'messages') }} {{ lineVersion.version }}</li>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <h3>{{ 'global.properties'|trans({}, 'messages') }}</h3>
-    <div class="form form-consult">
+    <div class="form form-show">
         <ul style="padding-left:20px;">
             <li>{{ 'line_version.labels.name'|trans({}, 'messages') }} : {{ lineVersion.name }}</li>
             <li>{{ 'line_version.labels.forward'|trans({}, 'messages') }} : {{ lineVersion.forwardDirection }}</li>
@@ -48,7 +48,7 @@
         </ul>
     </div>
     <h3>{{ 'global.printings'|trans({}, 'messages') }}</h3>
-    <div class="form form-consult">
+    <div class="form form-show">
         {% if lineVersion.printings is empty %}
         <span class="message">{{ 'line_version.no_printings'|trans({}, 'default') }}</span>
         {% else %}
@@ -64,7 +64,7 @@
         {% endif %}
     </div>
     <h3>{{ 'global.modifications'|trans({}, 'messages') }}</h3>
-    <div class="form form-consult">
+    <div class="form form-show">
         {% if lineVersion.modifications is empty %}
         <span class="message">{{ 'line_version.no_modifications'|trans({}, 'default') }}</span>
         {% else %}

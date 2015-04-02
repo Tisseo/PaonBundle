@@ -11,6 +11,12 @@ use Tisseo\TidBundle\Form\Type\CommentType;
 
 class ExceptionController extends AbstractController
 {
+    /*
+     * Build Form
+     * @return Form $form
+     *
+     * Build a new CommentType form.
+     */
     private function buildForm()
     {
         $form = $this->createForm(
@@ -21,6 +27,14 @@ class ExceptionController extends AbstractController
         return ($form);
     }
 
+    /*
+     * Process Form
+     * @param Request $request
+     * @param Form $form
+     *
+     * If form is valid, return its data in JSON array.
+     * Else, return the actual form with errors.
+     */
     private function processForm(Request $request, $form)
     {
         $form->handleRequest($request);
@@ -44,7 +58,7 @@ class ExceptionController extends AbstractController
     }
 
     /**
-     * editAction
+     * Edit
      * @param Request $request
      * @param integer $lineVersionId
      *
@@ -58,7 +72,7 @@ class ExceptionController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
 
-        // POST data from pseudo-form 
+        // POST data from pseudo-form
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
             $data = json_decode($request->getContent(), true);
@@ -96,10 +110,10 @@ class ExceptionController extends AbstractController
     }
 
     /*
-     * Comment action
+     * Comment
      * @param Request $request
      *
-     * Render a new comment form
+     * Render a new CommentType form
      */
     public function commentAction(Request $request)
     {

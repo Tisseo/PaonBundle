@@ -67,23 +67,23 @@
                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'line_version.actions.offer'|trans({}, 'messages')}} <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ path('tisseo_tid_line_version_consult', {'lineVersionId': lineVersion.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                        {{'line_version.actions.consult'|trans({}, 'messages')}}
+                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_show', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                        {{'line_version.actions.show'|trans({}, 'messages')}}
                                     </a>
                                 </li>
                                 {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
                                 <li>
-                                    <a href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
                                         {{'global.edit'|trans({}, 'messages')}}
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                    <a class="btn" role"button" href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
                                         {{'line_version.actions.close'|trans({}, 'messages')}}
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('tisseo_tid_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
+                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
                                         {{'line_version.actions.purge'|trans({}, 'messages')}}
                                     </a>
                                 </li>
@@ -95,12 +95,12 @@
                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{'line_version.actions.publication'|trans({}, 'messages')}} <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="line-version-edit" href="{{ path('tisseo_tid_calendar_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').addClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                    <a class="btn" role="button" href="{{ path('tisseo_tid_calendar_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').addClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
                                         {{'line_version.actions.calendar'|trans({}, 'messages')}}
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="line-version-edit" href="{{ path('tisseo_tid_exception_edit', {'lineVersionId': lineVersion.id}) }}">
+                                <a class="btn {% if lineVersion.gridCalendars|length == 0 %} disabled {% endif %}" role="button" href="{{ path('tisseo_tid_exception_edit', {'lineVersionId': lineVersion.id}) }}">
                                         {{'line_version.actions.exception'|trans({}, 'messages')}}
                                     </a>
                                 </li>

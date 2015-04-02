@@ -6,29 +6,40 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DataExchangeController extends AbstractController
 {
-    public function editAction(Request $request, $jobName)
+    /**
+     * Launch
+     * @param Request $request
+     * @param string $jobName
+     *
+     * Launch a job.
+     */
+    public function launchAction(Request $request, $jobName)
     {
-        $this->isGranted('BUSINESS_MANAGE_IMPORTS_EXPORTS');
+        $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
 
         $dataExchangeManager = $this->get('tisseo_tid.data_exchange_manager');
-        // Check no master jobs are currently running
-        if ($dataExchangeManager->getRunningJob())
-            return $this->redirect($this->generateUrl('tisseo_tid_data_exchange_import'));
+        // Check no master jobs are currently running and launch the job if it's clear
+        if ($dataExchangeManager->getRunningJob() === null)
+            $dataExchangeManager->launchJob($jobName);
 
-        // Run the job
-        $dataExchangeManager->launchJob($jobName);
-        return $this->redirect($this->generateUrl('tisseo_tid_data_exchange_import'));
+        return $this->redirect($this->generateUrl('tisseo_tid_data_exchange_show'));
     }
 
-    public function importAction(Request $request)
+    /**
+     * Show
+     * @param Request $request
+     *
+     * Display list of runnable jobs.
+     */
+    public function showAction(Request $request)
     {
-        $this->isGranted('BUSINESS_MANAGE_IMPORTS_EXPORTS');
+        $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
 
         $dataExchangeManager = $this->get('tisseo_tid.data_exchange_manager');
         $runningJobData = $dataExchangeManager->buildRunningJobData();
 
         return $this->render(
-            'TisseoTidBundle:DataExchange:imports.html.twig',
+            'TisseoTidBundle:DataExchange:jobs.html.twig',
             array(
                 'pageTitle' => 'menu.import_manage',
                 'jobs' => $dataExchangeManager->getJobsList(),

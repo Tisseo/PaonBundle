@@ -2,7 +2,7 @@ tisseo_tid_homepage:
     pattern:  /
     defaults: { _controller: TisseoTidBundle:Default:index }
 
-#Line administration
+# Line routes
 tisseo_tid_line_list:
     pattern: /lines/list
     defaults: { _controller: TisseoTidBundle:Line:list }
@@ -10,7 +10,7 @@ tisseo_tid_line_edit:
     pattern: /lines/edit/{lineId}
     defaults: { _controller: TisseoTidBundle:Line:edit, lineId: null }
 
-#LineVersion administration
+# LineVersion routes
 tisseo_tid_line_version_list:
     pattern: /offers/list
     defaults: { _controller: TisseoTidBundle:LineVersion:list }
@@ -20,9 +20,9 @@ tisseo_tid_line_version_history:
 tisseo_tid_line_version_edit:
     pattern: /offers/edit/{lineVersionId}
     defaults: { _controller: TisseoTidBundle:LineVersion:edit, lineVersionId: null }
-tisseo_tid_line_version_consult:
-    pattern: /offers/consult/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:consult }
+tisseo_tid_line_version_show:
+    pattern: /offers/show/{lineVersionId}
+    defaults: { _controller: TisseoTidBundle:LineVersion:show }
     options:
         expose: true
 tisseo_tid_line_version_close:
@@ -35,21 +35,20 @@ tisseo_tid_line_version_purge:
     defaults: { _controller: TisseoTidBundle:LineVersion:purge }
     requirements:
         lineVersionId: \d+
-tisseo_tid_printing_create:
-    pattern: /offers/add/printings/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Printing:create }
-    requirements:
-        lineVersionId: \d+
 tisseo_tid_select_line_version_by_line:
     pattern: /offers/select_by_line
     defaults: { _controller: TisseoTidBundle:LineVersion:selectByLine }
     options:
         expose: true
 
-#Calendar administration
-tisseo_tid_calendar_list:
-    pattern: /calendars/list
-    defaults: { _controller: TisseoTidBundle:Calendar:list }
+# Printing routes
+tisseo_tid_printing_create:
+    pattern: /offers/add/printings/{lineVersionId}
+    defaults: { _controller: TisseoTidBundle:Printing:create }
+    requirements:
+        lineVersionId: \d+
+
+# GridCalendar/GridMaskType routes
 tisseo_tid_calendar_edit:
     pattern: /calendars/edit/{lineVersionId}
     defaults: { _controller: TisseoTidBundle:Calendar:edit }
@@ -72,10 +71,7 @@ tisseo_tid_calendar_create:
     options:
         expose: true
 
-#Exception administration
-tisseo_tid_exception_list:
-    pattern: /exceptions/list
-    defaults: { _controller: TisseoTidBundle:Exception:list }
+# Exception/Comment administration
 tisseo_tid_exception_edit:
     pattern: /exceptions/edit/{lineVersionId}
     defaults: { _controller: TisseoTidBundle:Exception:edit, lineVersionId: null }
@@ -87,15 +83,10 @@ tisseo_tid_exception_comment:
     options:
         expose: true
 
-#Imports administration
-tisseo_tid_data_exchange_import:
-    pattern: /data-exchange
-    defaults: { _controller: TisseoTidBundle:DataExchange:import }
-tisseo_tid_data_exchange_edit:
-    pattern: /data-exchange/{jobName}
-    defaults: { _controller: TisseoTidBundle:DataExchange:edit, jobName: null }
-
-#Export administration
-tisseo_tid_export_timetable:
-    pattern: /exports/timetable
-    defaults: { _controller: TisseoTidBundle:Export:timetable }
+# Imports administration
+tisseo_tid_data_exchange_show:
+    pattern: /data-exchange/show
+    defaults: { _controller: TisseoTidBundle:DataExchange:show }
+tisseo_tid_data_exchange_launch:
+    pattern: /data-exchange/launch/{jobName}
+    defaults: { _controller: TisseoTidBundle:DataExchange:launch, jobName: null }

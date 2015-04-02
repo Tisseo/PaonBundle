@@ -7,7 +7,7 @@ global:
     modifications: Modifications
     actions: Actions
     edit: Éditer
-    consult: Consulter
+    show: Consulter
     preview: Prévisualiser
     validate: Valider
     save: Enregistrer
@@ -128,7 +128,7 @@ line_version:
     actions:
         publication: Publication
         offer: Offre
-        consult: Consulter
+        show: Consulter
         purge: Purger
         close: Clôturer
         calendar: Calendriers

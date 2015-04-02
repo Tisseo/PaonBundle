@@ -35,7 +35,7 @@
 .form ul li {
     line-height:1.5em;
 }
-.form-consult {
+.form-show {
     padding:10px 0;
     margin:10px 0;
     display:inline-block;
@@ -47,11 +47,11 @@
     display:inline-block;
     width:100%;
 }
-.form-consult .left-summary {
+.form-show .left-summary {
     width:70%;
     display:inline-block;
 }
-.form-consult .right-summary {
+.form-show .right-summary {
     width:20%;
     float:right;
     display:inline-block;
@@ -217,4 +217,8 @@ table .grid-mask-type {
 }
 .mode-tad {
     background:0 0px;
+}
+/* data exchange */
+.job-running {
+    color:gray;
 }

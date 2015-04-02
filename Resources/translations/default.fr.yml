@@ -26,10 +26,10 @@ line_version:
             physical_mode: Mode de transport
         title: Liste des offres
     history:
-        consult: Historique d'une offre
+        show: Historique d'une offre
         title: Historique des offres
     title: Offre
-    consult: Consultation d'une offre
+    show: Consultation d'une offre
     edit: Edition d'une offre
     create: Création d'une offre
     created: Offre sauvegardée
@@ -40,13 +40,15 @@ line_version:
     not_found: Offre introuvable
     no_printings: Aucun tirage pour cette offre
     no_modifications: Aucune modification apportée à cette offre
-    purge: Offre purgée des données "fiche horaire".
+    clean: Nettoyage des données "fiche horaire" effectué pour cette offre.
+    cant_clean: Nettoyage des données "fiche horaire" impossible pour cette offre.
 
 calendar:
     list:
         title: Edition des calendriers d'offres
     grid_calendar_table: Grilles présentes sur la fiche horaire
     grid_mask_table: Calendriers disponibles dans les données
+    grid_calendars_updated: Les grilles horaires ont été mises à jour.
 
 grid_mask_type:
     list:
@@ -98,3 +100,11 @@ printing:
     title: Tirage
     create: Nouvelle impression
     created: Nouveau tirage ajouté
+
+data_exchange:
+    job_running: Traitement %name% lancé par %user%. Lancement de nouveau traitement en attente.
+    launched_by: lancé par %user%
+    launch_job: Lancement
+    list:
+        columns:
+            job: Tâche

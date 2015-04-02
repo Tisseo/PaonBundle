@@ -8,7 +8,20 @@ use Tisseo\EndivBundle\Entity\LineVersion;
 
 class LineVersionController extends AbstractController
 {
-    private function buildForm($lineVersion, $new, $secondStape, $close = false, $url)
+    /*
+     * Build Form
+     * @param LineVersion $lineVersion
+     * @param boolean $new
+     * @param boolean $secondStape
+     * @param boolean $close
+     * @param string $url
+     * @return Form $form
+     *
+     * Build a new LineVersionType with different data switch booleans values.
+     * This form is used by create/edit/close views and must handle different 
+     * data in each view.
+     */
+    private function buildForm(LineVersion $lineVersion, $new, $secondStape, $close = false, $url)
     {
         $form = $this->createForm(
             new LineVersionType($lineVersion, $new, $secondStape, $close),
@@ -25,11 +38,22 @@ class LineVersionController extends AbstractController
         return ($form);
     }
 
+    /**
+     * Process form
+     * @param Request $request
+     * @param Form $form
+     * @param boolean $closure
+     * @param boolean $create
+     * 
+     * Process to form validation and launche different actions switch form 
+     * data.
+     * Actions can be close, create, edit.
+     */
     private function processForm(Request $request, $form, $closure = false, $create = false)
     {
         $form->handleRequest($request);
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        if ($form->isValid()) {            
+        if ($form->isValid()) {
             if ($closure)
                 $write = $lineVersionManager->close($form->getData());
             else if($create)
@@ -54,7 +78,11 @@ class LineVersionController extends AbstractController
     }
 
     /**
+     * Edit
+     * @param Request $request
+     * @param integer $lineVersionId
      *
+     * Handle Form display / Form validation for the edition view.
      */
     public function editAction(Request $request, $lineVersionId)
     {
@@ -90,6 +118,13 @@ class LineVersionController extends AbstractController
         return ($render);
     }
 
+    /**
+     * Close
+     * @param Request $request
+     * @param integer $lineVersionId
+     *
+     * Handle Form display / Form validation for the closing view.
+     */
     public function closeAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
@@ -133,6 +168,16 @@ class LineVersionController extends AbstractController
         }
     }
 
+    /**
+     * Select by Line
+     * @param Request $request
+     *
+     * Called through AJAX request, in order to display LineVersion using a 
+     * lineId. This action is called by LineVersion create view. The first 
+     * stape of this view is to choose the Line then display a new LineVersion 
+     * form related to this Line. This action handle the display of the second 
+     * stape.
+     */
     public function selectByLineAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
@@ -175,6 +220,12 @@ class LineVersionController extends AbstractController
         return($render);
     }
 
+    /**
+     * List
+     * @param Request $request
+     *
+     * Display the list view of all LineVersion.
+     */
     public function listAction(Request $request)
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
@@ -189,23 +240,30 @@ class LineVersionController extends AbstractController
         );
     }
 
-    public function consultAction(Request $request, $lineVersionId)
+    /**
+     * Show
+     * @param Request $request
+     * @param integer $lineVersionId
+     *
+     * Display a LineVersion in a view.
+     */
+    public function showAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         $history = false;
-        $title = 'line_version.consult';
+        $title = 'line_version.show';
 
         if ($request->isXmlHttpRequest())
         {
             $history = $request->get('history');
             if ($history)
-                $title = 'line_version.history.consult';
+                $title = 'line_version.history.show';
         }
 
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         return $this->render(
-            'TisseoTidBundle:LineVersion:consult.html.twig',
+            'TisseoTidBundle:LineVersion:show.html.twig',
             array(
                 'title' => $title,
                 'history' => $history,
@@ -214,6 +272,12 @@ class LineVersionController extends AbstractController
         );
     }
 
+    /**
+     * History
+     * @param Request $request
+     *
+     * Display a list of LineVersion with all their previous versions.
+     */
     public function historyAction(Request $request)
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
@@ -228,16 +292,23 @@ class LineVersionController extends AbstractController
         );
     }
 
-    public function purgeAction(Request $request, $lineVersionId)
+    /**
+     * Clean
+     * @param Request $request
+     * @param integer $lineVersionId
+     *
+     * Launch a cleaning action in database for the related LineVersion.
+     */
+    public function cleanAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        if ($lineVersionManager->purge($lineVersionId))
+        if ($lineVersionManager->clean($lineVersionId))
         {
             $this->get('session')->getFlashBag()->add(
                 'success',
                 $this->get('translator')->trans(
-                    'line_version.purge',
+                    'line_version.clean',
                     array(),
                     'default'
                 )
@@ -248,7 +319,7 @@ class LineVersionController extends AbstractController
             $this->get('session')->getFlashBag()->add(
                 'danger',
                 $this->get('translator')->trans(
-                    'line_version.not_purge',
+                    'line_version.cant_clean',
                     array(),
                     'default'
                 )

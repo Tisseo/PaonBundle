@@ -2,35 +2,23 @@ parameters:
     tid.permissions:
         BUSINESS_LIST_LINE:
             label: Afficher la liste des lignes
-            description: Afficher la liste des lignes.
+            description: Afficher la liste des lignes de transport
         BUSINESS_MANAGE_LINE:
             label: Administrer les lignes
-            description: Administrer les lignes.
+            description: Administrer les lignes de transport
         BUSINESS_LIST_LINE_VERSION:
             label: Afficher la liste des offres
-            description: Afficher la liste des offres.
+            description: Afficher la liste des offres
         BUSINESS_MANAGE_LINE_VERSION:
             label: Administrer les offres
-            description: Administrer les offres.
-        BUSINESS_LIST_CALENDAR:
-            label: Afficher la liste des calendriers
-            description: Afficher la liste des calendriers.
-        BUSINESS_MANAGE_CALENDAR:
-            label: Administrer les calendriers
-            description: Administrer les calendriers.
-        BUSINESS_LIST_EXCEPTION:
-            label: Afficher la liste des exceptions
-            description: Afficher la liste des exceptions.
+            description: Administrer les offres
+        BUSINESS_MANAGE_GRID_CALENDAR:
+            label: Administrer les grilles horaires
+            description: Administrer les grilles horaires et les calendriers de services
         BUSINESS_MANAGE_EXCEPTION:
             label: Administrer les exceptions
-            description: Administrer les exceptions.
-        BUSINESS_MANAGE_IMPORT:
-            label: Administrer les imports
-            description: Administrer les imports.
-        BUSINESS_MANAGE_EXPORT:
-            label: Administrer les exports
-            description: Administrer les exports.
-        BUSINESS_MANAGE_IMPORTS_EXPORTS:
-            label: Accès aux imports/exports
-            description: Droit de lancer des imports ou exports.
+            description: Administrer les exceptions sur les services
+        BUSINESS_MANAGE_DATA_EXCHANGE:
+            label: Administrer les imports et exports de données
+            description: Droit de lancer des imports ou exports de données
         
