@@ -30,9 +30,9 @@ tisseo_tid_line_version_close:
     defaults: { _controller: TisseoTidBundle:LineVersion:close }
     requirements:
         lineVersionId: \d+
-tisseo_tid_line_version_purge:
-    pattern: /offers/purge/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:purge }
+tisseo_tid_line_version_clean:
+    pattern: /offers/clean/{lineVersionId}
+    defaults: { _controller: TisseoTidBundle:LineVersion:clean }
     requirements:
         lineVersionId: \d+
 tisseo_tid_select_line_version_by_line:

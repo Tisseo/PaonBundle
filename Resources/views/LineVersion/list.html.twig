@@ -83,8 +83,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_purge', {'lineVersionId': lineVersion.id}) }}">
-                                        {{'line_version.actions.purge'|trans({}, 'messages')}}
+                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_clean', {'lineVersionId': lineVersion.id}) }}">
+                                        {{'line_version.actions.clean'|trans({}, 'messages')}}
                                     </a>
                                 </li>
                                 {% endif %}
@@ -127,9 +127,7 @@
     <script>
         require(['jquery'], function() {
             $(document).on("click", ".physical-mode", function() {
-                console.log("CLICK");
                 var id = $(this).attr('id');
-                console.log(id);
                 var datatable =  $('#'+id+".datatable");
                 datatable.toggle();
                 datatable.parent().toggle();

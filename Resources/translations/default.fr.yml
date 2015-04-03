@@ -41,7 +41,7 @@ line_version:
     no_printings: Aucun tirage pour cette offre
     no_modifications: Aucune modification apportée à cette offre
     clean: Nettoyage des données "fiche horaire" effectué pour cette offre.
-    cant_clean: Nettoyage des données "fiche horaire" impossible pour cette offre.
+    not_clean: Nettoyage des données "fiche horaire" impossible pour cette offre.
 
 calendar:
     list:

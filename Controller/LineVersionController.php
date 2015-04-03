@@ -49,14 +49,12 @@ class LineVersionController extends AbstractController
      * data.
      * Actions can be close, create, edit.
      */
-    private function processForm(Request $request, $form, $closure = false, $create = false)
+    private function processForm(Request $request, $form, $create = false)
     {
         $form->handleRequest($request);
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         if ($form->isValid()) {
-            if ($closure)
-                $write = $lineVersionManager->close($form->getData());
-            else if($create)
+            if($create)
                 $write = $lineVersionManager->create($form->getData());
             else
                 $write = $lineVersionManager->save($form->getData());
@@ -100,7 +98,7 @@ class LineVersionController extends AbstractController
             $new = false;
         }
         $form = $this->buildForm($lineVersion, $new, false, false, 'tisseo_tid_line_version_edit');
-        $render = $this->processForm($request, $form, false, $new);
+        $render = $this->processForm($request, $form, $new);
 
         if (!$render) {
             return $this->render(
@@ -150,7 +148,7 @@ class LineVersionController extends AbstractController
         else
         {
             $form = $this->buildForm($lineVersion, false, false, true, 'tisseo_tid_line_version_close');
-            $render = $this->processForm($request, $form, true, false);
+            $render = $this->processForm($request, $form);
 
             if (!$render) {
                 return $this->render(
@@ -204,7 +202,7 @@ class LineVersionController extends AbstractController
         }
 
         $form = $this->buildForm($lineVersion, true, true, false, 'tisseo_tid_select_line_version_by_line');
-        $render = $this->processForm($request, $form, false, true);
+        $render = $this->processForm($request, $form, true);
         if (!$render)
         {
             return $this->render(
@@ -302,29 +300,16 @@ class LineVersionController extends AbstractController
     public function cleanAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        if ($lineVersionManager->clean($lineVersionId))
-        {
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans(
-                    'line_version.clean',
-                    array(),
-                    'default'
-                )
-            );
-        }
-        else
-        {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                $this->get('translator')->trans(
-                    'line_version.cant_clean',
-                    array(),
-                    'default'
-                )
-            );
-        }
+        $storedProcedureManager = $this->get('tisseo_endiv.stored_procedure_manager');
+        $result = $storedProcedureManager->cleanLineVersion($lineVersionId);
+        $this->get('session')->getFlashBag()->add(
+            ($result ? 'success' : 'danger'),
+            $this->get('translator')->trans(
+                ($result ? 'line_version.clean' : 'line_version_not_clean'),
+                array(),
+                'default'
+            )
+        );
         return $this->redirect(
             $this->generateUrl('tisseo_tid_line_version_list')
         );

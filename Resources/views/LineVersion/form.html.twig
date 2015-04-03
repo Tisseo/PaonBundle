@@ -32,7 +32,7 @@
                         {{ form_row(form.version) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(form.endDate) }}
+                        <div class="input-range">{{ form_row(form.endDate) }}</div>
                     </div>
                 </div>
             </li>
@@ -58,12 +58,6 @@
                     </div>
                 </div>
             </li>
-            {% if close %}
-            <li><div class="input-range">{{ form_row(form.endDate) }}</div></li>
-            {% endif %}
-            {% if not close %}
-            <li>{{ form_row(form.childLine) }}</li>
-            {% endif %}
         </ul>
         </div>
     </div>
@@ -164,37 +158,19 @@
     {{ form_end(form) }}
     {% endif %}
 
-    {% if new and stape %}
+    {% if stape or close %}
     <script>
         require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
             $('.input-range input').datepicker({
                 language: '{{ app.request.locale }}',
                 startView: 1,
-                autoclose: true
-            }).on(
-                'changeDate',
-                function(){
-                    if ($(this).data('fromDate') == 1) {
-                        var $endDateElem = $(this).parents('.input-range').find('input[data-to-date=1]');
-                        var date = $(this).datepicker('getDate');
-                        if (!isNaN(date.getTime())) {
-                            date.setDate(date.getDate() + 1);
-                            $endDateElem.datepicker('setStartDate', date);
-                            var endDate = $endDateElem.datepicker('getDate');
-                            if ($endDateElem.val() != '' && isNaN(endDate.getTime())) {
-                                $endDateElem.datepicker('update', date);
-                            }
-                        } else {
-                            $endDateElem.datepicker('setStartDate', new Date());
-                        }
-                    }
-                }
-            );
-            $('input[data-from-date=1]').datepicker('setStartDate', new Date()).trigger('changeDate');
+                autoclose: true,
+                zIndex: 1160
+            });
         });
     </script>
     {% endif %}
-    {% if stape or not(new and stape) %}
+    {% if not(new and close) %}
     <script>
         require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
             var $collectionHolder;

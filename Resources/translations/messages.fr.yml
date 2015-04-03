@@ -46,7 +46,7 @@ global:
         and: et
     edit_calendar: Calendriers
     edit_exception: Exceptions
-    purge: Purger
+    clean: Purger
     short_days:
         1: L
         2: M
@@ -130,7 +130,7 @@ line_version:
         publication: Publication
         offer: Offre
         show: Consulter
-        purge: Purger
+        clean: Purger
         close: Clôturer
         calendar: Calendriers
         exception: Exceptions
