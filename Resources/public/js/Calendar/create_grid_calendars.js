@@ -1,4 +1,4 @@
-define(['jquery', 'jquery_ui_droppable', 'fosjsrouting'], function($) {
+define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translation/messages'], function($) {
     $(document).ready(function() {
         /*
          * delete calendar button removes gridCalendar's <tbody> from left table in
@@ -74,7 +74,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting'], function($) {
                                     $(this).after(ui.draggable);
                                     if ($(".grid-mask-type-table").children().length == 2)
                                     {
-                                        $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>");
+                                        $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>"+Translator.trans('calendar.labels.no_data', {}, 'messages')+"</span>");
                                         $(".grid-mask-type-table").next().fadeIn();
                                     }
                                 }
