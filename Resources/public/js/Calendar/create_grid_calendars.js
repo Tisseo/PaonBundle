@@ -1,4 +1,4 @@
-define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translation/messages'], function($) {
+define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'], function($) {
     $(document).ready(function() {
         /*
          * delete calendar button removes gridCalendar's <tbody> from left table in
