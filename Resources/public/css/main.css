@@ -6,6 +6,10 @@
 .bold {
     font-weight:bold;
 }
+/* datepicker fix chrome bug */
+.datepicker {
+    z-index:9999 !important;
+}
 /* datatables plugin */
 #datatable_length {
     margin-left:20px;
