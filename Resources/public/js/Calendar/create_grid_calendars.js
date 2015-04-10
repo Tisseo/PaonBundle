@@ -26,7 +26,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                 $(this).closest('tbody').remove();
             });
         });
-        
+
         /*
          * submit button for gridCalendar form validation. If the validation
          * fails, the called controller will resend the same form with errors
@@ -119,7 +119,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                 data : JSON.stringify(data),
                 success: function(data) {
                     if (data.status === true && data.location)
-                        window.location.replace(data.location);
+                        $("#base-modal").modal('hide');
                     if (data.content)
                         $('.modal-content').html(data.content);
                 }

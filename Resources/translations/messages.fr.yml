@@ -131,6 +131,7 @@ line_version:
         offer: Offre
         show: Consulter
         clean: Purger
+        clean_confirm: Voulez-vous vraiment purger les données de cette offre ?
         close: Clôturer
         calendar: Calendriers
         exception: Exceptions

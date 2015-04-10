@@ -18,7 +18,7 @@ class LineVersionController extends AbstractController
      * @return Form $form
      *
      * Build a new LineVersionType with different data switch booleans values.
-     * This form is used by create/edit/close views and must handle different 
+     * This form is used by create/edit/close views and must handle different
      * data in each view.
      */
     private function buildForm(LineVersion $lineVersion, $new, $secondStape, $close = false, $url)
@@ -44,8 +44,8 @@ class LineVersionController extends AbstractController
      * @param Form $form
      * @param boolean $closure
      * @param boolean $create
-     * 
-     * Process to form validation and launche different actions switch form 
+     *
+     * Process to form validation and launche different actions switch form
      * data.
      * Actions can be close, create, edit.
      */
@@ -170,10 +170,10 @@ class LineVersionController extends AbstractController
      * Select by Line
      * @param Request $request
      *
-     * Called through AJAX request, in order to display LineVersion using a 
-     * lineId. This action is called by LineVersion create view. The first 
-     * stape of this view is to choose the Line then display a new LineVersion 
-     * form related to this Line. This action handle the display of the second 
+     * Called through AJAX request, in order to display LineVersion using a
+     * lineId. This action is called by LineVersion create view. The first
+     * stape of this view is to choose the Line then display a new LineVersion
+     * form related to this Line. This action handle the display of the second
      * stape.
      */
     public function selectByLineAction(Request $request)

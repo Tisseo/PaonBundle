@@ -4,17 +4,23 @@ define(['jquery', 'tid/textfill', 'datatables'], function($) {
         $(".datatable").each(function(index) {
             var datatable = $(this).DataTable({
                 "aaSorting": [],
-                "iDisplayLength": 25,
+                "bPaginate": false,
                 "createdRow": function(row, data) {
                     $(row).find("td:first .line-small").textfill({
                         minFontPixels: 2,
                         maxFontPixels: 15
                     });
                 },
-                "aoColumnDefs" : [ {
-                    "bSortable" : false,
-                    "aTargets" : [ "no-sort" ]
-                } ],
+                "aoColumnDefs" : [
+                    {
+                        "bSortable" : false,
+                        "aTargets" : [ "no-sort" ]
+                    },
+                    {
+                        "bSearchable" : false,
+                        "aTargets": [ "no-search" ]
+                    }
+                ],
                 "language": {
                     "sProcessing":     "Traitement en cours...",
                     "sSearch":         "Rechercher&nbsp;:",

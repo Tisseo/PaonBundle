@@ -26,16 +26,16 @@
         <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
         <table id="{{loop.index}}" class="table datatable">
             <thead>
-                <th class="col-sm-1 nat-sort">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
+                <th class="col-sm-1">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
                 <th class="col-sm-5">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'line_version.list.columns.start_date'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
+                <th class="col-sm-1 no-search">{{ 'line_version.list.columns.printings'|trans({}, 'default') }}</th>
+                <th class="col-sm-1 no-search">{{ 'line_version.list.columns.version'|trans({}, 'default') }}</th>
+                <th class="col-sm-1 no-search">{{ 'line_version.list.columns.start_date'|trans({}, 'default') }}</th>
+                <th class="col-sm-1 no-search">{{ 'line_version.list.columns.status'|trans({}, 'default') }}</th>
                 {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                    <th class="col-sm-2 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
+                    <th class="col-sm-2 no-search no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
                 {% else %}
-                    <th class="no-sort"></th>
+                    <th class="no-search no-sort"></th>
                 {% endif %}
             </thead>
             <tbody>
@@ -83,7 +83,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_clean', {'lineVersionId': lineVersion.id}) }}">
+                                    <a class="btn clean-offer" role="button" href="{{ path('tisseo_tid_line_version_clean', {'lineVersionId': lineVersion.id}) }}">
                                         {{'line_version.actions.clean'|trans({}, 'messages')}}
                                     </a>
                                 </li>
@@ -131,6 +131,13 @@
                 var datatable =  $('#'+id+".datatable");
                 datatable.toggle();
                 datatable.parent().toggle();
+            });
+            $(document).on("click", ".clean-offer", function(event) {
+                var link = this;
+                event.preventDefault();
+                if (confirm("{{ 'line_version.actions.clean_confirm'|trans({}, 'messages') }}")) {
+                    window.location.href = $(this).attr("href");
+                }
             });
         });
     </script>

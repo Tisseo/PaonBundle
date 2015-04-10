@@ -197,9 +197,9 @@
                 var index = $collectionHolder.data('index');
                 var newForm = prototype.replace(/__name__/g, index);
                 $collectionHolder.data('index', index + 1);
-                
+
                 var $newFormLi = $('<li></li>').append(newForm);
-                $newFormLi.append('<button class="btn btn-xs btn-danger small-button remove-modification"><span class="glyphicon glyphicon-minus"></span></button>');                
+                $newFormLi.append('<button class="btn btn-xs btn-danger small-button remove-modification"><span class="glyphicon glyphicon-minus"></span></button>');
                 $newLinkLi.before($newFormLi);
                 $('.remove-modification').click(function(e) {
                     e.preventDefault();

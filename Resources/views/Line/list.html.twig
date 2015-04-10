@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block table_head -%}
-    <th class="nat-sort">{{'line.list.columns.label'|trans({}, 'default')}}</th>
+    <th>{{'line.list.columns.label'|trans({}, 'default')}}</th>
     <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
     {% if is_granted('BUSINESS_MANAGE_LINE') %}
-        <th class="no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
+        <th class="no-search no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
     {% endif %}
 {% endblock %}
 
