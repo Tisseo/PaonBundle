@@ -147,7 +147,7 @@ class CalendarController extends AbstractController
             'TisseoTidBundle:Calendar:edit.html.twig',
             array(
                 'title' => 'menu.grid_calendar_manage',
-                'lineVersionId' => $lineVersion->getId(),
+                'lineVersion' => $lineVersion,
                 'gridCalendars' => $gridCalendars,
                 'gridMaskTypes' => $gridMaskTypes,
             )

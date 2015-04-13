@@ -97,6 +97,7 @@
     border-radius:3px;
     text-align:center;
     padding:0 5px;
+    display:inline-block;
 }
 /* calendar form rendering */
 .calendar-container {
