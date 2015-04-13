@@ -18,16 +18,14 @@ class CommentType extends AbstractType
             'label',
             'text',
             array(
-                'label' => 'comment.labels.label',
-                'required' => true
+                'label' => 'comment.labels.label'
             )
         );
         $builder->add(
             'commentText',
             'textarea',
             array(
-                'label' => 'comment.labels.comment_text',
-                'required' => true
+                'label' => 'comment.labels.comment_text'
             )
         );
     }

@@ -91,7 +91,7 @@ define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/me
                 success: function(data) {
                     if (data.content)
                         $(".modal-content").html(data.content);
-                    else if (data.label && data.commentText)
+                    else
                         newData = data;
                 }
             }).promise().then(function() {
@@ -235,11 +235,11 @@ define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/me
         
             $.each(editedRows, function(index, row) {
                 $(currentPanel.row(row).nodes()).removeClass("edit-comment").addClass("edited-row");
-                currentPanelApi.fnUpdate(data.label, row, 6);
-                currentPanelApi.fnUpdate(data.commentText, row, 7);
+                currentPanelApi.fnUpdate((data.label === null ? "&nbsp;" : data.label), row, 6);
+                currentPanelApi.fnUpdate((data.commentText === null ? "&nbsp;" : data.commentText), row, 7);
             });
 
-            currentPanel.order([6, 'desc']).draw(true);
+            currentPanel.order([6, 'desc'], [0, 'asc']).draw(true);
         }
     });
 });
