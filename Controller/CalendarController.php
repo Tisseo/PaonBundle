@@ -58,7 +58,6 @@ class CalendarController extends AbstractController
             $lineVersion = $lineVersionManager->find($lineVersionId);
             $gridCalendar = $form->getData();
             $gridCalendar->setLineVersion($lineVersion);
-            $gridCalendarManager->save($gridCalendar);
 
             return $this->render(
                 'TisseoTidBundle:GridCalendar:new.html.twig',
@@ -120,10 +119,9 @@ class CalendarController extends AbstractController
 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
-            $jsonDecode = new JsonDecode();
-            $data = $jsonDecode->decode($request->getContent(), JsonEncoder::FORMAT);
-            $lineVersionManager->updateGridCalendars(array_keys(get_object_vars($data)), $lineVersionId);
-            $gridCalendarManager->attachGridCalendars($data);
+            $data = json_decode($request->getContent(), true);
+            $freshData = $lineVersionManager->updateGridCalendars($data, $lineVersionId);
+            $gridCalendarManager->attachGridCalendars($freshData);
 
             $this->get('session')->getFlashBag()->add(
                 'success',

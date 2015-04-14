@@ -29,14 +29,14 @@
                 <tbody class="grid-calendar">
                     <tr class="active">
                         <input type="hidden" class="grid-calendar-row" value="{{ gridCalendar[0].id }}"></input>
-                        <td>{{ gridCalendar[0].name }}</td>
-                        <td><div class="calendar-day {% if gridCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if gridCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if gridCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if gridCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if gridCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if gridCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if gridCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="name">{{ gridCalendar[0].name }}</td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        <td class="day"><div class="calendar-day {% if gridCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
                         <td><button class="btn btn-xs btn-danger small-button delete-calendar"><span class="glyphicon glyphicon-minus"></span></button></td>
                     </tr>
                 </tbody>

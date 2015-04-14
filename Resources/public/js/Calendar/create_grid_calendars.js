@@ -105,14 +105,27 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
             var $inputs = $("#grid-calendar :input.grid-calendar-row, #grid-calendar :input.grid-mask-type-row");
             var data = {};
             var gridCalendar;
-            $inputs.each(function() {
+            var lastIndex = null;
+            $inputs.each(function(index) {
                 if ($(this).hasClass('grid-calendar-row')) {
                     gridCalendar = $(this).val();
-                    data[gridCalendar] = [];
+                    if (gridCalendar === "new") {
+                        lastIndex = gridCalendar+"_"+index;
+                        data[lastIndex] = { 'gmt': [], 'name': null, 'days': {} };
+                        data[lastIndex].name = $(this).parent().find('td.name').html(); 
+                        $(this).parent().find('td.day').each(function(idx) {
+                            data[lastIndex].days[idx] = ($(this).children().hasClass('green-day') ? 1 : 0);
+                        });
+                    }
+                    else {
+                        lastIndex = gridCalendar;
+                        data[lastIndex] = { 'gmt': [] };
+                    }
                 }
                 else
-                    data[gridCalendar].push($(this).val());
+                    data[lastIndex].gmt.push($(this).val());
             });
+            console.log(data);
             $.ajax({
                 url : Routing.generate('tisseo_tid_calendar_edit')+"/"+line_id,
                 type: 'POST',
