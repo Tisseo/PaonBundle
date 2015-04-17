@@ -38,6 +38,28 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
                 'BUSINESS_MANAGE_EXCEPTION',
                 'BUSINESS_MANAGE_DATA_EXCHANGE'
             )
+        ),
+        array(
+            'name'          => 'User TID IV',
+            'reference'     => 'user-tid-iv',
+            'application'   => 'app-tid',
+            'isEditable'    => true,
+            'permissions'   => array(
+                'BUSINESS_LIST_LINE',
+                'BUSINESS_LIST_LINE_VERSION',
+                'BUSINESS_MANAGE_SCHEMA'
+            )
+        ),
+        array(
+            'name'          => 'User TID SIG',
+            'reference'     => 'user-tid-sig',
+            'application'   => 'app-tid',
+            'isEditable'    => true,
+            'permissions'   => array(
+                'BUSINESS_LIST_LINE',
+                'BUSINESS_LIST_LINE_VERSION',
+                'BUSINESS_MANAGE_SCHEMA'
+            )
         )
     );
 

@@ -21,4 +21,7 @@ parameters:
         BUSINESS_MANAGE_DATA_EXCHANGE:
             label: Administrer les imports et exports de données
             description: Droit de lancer des imports ou exports de données
+        BUSINESS_MANAGE_SCHEMA:
+          label: Accéder à la gestion des schémas
+          description: Afficher la liste des lignes
         

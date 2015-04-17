@@ -90,6 +90,7 @@ menu:
     import_fichor: Fiches horaires Hastus
     export_timetable: Timetable
     grid_calendar_manage: Edition des calendriers
+    schema_manage: Gestion des schémas
 
 line:
     labels:
