@@ -1,0 +1,11 @@
+{% form_theme form 'TisseoTidBundle:Form:fields.html.twig' %}
+<div class="row">
+    <div class="col-md-12">
+        <ul>
+            <li>Objet : Demande de nouveau schéma - LIGNE L{{ lineId }}</li>
+            <li>Date : {{ "now"|date("d/m/Y") }}</li>
+            <li>Auteur : {{ app.user.username }} </li>
+        </ul>
+        {{ form(form) }}
+    </div>
+</div>
