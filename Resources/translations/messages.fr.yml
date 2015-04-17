@@ -90,6 +90,7 @@ menu:
     import_fichor: Fiches horaires Hastus
     export_timetable: Timetable
     grid_calendar_manage: Edition des calendriers
+    schema_manage: Gestion des schémas
 
 line:
     labels:
@@ -124,6 +125,7 @@ line_version:
         new: nouvelle
         wip: work in progress
         modifications: Modifications
+        choose_schematic: Choisir un schéma
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
     actions:
@@ -162,6 +164,11 @@ comment:
     labels:
         label: Renvoi
         comment_text: Texte
+
+mailer:
+    schematic:
+          confirm:
+              success: La demande a bien été envoyée.
 
 #should be in error namespace above
 network:

@@ -9,9 +9,11 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Doctrine\ORM\EntityRepository;
+use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
 
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineVersion;
+use Tisseo\EndivBundle\Entity\Schematic;
 
 class LineVersionType extends AbstractType
 {
@@ -49,6 +51,11 @@ class LineVersionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $transformer = new EntityToIntTransformer($options['em']);
+        $transformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\Schematic");
+        $transformer->setEntityRepository("TisseoEndivBundle:Schematic");
+        $transformer->setEntityType("schematic");
+
         if ($this->new)
         {
             $builder->add('extra', 'hidden', array('mapped' => false));
@@ -216,15 +223,6 @@ class LineVersionType extends AbstractType
                 )
             );
             $builder->add(
-                'cartoFile',
-                'file',
-                array(
-                    'label' => 'line_version.labels.carto_file',
-                    'data_class' => null,
-                    'required' => false
-                )
-            );
-            $builder->add(
                 'accessibility',
                 'checkbox',
                 array(
@@ -254,6 +252,34 @@ class LineVersionType extends AbstractType
                 array(
                     'label' => 'line_version.labels.depot'
                 )
+            );
+            $builder->add(
+                'button_schematic',
+                'button',
+                array(
+                    'label' => 'line_version.labels.choose_schematic',
+                    'attr' => array(
+                        'class' => 'choose-schematic'
+                    )
+                )
+            );
+
+            /*
+             * This field is mandatory but must be hidden
+             * it will be hiddent and positioned with css for allow use html5 validation
+             * See classes specified into attribute : class
+             * TODO :  This system will must be removed
+             */
+            $builder->add(
+                $builder->create(
+                    'schematic',
+                    'text',
+                    array(
+                        'attr' => array(
+                            'class' => 'input-hidden schematic-min-width-field'
+                        ),
+                    )
+                )->addModelTransformer($transformer)
             );
             $builder->add(
                 'comment',
@@ -294,6 +320,14 @@ class LineVersionType extends AbstractType
                 }
             )
         );
+
+        $resolver->setRequired(array(
+            'em'
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
+        ));
     }
 
     /**

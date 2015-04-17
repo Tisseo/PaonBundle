@@ -1,0 +1,77 @@
+{% extends "TisseoTidBundle::container.html.twig" %}
+
+{% import "TisseoTidBundle::macros.html.twig" as render %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/tisseotid/css/jquery.dataTables.min.css'
+                   filter='cssrewrite' output='css/datatables_tid.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block main_content -%}
+    <h1>
+        {{ 'line_schema.title'|trans({}, 'default') }}
+    </h1>
+    {% for physicalMode, lines in data %}
+        {% if lines|length > 0 %}
+        <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
+        <table id="{{loop.index}}" class="table datatable">
+            <thead>
+                <th class="col-sm-1 nat-sort">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
+                <th class="col-sm-3">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
+                <th class="col-sm-2 no-sort">{{ 'line_version.list.columns.group'|trans({}, 'default') }}</th>
+                <th class="col-sm-2 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
+            </thead>
+            <tbody>
+            {% for line in lines %}
+                {% set class = '' %}
+                {%  if line.schematics is defined and line.schematics|length > 0
+                        and line.schematics[(line.schematics|length)-1].filePath is empty %}
+
+                    {%  set class='schematic-updating' %}
+                {% endif %}
+                <tr class="{{ class }}">
+                    <td>
+                        {{ render.line_number(line, 'line', 'small') }}
+                    </td>
+                    <td>
+                        {% if line.LastLineVersion is defined %}
+                            {% set lineName = line.LastLineVersion.name %}
+                        {% else %}
+                            {% set lineName = '' %}
+                        {% endif %}
+                        <span>{{ lineName }}</span>
+                    </td>
+                    <td></td>
+                    <td>
+                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-list"></span> Schemas
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        require(['tid/datatables']);
+    </script>
+    <script>
+        require(['jquery'], function() {
+            $(document).on("click", ".physical-mode", function() {
+                var id = $(this).attr('id');
+                var datatable =  $('#'+id+".datatable");
+                datatable.toggle();
+                datatable.parent().toggle();
+            });
+        });
+    </script>
+{% endblock %}

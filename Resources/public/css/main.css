@@ -97,7 +97,6 @@
     border-radius:3px;
     text-align:center;
     padding:0 5px;
-    display:inline-block;
 }
 /* calendar form rendering */
 .calendar-container {
@@ -226,4 +225,25 @@ table .grid-mask-type {
 /* data exchange */
 .job-running {
     color:gray;
+}
+
+/* Schematic */
+.schematic-updating, .schematic-updating.even, .schematic-updating.odd {
+    color: rgb(255, 0, 0);
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.schematic-content-form {
+    display: none;
+}
+.schematic-min-width-field {
+    width: 60px;
+}
+
+.input-hidden {
+    left: 25px;
+    z-index: -10;
+    position: absolute;
+    float: none;
+    top: 25px;
 }
