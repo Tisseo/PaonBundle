@@ -108,3 +108,13 @@ data_exchange:
     list:
         columns:
             job: Tâche
+line_schema:
+    title: Liste des schémas
+    list:
+        title: Schémas de la ligne
+        empty: Il n'y a aucun schéma.
+        columns:
+            file: Fichier
+            modification: Modification
+    label:
+        upload_file: Déposer un fichier

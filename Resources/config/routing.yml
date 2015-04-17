@@ -90,3 +90,13 @@ tisseo_tid_data_exchange_show:
 tisseo_tid_data_exchange_launch:
     pattern: /data-exchange/launch/{jobName}
     defaults: { _controller: TisseoTidBundle:DataExchange:launch, jobName: null }
+
+# Line schema administration
+tisseo_tid_line_schema_list:
+    pattern: /line-schema/list
+    defaults: { _controller: TisseoTidBundle:LineSchema:list }
+tisseo_tid_schema_create:
+    pattern: /line-schema/{lineId}/schema/list
+    defaults: { _controller: TisseoTidBundle:LineSchema:listSchema }
+    requirements:
+        lineId: \d+
