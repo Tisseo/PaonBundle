@@ -27,14 +27,15 @@
         <table id="{{loop.index}}" class="table datatable">
             <thead>
                 <th class="col-sm-1 nat-sort">{{ 'line_version.list.columns.number'|trans({}, 'default') }}</th>
-                <th class="col-sm-5">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
+                <th class="col-sm-3">{{ 'line_version.list.columns.name'|trans({}, 'default') }}</th>
+                <th class="col-sm-2 no-sort">{{ 'line_version.list.columns.group'|trans({}, 'default') }}</th>
                 <th class="col-sm-2 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
             </thead>
             <tbody>
             {% for lineVersion in lineVersions %}
                 {% set class = '' %}
                 {%  if lineVersion.schematic is not empty and lineVersion.schematic.filePath is empty %}
-                    {%  set class='shematic-updating' %}
+                    {%  set class='schematic-updating' %}
                 {% endif %}
                 <tr class="{{ class }}">
                     <td>
@@ -43,8 +44,12 @@
                     <td>
                         <span>{{ lineVersion.name }}</span>
                     </td>
+                    <td></td>
                     <td>
-                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_create', {'lineId': lineVersion.line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': lineVersion.line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <span class="glyphicon glyphicon-plus"></span> Nouveau schéma
+                        </a>
+                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': lineVersion.line.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-list"></span> Schemas
                         </a>
                     </td>

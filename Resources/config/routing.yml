@@ -95,8 +95,22 @@ tisseo_tid_data_exchange_launch:
 tisseo_tid_line_schema_list:
     pattern: /line-schema/list
     defaults: { _controller: TisseoTidBundle:LineSchema:list }
-tisseo_tid_schema_create:
+tisseo_tid_schema_list:
     pattern: /line-schema/{lineId}/schema/list
     defaults: { _controller: TisseoTidBundle:LineSchema:listSchema }
     requirements:
         lineId: \d+
+tisseo_tid_schema_edit:
+    pattern: /line-schema/{lineId}/schema/edit
+    defaults: { _controller: TisseoTidBundle:LineSchema:editSchema }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true
+tisseo_tid_schema_ask:
+    pattern: /line-schema/{lineId}/schema/ask
+    defaults: { _controller: TisseoTidBundle:LineSchema:askSchema }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true
