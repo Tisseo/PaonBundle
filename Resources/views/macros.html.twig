@@ -65,3 +65,14 @@
         {% endfor %}
     </span>
 {% endmacro %}
+
+{# Generate HTML to display loader (ajax request) #}
+{% macro loader(class) %}
+<div class="{{ class }}">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+{% endmacro %}
