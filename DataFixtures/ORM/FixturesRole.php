@@ -47,7 +47,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',
                 'BUSINESS_LIST_LINE_VERSION',
-                'BUSINESS_MANAGE_SCHEMA'
+                'BUSINESS_LIST_SCHEMA',
+                'BUSINESS_MANAGE_ASK_SCHEMA'
             )
         ),
         array(
@@ -58,7 +59,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',
                 'BUSINESS_LIST_LINE_VERSION',
-                'BUSINESS_MANAGE_SCHEMA'
+                'BUSINESS_LIST_SCHEMA',
+                'BUSINESS_MANAGE_NEW_SCHEMA'
             )
         )
     );

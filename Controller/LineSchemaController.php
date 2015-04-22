@@ -19,7 +19,7 @@ class LineSchemaController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+        $this->isGranted('BUSINESS_LIST_SCHEMA');
 
         /** @var \Tisseo\EndivBundle\Services\LineVersionManager $lineVersionManager */
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
@@ -42,7 +42,7 @@ class LineSchemaController extends AbstractController
      */
     public function listSchemaAction($lineId, Request $request)
     {
-        $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+        $this->isGranted('BUSINESS_LIST_SCHEMA');
 
         /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
         $schematicManager = $this->get('tisseo_endiv.schematic_manager');
@@ -65,7 +65,7 @@ class LineSchemaController extends AbstractController
      */
     public function editSchemaAction($lineId, Request $request)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
         /** @var \Tisseo\EndivBundle\Services\LineManager $line */
         $lineManager = $this->get('tisseo_endiv.line_manager');
@@ -144,7 +144,7 @@ class LineSchemaController extends AbstractController
      */
     public function askSchemaAction($lineId, Request $request)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->isGranted('BUSINESS_MANAGE_ASK_SCHEMA');
 
         $form = $this->createForm(new MailType(),
             array(
