@@ -248,6 +248,16 @@ class LineVersionType extends AbstractType
                 )
             );
             $builder->add(
+                'button_chematic',
+                'button',
+                array(
+                    'label' => 'line_version.labels.choose_schematic',
+                    'attr' => array(
+                        'class' => 'choose-schematic'
+                    )
+                )
+            );
+            $builder->add(
                 'comment',
                 'textarea',
                 array(

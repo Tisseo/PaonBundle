@@ -13,16 +13,9 @@
 {% block main_content -%}
     <h1>
         {{ 'line_schema.title'|trans({}, 'default') }}
-        {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-            -
-            <a href="{{ path('tisseo_tid_line_version_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-                <span class="glyphicon glyphicon-plus"></span> {{ 'line_version.create'|trans({}, 'default') }}
-            </a>
-        {% endif %}
     </h1>
-    {% for physicalMode, lineVersions in data %}
-
-        {% if lineVersions|length > 0 %}
+    {% for physicalMode, lines in data %}
+        {% if lines|length > 0 %}
         <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
         <table id="{{loop.index}}" class="table datatable">
             <thead>
@@ -32,21 +25,28 @@
                 <th class="col-sm-2 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
             </thead>
             <tbody>
-            {% for lineVersion in lineVersions %}
+            {% for line in lines %}
                 {% set class = '' %}
-                {%  if lineVersion.schematic is not empty and lineVersion.schematic.filePath is empty %}
+                {%  if line.schematics is defined and line.schematics|length > 0
+                        and line.schematics[(line.schematics|length)-1].filePath is empty %}
+
                     {%  set class='schematic-updating' %}
                 {% endif %}
                 <tr class="{{ class }}">
                     <td>
-                        {{ render.line_number(lineVersion, 'lineVersion', 'small') }}
+                        {{ render.line_number(line, 'line', 'small') }}
                     </td>
                     <td>
-                        <span>{{ lineVersion.name }}</span>
+                        {% if line.LastLineVersion is defined %}
+                            {% set lineName = line.LastLineVersion.name %}
+                        {% else %}
+                            {% set lineName = '' %}
+                        {% endif %}
+                        <span>{{ lineName }}</span>
                     </td>
                     <td></td>
                     <td>
-                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': lineVersion.line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-list"></span> Schemas
                         </a>
                     </td>
@@ -54,9 +54,7 @@
             {% endfor %}
             </tbody>
         </table>
-        </ul>
-        </li>
-        </ul>
+
         {% endif %}
     {% endfor %}
 {% endblock %}

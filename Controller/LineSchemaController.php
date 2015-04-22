@@ -14,23 +14,21 @@ class LineSchemaController extends AbstractController
      * List
      * @param Request $request
      *
-     * Display the list view of all LineVersion.
+     * Display the list view of all line.
      * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
     public function listAction(Request $request)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
-        /** @var \Tisseo\EndivBundle\Services\LineVersionManager $lineVersionManager */
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-
-        $now = new \Datetime();
+        /** @var \Tisseo\EndivBundle\Services\LineManager $lineManager */
+        $lineManager = $this->get('tisseo_endiv.line_manager');
 
         return $this->render(
             'TisseoTidBundle:LineSchema:list.html.twig',
             array(
                 'pageTitle' => 'menu.schema_manage',
-                'data' => $lineVersionManager->findActiveLineVersions($now, 'schematic', true)
+                'data' => $lineManager->findAllLinesWithSchematic(true)
             )
         );
     }
@@ -74,11 +72,11 @@ class LineSchemaController extends AbstractController
         if (empty($line)) {
             throw new \Exception('Line id not found');
         }
-
+        $line->getSchematics;
         $now = new \DateTime();
         $LineSchematic = new Schematic();
         $LineSchematic->setLine($line);
-        $LineSchematic->setName('L'. $lineId . '_' . $now->format('Ymd'));
+        $LineSchematic->setName($line->getNumber() . '_' . $now->format('Ymd'));
         $LineSchematic->setDate($now);
 
         $form = $this->createForm(new LineSchemaType(), $LineSchematic,
@@ -105,8 +103,8 @@ class LineSchemaController extends AbstractController
                     $this->get('translator')->trans($result[1], array(), 'default')
                 );
 
-                if ($result[0]) {
-                    /** @var \Tisseo\EndivBundle\Services\LineVersionManager $lineVersionManager */
+                /*if ($result[0]) {
+
                     $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
                     $lineVersion = $lineVersionManager->findLastLineVersionOfLine(
                         $LineSchematic->getLine()->getId()
@@ -118,7 +116,7 @@ class LineSchemaController extends AbstractController
                         (($result[0]) ? 'success' : 'danger'),
                         $this->get('translator')->trans($result[1], array(), 'default')
                     );
-                }
+                }*/
 
                 return $this->redirect(
                     $this->generateUrl('tisseo_tid_line_schema_list')

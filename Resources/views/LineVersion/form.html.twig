@@ -105,9 +105,15 @@
                         {{ form_row(form.depot) }}
                     </div>
                     <div class="col-md-6">
-                        <span style="color: red">plus tard un bouton</span>
+                        <div class="form-group">
+                            <label class="control-label required" for="tid_line_version_button_chematic">&nbsp;</label>
+                            {{ form_widget(form.button_chematic) }}
+                        </div>
                     </div>
                 </div>
+            </li>
+            <li>
+               <div class="row target"></div>
             </li>
             <li>{{ form_row(form.comment) }}</li>
         </ul>
