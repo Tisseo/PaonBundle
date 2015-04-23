@@ -156,6 +156,7 @@ modification:
 
 exception:
     invalid_alert: Les modifications effectuées ne peuvent être validées car il reste des labels automatiques 'zz' dans les grilles horaires.
+    think_press_save: Attention, les données actuellement éditées ne seront pas sauvegardées si vous ne cliquez pas sur "Enregistrer".
 
 comment:
     labels:

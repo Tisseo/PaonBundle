@@ -99,6 +99,10 @@ define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/me
                     var currentPanel = getActivePanel();
                     fillNewComment(newData, currentPanel);
                     toggleAllCommentRows(currentPanel);
+                    if ($(document).find('#main-container .alert-warning').length === 0) {
+                        var message = "<div class='alert alert-warning alert-dismissable danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+Translator.trans('exception.think_press_save', {}, 'messages')+"</div>";
+                        $("#main-container").prepend(message);
+                    }
                     $("#base-modal").modal('hide');
                 }
             });
