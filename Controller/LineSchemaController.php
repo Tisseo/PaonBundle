@@ -3,6 +3,7 @@
 namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\TidBundle\Form\Type\LineSchemaType;
 use Tisseo\TidBundle\Form\Type\MailType;
@@ -56,6 +57,32 @@ class LineSchemaController extends AbstractController
     }
 
     /**
+     * @param $lineId
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function choiceListSchemaAction($lineId, Request $request)
+    {
+        $this->isGranted('BUSINESS_LIST_SCHEMA');
+
+        /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
+        $schematicManager = $this->get('tisseo_endiv.schematic_manager');
+
+        return $this->render(
+            'TisseoTidBundle:LineSchema:choiceListSchema.html.twig',
+            array(
+                'pageTitle' => 'menu.schema_manage',
+                'lineId' => $lineId,
+                'schematics' => $schematicManager->findLineSchematics($lineId)
+            )
+        );
+
+
+
+    }
+
+    /**
      * @param integer $lineId
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -103,21 +130,6 @@ class LineSchemaController extends AbstractController
                     $this->get('translator')->trans($result[1], array(), 'default')
                 );
 
-                /*if ($result[0]) {
-
-                    $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-                    $lineVersion = $lineVersionManager->findLastLineVersionOfLine(
-                        $LineSchematic->getLine()->getId()
-                    );
-                    $lineVersion->setSchematic($LineSchematic);
-                    $result = $lineVersionManager->save($lineVersion);
-
-                    $this->addFlash(
-                        (($result[0]) ? 'success' : 'danger'),
-                        $this->get('translator')->trans($result[1], array(), 'default')
-                    );
-                }*/
-
                 return $this->redirect(
                     $this->generateUrl('tisseo_tid_line_schema_list')
                 );
@@ -139,6 +151,7 @@ class LineSchemaController extends AbstractController
      * @param integer $lineId
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function askSchemaAction($lineId, Request $request)
     {
@@ -161,8 +174,16 @@ class LineSchemaController extends AbstractController
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
+
+                /** @var \Tisseo\EndivBundle\Services\LineManager $line */
+                $lineManager = $this->get('tisseo_endiv.line_manager');
+                $line = $lineManager->find($lineId);
+                if (empty($line)) {
+                    throw new \Exception('Line id not found');
+                }
+
                 $message = \Swift_Message::newInstance()
-                    ->setSubject('Demande de nouveau schéma - LIGNE L' . $lineId)
+                    ->setSubject('Demande de nouveau schéma - LIGNE ' . $line->getNumber())
                     ->setFrom('send@example.com')
                     ->setTo($data['to'])
                     ->setBody($data['body']);

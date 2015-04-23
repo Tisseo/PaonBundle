@@ -32,7 +32,8 @@ class LineVersionController extends AbstractController
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
-                )
+                ),
+                'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
         return ($form);
@@ -97,6 +98,7 @@ class LineVersionController extends AbstractController
             $lineVersion = $lineVersionManager->find($lineVersionId);
             $new = false;
         }
+
         $form = $this->buildForm($lineVersion, $new, false, false, 'tisseo_tid_line_version_edit');
         $render = $this->processForm($request, $form, $new);
 

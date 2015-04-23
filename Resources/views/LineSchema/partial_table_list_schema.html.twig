@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <thead>
+    <th>{{ 'line_schema.list.columns.file'|trans({}, 'default') }}</th>
+    <th>{{ 'line_schema.list.columns.modification'|trans({}, 'default') }}</th>
+    </thead>
+    <tbody>
+    {% for schematic in schematics %}
+        {% set class='' %}
+        {% if schematic.name is empty %}
+            {% set class='empty' %}
+        {% endif %}
+        <tr class="{{ class }}" data-schematic_id="{{ schematic.id }}">
+            <td>{{ schematic.name }}</td>
+            <td>{{ schematic.comment }}</td>
+        </tr>
+    {%  else  %}
+        <tr class="info">
+            <td colspan="2">
+                {{ 'line_schema.list.empty'|trans({}, 'default') }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

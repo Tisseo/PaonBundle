@@ -9,9 +9,11 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Doctrine\ORM\EntityRepository;
+use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
 
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineVersion;
+use Tisseo\EndivBundle\Entity\Schematic;
 
 class LineVersionType extends AbstractType
 {
@@ -49,6 +51,11 @@ class LineVersionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $transformer = new EntityToIntTransformer($options['em']);
+        $transformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\Schematic");
+        $transformer->setEntityRepository("TisseoEndivBundle:Schematic");
+        $transformer->setEntityType("schematic");
+
         if ($this->new)
         {
             $builder->add('extra', 'hidden', array('mapped' => false));
@@ -258,6 +265,15 @@ class LineVersionType extends AbstractType
                 )
             );
             $builder->add(
+                $builder->create(
+                    'schematic',
+                    'hidden',
+                    array(
+                        'required' => false
+                    )
+                )->addModelTransformer($transformer)
+            );
+            $builder->add(
                 'comment',
                 'textarea',
                 array(
@@ -296,6 +312,14 @@ class LineVersionType extends AbstractType
                 }
             )
         );
+
+        $resolver->setRequired(array(
+            'em'
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
+        ));
     }
 
     /**

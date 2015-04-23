@@ -107,13 +107,17 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label required" for="tid_line_version_button_chematic">&nbsp;</label>
-                            {{ form_widget(form.button_chematic) }}
+                            {{ form_widget(form.button_chematic,
+                                {'attr': { 'data-target': 'target' } })
+                            }}
                         </div>
                     </div>
                 </div>
             </li>
             <li>
-               <div class="row target"></div>
+               <div class="row target">
+                   <div class="listSchematic"></div>
+               </div>
             </li>
             <li>{{ form_row(form.comment) }}</li>
         </ul>
@@ -152,9 +156,12 @@
 {% endblock %}
 
 {% block modal_actions %}
+    <script type="text/javascript">
+        require(['tid/list/schemas']);
+    </script>
     {% if new and not stape %}
     {{ form_end(form, {'render_rest': false}) }}
-    <script>
+    <script type="text/javascript">
         require(['tid/edit/offers']);
     </script>
     {% else %}
@@ -165,7 +172,7 @@
     {% endif %}
 
     {% if stape or close %}
-    <script>
+    <script type="text/javascript">
         require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
             $('.input-range input').datepicker({
                 language: '{{ app.request.locale }}',
@@ -176,7 +183,7 @@
     </script>
     {% endif %}
     {% if not(new and close) %}
-    <script>
+    <script type="text/javascript">
         require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
             var $collectionHolder;
             var $addModificationLink = $('<button type="submit" class="btn btn-success small-button"><span class="glyphicon glyphicon-plus"></span></button>');

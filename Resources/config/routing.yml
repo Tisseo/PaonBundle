@@ -100,6 +100,13 @@ tisseo_tid_schema_list:
     defaults: { _controller: TisseoTidBundle:LineSchema:listSchema }
     requirements:
         lineId: \d+
+tisseo_tid_schema_choice_list:
+    pattern: /line-schema/{lineId}/schema/choice/list
+    defaults: { _controller: TisseoTidBundle:LineSchema:choiceListSchema }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true
 tisseo_tid_schema_edit:
     pattern: /line-schema/{lineId}/schema/edit
     defaults: { _controller: TisseoTidBundle:LineSchema:editSchema }
