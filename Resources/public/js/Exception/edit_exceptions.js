@@ -127,6 +127,9 @@ define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/me
                         var tripId = $(datatable.row(row).nodes()).find('input').val();
                         var label =  $(datatable.cell(row, 6).node()).html();
                         var commentText =  $(datatable.cell(row, 7).node()).html();
+
+                        if (label === "&nbsp;" || commentText === "&nbsp;")
+                            label = commentText = "none";
                         
                         if (!(label in data))
                             data[label] = {"comment": commentText, "trips": []};
