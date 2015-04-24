@@ -255,7 +255,7 @@ class LineVersionType extends AbstractType
                 )
             );
             $builder->add(
-                'button_chematic',
+                'button_schematic',
                 'button',
                 array(
                     'label' => 'line_version.labels.choose_schematic',
@@ -264,12 +264,21 @@ class LineVersionType extends AbstractType
                     )
                 )
             );
+
+            /*
+             * This field is mandatory but must be hidden
+             * it will be hiddent and positioned with css for allow use html5 validation
+             * See classes specified into attribute : class
+             * TODO :  This system will must be removed
+             */
             $builder->add(
                 $builder->create(
                     'schematic',
-                    'hidden',
+                    'text',
                     array(
-                        'required' => false
+                        'attr' => array(
+                            'class' => 'input-hidden schematic-min-width-field'
+                        ),
                     )
                 )->addModelTransformer($transformer)
             );

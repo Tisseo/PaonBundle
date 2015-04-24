@@ -264,3 +264,14 @@ table .grid-mask-type {
 .schematic-content-form {
     display: none;
 }
+.schematic-min-width-field {
+    width: 60px;
+}
+
+.input-hidden {
+    left: 25px;
+    z-index: -10;
+    position: absolute;
+    float: none;
+    top: 25px;
+}

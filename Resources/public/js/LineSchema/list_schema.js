@@ -3,7 +3,8 @@ require(['jquery','fosjsrouting'], function($) {
         $(document).on('click', '.choose-schematic', function() {
             var target = $(document).find('.' + $(this).data('target') + ' > .listSchematic');
             var params = {
-                'lineId': $('#tid_line_version_line').find('option:selected').val()
+                'lineId': $('#tid_line_version_line').find('option:selected').val(),
+                'schematicId': $('#tid_line_version_schematic').val()
             };
 
             var url = Routing.generate('tisseo_tid_schema_choice_list', params);
@@ -41,8 +42,11 @@ require(['jquery','fosjsrouting'], function($) {
                     case 'click':
                         elem.siblings().removeClass('danger');
                         elem.toggleClass('danger');
-                        console.log(elem.data('schematic_id'));
-                        $(document).find('#tid_line_version_schematic').val(elem.data('schematic_id'));
+                        if (elem.hasClass('danger')) {
+                            $(document).find('#tid_line_version_schematic').val(elem.data('schematic_id'));
+                        } else {
+                            $(document).find('#tid_line_version_schematic').val('');
+                        }
                         break;
                     default:
                         return false;

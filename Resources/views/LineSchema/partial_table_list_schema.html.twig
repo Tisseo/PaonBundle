@@ -9,6 +9,9 @@
         {% if schematic.name is empty %}
             {% set class='empty' %}
         {% endif %}
+        {%  if schematicId is not empty and schematicId == schematic.id %}
+            {% set class='danger' %}
+        {% endif %}
         <tr class="{{ class }}" data-schematic_id="{{ schematic.id }}">
             <td>{{ schematic.name }}</td>
             <td>{{ schematic.comment }}</td>

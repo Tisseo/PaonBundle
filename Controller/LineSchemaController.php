@@ -57,12 +57,13 @@ class LineSchemaController extends AbstractController
     }
 
     /**
-     * @param $lineId
+     * @param integer $lineId
+     * @param integer $schematicId
      * @param Request $request
      * @return JsonResponse
      * @throws \Exception
      */
-    public function choiceListSchemaAction($lineId, Request $request)
+    public function choiceListSchemaAction($lineId, $schematicId = null, Request $request)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
@@ -74,6 +75,7 @@ class LineSchemaController extends AbstractController
             array(
                 'pageTitle' => 'menu.schema_manage',
                 'lineId' => $lineId,
+                'schematicId' => $schematicId,
                 'schematics' => $schematicManager->findLineSchematics($lineId)
             )
         );

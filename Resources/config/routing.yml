@@ -101,8 +101,8 @@ tisseo_tid_schema_list:
     requirements:
         lineId: \d+
 tisseo_tid_schema_choice_list:
-    pattern: /line-schema/{lineId}/schema/choice/list
-    defaults: { _controller: TisseoTidBundle:LineSchema:choiceListSchema }
+    pattern: /line-schema/{lineId}/schema/choice/list/{schematicId}
+    defaults: { _controller: TisseoTidBundle:LineSchema:choiceListSchema, schematicId: null }
     requirements:
         lineId: \d+
     options:
