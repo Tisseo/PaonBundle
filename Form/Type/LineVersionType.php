@@ -161,7 +161,7 @@ class LineVersionType extends AbstractType
         if (!$this->close)
         {
             $builder->add(
-                'childLine',
+                'lineGroupContents',
                 'entity',
                 array(
                     'label' => 'line_version.labels.child_line',
