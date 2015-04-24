@@ -222,6 +222,7 @@ class LineVersionType extends AbstractType
                     'required' => true
                 )
             );
+
             $builder->add(
                 'accessibility',
                 'checkbox',
