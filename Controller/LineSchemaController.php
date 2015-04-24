@@ -189,7 +189,7 @@ class LineSchemaController extends AbstractController
                     ->setBody($data['body']);
 
                 $this->get('mailer')->send($message);
-                $this->addFlash('success', 'mailer.message.success');
+                $this->addFlash('success', 'mailer.schematic.confirm.success');
 
                 return $this->redirect($this->generateUrl(tisseo_tid_line_schema_list));
             }

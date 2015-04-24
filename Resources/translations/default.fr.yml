@@ -118,3 +118,5 @@ line_schema:
             modification: Modification
     label:
         upload_file: Déposer un fichier
+        ask_schematic: Demander un nouveau schéma
+    persisted: Schéma sauvegardé
