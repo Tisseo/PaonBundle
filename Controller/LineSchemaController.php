@@ -3,7 +3,6 @@
 namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\TidBundle\Form\Type\LineSchemaType;
 use Tisseo\TidBundle\Form\Type\MailType;
@@ -60,36 +59,7 @@ class LineSchemaController extends AbstractController
      * @param integer $lineId
      * @param integer $schematicId
      * @param Request $request
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function choiceListSchemaAction($lineId, $schematicId = null, Request $request)
-    {
-        $this->isGranted('BUSINESS_LIST_SCHEMA');
-
-        /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
-        $schematicManager = $this->get('tisseo_endiv.schematic_manager');
-
-        return $this->render(
-            'TisseoTidBundle:LineSchema:choiceListSchema.html.twig',
-            array(
-                'pageTitle' => 'menu.schema_manage',
-                'lineId' => $lineId,
-                'schematicId' => $schematicId,
-                'schematics' => $schematicManager->findLineSchematics($lineId)
-            )
-        );
-
-
-
-    }
-
-    /**
-     * @param integer $lineId
-     * @param integer $schematicId
-     * @param Request $request
-     * @return JsonResponse
-     * @throws \Exception
+     * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
     public function choiceListSchemaAction($lineId, $schematicId = null, Request $request)
     {
