@@ -222,15 +222,7 @@ class LineVersionType extends AbstractType
                     'required' => true
                 )
             );
-            $builder->add(
-                'cartoFile',
-                'file',
-                array(
-                    'label' => 'line_version.labels.carto_file',
-                    'data_class' => null,
-                    'required' => false
-                )
-            );
+
             $builder->add(
                 'accessibility',
                 'checkbox',
