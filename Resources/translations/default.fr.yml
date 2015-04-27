@@ -116,6 +116,9 @@ line_schema:
         columns:
             file: Fichier
             modification: Modification
+            number: Numéro
+            name: Nom de ligne
+            group: Voussure
     label:
         upload_file: Déposer un fichier
         ask_schematic: Demander un nouveau schéma
