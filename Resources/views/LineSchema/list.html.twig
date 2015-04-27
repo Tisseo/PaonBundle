@@ -29,7 +29,6 @@
                 {% set class = '' %}
                 {%  if line.schematics is defined and line.schematics|length > 0
                         and line.schematics[(line.schematics|length)-1].filePath is empty %}
-
                     {%  set class='schematic-updating' %}
                 {% endif %}
                 <tr class="{{ class }}">

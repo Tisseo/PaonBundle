@@ -18,8 +18,14 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('tisseo_tid', 'array')
-            ->children() 
+        $rootNode = $treeBuilder->root('tisseo_tid', 'array');
+        $rootNode->children()
+            ->arrayNode('mailer')
+                ->children()
+                    ->scalarNode('default_email_dest')->isRequired()->end()
+                    ->scalarNode('default_email_exp')->isRequired()->end()
+                ->end()
+            ->end()
             ->arrayNode('data_exchange')
                 ->info('Configuration des imports/exports')
                 ->children()

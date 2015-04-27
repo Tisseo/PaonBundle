@@ -159,7 +159,7 @@ class LineSchemaController extends AbstractController
 
         $form = $this->createForm(new MailType(),
             array(
-                'to' => 'pierre.cl@gmail.com'
+                'to' => $this->container->getParameter('tisseo_tid.default_email_dest')
             ),
             array(
             'action' => $this->generateUrl(
@@ -184,7 +184,7 @@ class LineSchemaController extends AbstractController
 
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Demande de nouveau schéma - LIGNE ' . $line->getNumber())
-                    ->setFrom('send@example.com')
+                    ->setFrom( $this->container->getParameter('tisseo_tid.default_email_exp') )
                     ->setTo($data['to'])
                     ->setBody($data['body']);
 
