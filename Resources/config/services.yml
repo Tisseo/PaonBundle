@@ -18,6 +18,12 @@ services:
         class: Tisseo\TidBundle\Form\Type\DatepickerType
         tags:
             - { name: form.type, alias: datepicker_tid }
+
+    form.type.tid_line_group_gis:
+        class: Tisseo\TidBundle\Form\Type\LineGroupGisType
+        tags:
+            - { name: form.type, alias: tid_line_group_gis }
+
     tisseo_tid.ajax_form_listener:
         class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener
         tags:

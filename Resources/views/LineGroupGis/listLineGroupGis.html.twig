@@ -1,0 +1,48 @@
+{% extends "TisseoTidBundle::datatable_list.html.twig" %}
+
+{% import "TisseoTidBundle::macros.html.twig" as render %}
+
+{% block list_title -%}
+    {{'line_group_gis.title'|trans({}, 'default')}}
+    {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
+        -
+        <a href="#" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> {{'line_group_gis.label.create'|trans({}, 'default')}}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block table_head -%}
+    <th>{{'line_group_gis.list.columns.name'|trans({}, 'default')}}</th>
+    <th>{{'line_group_gis.list.columns.line'|trans({}, 'default')}}</th>
+    <th class="no-search no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
+{% endblock %}
+
+{% block table_body -%}
+    {% if groups|length == 0 %}
+        <tr>
+            <td>
+                {{'global.no_items'|trans}}
+            </td>
+            <td></td><td></td>
+        </tr>
+    {% else %}
+        {% for group in groups %}
+            <tr>
+                <td>
+                    {{ group.name }}
+                </td>
+                <td>
+                    -
+                </td>
+                <td>
+                    {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
+                    <a class="btn btn-default" href="{{ path('tisseo_tid_line_edit', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -30,5 +30,11 @@ parameters:
         BUSINESS_MANAGE_ASK_SCHEMA:
             label: Accéder au formulaire de demande d'un schéma
             description:
+        BUSINESS_LIST_GROUP_GIS:
+            label: Accéder à la liste des voussures
+            description:
+        BUSINESS_MANAGE_GROUP_GIS:
+            label: Administrer les voussures
+            description:
 
         

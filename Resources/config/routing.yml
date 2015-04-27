@@ -121,3 +121,8 @@ tisseo_tid_schema_ask:
         lineId: \d+
     options:
         expose: true
+
+# Line Group Gis
+tisseo_tid_line_group_gis_list:
+    pattern: /line-schema/line-group/list
+    defaults: { _controller: TisseoTidBundle:LineGroupGis:list }

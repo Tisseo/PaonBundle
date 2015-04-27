@@ -123,3 +123,13 @@ line_schema:
         upload_file: Déposer un fichier
         ask_schematic: Demander un nouveau schéma
     persisted: Schéma sauvegardé
+
+line_group_gis:
+    title: Liste des voussures
+    list:
+        columns:
+            name: Voussures
+            line: lignes
+    persisted: Voussure sauvegardée
+    label:
+        create: Créer une voussure

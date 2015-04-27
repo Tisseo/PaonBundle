@@ -91,6 +91,8 @@ menu:
     export_timetable: Timetable
     grid_calendar_manage: Edition des calendriers
     schema_manage: Gestion des schémas
+    schema_list: Liste des lignes
+    schema_gis_group: Gestion des voussures
 
 line:
     labels:
