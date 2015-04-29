@@ -119,18 +119,24 @@ line_schema:
             modification: Modification
             number: Numéro
             name: Nom de ligne
-            group: Voussure
+            group: Amalgame
     label:
         upload_file: Déposer un fichier
         ask_schematic: Demander un nouveau schéma
     persisted: Schéma sauvegardé
 
 line_group_gis:
-    title: Liste des voussures
+    title: Liste des amalgames
+    form:
+        title: Amalgame
+        associated_lines: Lignes associées
     list:
         columns:
-            name: Voussures
+            name: Amalgame
             line: lignes
-    persisted: Voussure sauvegardée
+    persisted: Amalgame sauvegardé
+    removed: Amalgame supprimé
+    not_found: Aucun groupe GIS trouvé pour cet id
     label:
-        create: Créer une voussure
+        create: Créer un amalgame
+

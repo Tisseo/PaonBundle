@@ -126,3 +126,13 @@ tisseo_tid_schema_ask:
 tisseo_tid_line_group_gis_list:
     pattern: /line-schema/line-group/list
     defaults: { _controller: TisseoTidBundle:LineGroupGis:list }
+tisseo_tid_line_group_gis_new:
+    pattern: /line-schema/line-group/edit/new
+    defaults: { _controller: TisseoTidBundle:LineGroupGis:create }
+tisseo_tid_line_group_gis_edit:
+    pattern: /line-schema/line-group/edit/{id}
+    defaults: { _controller: TisseoTidBundle:LineGroupGis:edit }
+tisseo_tid_line_group_gis_delete:
+    pattern: /line-schema/line-group/delete/{id}
+    defaults: { _controller: TisseoTidBundle:LineGroupGis:delete }
+

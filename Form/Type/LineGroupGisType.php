@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Tisseo\EndivBundle\Entity\Line;
+use Tisseo\EndivBundle\Entity\LineGroupGis;
+use Tisseo\EndivBundle\Entity\LineGroupGisContent;
+use Tisseo\TidBundle\Form\Type\LineGroupGisContentType;
+
 class LineGroupGisType extends AbstractType
 {
 
@@ -15,9 +20,19 @@ class LineGroupGisType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name','text', array(
-            'label' => 'Name',
+
+        $builder->add('name', 'text', array(
+            'label' => 'line_group_gis.labels.group_name',
         ));
+
+        $builder->add('LineGroupGisContents', 'collection', array(
+            'type' => new LineGroupGisContentType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'options' => array('em' => $options['em'])
+        ));
+
 
         $builder->setAction($options['action']);
     }
@@ -29,6 +44,13 @@ class LineGroupGisType extends AbstractType
                 'data_class' => 'Tisseo\EndivBundle\Entity\LineGroupGis',
             )
         );
+        $resolver->setRequired(array(
+            'em'
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
+        ));
     }
 
     /**
