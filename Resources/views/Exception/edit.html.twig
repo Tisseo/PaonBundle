@@ -15,6 +15,9 @@
 {% endblock %}
 
 {% block main_content -%}
+    {% if data is empty %}
+    <div class='alert alert-info alert-dismissable'>{{ 'exception.no_data'|trans({}, 'default') }}</div>
+    {% else %}
     <div class="head-info col-md-12">               
         <div class="head-menu">
             <div class="title-choice">{{ 'exception.choice'|trans({}, 'default') }}</div>
@@ -82,11 +85,14 @@
         </a>
     </div>
     {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {% if data is not empty %}
     <script>
         require(['tid/exceptions']);
     </script>
+    {% endif %}
 {% endblock %}

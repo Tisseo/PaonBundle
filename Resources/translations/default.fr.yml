@@ -75,6 +75,7 @@ exception:
     create: Créer une exception
     created: Exception sauvegardée
     choice: Choix de la grille horaire
+    no_data: Il n'y a aucun calendrier attaché à cette offre. Veuillez créer des grilles horaires dans le menu 'Calendrier' afin de pouvoir effectuer l'édition des exceptions.
     comments_updated: Les commentaires ont bien été mis à jour.
 
 trip:

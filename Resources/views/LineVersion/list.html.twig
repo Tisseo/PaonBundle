@@ -22,7 +22,7 @@
     </h1>
 
     {% for physicalMode, lineVersions in data %}
-        {% if lineVersions|length > 0 %}
+        {% if lineVersions is not empty %}
         <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
         <table id="{{loop.index}}" class="table datatable">
             <thead>
@@ -100,7 +100,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                <a class="btn {% if lineVersion.gridCalendars|length == 0 %} disabled {% endif %}" role="button" href="{{ path('tisseo_tid_exception_edit', {'lineVersionId': lineVersion.id}) }}">
+                                <a class="btn" role="button" href="{{ path('tisseo_tid_exception_edit', {'lineVersionId': lineVersion.id}) }}">
                                         {{'line_version.actions.exception'|trans({}, 'messages')}}
                                     </a>
                                 </li>

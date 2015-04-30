@@ -125,7 +125,6 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                 else
                     data[lastIndex].gmt.push($(this).val());
             });
-            console.log(data);
             $.ajax({
                 url : Routing.generate('tisseo_tid_calendar_edit')+"/"+line_id,
                 type: 'POST',

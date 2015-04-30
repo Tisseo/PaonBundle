@@ -1,6 +1,6 @@
 {% block form_errors %}
 {% spaceless %}
-    {% if errors|length > 0 %}
+    {% if errors is not empty %}
     {% endif %}
 {% endspaceless %}
 {% endblock %}

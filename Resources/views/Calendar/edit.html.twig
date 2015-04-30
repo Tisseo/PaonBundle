@@ -109,7 +109,7 @@
                 </tbody>
                 {% endfor %}
             </table>
-            {% if gridMaskTypes|length == 0 %}
+            {% if gridMaskTypes is empty %}
             <span class="no-data">{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>
             {% endif %}
         </div>

@@ -123,15 +123,6 @@ class CalendarController extends AbstractController
             $freshData = $lineVersionManager->updateGridCalendars($data, $lineVersionId);
             $gridCalendarManager->attachGridCalendars($freshData);
 
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans(
-                    'calendar.grid_calendars_updated',
-                    array(),
-                    'default'
-                )
-            );
-
             return $this->redirect(
                 $this->generateUrl('tisseo_tid_line_version_list')
             );
