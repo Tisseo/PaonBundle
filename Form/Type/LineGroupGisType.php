@@ -25,6 +25,18 @@ class LineGroupGisType extends AbstractType
             'label' => 'line_group_gis.labels.group_name',
         ));
 
+        $builder->add('nbBus', 'text', array(
+            'label' => 'line_group_gis.labels.nb_bus',
+        ));
+
+        $builder->add('comment', 'textarea', array(
+            'label' => 'line_group_gis.labels.comment',
+        ));
+
+        $builder->add('name', 'text', array(
+            'label' => 'line_group_gis.labels.group_name',
+        ));
+
         $builder->add('LineGroupGisContents', 'collection', array(
             'type' => new LineGroupGisContentType(),
             'allow_add' => true,

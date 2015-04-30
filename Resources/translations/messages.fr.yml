@@ -145,6 +145,8 @@ line_group_gis:
     labels:
         group_name: Nom de l'amalgame
         line: Ligne
+        nb_bus: Nombre de bus
+        comment: Commentaire
 
 calendar:
     labels:
