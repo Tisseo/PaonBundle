@@ -55,15 +55,11 @@ class LineVersionController extends AbstractController
         $form->handleRequest($request);
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         if ($form->isValid()) {
+            $datas = $form->getData();
             if($create)
-            {
-                $user = $this->get('security.context')->getToken()->getUser();
-                $write = $lineVersionManager->create($form->getData(), $user->getUsername());
-            }
+                $write = $lineVersionManager->create($datas);
             else
-            {
-                $write = $lineVersionManager->save($form->getData());
-            }
+                $write = $lineVersionManager->save($form->getData($datas));
 
             $this->get('session')->getFlashBag()->add(
                 ($write[0] ? 'success' : 'danger'),
