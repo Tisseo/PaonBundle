@@ -3,32 +3,60 @@
 namespace Tisseo\TidBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\TidBundle\Form\Type\LineVersionType;
+use Tisseo\TidBundle\Form\Type\LineVersionEditType;
+use Tisseo\TidBundle\Form\Type\LineVersionCreateType;
+use Tisseo\TidBundle\Form\Type\LineVersionCloseType;
 use Tisseo\EndivBundle\Entity\LineVersion;
 
 class LineVersionController extends AbstractController
 {
-    /*
-     * Build Form
-     * @param LineVersion $lineVersion
-     * @param boolean $new
-     * @param boolean $secondStape
-     * @param boolean $close
-     * @param string $url
-     * @return Form $form
-     *
-     * Build a new LineVersionType with different data switch booleans values.
-     * This form is used by create/edit/close views and must handle different
-     * data in each view.
-     */
-    private function buildForm(LineVersion $lineVersion, $new, $secondStape, $close = false, $url)
+    private function foundLineVersion(LineVersion $lineVersion = null)
     {
+        if (empty($lineVersion))
+        {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                $this->get('translator')->trans(
+                    'line_version.not_found',
+                    array(),
+                    'default'
+                )
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Edit
+     * @param Request $request
+     * @param integer $lineVersionId
+     *
+     * Handle Form display / Form validation for the edition view.
+     */
+    public function editAction(Request $request, $lineVersionId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $lineVersion = $lineVersionManager->find($lineVersionId);
+
+        if (!($this->foundLineVersion($lineVersion)))
+        {
+            return $this->redirect(
+                $this->generateUrl('tisseo_tid_line_version_list')
+            );
+        }
+
+        // Build the form and process its content
         $form = $this->createForm(
-            new LineVersionType($lineVersion, $new, $secondStape, $close),
+            new LineVersionEditType(),
             $lineVersion,
             array(
                 'action' => $this->generateUrl(
-                    $url,
+                    'tisseo_tid_line_version_edit',
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
@@ -36,34 +64,10 @@ class LineVersionController extends AbstractController
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
-        return ($form);
-    }
 
-    /**
-     * Process form
-     * @param Request $request
-     * @param Form $form
-     * @param boolean $closure
-     * @param boolean $create
-     *
-     * Process to form validation and launche different actions switch form
-     * data.
-     * Actions can be close, create, edit.
-     */
-    private function processForm(Request $request, $form, $create = false)
-    {
         $form->handleRequest($request);
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         if ($form->isValid()) {
-            if($create)
-            {
-                $user = $this->get('security.context')->getToken()->getUser();
-                $write = $lineVersionManager->create($form->getData(), $user->getUsername());
-            }
-            else
-            {
-                $write = $lineVersionManager->save($form->getData());
-            }
+            $write = $lineVersionManager->save($form->getData());
 
             $this->get('session')->getFlashBag()->add(
                 ($write[0] ? 'success' : 'danger'),
@@ -78,53 +82,18 @@ class LineVersionController extends AbstractController
                 $this->generateUrl('tisseo_tid_line_version_list')
             );
         }
-        return (null);
+
+        return $this->render(
+            'TisseoTidBundle:LineVersion:edit.html.twig',
+            array(
+                'form' => $form->createView(),
+                'lineVersion' => $lineVersion
+            )
+        );
     }
 
     /**
-     * Edit
-     * @param Request $request
-     * @param integer $lineVersionId
-     *
-     * Handle Form display / Form validation for the edition view.
-     */
-    public function editAction(Request $request, $lineVersionId)
-    {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
-
-        if (empty($lineVersionId))
-        {
-            $lineVersion = new LineVersion();
-            $new = true;
-        }
-        else
-        {
-            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-            $lineVersion = $lineVersionManager->find($lineVersionId);
-            $new = false;
-        }
-
-        $form = $this->buildForm($lineVersion, $new, false, false, 'tisseo_tid_line_version_edit');
-        $render = $this->processForm($request, $form, $new);
-
-        if (!$render) {
-            return $this->render(
-                'TisseoTidBundle:LineVersion:form.html.twig',
-                array(
-                    'form' => $form->createView(),
-                    'new' => $new,
-                    'stape' => false,
-                    'lineVersion' => $lineVersion,
-                    'title' => ($lineVersionId ? 'line_version.edit' : 'line_version.create')
-                )
-            );
-        }
-
-        return ($render);
-    }
-
-    /**
-     * Close
+     * Close LineVersion
      * @param Request $request
      * @param integer $lineVersionId
      *
@@ -137,12 +106,35 @@ class LineVersionController extends AbstractController
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
-        if (empty($lineVersion))
+        if (!($this->foundLineVersion($lineVersion)))
         {
+            return $this->redirect(
+                $this->generateUrl('tisseo_tid_line_version_list')
+            );
+        }
+
+        // Build the form and process its content
+        $form = $this->createForm(
+            new LineVersionCloseType(),
+            $lineVersion,
+            array(
+                'action' => $this->generateUrl(
+                    'tisseo_tid_line_version_close',
+                    array(
+                        'lineVersionId' => $lineVersion->getId()
+                    )
+                )
+            )
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $write = $lineVersionManager->save($form->getData());
+
             $this->get('session')->getFlashBag()->add(
-                'danger',
+                ($write[0] ? 'success' : 'danger'),
                 $this->get('translator')->trans(
-                    'line_version.not_found',
+                    $write[1],
                     array(),
                     'default'
                 )
@@ -152,42 +144,28 @@ class LineVersionController extends AbstractController
                 $this->generateUrl('tisseo_tid_line_version_list')
             );
         }
-        else
-        {
-            $form = $this->buildForm($lineVersion, false, false, true, 'tisseo_tid_line_version_close');
-            $render = $this->processForm($request, $form);
 
-            if (!$render) {
-                return $this->render(
-                    'TisseoTidBundle:LineVersion:form.html.twig',
-                    array(
-                        'form' => $form->createView(),
-                        'new' => false,
-                        'stape' => false,
-                        'close' => true,
-                        'title' => 'line_version.closure'
-                    )
-                );
-            }
-            return ($render);
-        }
+        return $this->render(
+            'TisseoTidBundle:LineVersion:close.html.twig',
+            array(
+                'form' => $form->createView(),
+                'lineVersion' => $lineVersion
+            )
+        );
+   
+    
     }
 
     /**
-     * Select by Line
+     * Create LineVersion
      * @param Request $request
-     *
-     * Called through AJAX request, in order to display LineVersion using a
-     * lineId. This action is called by LineVersion create view. The first
-     * stape of this view is to choose the Line then display a new LineVersion
-     * form related to this Line. This action handle the display of the second
-     * stape.
      */
-    public function selectByLineAction(Request $request)
+    public function createAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineId = $request->request->get('line_id');
+        $lineId = $request->request->get('lineId');
+
         if (!empty($lineId))
         {
             $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
@@ -208,21 +186,56 @@ class LineVersionController extends AbstractController
             $lineVersion = new LineVersion();
         }
 
-        $form = $this->buildForm($lineVersion, true, true, false, 'tisseo_tid_select_line_version_by_line');
-        $render = $this->processForm($request, $form, true);
-        if (!$render)
+        $lineManager = $this->get('tisseo_endiv.line_manager');
+        $form = null;
+
+        if ($request->getMethod() === 'POST')
         {
-            return $this->render(
-                'TisseoTidBundle:LineVersion:form.html.twig',
+            // Build the form and process its content
+            $form = $this->createForm(
+                new LineVersionCreateType(),
+                $lineVersion,
                 array(
-                    'form' => $form->createView(),
-                    'new' => true,
-                    'stape' => true,
-                    'title' => ('line_version.create')
+                    'action' => $this->generateUrl(
+                        'tisseo_tid_line_version_create',
+                        array(
+                            'lineVersionId' => $lineVersion->getId()
+                        )
+                    ),
+                    'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
                 )
             );
+
+            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+
+                $user = $this->get('security.context')->getToken()->getUser();
+                $write = $lineVersionManager->create($form->getData(), $user->getUsername());
+
+                $this->get('session')->getFlashBag()->add(
+                    ($write[0] ? 'success' : 'danger'),
+                    $this->get('translator')->trans(
+                        $write[1],
+                        array(),
+                        'default'
+                    )
+                );
+
+                return $this->redirect(
+                    $this->generateUrl('tisseo_tid_line_version_list')
+                );
+            }
         }
-        return($render);
+
+        return $this->render(
+            'TisseoTidBundle:LineVersion:create.html.twig',
+            array(
+                'form' => (!empty($form) ? $form->createView() : null),
+                'lineVersion' => $lineVersion,
+                'lines' => $lineManager->findAllLinesByPriority()
+            )
+        );
     }
 
     /**

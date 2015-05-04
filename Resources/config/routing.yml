@@ -19,10 +19,19 @@ tisseo_tid_line_version_history:
     defaults: { _controller: TisseoTidBundle:LineVersion:history }
 tisseo_tid_line_version_edit:
     pattern: /offers/edit/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:edit, lineVersionId: null }
+    defaults: { _controller: TisseoTidBundle:LineVersion:edit }
+    requirements:
+        lineVersionId: \d+
+tisseo_tid_line_version_create:
+    pattern: /offers/create
+    defaults: { _controller: TisseoTidBundle:LineVersion:create }
+    options:
+        expose: true
 tisseo_tid_line_version_show:
     pattern: /offers/show/{lineVersionId}
     defaults: { _controller: TisseoTidBundle:LineVersion:show }
+    requirements:
+        lineVersionId: \d+
     options:
         expose: true
 tisseo_tid_line_version_close:
@@ -35,11 +44,6 @@ tisseo_tid_line_version_clean:
     defaults: { _controller: TisseoTidBundle:LineVersion:clean }
     requirements:
         lineVersionId: \d+
-tisseo_tid_select_line_version_by_line:
-    pattern: /offers/select_by_line
-    defaults: { _controller: TisseoTidBundle:LineVersion:selectByLine }
-    options:
-        expose: true
 
 # Printing routes
 tisseo_tid_printing_create:
