@@ -28,7 +28,7 @@ class MailType extends AbstractType
         ));
 
         $builder->add('save', 'submit', array(
-            'attr' => array('class' => 'btn btn-success'),
+            'attr' => array('class' => 'btn btn-success .action-button'),
             'label' => 'Envoyer'
         ));
 

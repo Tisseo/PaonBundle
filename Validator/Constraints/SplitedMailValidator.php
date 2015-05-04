@@ -31,7 +31,7 @@ class SplitedMailValidator extends ConstraintValidator
             $values = explode(',', $value);
             foreach ($values as $email) {
                 $emailValidator->validate($email,
-                    new Email(array('checkMX' => true))
+                    new Email(array('strict' => true))
                 );
             }
         }

@@ -7,7 +7,7 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
 
     $(document).on('click', '.action-button', function() {
         var modalContent = $(document).find('.modal-body');
-        var target = modalContent.find('> .schematic-content-form ');
+        var target = modalContent.find('> .target ');
 
         modalContent.find(' > .schema-content-list').hide();
 
@@ -23,6 +23,9 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
             case 'ask-schema':
                 url = Routing.generate('tisseo_tid_schema_ask', params);
                 break;
+            case 'deprecated-schema':
+                url = Routing.generate('tisseo_tid_schema_ask', params);
+                break;
             default:
                 console.log('data-action undefined');
                 modalContent.show();
@@ -34,7 +37,7 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
             'url': url,
             'cache': false,
             'success': function(data){
-                target.replaceWith(data);
+                target.html(data);
                 target.show();
             },
             'error':function(xhr) {

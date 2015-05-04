@@ -183,17 +183,17 @@ class LineSchemaController extends AbstractController
             )
         ));
 
+        /** @var \Tisseo\EndivBundle\Services\LineManager $line */
+        $lineManager = $this->get('tisseo_endiv.line_manager');
+        $line = $lineManager->find($lineId);
+        if (empty($line)) {
+            throw new \Exception('Line id not found');
+        }
+
         if($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
-
-                /** @var \Tisseo\EndivBundle\Services\LineManager $line */
-                $lineManager = $this->get('tisseo_endiv.line_manager');
-                $line = $lineManager->find($lineId);
-                if (empty($line)) {
-                    throw new \Exception('Line id not found');
-                }
 
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Demande de nouveau schéma - LIGNE ' . $line->getNumber())
@@ -212,7 +212,7 @@ class LineSchemaController extends AbstractController
             'TisseoTidBundle:LineSchema:askSchemaForm.html.twig',
             array(
                 'form' => $form->createView(),
-                'lineId' => $lineId,
+                'lineNumber' => $line->getNumber(),
                 'title' => 'Nouveau schema de la ligne '
             )
         );
