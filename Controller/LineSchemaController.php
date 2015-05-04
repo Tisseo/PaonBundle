@@ -197,8 +197,8 @@ class LineSchemaController extends AbstractController
 
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Demande de nouveau schéma - LIGNE ' . $line->getNumber())
-                    ->setFrom( $this->container->getParameter('tisseo_tid.default_email_exp') )
-                    ->setTo($data['to'])
+                    ->setFrom($this->container->getParameter('tisseo_tid.default_email_exp'))
+                    ->setTo(explode(',', $data['to']))
                     ->setBody($data['body']);
 
                 $this->get('mailer')->send($message);
