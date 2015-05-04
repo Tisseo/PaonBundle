@@ -15,23 +15,30 @@ class LineSchemaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name','text', array(
-            'label' => 'Name',
+        $builder->add('name','hidden', array(
+            'label' => 'line_schema.labels.name',
+        ));
+
+        $date = new \DateTime('now');
+        $builder->add('date','text', array(
+            'label' => 'line_schema.labels.date',
             'read_only' => true,
+            'data' => $date->format('d/m/Y'),
+            'mapped' => false
         ));
 
         $builder->add('comment','textarea', array(
-            'label' => 'Commentaire'
+            'label' => 'line_schema.labels.comment'
         ));
 
         $builder->add('file','file', array(
-            'label' => 'Fichier',
+            'label' => 'line_schema.labels.file',
             'required' => false
         ));
 
         $builder->add('save', 'submit', array(
             'attr' => array('class' => 'btn btn-success'),
-            'label' => 'Déposer un fichier'
+            'label' => 'line_schema.labels.submit_file'
         ));
 
         $builder->setAction($options['action']);

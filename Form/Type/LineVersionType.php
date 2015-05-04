@@ -161,6 +161,23 @@ class LineVersionType extends AbstractType
         if (!$this->close)
         {
             $builder->add(
+                'childLine',
+                'entity',
+                array(
+                    'label' => 'line_version.labels.child_line',
+                    'class' => 'TisseoEndivBundle:Line',
+                    'property' => 'number',
+                    'empty_value' => '',
+                    'required' => false,
+                    'mapped' => false,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('l')
+                        ->orderBy('l.number', 'ASC');
+                    }
+                )
+            );
+/*            
+            $builder->add(
                 'lineGroupContents',
                 'entity',
                 array(
@@ -175,6 +192,7 @@ class LineVersionType extends AbstractType
                     }
                 )
             );
+*/
             $builder->add(
                 'name',
                 'text',

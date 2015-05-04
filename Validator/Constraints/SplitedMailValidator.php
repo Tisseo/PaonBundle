@@ -3,13 +3,13 @@
 namespace Tisseo\TidBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
- * GreaterThanFieldValidator
+ * @Annotation
  */
-class GreaterThanFieldValidator extends ConstraintValidator
+class SplitedMailValidator extends ConstraintValidator
 {
     /**
      * Checks if the passed value is valid.
@@ -21,9 +21,19 @@ class GreaterThanFieldValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $field = $this->context->getRoot()->get($constraint->field);
+        $this->context
+        //$field = $this->context->getRoot()->get($constraint->field);
+        if ($value !== null) {
+            $emailValidator = New Email();
+            $values = explode(',', $value);
+            foreach ($values as $email) {
+                if ($emailValidator->th) {
 
-        if ($value !== null && $value <= $field->getData()) {
+                }
+            }
+
+
+        } && $value <= $field->getData()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%string%', $value->format('d/m/Y'))
                 ->setParameter('%field%', $constraint->field)

@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 requirejs.config({
     urlArgs: '{{ assets_version }}',
     paths: {
@@ -15,6 +15,7 @@ requirejs.config({
         'tid/exceptions':                   'bundles/tisseotid/js/Exception/edit_exceptions',
         'tid/edit/schema':                  'bundles/tisseotid/js/LineSchema/form_schema',
         'tid/list/schemas':                 'bundles/tisseotid/js/LineSchema/list_schema'
+        //'tid/edit/line_group_gis':          'bundles/tisseotid/js/LineGroupGis/form_lineGroupGis'
     },
     shim: {
         'jquery/textfill': {

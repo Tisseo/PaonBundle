@@ -10,6 +10,7 @@ require(['jquery', 'utils'], function($, utils){
         'form',
         function(){
             var $form = $(this);
+            var $target = $form.find('button[type=submit]').data('target');
             utils.disableBtn($form.find('button[type=submit]'));
             $.ajax({
                 'type': 'POST',
@@ -21,7 +22,12 @@ require(['jquery', 'utils'], function($, utils){
                     if (data.status === false) {
                         $form.replaceWith(data.content);
                     } else if (data.status === true) {
-                        window.location = data.location;
+                        if (undefined === $target) {
+                            window.location = data.location;
+                        } else {
+                            console.log(data, data.content);
+                            $($target).html(data.content);
+                        }
                     } else {
                         displayError(data);
                     }

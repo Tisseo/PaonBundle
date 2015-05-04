@@ -123,12 +123,25 @@ class LineSchemaController extends AbstractController
 
                 /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
                 $schematicManager = $this->get('tisseo_endiv.schematic_manager');
+
+                /** @var \Tisseo\EndivBundle\Services\LineGroupGisContentManager $lineGroupGisContentManager */
+                $lineGroupGisContentManager = $this->get('tisseo_endiv.line_group_gis_content_manager');
+
                 $result = $schematicManager->save($LineSchematic);
 
                 $this->addFlash(
                     (($result[0]) ? 'success' : 'danger'),
                     $this->get('translator')->trans($result[1], array(), 'default')
                 );
+
+                $result = $lineGroupGisContentManager->findLineGroup($result[2]->getLine()->getId());
+                if (!empty($result)) {
+                    $this->addFlash(
+                        'warning',
+                        $this->get('translator')->trans('line_schema.warning_group', array(), 'default')
+                    );
+                }
+
 
                 return $this->redirect(
                     $this->generateUrl('tisseo_tid_line_schema_list')
@@ -184,8 +197,8 @@ class LineSchemaController extends AbstractController
 
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Demande de nouveau schéma - LIGNE ' . $line->getNumber())
-                    ->setFrom( $this->container->getParameter('tisseo_tid.default_email_exp') )
-                    ->setTo($data['to'])
+                    ->setFrom($this->container->getParameter('tisseo_tid.default_email_exp'))
+                    ->setTo(explode(',', $data['to']))
                     ->setBody($data['body']);
 
                 $this->get('mailer')->send($message);

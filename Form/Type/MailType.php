@@ -16,7 +16,7 @@ class MailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('to','email', array(
+        $builder->add('to','text', array(
             'label' => 'Destinataire',
         ));
 

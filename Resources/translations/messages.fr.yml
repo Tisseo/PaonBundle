@@ -85,14 +85,14 @@ menu:
     exception_manage: Gestion des exceptions
     data_manage: Import Fiches Horaires
     timetable_manage: Export Timetable
-    import_manage: Imports/Exports
+    import_manage: Imports   /Exports
     export_manage: Exports
     import_fichor: Fiches horaires Hastus
     export_timetable: Timetable
     grid_calendar_manage: Edition des calendriers
     schema_manage: Gestion des schémas
-    schema_list: Liste des lignes
-    schema_gis_group: Gestion des voussures
+    schema_list: Liste des schémas
+    schema_gis_group: Gestion des amalgames
 
 line:
     labels:
@@ -139,6 +139,20 @@ line_version:
         close: Clôturer
         calendar: Calendriers
         exception: Exceptions
+line_schema:
+    labels:
+        name: Nom
+        date: Date
+        comment: Commentaire
+        submit_file: Déposer le fichier
+
+line_group_gis:
+    title: Liste des amalgames
+    labels:
+        group_name: Nom de l'amalgame
+        line: Ligne
+        nb_bus: Nombre de bus
+        comment: Commentaire
 
 calendar:
     labels:
