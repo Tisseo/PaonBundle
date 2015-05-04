@@ -43,7 +43,15 @@
                         {% endif %}
                         <span>{{ lineName }}</span>
                     </td>
-                    <td></td>
+                    <td>
+                        {% if line.lineGroupGisContents is defined and line.lineGroupGisContents|length > 0 %}
+                            <ul>
+                            {% for lineGroupGisContent in line.lineGroupGisContents %}
+                                <li>{{ lineGroupGisContent.lineGroupGis.name }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
                     <td>
                         <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-list"></span> Schemas
