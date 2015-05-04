@@ -139,6 +139,12 @@ line_version:
         close: Clôturer
         calendar: Calendriers
         exception: Exceptions
+line_schema:
+    labels:
+        name: Nom
+        date: Date
+        comment: Commentaire
+        submit_file: Déposer le fichier
 
 line_group_gis:
     title: Liste des amalgames
