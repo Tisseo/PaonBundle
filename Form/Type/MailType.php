@@ -5,6 +5,7 @@ namespace Tisseo\TidBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Tisseo\TidBundle\Validator\Constraints\SplitedMail;
 
 class MailType extends AbstractType
 {
@@ -18,6 +19,7 @@ class MailType extends AbstractType
 
         $builder->add('to','text', array(
             'label' => 'Destinataire',
+            'constraints' => new splitedMail()
         ));
 
         $builder->add('body','textarea', array(
@@ -26,7 +28,7 @@ class MailType extends AbstractType
         ));
 
         $builder->add('save', 'submit', array(
-            'attr' => array('class' => 'btn btn-success'),
+            'attr' => array('class' => 'btn btn-success .action-button'),
             'label' => 'Envoyer'
         ));
 

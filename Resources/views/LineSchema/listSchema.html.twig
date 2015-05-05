@@ -20,6 +20,11 @@
     <div class="row">
         <div class="col-md-12 action">
             {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
+                <a style="float:right;" class="btn btn-default action-button" href="#" data-action="deprecated-schema" data-line_id="{{ lineId }}">
+                    {{ 'line_schema.label.deprecated'|trans({}, 'default') }}
+                </a>
+            {% endif %}
+            {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
             <a style="float:right;" class="btn btn-default action-button" href="#" data-action="edit-schema" data-line_id="{{ lineId }}">
                 {{ 'line_schema.label.upload_file'|trans({}, 'default') }}
             </a>
@@ -32,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="schematic-content-form">
+<div class="target">
 </div>
 {% endblock %}
 {% block javascripts %}

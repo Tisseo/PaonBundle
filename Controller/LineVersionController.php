@@ -216,7 +216,8 @@ class LineVersionController extends AbstractController
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser();
-                $write = $lineVersionManager->create($form->getData(), $user->getUsername());
+                $childLine = $form->get('childLine')->getData();
+                $write = $lineVersionManager->create($form->getData(), $user->getUsername(), $childLine);
 
                 $this->get('session')->getFlashBag()->add(
                     ($write[0] ? 'success' : 'danger'),

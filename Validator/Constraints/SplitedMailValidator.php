@@ -4,6 +4,7 @@ namespace Tisseo\TidBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\EmailValidator;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
@@ -21,23 +22,18 @@ class SplitedMailValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $this->context
         //$field = $this->context->getRoot()->get($constraint->field);
         if ($value !== null) {
-            $emailValidator = New Email();
+
+            $emailValidator = new EmailValidator();
+            $emailValidator->initialize($this->context);
+
             $values = explode(',', $value);
             foreach ($values as $email) {
-                if ($emailValidator->th) {
-
-                }
+                $emailValidator->validate($email,
+                    new Email(array('strict' => true))
+                );
             }
-
-
-        } && $value <= $field->getData()) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('%string%', $value->format('d/m/Y'))
-                ->setParameter('%field%', $constraint->field)
-                ->addViolation();
         }
     }
 }
