@@ -255,7 +255,6 @@ class LineVersionController extends AbstractController
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $now = new \Datetime();
-        dump($lineVersionManager->findActiveLineVersions($now, null, true));
         return $this->render(
             'TisseoTidBundle:LineVersion:list.html.twig',
             array(
