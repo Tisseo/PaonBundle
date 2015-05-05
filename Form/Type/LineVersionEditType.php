@@ -126,27 +126,14 @@ class LineVersionEditType extends AbstractType
                 )
             )
             ->add(
-                'accessibility',
-                'checkbox',
+                'Property',
+                'entity',
                 array(
-                    'label' => 'line_version.labels.accessibility',
-                    'required' => false
-                )
-            )
-            ->add(
-                'airConditioned',
-                'checkbox',
-                array(
-                    'label' => 'line_version.labels.air_conditioned',
-                    'required' => false
-                )
-            )
-            ->add(
-                'certified',
-                'checkbox',
-                array(
-                    'label' => 'line_version.labels.certified',
-                    'required' => false
+                    'class' => 'TisseoEndivBundle:Property',
+                    'property' => 'name',
+                    'expanded' => true,
+                    'multiple' => true,
+                    'label' => 'line_version.labels.properties'
                 )
             )
             ->add(

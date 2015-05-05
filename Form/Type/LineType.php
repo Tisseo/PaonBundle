@@ -34,7 +34,6 @@ class LineType extends AbstractType
             'collection',
             array(
                 'type' => new LineDatasourceType(),
-                'allow_add' => true,
                 'by_reference' => false
             )
         );

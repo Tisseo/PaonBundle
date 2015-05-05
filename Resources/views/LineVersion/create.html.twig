@@ -85,17 +85,18 @@
                     </div>
                 </li>
                 <li>
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ form_row(form.accessibility) }}
-                        </div>
-                        <div class="col-md-4">
-                            {{ form_row(form.airConditioned) }}
-                        </div>
-                        <div class="col-md-4">
-                            {{ form_row(form.certified) }}
-                        </div>
-                    </div>
+                    {{ form_label(form.Property) }}
+                    {% for property in form.Property %}
+                        {% for lvProperty in lineVersion.lineVersionProperties %}
+                            {% if lvProperty.property.id == property.vars.value %}
+                                {% if lvProperty.value == false %} 
+                                    {{ form_row(property, {'checked': false}) }}
+                                {% else %}
+                                    {{ form_row(property) }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
                 </li>
                 <li>
                     <div class="row">

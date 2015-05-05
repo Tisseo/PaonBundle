@@ -50,6 +50,11 @@ class LineVersionController extends AbstractController
             );
         }
 
+        // Update LineVersion -> LineVersionProperty -> Property relations
+        $propertyManager = $this->get('tisseo_endiv.property_manager');
+        $properties = $propertyManager->findAll();
+        $lineVersion->synchronizeLineVersionProperties($properties);
+
         // Build the form and process its content
         $form = $this->createForm(
             new LineVersionEditType(),
@@ -152,8 +157,6 @@ class LineVersionController extends AbstractController
                 'lineVersion' => $lineVersion
             )
         );
-   
-    
     }
 
     /**
@@ -164,6 +167,8 @@ class LineVersionController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
+        $propertyManager = $this->get('tisseo_endiv.property_manager');
+        $properties = $propertyManager->findAll();
         $lineId = $request->request->get('lineId');
 
         if (!empty($lineId))
@@ -174,16 +179,16 @@ class LineVersionController extends AbstractController
             {
                 $lineManager = $this->get('tisseo_endiv.line_manager');
                 $line = $lineManager->find($lineId);
-                $lineVersion = new LineVersion(null, $line);
+                $lineVersion = new LineVersion($properties, null, $line);
             }
             else
             {
-                $lineVersion = new LineVersion($lineVersionResult);
+                $lineVersion = new LineVersion($properties, $lineVersionResult, null);
             }
         }
         else
         {
-            $lineVersion = new LineVersion();
+            $lineVersion = new LineVersion($properties);
         }
 
         $lineManager = $this->get('tisseo_endiv.line_manager');
@@ -249,6 +254,7 @@ class LineVersionController extends AbstractController
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $now = new \Datetime();
+        dump($lineVersionManager->findActiveLineVersions($now, null, true));
         return $this->render(
             'TisseoTidBundle:LineVersion:list.html.twig',
             array(

@@ -37,10 +37,12 @@
             <br>
             <li>{{ 'line_version.labels.fg_color'|trans({}, 'messages') }} : {{ lineVersion.fgColor.name }}</li>
             <li>{{ 'line_version.labels.bg_color'|trans({}, 'messages') }} : {{ lineVersion.bgColor.name }}</li>
+            {% if lineVersion.lineVersionProperties is not empty %}
             <br>
-            <li>{{ 'line_version.labels.accessibility'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.accessibility %}checked{% endif %}></li>
-            <li>{{ 'line_version.labels.air_conditioned'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.airContioned %}checked{% endif %}></li>
-            <li>{{ 'line_version.labels.certified'|trans({}, 'messages') }} : <input type="checkbox" onclick="return false;" {% if lineVersion.certified %}checked{% endif %}></li>
+            {% for lineVersionProperty in lineVersion.lineVersionProperties %}
+            <li>{{ lineVersionProperty.property.name }} : <input type="checkbox" onclick="return false;" {% if lineVersionProperty.value %}checked{% endif %}></li>
+            {% endfor %}
+            {% endif %}
             <br>
             <li>{{ 'line_version.labels.depot'|trans({}, 'messages') }} : {{ lineVersion.depot|capitalize }}</li>
             <li>{{ 'line_version.labels.carto_file'|trans({}, 'messages') }} : {% if lineVersion.cartoFile %}{{ lineVersion.cartoFile }}{% else %}Aucun{% endif %}</li>
