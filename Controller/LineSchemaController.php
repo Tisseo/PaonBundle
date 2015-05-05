@@ -5,8 +5,9 @@ namespace Tisseo\TidBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\TidBundle\Form\Type\LineSchemaType;
+//use Tisseo\TidBundle\Form\Type\ListSchemaType;
 use Tisseo\TidBundle\Form\Type\MailType;
-
+use Tisseo\TidBundle\Entity\SchematicList;
 
 class LineSchemaController extends AbstractController
 {
@@ -214,6 +215,65 @@ class LineSchemaController extends AbstractController
                 'form' => $form->createView(),
                 'lineNumber' => $line->getNumber(),
                 'title' => 'Nouveau schema de la ligne '
+            )
+        );
+    }
+
+    /**
+     * @param $lineId
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function deprecatedSchemaAction($lineId, Request $request)
+    {
+        $this->isGranted('BUSINESS_LIST_SCHEMA');
+
+        /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
+        $schematicManager = $this->get('tisseo_endiv.schematic_manager');
+        $schematics = $schematicManager->findLineSchematics($lineId, 0, true);
+
+        /** @var \Tisseo\EndivBundle\Services\LineManager $line */
+        $lineManager = $this->get('tisseo_endiv.line_manager');
+        $line = $lineManager->find($lineId);
+        if (empty($line)) {
+            throw new \Exception('Line id not found');
+        }
+
+        $schematicList = new SchematicList();
+        foreach($schematics as $schematic) {
+            $schematicList->setSchematics($schematic);
+        }
+
+        $form = $this->createForm('tid_list_schema', $schematicList,
+            array(
+                'action' => $this->generateUrl(
+                    'tisseo_tid_schema_deprecated',
+                    array(
+                        'lineId' => $lineId
+                    )
+                )
+            )
+        );
+
+        if($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $data = $form->getData();
+                foreach($data->schematics as $schematic) {
+                    $schematicManager->save($schematic);
+                }
+                $this->addFlash('success', 'line_schema.persisted');
+
+                return $this->redirect($this->generateUrl('tisseo_tid_line_schema_list'));
+            }
+        }
+
+        return $this->render(
+            'TisseoTidBundle:LineSchema:deprecatedSchemaForm.html.twig',
+            array(
+                'form' => $form->createView(),
+                'schematics' => $schematics,
             )
         );
     }

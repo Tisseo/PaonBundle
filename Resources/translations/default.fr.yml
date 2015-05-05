@@ -120,9 +120,11 @@ line_schema:
             number: Numéro
             name: Nom de ligne
             group: Amalgame
+            deprecated: Obsolète ?
     label:
         upload_file: Déposer un fichier
         ask_schematic: Demander un nouveau schéma
+        deprecated: Déclarer un Schéma obsolète
     persisted: Schéma sauvegardé
     warning_group: Attention, cette ligne appartient à un l'amalame
 

@@ -24,6 +24,11 @@ services:
         tags:
             - { name: form.type, alias: tid_line_group_gis }
 
+    form.type.tid_list_schema:
+        class: Tisseo\TidBundle\Form\Type\ListSchemaType
+        tags:
+            - { name: form.type, alias: tid_list_schema }
+
     tisseo_tid.ajax_form_listener:
         class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener
         tags:

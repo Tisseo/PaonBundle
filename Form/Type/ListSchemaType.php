@@ -5,26 +5,20 @@ namespace Tisseo\TidBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\TidBundle\Validator\Constraints\SplitedMail;
 
-class MailType extends AbstractType
+
+class ListSchemaType extends AbstractType
 {
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $builder->add('to','text', array(
-            'label' => 'Destinataire',
-            'constraints' => new splitedMail()
-        ));
-
-        $builder->add('body','textarea', array(
-            'label' => 'Message',
-            'max_length' => 255
+        $builder->add('schematics', 'collection', array(
+            'type' => new LineSchemaType(true),
+            'label' => false
         ));
 
         $builder->setAction($options['action']);
@@ -37,9 +31,7 @@ class MailType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'attr' => array(
-                    'enctype' => 'multipart/form-data'
-                )
+                'data_class' => 'Tisseo\TidBundle\Entity\SchematicList',
             )
         );
     }
@@ -49,6 +41,6 @@ class MailType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_mail';
+        return 'tid_list_schema';
     }
 }

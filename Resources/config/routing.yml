@@ -125,6 +125,13 @@ tisseo_tid_schema_ask:
         lineId: \d+
     options:
         expose: true
+tisseo_tid_schema_deprecated:
+    pattern: /line-schema/{lineId}/schema/deprecated
+    defaults: { _controller: TisseoTidBundle:LineSchema:deprecatedSchema }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true
 
 # Line Group Gis
 tisseo_tid_line_group_gis_list:

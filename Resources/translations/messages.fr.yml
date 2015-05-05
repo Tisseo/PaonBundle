@@ -12,6 +12,7 @@ global:
     preview: Prévisualiser
     validate: Valider
     save: Enregistrer
+    send: Envoyer
     close: Fermer
     closure: Clôturer
     delete: Supprimer
@@ -141,6 +142,7 @@ line_schema:
         name: Nom
         date: Date
         comment: Commentaire
+        file: Schéma
         submit_file: Déposer le fichier
 
 line_group_gis:

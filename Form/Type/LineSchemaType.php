@@ -8,6 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class LineSchemaType extends AbstractType
 {
+    /** @var bool $isBatch */
+    protected $isBatch;
+
+    /**
+     * @param bool $isBatch
+     */
+    public function __construct($isBatch = false)
+    {
+        $this->isBatch = $isBatch;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -15,33 +25,44 @@ class LineSchemaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name','hidden', array(
-            'label' => 'line_schema.labels.name',
-        ));
+        if ($this->isBatch) {
 
-        $date = new \DateTime('now');
-        $builder->add('date','text', array(
-            'label' => 'line_schema.labels.date',
-            'read_only' => true,
-            'data' => $date->format('d/m/Y'),
-            'mapped' => false
-        ));
+            $builder->add('deprecated','checkbox', array(
+                'label' => false,
+                'required' => false
+            ));
 
-        $builder->add('comment','textarea', array(
-            'label' => 'line_schema.labels.comment'
-        ));
+        } else {
 
-        $builder->add('file','file', array(
-            'label' => 'line_schema.labels.file',
-            'required' => false
-        ));
+            $builder->add('name','hidden', array(
+                'label' => 'line_schema.labels.name',
+            ));
 
-        $builder->add('save', 'submit', array(
-            'attr' => array('class' => 'btn btn-success'),
-            'label' => 'line_schema.labels.submit_file'
-        ));
+            $date = new \DateTime('now');
+            $builder->add('date','text', array(
+                'label' => 'line_schema.labels.date',
+                'read_only' => true,
+                'data' => $date->format('d/m/Y'),
+                'mapped' => false
+            ));
 
-        $builder->setAction($options['action']);
+            $builder->add('comment','textarea', array(
+                'label' => 'line_schema.labels.comment'
+            ));
+
+            $builder->add('file','file', array(
+                'label' => 'line_schema.labels.file',
+                'required' => false
+            ));
+
+            $builder->add('deprecated','hidden', array(
+                'data' => 0
+            ));
+
+            $builder->setAction($options['action']);
+        }
+
+
     }
 
     /**
