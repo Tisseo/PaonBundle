@@ -72,17 +72,21 @@ class LineVersionCreateType extends AbstractType
                 )
             )
             ->add(
-                'lineGroupContents',
+                'childLine',
                 'entity',
                 array(
                     'label' => 'line_version.labels.child_line',
-                    'class' => 'TisseoEndivBundle:Line',
-                    'property' => 'number',
+                    'class' => 'TisseoEndivBundle:LineVersion',
+                    'property' => 'line.number',
                     'empty_value' => '',
                     'required' => false,
+                    'mapped' => false,
                     'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('l')
-                            ->orderBy('l.number', 'ASC');
+                        return $er->createQueryBuilder('lv')
+                        ->join('lv.line', 'l')
+                        ->where('lv.startDate <= CURRENT_DATE()')
+                        ->andWhere('lv.endDate is null OR lv.endDate > CURRENT_DATE()')
+                        ->orderBy('l.number', 'ASC');
                     }
                 )
             )

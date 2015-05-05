@@ -4,6 +4,8 @@ namespace Tisseo\TidBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -21,6 +23,42 @@ class LineVersionEditType extends AbstractType
         $transformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\Schematic");
         $transformer->setEntityRepository("TisseoEndivBundle:Schematic");
         $transformer->setEntityType("schematic");
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $form = $event->getForm();
+            $lineVersion = $event->getData();
+
+            $em = $options['em'];
+            $query = $em->createQuery("
+                SELECT l.number
+                FROM Tisseo\EndivBundle\Entity\LineGroupContent lgc
+                JOIN lgc.lineGroup lg
+                JOIN lg.lineGroupContents lgc2
+                JOIN lgc2.lineVersion lv
+                JOIN lv.line l
+                WHERE lgc.isParent = true
+                AND lgc.lineVersion = :lv
+                AND lgc2.isParent = false
+            ")
+            ->setParameter('lv', $lineVersion);
+            $childLine = $query->getOneOrNullResult();
+            
+            if ( empty($childLine) )
+                $lineNumber = "";
+            else
+                $lineNumber = $childLine["number"];
+
+
+
+            $form->add('childLine', 'text',
+                array(
+                    'label' => 'line_version.labels.child_line',
+                    'mapped' => false,
+                    'read_only' => true,
+                    'data' => $lineNumber
+                )
+            );
+        });
 
         $builder
             ->add(
