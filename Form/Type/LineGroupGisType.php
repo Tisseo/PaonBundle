@@ -5,6 +5,7 @@ namespace Tisseo\TidBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Tisseo\TidBundle\Validator\Constraints\UniqueInCollection;
 
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineGroupGis;
@@ -26,7 +27,7 @@ class LineGroupGisType extends AbstractType
         ));
 
         $builder->add('nbBus', 'text', array(
-            'label' => 'line_group_gis.labels.nb_bus',
+            'label' => 'line_group_gis.labels.nb_bus'
         ));
 
         $builder->add('comment', 'textarea', array(
@@ -42,7 +43,8 @@ class LineGroupGisType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
-            'options' => array('em' => $options['em'])
+            'options' => array('em' => $options['em']),
+            'constraints' => new UniqueInCollection('[line][id]')
         ));
 
 

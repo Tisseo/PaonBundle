@@ -27,11 +27,6 @@ class MailType extends AbstractType
             'max_length' => 255
         ));
 
-        $builder->add('save', 'submit', array(
-            'attr' => array('class' => 'btn btn-success .action-button'),
-            'label' => 'Envoyer'
-        ));
-
         $builder->setAction($options['action']);
     }
 

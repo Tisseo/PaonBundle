@@ -24,7 +24,7 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
                 url = Routing.generate('tisseo_tid_schema_ask', params);
                 break;
             case 'deprecated-schema':
-                url = Routing.generate('tisseo_tid_schema_ask', params);
+                url = Routing.generate('tisseo_tid_schema_deprecated', params);
                 break;
             default:
                 console.log('data-action undefined');

@@ -1,0 +1,34 @@
+{% form_theme form 'TisseoTidBundle:Form:fields.html.twig' %}
+{% import "TisseoTidBundle::macros.html.twig" as render %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{ 'line_schema.list.title'|trans({}, 'default') }}</h1>{{ render.line_number(schematics[0].line, 'line', 'small') }}
+        {{ form_start(form) }}
+        <table class="table table-striped">
+            <thead>
+                <th>{{ 'line_schema.list.columns.file'|trans({}, 'default') }}</th>
+                <th>{{ 'line_schema.list.columns.modification'|trans({}, 'default') }}</th>
+                <th>{{ 'line_schema.list.columns.deprecated'|trans({}, 'default') }}</th>
+            </thead>
+            <tbody>
+            {% for schematic in form.schematics %}
+                <tr>
+                    <td>{{ schematic.vars['value'].name }}</td>
+                    <td>{{ schematic.vars['value'].comment }}</td>
+                    <td>{{ form_widget(schematic) }}</td>
+                </tr>
+            {% else %}
+                <tr class="info">
+                    <td colspan="3">
+                        {{ 'line_schema.list.empty'|trans({}, 'default') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <input type="submit" class="btn btn-success pull-right" value="{{ 'global.save'|trans({}, 'messages') }}" >
+        {{ form_end(form) }}
+    </div>
+</div>

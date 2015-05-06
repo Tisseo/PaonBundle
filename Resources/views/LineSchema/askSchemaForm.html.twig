@@ -6,6 +6,10 @@
             <li>Date : {{ "now"|date("d/m/Y") }}</li>
             <li>Auteur : {{ app.user.username }} </li>
         </ul>
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.to) }}
+        {{ form_row(form.body) }}
+        <input type="submit" class="btn btn-success pull-right" value="{{ 'global.send'|trans({}, 'messages') }}" >
+        {{ form_end(form) }}
     </div>
 </div>

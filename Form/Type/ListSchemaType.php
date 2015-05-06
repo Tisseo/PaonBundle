@@ -6,9 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
 
-class LineGroupGisContentType extends AbstractType
+class ListSchemaType extends AbstractType
 {
 
     /**
@@ -17,32 +16,24 @@ class LineGroupGisContentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('line','entity', array(
-            'label' => 'line_group_gis.labels.line',
-            'property' => 'number',
-            'em' => $options['em'],
-            'class' => 'Tisseo\EndivBundle\Entity\Line',
+        $builder->add('schematics', 'collection', array(
+            'type' => new LineSchemaType(true),
+            'label' => false
         ));
 
         $builder->setAction($options['action']);
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\EndivBundle\Entity\LineGroupGisContent',
+                'data_class' => 'Tisseo\TidBundle\Entity\SchematicList',
             )
         );
-
-        $resolver->setRequired(array(
-            'em'
-        ));
-
-        $resolver->setAllowedTypes(array(
-            'em' => 'Doctrine\Common\Persistence\ObjectManager',
-        ));
-
     }
 
     /**
@@ -50,6 +41,6 @@ class LineGroupGisContentType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_group_gis_content';
+        return 'tid_list_schema';
     }
 }
