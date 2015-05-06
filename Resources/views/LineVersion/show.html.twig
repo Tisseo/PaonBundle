@@ -18,7 +18,7 @@
                 <li>{{ 'line_version.labels.version'|trans({}, 'messages') }} {{ lineVersion.version }}</li>
                 <li>{{ 'line_version.labels.start_date'|trans({}, 'messages') }} : {{ lineVersion.startDate|date('d/m/Y') }}</li>
                 <li>{{ 'line_version.labels.planned_end_date'|trans({}, 'messages') }} : {{ lineVersion.plannedEndDate|date('d/m/Y') }}</li>
-                {% if history %}
+                {% if history  or lineVersion.endDate %}
                 <li class="bold">{{ 'line_version.labels.end_date'|trans({}, 'messages') }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
                 {% endif %}
                 <li>{{ 'line_version.labels.child_line'|trans({}, 'messages') }} : {% if lineVersion.childLineId != null %}{{ lineVersion.childLineId }}{% else %}Aucune{% endif %}</li>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="col-md-4">
                         {% if modification.resolvedIn %}
-                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn }}
+                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn.version }}
                         {% else %}
                         {{ 'modification.labels.not_resolved'|trans({},'messages') }}
                         {% endif %}

@@ -5,7 +5,7 @@ define(['jquery', 'fosjsrouting'], function($) {
                 url : Routing.generate('tisseo_tid_line_version_show')+"/"+$(this).children(":selected").val(),
                 type: 'GET',
                 data : { history: true },
-                success: function(data, textStatus) {
+                success: function(data) {
                     $('.modal-content').html(data);
                 }
             });

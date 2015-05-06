@@ -71,6 +71,7 @@ error:
     line_exists: Ce numéro de ligne est déja attribué.
     line_version:
         not_found: Cette ligne ne possède aucune offre.
+        already_exists: Cette offre existe déjà sur ce numéro de version.
     comment:
         label_length: Le label doit comporter 1 à 4 caractères.
         label_type: Le label doit être composé de lettres.
@@ -125,6 +126,8 @@ line_version:
         wip: work in progress
         modifications: Modifications
         choose_schematic: Choisir un schéma
+        resolved_modifications: Résolution des modifications
+        no_modifications: Aucune modification non résolue sur cette ligne.
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
     actions:
@@ -166,7 +169,7 @@ modification:
         description: Description
         date: Date
         author: Auteur
-        resolved_in: Résolue
+        resolved_in: Résolue dans version
         not_resolved: Non résolue
 
 exception:

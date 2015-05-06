@@ -163,21 +163,26 @@ class LineVersionController extends AbstractController
      * Create LineVersion
      * @param Request $request
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $lineId = null)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $propertyManager = $this->get('tisseo_endiv.property_manager');
-        $properties = $propertyManager->findAll();
-        $lineId = $request->request->get('lineId');
+        if ($lineId === null)
+            $lineId = $request->request->get('lineId');
+
+        $lineManager = $this->get('tisseo_endiv.line_manager');
 
         if (!empty($lineId))
         {
+            $propertyManager = $this->get('tisseo_endiv.property_manager');
             $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-            $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);
+
+            $properties = $propertyManager->findAll();
+            $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);    
+
+            // no previous offer on this line
             if (empty($lineVersionResult))
             {
-                $lineManager = $this->get('tisseo_endiv.line_manager');
                 $line = $lineManager->find($lineId);
                 $lineVersion = new LineVersion($properties, null, $line);
             }
@@ -185,39 +190,28 @@ class LineVersionController extends AbstractController
             {
                 $lineVersion = new LineVersion($properties, $lineVersionResult, null);
             }
-        }
-        else
-        {
-            $lineVersion = new LineVersion($properties);
-        }
-
-        $lineManager = $this->get('tisseo_endiv.line_manager');
-        $form = null;
-
-        if ($request->getMethod() === 'POST')
-        {
-            // Build the form and process its content
+            
+            $modificationManager = $this->get('tisseo_endiv.modification_manager');          
             $form = $this->createForm(
-                new LineVersionCreateType(),
+                new LineVersionCreateType($modificationManager, ($lineVersion->getLine() !== null ? $lineVersion->getLine()->getId() : null)),
                 $lineVersion,
                 array(
                     'action' => $this->generateUrl(
                         'tisseo_tid_line_version_create',
                         array(
-                            'lineVersionId' => $lineVersion->getId()
+                            'lineId' => $lineVersion->getLine()->getId()
                         )
                     ),
                     'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
                 )
             );
 
-            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
             $form->handleRequest($request);
+
             if ($form->isValid()) {
 
                 $user = $this->get('security.context')->getToken()->getUser();
-                $childLine = $form->get('childLine')->getData();
-                $write = $lineVersionManager->create($form->getData(), $user->getUsername(), $childLine);
+                $write = $lineVersionManager->create($form->getData(), $user->getUsername());
 
                 $this->get('session')->getFlashBag()->add(
                     ($write[0] ? 'success' : 'danger'),
@@ -232,13 +226,22 @@ class LineVersionController extends AbstractController
                     $this->generateUrl('tisseo_tid_line_version_list')
                 );
             }
+            
+            return $this->render(
+                'TisseoTidBundle:LineVersion:create.html.twig',
+                array(
+                    'form' => $form->createView(),
+                    'lineVersion' => $lineVersion,
+                    'lines' => $lineManager->findAllLinesByPriority()
+                )
+            );
         }
 
         return $this->render(
             'TisseoTidBundle:LineVersion:create.html.twig',
             array(
-                'form' => (!empty($form) ? $form->createView() : null),
-                'lineVersion' => $lineVersion,
+                'form' => null,
+                'lineVersion' => null,
                 'lines' => $lineManager->findAllLinesByPriority()
             )
         );

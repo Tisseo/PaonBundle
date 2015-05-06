@@ -23,8 +23,8 @@ tisseo_tid_line_version_edit:
     requirements:
         lineVersionId: \d+
 tisseo_tid_line_version_create:
-    pattern: /offers/create
-    defaults: { _controller: TisseoTidBundle:LineVersion:create }
+    pattern: /offers/create/{lineId}
+    defaults: { _controller: TisseoTidBundle:LineVersion:create, lineId: null }
     options:
         expose: true
 tisseo_tid_line_version_show:

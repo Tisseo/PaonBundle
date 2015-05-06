@@ -29,9 +29,9 @@ Tisseo\EndivBundle\Entity\LineVersion:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             groups: [registration]
-            fields: [name, version]
+            fields: [line, version]
             errorPath: name
-            message: error.line_version_exists
+            message: error.line_version.already_exists
     properties:
         name:
             - NotBlank: ~

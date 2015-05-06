@@ -122,30 +122,12 @@
                 <li>{{ form_row(form.comment) }}</li>
             </ul>
             <ul>
-                <li>{{ form_label(form.modifications) }}</li>
-                {% for modification in lineVersion.modifications %}
                 <li>
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ 'modification.labels.date'|trans({}, 'messages') }} : {{ modification.date|date('d/m/Y') }}
-                        </div>
-                        <div class="col-md-4">
-                            {{ 'modification.labels.author'|trans({}, 'messages') }} : {{ modification.author }}
-                        </div>
-                        <div class="col-md-4">
-                            {% if modification.resolvedIn %}
-                            {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn }}
-                            {% else %}
-                            {{ 'modification.labels.not_resolved'|trans({},'messages') }}
-                            {% endif %}
-                        </div>
-                    </div>
+                    {{ form_row(form.ResolvedModifications) }}
+                    {% if form.ResolvedModifications is empty %} 
+                        <span>{{ 'line_version.labels.no_modifications'|trans({}, 'messages') }}</span>
+                    {% endif %}
                 </li>
-                <li>{{ 'modification.labels.description'|trans({}, 'messages') }} : {{ modification.description }}</li>
-                {% endfor %}
-            </ul>
-            <ul class="modifications" data-prototype="{% filter escape %}{% include 'TisseoTidBundle:Modification:form.html.twig' with {'form': form.modifications.vars.prototype} %}{% endfilter %}">
-                <div style="display:none;">{{ form_row(form.modifications) }}</div>
             </ul>
             </div>
         </div>
@@ -155,7 +137,7 @@
 {% block modal_actions %}
     {% if form %}
         <button type="submit" class="btn btn-success">
-            <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+            <span class="glyphicon glyphicon-pencil"></span> {{ 'global.save'|trans }}
         </button>
         {{ form_end(form) }}
         <script type="text/javascript">

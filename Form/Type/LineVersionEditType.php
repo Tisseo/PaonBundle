@@ -24,43 +24,42 @@ class LineVersionEditType extends AbstractType
         $transformer->setEntityRepository("TisseoEndivBundle:Schematic");
         $transformer->setEntityType("schematic");
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
-            $form = $event->getForm();
-            $lineVersion = $event->getData();
-
-            $em = $options['em'];
-            $query = $em->createQuery("
-                SELECT l.number
-                FROM Tisseo\EndivBundle\Entity\LineGroupContent lgc
-                JOIN lgc.lineGroup lg
-                JOIN lg.lineGroupContents lgc2
-                JOIN lgc2.lineVersion lv
-                JOIN lv.line l
-                WHERE lgc.isParent = true
-                AND lgc.lineVersion = :lv
-                AND lgc2.isParent = false
-            ")
-            ->setParameter('lv', $lineVersion);
-            $childLine = $query->getOneOrNullResult();
-            
-            if ( empty($childLine) )
-                $lineNumber = "";
-            else
-                $lineNumber = $childLine["number"];
-
-
-
-            $form->add('childLine', 'text',
-                array(
-                    'label' => 'line_version.labels.child_line',
-                    'mapped' => false,
-                    'read_only' => true,
-                    'data' => $lineNumber
-                )
-            );
-        });
-
         $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA,
+                function (FormEvent $event) use ($options) {
+                    $form = $event->getForm();
+                    $lineVersion = $event->getData();
+
+                    $em = $options['em'];
+                    $query = $em->createQuery("
+                        SELECT l.number
+                        FROM Tisseo\EndivBundle\Entity\LineGroupContent lgc
+                        JOIN lgc.lineGroup lg
+                        JOIN lg.lineGroupContents lgc2
+                        JOIN lgc2.lineVersion lv
+                        JOIN lv.line l
+                        WHERE lgc.isParent = true
+                        AND lgc.lineVersion = :lv
+                        AND lgc2.isParent = false
+                    ")
+                    ->setParameter('lv', $lineVersion);
+                    $childLine = $query->getOneOrNullResult();
+                    
+                    if (empty($childLine))
+                        $lineNumber = "";
+                    else
+                        $lineNumber = $childLine["number"];
+
+                    $form->add('childLine', 'text',
+                        array(
+                            'label' => 'line_version.labels.child_line',
+                            'mapped' => false,
+                            'read_only' => true,
+                            'data' => $lineNumber
+                        )
+                    );
+                }
+            )
             ->add(
                 'line',
                 'entity',
@@ -99,21 +98,6 @@ class LineVersionEditType extends AbstractType
                     'label' => 'line_version.labels.version',
                     'precision' => 0,
                     'read_only' => true
-                )
-            )
-            ->add(
-                'lineGroupContents',
-                'entity',
-                array(
-                    'label' => 'line_version.labels.child_line',
-                    'class' => 'TisseoEndivBundle:Line',
-                    'property' => 'number',
-                    'empty_value' => '',
-                    'required' => false,
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('l')
-                            ->orderBy('l.number', 'ASC');
-                    }
                 )
             )
             ->add(
@@ -201,7 +185,7 @@ class LineVersionEditType extends AbstractType
             ->add(
                 $builder->create(
                     'schematic',
-                    'text',
+                    'hidden',
                     array(
                         'attr' => array(
                             'class' => 'input-hidden schematic-min-width-field'
