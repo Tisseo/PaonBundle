@@ -62,7 +62,16 @@ class LineGroupGisController extends AbstractController
                 $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
                 $result = $lineGroupGisManager->save($form->getData());
 
-                return $this->forward('TisseoTidBundle:LineGroupGis:edit', array('id' => $result[2]->getId()));
+                $this->addFlash(
+                    (($result[0]) ? 'success' : 'danger'),
+                    $this->get('translator')->trans($result[1], array(), 'default')
+                );
+
+                return $this->redirect(
+                    $this->generateUrl('tisseo_tid_line_group_gis_list')
+                );
+
+                //return $this->forward('TisseoTidBundle:LineGroupGis:edit', array('id' => $result[2]->getId()));
             }
         }
 
