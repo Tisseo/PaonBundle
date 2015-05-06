@@ -17,24 +17,12 @@ class LineGroupGisContentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /*$entityTransformer = new EntityToIntTransformer($options["em"]);
-        $entityTransformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\LineGroupGis");
-        $entityTransformer->setEntityRepository("TisseoEndivBundle:LineGroupGis");
-        $entityTransformer->setEntityType("lineGroupGis");*/
-
         $builder->add('line','entity', array(
             'label' => 'line_group_gis.labels.line',
             'property' => 'number',
             'em' => $options['em'],
             'class' => 'Tisseo\EndivBundle\Entity\Line',
         ));
-
-        /*$builder->add(
-            $builder->create(
-                'lineGroupGis',
-                'hidden'
-            )->addModelTransformer($entityTransformer)
-        );*/
 
         $builder->setAction($options['action']);
     }
