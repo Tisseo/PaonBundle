@@ -178,7 +178,7 @@ class LineVersionController extends AbstractController
             $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
             $properties = $propertyManager->findAll();
-            $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);    
+            $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);
 
             // no previous offer on this line
             if (empty($lineVersionResult))
@@ -190,8 +190,8 @@ class LineVersionController extends AbstractController
             {
                 $lineVersion = new LineVersion($properties, $lineVersionResult, null);
             }
-            
-            $modificationManager = $this->get('tisseo_endiv.modification_manager');          
+
+            $modificationManager = $this->get('tisseo_endiv.modification_manager');
             $form = $this->createForm(
                 new LineVersionCreateType($modificationManager, ($lineVersion->getLine() !== null ? $lineVersion->getLine()->getId() : null)),
                 $lineVersion,
@@ -226,7 +226,7 @@ class LineVersionController extends AbstractController
                     $this->generateUrl('tisseo_tid_line_version_list')
                 );
             }
-            
+
             return $this->render(
                 'TisseoTidBundle:LineVersion:create.html.twig',
                 array(

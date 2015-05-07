@@ -21,7 +21,16 @@
                 {% if history  or lineVersion.endDate %}
                 <li class="bold">{{ 'line_version.labels.end_date'|trans({}, 'messages') }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
                 {% endif %}
-                <li>{{ 'line_version.labels.child_line'|trans({}, 'messages') }} : {% if lineVersion.childLineId != null %}{{ lineVersion.childLineId }}{% else %}Aucune{% endif %}</li>
+                <li class="child-line">
+                {% if lineVersion.IsParent %}
+                    {{ 'line_version.labels.child_line'|trans({}, 'messages') }} :
+                    {% for childLine in lineVersion.ChildLines %}
+                        {{ render.line_number(childLine, 'lineVersion', 'small') }}
+                    {% endfor %}
+                {% else %}
+                    {{ 'line_version.labels.no_child_line'|trans({}, 'messages') }}
+                {% endif %}
+                </li>
             </ul>   
         </div>
         <div class="right-summary">
