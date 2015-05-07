@@ -44,7 +44,7 @@ class LineGroupGisType extends AbstractType
             'allow_delete' => true,
             'by_reference' => false,
             'options' => array('em' => $options['em']),
-            'constraints' => new UniqueInCollection('[line][id]')
+            'constraints' => new UniqueInCollection('line')
         ));
 
 

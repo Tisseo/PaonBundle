@@ -15,18 +15,19 @@ class UniqueInCollectionValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        if( $constraint->propertyPath ) {
-            $propertyAccessor = PropertyAccess::createPropertyAccessor();
-            $value = $propertyAccessor->getValue($value, $constraint->propertyPath);
+        if($constraint->propertyPath) {
+            foreach ($value as $element) {
+                $el = $propertyAccessor->getValue($element, $constraint->propertyPath);
+
+                if (in_array($el, $this->collectionValues)) {
+                    $this->context->buildViolation($constraint->message)->addViolation();
+                    break;
+                }
+
+                $this->collectionValues[] = $el;
+            }
         }
-
-        if( in_array($value, $this->collectionValues)) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('%string%', $value)
-                ->addViolation();
-        }
-
-        $this->collectionValues[] = $value;
     }
 }
