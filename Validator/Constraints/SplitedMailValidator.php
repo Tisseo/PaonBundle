@@ -3,8 +3,8 @@
 namespace Tisseo\TidBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\EmailValidator;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\RegexValidator;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
@@ -22,16 +22,21 @@ class SplitedMailValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        //$field = $this->context->getRoot()->get($constraint->field);
         if ($value !== null) {
-
-            $emailValidator = new EmailValidator();
-            $emailValidator->initialize($this->context);
+            $regexValidator = new RegexValidator();
+            $regexValidator->initialize($this->context);
 
             $values = explode(',', $value);
             foreach ($values as $email) {
-                $emailValidator->validate($email,
-                    new Email(array('strict' => true))
+                /**
+                 * The validation with email's constraint is not yet compatible with swiftMail
+                 * so it must to add a regex's constraint.
+                 */
+                $regexValidator->validate($email,
+                    new Regex(array(
+                        'pattern' => "/^([\dA-z_\.\-+]+\@[\dA-z\.\+-]+\.[\dA-z\.]+)$/",
+                        'message' => 'error.invalid_email'
+                    ))
                 );
             }
         }

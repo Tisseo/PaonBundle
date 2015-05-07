@@ -78,6 +78,7 @@ error:
         label_type: Le label doit être composé de lettres.
     blank_value: Veuillez renseigner ce champs.
     unique_in_collection: Vous ne pouvez pas associer plusieurs fois le même objet.
+    invalid_email: Adresse email invalide.
 
 menu:
     line_manage: Gestion des lignes
