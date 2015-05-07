@@ -1,12 +1,13 @@
 {% form_theme form 'TisseoTidBundle:Form:fields.html.twig' %}
 <div class="row">
     <div class="col-md-12">
+        {{ form_start(form) }}
         <ul>
             <li>Objet : Demande de nouveau schéma - LIGNE {{ lineNumber }}</li>
             <li>Date : {{ "now"|date("d/m/Y") }}</li>
             <li>Auteur : {{ app.user.username }} </li>
         </ul>
-        {{ form_start(form) }}
+
         {{ form_row(form.to) }}
         {{ form_row(form.body) }}
         <input type="submit" class="btn btn-success pull-right" value="{{ 'global.send'|trans({}, 'messages') }}" >
