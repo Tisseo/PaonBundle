@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueInCollection extends Constraint
 {
-    public $message = 'error.unique_in_collection (%string%)';
+    public $message = 'error.unique_in_collection';
 
     public $propertyPath;
 
