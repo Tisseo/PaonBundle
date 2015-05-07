@@ -119,7 +119,7 @@
                     </div>
                     <div class="col-md-4">
                         {% if modification.resolvedIn %}
-                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn }}
+                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn.version }}
                         {% else %}
                         {{ 'modification.labels.not_resolved'|trans({},'messages') }}
                         {% endif %}
