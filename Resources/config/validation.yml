@@ -30,7 +30,7 @@ Tisseo\EndivBundle\Entity\LineVersion:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             groups: [registration]
             fields: [line, version]
-            errorPath: name
+            errorPath: version
             message: error.line_version.already_exists
     properties:
         name:
@@ -42,10 +42,12 @@ Tisseo\EndivBundle\Entity\LineVersion:
         plannedEndDate:
             - DateTime: ~
             - Tisseo\TidBundle\Validator\Constraints\GreaterThanField:
+                groups: [registration]
                 field: startDate
         endDate:
             - DateTime: ~
             - Tisseo\TidBundle\Validator\Constraints\GreaterThanField:
+                groups: [close]
                 field: startDate
 Tisseo\EndivBundle\Entity\Comment:
     properties:

@@ -223,7 +223,7 @@ class LineVersionEditType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => 'Tisseo\EndivBundle\Entity\LineVersion',
-                'validation_groups' => 'Default'
+                'validation_groups' => array('LineVersion')
             )
         );
 

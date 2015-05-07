@@ -83,6 +83,13 @@
     padding-left:20px;
 }
 /* line number rendering */
+li.child-line {
+    padding-top:10px;
+    display:block;
+}
+.child-line div {
+    display:inline-block;
+}
 .line-small {
     height:30px;
     width:30px;

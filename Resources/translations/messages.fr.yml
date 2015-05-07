@@ -129,6 +129,7 @@ line_version:
         choose_schematic: Choisir un schéma
         resolved_modifications: Résolution des modifications
         no_modifications: Aucune modification non résolue sur cette ligne.
+        no_child_line: Pas de ligne soirée
     locked_alert: Attention, cette offre est active ou débute dans moins de 20 jours.
     no_offers: Aucune offre cloturée pour cette ligne.
     actions:
