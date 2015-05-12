@@ -21,15 +21,23 @@
             <thead>
                 <th class="col-sm-1 nat-sort">{{ 'line_schema.list.columns.number'|trans({}, 'default') }}</th>
                 <th class="col-sm-3">{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
+                <th class="col-sm-2 no-sort">{{ 'line_schema.list.columns.schematic_date'|trans({}, 'default') }}</th>
+                <th class="col-sm-2 no-sort">{{ 'line_schema.list.columns.schematic_comment'|trans({}, 'default') }}</th>
                 <th class="col-sm-2 no-sort">{{ 'line_schema.list.columns.group'|trans({}, 'default') }}</th>
                 <th class="col-sm-2 no-sort">{{ 'global.actions'|trans({}, 'messages') }}</th>
             </thead>
             <tbody>
             {% for line in lines %}
                 {% set class = '' %}
-                {%  if line.schematics is defined and line.schematics|length > 0
-                        and line.schematics[(line.schematics|length)-1].filePath is empty %}
-                    {%  set class='schematic-updating' %}
+
+                {% if line.schematics is defined and line.schematics|length > 0 %}
+                    {% set hasSchematic = true %}
+                    {% set lastSchematic = (line.schematics|length)-1 %}
+                    {%  if line.schematics[lastSchematic].filePath is empty %}
+                        {%  set class='schematic-updating' %}
+                    {% endif %}
+                {% else %}
+                    {% set hasSchematic = false %}
                 {% endif %}
                 <tr class="{{ class }}">
                     <td>
@@ -43,6 +51,13 @@
                         {% endif %}
                         <span>{{ lineName }}</span>
                     </td>
+                    {% if hasSchematic %}
+                        <td>{{ line.schematics[lastSchematic].date|date('d/m/Y') }}</td>
+                        <td>{{ line.schematics[lastSchematic].comment }}</td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                    {% endif %}
                     <td>
                         {% if line.lineGroupGisContents is defined and line.lineGroupGisContents|length > 0 %}
                             <ul>
