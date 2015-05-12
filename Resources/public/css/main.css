@@ -102,6 +102,7 @@ li.child-line {
     margin:10px 0;
 }
 .line-number {
+    display: inline-block;
     border-radius:3px;
     text-align:center;
     padding:0 5px;
