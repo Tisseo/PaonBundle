@@ -42,6 +42,8 @@ line_version:
     no_modifications: Aucune modification apportée à cette offre
     clean: Nettoyage des données "fiche horaire" effectué pour cette offre.
     not_clean: Nettoyage des données "fiche horaire" impossible pour cette offre.
+    deleted: Offre supprimée
+    not_deleted: Suppression de cette offre impossible.
 
 calendar:
     list:

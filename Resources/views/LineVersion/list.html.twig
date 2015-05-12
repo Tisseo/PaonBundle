@@ -72,21 +72,28 @@
                                     </a>
                                 </li>
                                 {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                                <li>
-                                    <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
-                                        {{'global.edit'|trans({}, 'messages')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn" role"button" href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
-                                        {{'line_version.actions.close'|trans({}, 'messages')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn clean-offer" role="button" href="{{ path('tisseo_tid_line_version_clean', {'lineVersionId': lineVersion.id}) }}">
-                                        {{'line_version.actions.clean'|trans({}, 'messages')}}
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a class="btn" role="button" href="{{ path('tisseo_tid_line_version_edit', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                            {{'global.edit'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn" role"button" href="{{ path('tisseo_tid_line_version_close', {'lineVersionId': lineVersion.id}) }}" onclick="return $('.modal-dialog').removeClass('modal-dialog-large');" data-toggle="modal" data-target="#base-modal">
+                                            {{'line_version.actions.close'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn clean-offer" role="button" href="{{ path('tisseo_tid_line_version_clean', {'lineVersionId': lineVersion.id}) }}">
+                                            {{'line_version.actions.clean'|trans({}, 'messages')}}
+                                        </a>
+                                    </li>
+                                    {% if lineVersion.startDate|date('Ymd') > "now"|date('Ymd') %}
+                                        <li>
+                                            <a class="btn delete-offer" role="button" href="{{ path('tisseo_tid_line_version_delete', {'lineVersionId': lineVersion.id}) }}">
+                                                {{'line_version.actions.delete'|trans({}, 'messages')}}
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 {% endif %}
                             </ul>
                         </div>
@@ -136,6 +143,13 @@
                 var link = this;
                 event.preventDefault();
                 if (confirm("{{ 'line_version.actions.clean_confirm'|trans({}, 'messages') }}")) {
+                    window.location.href = $(this).attr("href");
+                }
+            });
+            $(document).on("click", ".delete-offer", function(event) {
+                var link = this;
+                event.preventDefault();
+                if (confirm("{{ 'line_version.actions.delete_confirm'|trans({}, 'messages')|e('js') }}")) {
                     window.location.href = $(this).attr("href");
                 }
             });

@@ -343,4 +343,29 @@ class LineVersionController extends AbstractController
             $this->generateUrl('tisseo_tid_line_version_list')
         );
     }
+
+    /**
+     * Delete
+     * @param Request $request
+     * @param integer $lineVersionId
+     *
+     * Launch a deleting action in database for the related LineVersion.
+     */
+    public function deleteAction(Request $request, $lineVersionId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $result = $lineVersionManager->delete($lineVersionId);
+        $this->get('session')->getFlashBag()->add(
+            ($result ? 'success' : 'danger'),
+            $this->get('translator')->trans(
+                ($result ? 'line_version.deleted' : 'line_version_not_deleted'),
+                array(), 'default'
+            )
+        );
+
+        return $this->redirect(
+            $this->generateUrl('tisseo_tid_line_version_list')
+        );
+    }
 }

@@ -139,7 +139,9 @@ line_version:
         offer: Offre
         show: Consulter
         clean: Purger
+        delete: Supprimer
         clean_confirm: Voulez-vous vraiment purger les données de cette offre ?
+        delete_confirm: Cette action entraine la suppression des données associées à cette offre (itinéraires, tronçons, horaires, ...) et réactivera l'offre précédente. Etes-vous sûr de vouloir supprimer cette offre ?
         close: Clôturer
         calendar: Calendriers
         exception: Exceptions

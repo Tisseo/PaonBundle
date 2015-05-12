@@ -44,6 +44,11 @@ tisseo_tid_line_version_clean:
     defaults: { _controller: TisseoTidBundle:LineVersion:clean }
     requirements:
         lineVersionId: \d+
+tisseo_tid_line_version_delete:
+    pattern: /offers/delete/{lineVersionId}
+    defaults: { _controller: TisseoTidBundle:LineVersion:delete }
+    requirements:
+        lineVersionId: \d+
 
 # Printing routes
 tisseo_tid_printing_create:
