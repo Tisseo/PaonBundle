@@ -189,6 +189,8 @@ class LineVersionController extends AbstractController
             else
             {
                 $lineVersion = new LineVersion($properties, $lineVersionResult, null);
+                $minDate = $lineVersionResult->getStartDate();
+                $minDate->add(new \DateInterval('P1D'));
             }
 
             $modificationManager = $this->get('tisseo_endiv.modification_manager');
@@ -232,7 +234,8 @@ class LineVersionController extends AbstractController
                 array(
                     'form' => $form->createView(),
                     'lineVersion' => $lineVersion,
-                    'lines' => $lineManager->findAllLinesByPriority()
+                    'lines' => $lineManager->findAllLinesByPriority(),
+                    'minDate' => $minDate
                 )
             );
         }
