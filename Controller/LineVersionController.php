@@ -172,6 +172,7 @@ class LineVersionController extends AbstractController
 
         $lineManager = $this->get('tisseo_endiv.line_manager');
 
+        $minDate = null;
         if (!empty($lineId))
         {
             $propertyManager = $this->get('tisseo_endiv.property_manager');
