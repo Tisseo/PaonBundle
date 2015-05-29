@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\DataFixtures\ORM;
+namespace Tisseo\PaonBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -14,7 +14,7 @@ class FixturesApplication extends AbstractFixture implements OrderedFixtureInter
 
     public function load(ObjectManager $om)
     {
-        $this->createApplication($om, 'Tid', '/tid', 'tid');
+        $this->createApplication($om, 'Paon', '/paon', 'paon');
         $om->flush();
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\DataTransformer;
+namespace Tisseo\PaonBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;

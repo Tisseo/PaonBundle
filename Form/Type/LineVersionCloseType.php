@@ -1,13 +1,13 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineVersionCloseType extends AbstractType
 {
@@ -60,7 +60,7 @@ class LineVersionCloseType extends AbstractType
             )
             ->add(
                 'endDate',
-                'datepicker_tid',
+                'datepicker_paon',
                 array(
                     'label' => 'line_version.labels.end_date',
                     'attr' => array(
@@ -90,6 +90,6 @@ class LineVersionCloseType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_version';
+        return 'paon_line_version';
     }
 }

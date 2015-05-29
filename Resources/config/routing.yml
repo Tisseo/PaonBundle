@@ -1,153 +1,153 @@
-tisseo_tid_homepage:
+tisseo_paon_homepage:
     pattern:  /
-    defaults: { _controller: TisseoTidBundle:Default:index }
+    defaults: { _controller: TisseoPaonBundle:Default:index }
 
 # Line routes
-tisseo_tid_line_list:
+tisseo_paon_line_list:
     pattern: /lines/list
-    defaults: { _controller: TisseoTidBundle:Line:list }
-tisseo_tid_line_edit:
+    defaults: { _controller: TisseoPaonBundle:Line:list }
+tisseo_paon_line_edit:
     pattern: /lines/edit/{lineId}
-    defaults: { _controller: TisseoTidBundle:Line:edit, lineId: null }
+    defaults: { _controller: TisseoPaonBundle:Line:edit, lineId: null }
 
 # LineVersion routes
-tisseo_tid_line_version_list:
+tisseo_paon_line_version_list:
     pattern: /offers/list
-    defaults: { _controller: TisseoTidBundle:LineVersion:list }
-tisseo_tid_line_version_history:
+    defaults: { _controller: TisseoPaonBundle:LineVersion:list }
+tisseo_paon_line_version_history:
     pattern: /offers/history
-    defaults: { _controller: TisseoTidBundle:LineVersion:history }
-tisseo_tid_line_version_edit:
+    defaults: { _controller: TisseoPaonBundle:LineVersion:history }
+tisseo_paon_line_version_edit:
     pattern: /offers/edit/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:edit }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:edit }
     requirements:
         lineVersionId: \d+
-tisseo_tid_line_version_create:
+tisseo_paon_line_version_create:
     pattern: /offers/create/{lineId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:create, lineId: null }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:create, lineId: null }
     options:
         expose: true
-tisseo_tid_line_version_show:
+tisseo_paon_line_version_show:
     pattern: /offers/show/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:show }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:show }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
-tisseo_tid_line_version_close:
+tisseo_paon_line_version_close:
     pattern: /offers/close/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:close }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:close }
     requirements:
         lineVersionId: \d+
-tisseo_tid_line_version_clean:
+tisseo_paon_line_version_clean:
     pattern: /offers/clean/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:clean }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:clean }
     requirements:
         lineVersionId: \d+
-tisseo_tid_line_version_delete:
+tisseo_paon_line_version_delete:
     pattern: /offers/delete/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:LineVersion:delete }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:delete }
     requirements:
         lineVersionId: \d+
 
 # Printing routes
-tisseo_tid_printing_create:
+tisseo_paon_printing_create:
     pattern: /offers/add/printings/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Printing:create }
+    defaults: { _controller: TisseoPaonBundle:Printing:create }
     requirements:
         lineVersionId: \d+
 
 # GridCalendar/GridMaskType routes
-tisseo_tid_calendar_edit:
+tisseo_paon_calendar_edit:
     pattern: /calendars/edit/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Calendar:edit }
+    defaults: { _controller: TisseoPaonBundle:Calendar:edit }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
-tisseo_tid_calendar_form:
+tisseo_paon_calendar_form:
     pattern: /offers/add/calendar/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Calendar:renderForm }
+    defaults: { _controller: TisseoPaonBundle:Calendar:renderForm }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
-tisseo_tid_calendar_create:
+tisseo_paon_calendar_create:
     pattern: /offers/create/calendar/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Calendar:create }
+    defaults: { _controller: TisseoPaonBundle:Calendar:create }
     requirements:
         lineVersionId: \d+
     options:
         expose: true
 
 # Exception/Comment administration
-tisseo_tid_exception_edit:
+tisseo_paon_exception_edit:
     pattern: /exceptions/edit/{lineVersionId}
-    defaults: { _controller: TisseoTidBundle:Exception:edit, lineVersionId: null }
+    defaults: { _controller: TisseoPaonBundle:Exception:edit, lineVersionId: null }
     options:
         expose: true
-tisseo_tid_exception_comment:
+tisseo_paon_exception_comment:
     pattern: /exceptions/create/comment
-    defaults: { _controller: TisseoTidBundle:Exception:comment }
+    defaults: { _controller: TisseoPaonBundle:Exception:comment }
     options:
         expose: true
 
 # Imports administration
-tisseo_tid_data_exchange_show:
+tisseo_paon_data_exchange_show:
     pattern: /data-exchange/show
-    defaults: { _controller: TisseoTidBundle:DataExchange:show }
-tisseo_tid_data_exchange_launch:
+    defaults: { _controller: TisseoPaonBundle:DataExchange:show }
+tisseo_paon_data_exchange_launch:
     pattern: /data-exchange/launch/{jobName}
-    defaults: { _controller: TisseoTidBundle:DataExchange:launch, jobName: null }
+    defaults: { _controller: TisseoPaonBundle:DataExchange:launch, jobName: null }
 
 # Line schema administration
-tisseo_tid_line_schema_list:
+tisseo_paon_line_schema_list:
     pattern: /line-schema/list
-    defaults: { _controller: TisseoTidBundle:LineSchema:list }
-tisseo_tid_schema_list:
+    defaults: { _controller: TisseoPaonBundle:LineSchema:list }
+tisseo_paon_schema_list:
     pattern: /line-schema/{lineId}/schema/list
-    defaults: { _controller: TisseoTidBundle:LineSchema:listSchema }
+    defaults: { _controller: TisseoPaonBundle:LineSchema:listSchema }
     requirements:
         lineId: \d+
-tisseo_tid_schema_choice_list:
+tisseo_paon_schema_choice_list:
     pattern: /line-schema/{lineId}/schema/choice/list/{schematicId}
-    defaults: { _controller: TisseoTidBundle:LineSchema:choiceListSchema, schematicId: null }
+    defaults: { _controller: TisseoPaonBundle:LineSchema:choiceListSchema, schematicId: null }
     requirements:
         lineId: \d+
     options:
         expose: true
-tisseo_tid_schema_edit:
+tisseo_paon_schema_edit:
     pattern: /line-schema/{lineId}/schema/edit
-    defaults: { _controller: TisseoTidBundle:LineSchema:editSchema }
+    defaults: { _controller: TisseoPaonBundle:LineSchema:editSchema }
     requirements:
         lineId: \d+
     options:
         expose: true
-tisseo_tid_schema_ask:
+tisseo_paon_schema_ask:
     pattern: /line-schema/{lineId}/schema/ask
-    defaults: { _controller: TisseoTidBundle:LineSchema:askSchema }
+    defaults: { _controller: TisseoPaonBundle:LineSchema:askSchema }
     requirements:
         lineId: \d+
     options:
         expose: true
-tisseo_tid_schema_deprecated:
+tisseo_paon_schema_deprecated:
     pattern: /line-schema/{lineId}/schema/deprecated
-    defaults: { _controller: TisseoTidBundle:LineSchema:deprecatedSchema }
+    defaults: { _controller: TisseoPaonBundle:LineSchema:deprecatedSchema }
     requirements:
         lineId: \d+
     options:
         expose: true
 
 # Line Group Gis
-tisseo_tid_line_group_gis_list:
+tisseo_paon_line_group_gis_list:
     pattern: /line-schema/line-group/list
-    defaults: { _controller: TisseoTidBundle:LineGroupGis:list }
-tisseo_tid_line_group_gis_new:
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:list }
+tisseo_paon_line_group_gis_new:
     pattern: /line-schema/line-group/edit/new
-    defaults: { _controller: TisseoTidBundle:LineGroupGis:create }
-tisseo_tid_line_group_gis_edit:
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:create }
+tisseo_paon_line_group_gis_edit:
     pattern: /line-schema/line-group/edit/{id}
-    defaults: { _controller: TisseoTidBundle:LineGroupGis:edit }
-tisseo_tid_line_group_gis_delete:
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:edit }
+tisseo_paon_line_group_gis_delete:
     pattern: /line-schema/line-group/delete/{id}
-    defaults: { _controller: TisseoTidBundle:LineGroupGis:delete }
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:delete }

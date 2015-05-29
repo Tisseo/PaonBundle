@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\DependencyInjection;
+namespace Tisseo\PaonBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class TisseoTidExtension extends Extension
+class TisseoPaonExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -26,14 +26,14 @@ class TisseoTidExtension extends Extension
         $loader->load('services.yml');
         $loader->load('permissions.yml');
 
-        $container->setParameter('tisseo_tid.default_email_dest', $config['mailer']['default_email_dest']);
-        $container->setParameter('tisseo_tid.default_email_exp', $config['mailer']['default_email_exp']);
+        $container->setParameter('tisseo_paon.default_email_dest', $config['mailer']['default_email_dest']);
+        $container->setParameter('tisseo_paon.default_email_exp', $config['mailer']['default_email_exp']);
 
         # DataExchange configuration
-        $container->setParameter('tisseo_tid.jenkins_server', $config['data_exchange']['jenkins_server']);
-        $container->setParameter('tisseo_tid.jenkins_user', $config['data_exchange']['jenkins_user']);
-        $container->setParameter('tisseo_tid.master_job_prefix', $config['data_exchange']['jobs']['master_prefix']);
-        $container->setParameter('tisseo_tid.atomic_job_prefix', $config['data_exchange']['jobs']['atomic_prefix']);
+        $container->setParameter('tisseo_paon.jenkins_server', $config['data_exchange']['jenkins_server']);
+        $container->setParameter('tisseo_paon.jenkins_user', $config['data_exchange']['jenkins_user']);
+        $container->setParameter('tisseo_paon.master_job_prefix', $config['data_exchange']['jobs']['master_prefix']);
+        $container->setParameter('tisseo_paon.atomic_job_prefix', $config['data_exchange']['jobs']['atomic_prefix']);
 
     }
 }

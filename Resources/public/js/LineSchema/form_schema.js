@@ -18,13 +18,13 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
         var url = null;
         switch ( $(this).data('action') ) {
             case 'edit-schema':
-                url = Routing.generate('tisseo_tid_schema_edit', params);
+                url = Routing.generate('tisseo_paon_schema_edit', params);
                 break;
             case 'ask-schema':
-                url = Routing.generate('tisseo_tid_schema_ask', params);
+                url = Routing.generate('tisseo_paon_schema_ask', params);
                 break;
             case 'deprecated-schema':
-                url = Routing.generate('tisseo_tid_schema_deprecated', params);
+                url = Routing.generate('tisseo_paon_schema_deprecated', params);
                 break;
             default:
                 console.log('data-action undefined');

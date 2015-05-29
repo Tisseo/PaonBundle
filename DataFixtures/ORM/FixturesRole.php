@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\DataFixtures\ORM;
+namespace Tisseo\PaonBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -16,8 +16,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
     private $roles = array(
         array(
             'name'          => 'User TID',
-            'reference'     => 'user-tid',
-            'application'   => 'app-tid',
+            'reference'     => 'user-paon',
+            'application'   => 'app-paon',
             'isEditable'    => true,
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',
@@ -26,8 +26,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
         ),
         array(
             'name'          => 'Admin TID',
-            'reference'     => 'admin-tid',
-            'application'   => 'app-tid',
+            'reference'     => 'admin-paon',
+            'application'   => 'app-paon',
             'isEditable'    => true,
             'permissions'  => array(
                 'BUSINESS_LIST_LINE',
@@ -41,8 +41,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
         ),
         array(
             'name'          => 'User TID IV',
-            'reference'     => 'user-tid-iv',
-            'application'   => 'app-tid',
+            'reference'     => 'user-paon-iv',
+            'application'   => 'app-paon',
             'isEditable'    => true,
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',
@@ -55,8 +55,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
         ),
         array(
             'name'          => 'User TID SIG',
-            'reference'     => 'user-tid-sig',
-            'application'   => 'app-tid',
+            'reference'     => 'user-paon-sig',
+            'application'   => 'app-paon',
             'isEditable'    => true,
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',

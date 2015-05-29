@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
 use Tisseo\EndivBundle\Entity\LineVersion;
-use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class PrintingType extends AbstractType
 {
@@ -33,7 +33,7 @@ class PrintingType extends AbstractType
         );
         $builder->add(
             'date',
-            'datepicker_tid',
+            'datepicker_paon',
             array(
                 'label' => 'printing.labels.date',
                 'attr' => array(
@@ -80,6 +80,6 @@ class PrintingType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_printing';
+        return 'paon_printing';
     }
 }

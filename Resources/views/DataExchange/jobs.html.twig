@@ -1,4 +1,4 @@
-{% extends "TisseoTidBundle::generic_list.html.twig" %}
+{% extends "TisseoPaonBundle::generic_list.html.twig" %}
 
 {% block subheader -%}
     {% if running %}
@@ -25,7 +25,7 @@
         {% endif %}
         </td>
         <td>
-            <a href="{{ path('tisseo_tid_data_exchange_launch', {'jobName': job.name}) }}" role="button" class="btn btn-default {% if running %} disabled {% endif %}">
+            <a href="{{ path('tisseo_paon_data_exchange_launch', {'jobName': job.name}) }}" role="button" class="btn btn-default {% if running %} disabled {% endif %}">
                 {{ 'data_exchange.launch_job'|trans({}, 'default') }}
             </a>
         </td>

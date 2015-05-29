@@ -1,11 +1,11 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\TidBundle\Validator\Constraints\SplitedMail;
+use Tisseo\PaonBundle\Validator\Constraints\SplitedMail;
 
 class MailType extends AbstractType
 {
@@ -49,6 +49,6 @@ class MailType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_mail';
+        return 'paon_mail';
     }
 }

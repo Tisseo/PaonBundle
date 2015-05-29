@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Doctrine\ORM\EntityRepository;
-use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
 use Tisseo\EndivBundle\Services\ModificationManager;
 
 class LineVersionCreateType extends AbstractType
@@ -69,7 +69,7 @@ class LineVersionCreateType extends AbstractType
             )
             ->add(
                 'startDate',
-                'datepicker_tid',
+                'datepicker_paon',
                 array(
                     'label' => 'line_version.labels.start_date',
                     'attr' => array(
@@ -79,7 +79,7 @@ class LineVersionCreateType extends AbstractType
             )
             ->add(
                 'plannedEndDate',
-                'datepicker_tid',
+                'datepicker_paon',
                 array(
                     'label' => 'line_version.labels.planned_end_date',
                     'attr' => array(
@@ -158,7 +158,11 @@ class LineVersionCreateType extends AbstractType
                     'class' => 'TisseoEndivBundle:Color',
                     'property' => 'name',
                     'empty_value' => '',
-                    'required' => true
+                    'required' => true,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('c')
+                            ->orderBy('c.name', 'ASC');
+                    }
                 )
             )
             ->add(
@@ -257,6 +261,6 @@ class LineVersionCreateType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_version';
+        return 'paon_line_version';
     }
 }

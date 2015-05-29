@@ -1,11 +1,11 @@
-{% extends no_left_menu == true ? "TisseoTidBundle::container.html.twig" : "TisseoTidBundle::container_and_menu.html.twig" %}
+{% extends no_left_menu == true ? "TisseoPaonBundle::container.html.twig" : "TisseoPaonBundle::container_and_menu.html.twig" %}
 
 {% import "CanalTPSamEcoreUserManagerBundle::macros.html.twig" as macros %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/tisseotid/css/jquery.dataTables.min.css'
-                   filter='cssrewrite' output='css/datatables_tid.css' %}
+    {% stylesheets 'bundles/tisseopaon/css/jquery.dataTables.min.css'
+                   filter='cssrewrite' output='css/datatables_paon.css' %}
         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
     {% endstylesheets %}
 {% endblock %}
@@ -34,6 +34,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        require(['tid/datatables']);
+        require(['paon/datatables']);
     </script>
 {% endblock %}

@@ -41,12 +41,12 @@ Tisseo\EndivBundle\Entity\LineVersion:
             - DateTime: ~
         plannedEndDate:
             - DateTime: ~
-            - Tisseo\TidBundle\Validator\Constraints\GreaterThanField:
+            - Tisseo\PaonBundle\Validator\Constraints\GreaterThanField:
                 groups: [registration]
                 field: startDate
         endDate:
             - DateTime: ~
-            - Tisseo\TidBundle\Validator\Constraints\GreaterThanField:
+            - Tisseo\PaonBundle\Validator\Constraints\GreaterThanField:
                 groups: [close]
                 field: startDate
 Tisseo\EndivBundle\Entity\Comment:

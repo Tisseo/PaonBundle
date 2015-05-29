@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Migrations\pdo_pgsql;
+namespace Tisseo\PaonBundle\Migrations\pdo_pgsql;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;

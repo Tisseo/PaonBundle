@@ -1,4 +1,4 @@
-define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/messages'], function($) {
+define(['jquery', 'datatables', 'paon/textfill', 'fosjsrouting', 'translations/messages'], function($) {
 
     // re-fill line-number text in colored div
     textfill(15, 30, '.line-big');
@@ -85,7 +85,7 @@ define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/me
             });
             var newData = false;
             $.ajax({
-                url : Routing.generate('tisseo_tid_exception_comment'),
+                url : Routing.generate('tisseo_paon_exception_comment'),
                 type: 'POST',
                 data : data,
                 success: function(data) {
@@ -141,7 +141,7 @@ define(['jquery', 'datatables', 'tid/textfill', 'fosjsrouting', 'translations/me
                     });
                 });
                 $.ajax({
-                    url : Routing.generate('tisseo_tid_exception_edit'),
+                    url : Routing.generate('tisseo_paon_exception_edit'),
                     type: 'POST',
                     data : JSON.stringify(data),
                     success: function(data) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,7 +31,7 @@ class ListSchemaType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Tisseo\TidBundle\Entity\SchematicList',
+                'data_class' => 'Tisseo\PaonBundle\Entity\SchematicList',
             )
         );
     }
@@ -41,6 +41,6 @@ class ListSchemaType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_list_schema';
+        return 'paon_list_schema';
     }
 }

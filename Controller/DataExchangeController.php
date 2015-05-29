@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,12 +17,12 @@ class DataExchangeController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
 
-        $dataExchangeManager = $this->get('tisseo_tid.data_exchange_manager');
+        $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         // Check no master jobs are currently running and launch the job if it's clear
         if ($dataExchangeManager->getRunningJob() === null)
             $dataExchangeManager->launchJob($jobName);
 
-        return $this->redirect($this->generateUrl('tisseo_tid_data_exchange_show'));
+        return $this->redirect($this->generateUrl('tisseo_paon_data_exchange_show'));
     }
 
     /**
@@ -35,11 +35,11 @@ class DataExchangeController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
 
-        $dataExchangeManager = $this->get('tisseo_tid.data_exchange_manager');
+        $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         $runningJobData = $dataExchangeManager->buildRunningJobData();
 
         return $this->render(
-            'TisseoTidBundle:DataExchange:jobs.html.twig',
+            'TisseoPaonBundle:DataExchange:jobs.html.twig',
             array(
                 'pageTitle' => 'menu.import_manage',
                 'jobs' => $dataExchangeManager->getJobsList(),

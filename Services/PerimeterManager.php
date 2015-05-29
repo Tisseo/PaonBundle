@@ -5,7 +5,7 @@
  *
  * @author rabikhalil
  */
-namespace Tisseo\TidBundle\Services;
+namespace Tisseo\PaonBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use CanalTP\NmmPortalBundle\Services\PerimeterManager as NmmPerimeterManager;

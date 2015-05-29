@@ -1,16 +1,16 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\TidBundle\Validator\Constraints\UniqueInCollection;
+use Tisseo\PaonBundle\Validator\Constraints\UniqueInCollection;
 
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineGroupGis;
 use Tisseo\EndivBundle\Entity\LineGroupGisContent;
-use Tisseo\TidBundle\Form\Type\LineGroupGisContentType;
+use Tisseo\PaonBundle\Form\Type\LineGroupGisContentType;
 
 class LineGroupGisType extends AbstractType
 {
@@ -72,6 +72,6 @@ class LineGroupGisType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_group_gis';
+        return 'paon_line_group_gis';
     }
 }

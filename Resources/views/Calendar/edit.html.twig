@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% import "TisseoTidBundle::macros.html.twig" as render %}
+{% import "TisseoPaonBundle::macros.html.twig" as render %}
 
 {% block modal_title %}
     <div>
@@ -67,7 +67,7 @@
                 <tbody>
                     <input type="hidden" id="line-version-id" value="{{ lineVersion.id }}"></input>
                     <tr id="new-grid-calendar">
-                        {{ render(controller('TisseoTidBundle:Calendar:renderForm', {'lineVersionId': lineVersion.id } )) }}
+                        {{ render(controller('TisseoPaonBundle:Calendar:renderForm', {'lineVersionId': lineVersion.id } )) }}
                     </tr>
                 </tbody>
             </table>
@@ -122,10 +122,10 @@
         <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
     </button>
     <script>
-        require(['tid/textfill'], function() {
+        require(['paon/textfill'], function() {
             textfill(2, 15, '.line-small');
         });
-        require(['tid/create/calendar']);
+        require(['paon/create/calendar']);
         require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {
             $.fn.liveDroppable = function() {
                 $(this).droppable({

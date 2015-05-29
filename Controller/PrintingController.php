@@ -1,10 +1,10 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Tisseo\TidBundle\Form\Type\PrintingType;
+use Tisseo\PaonBundle\Form\Type\PrintingType;
 use Tisseo\EndivBundle\Entity\Printing;
 use Tisseo\EndivBundle\Entity\LineVersion;
 
@@ -24,7 +24,7 @@ class PrintingController extends AbstractController
             $printing,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_tid_printing_create',
+                    'tisseo_paon_printing_create',
                     array(
                         'lineVersionId' => $printing->getLineVersion()->getId()
                     )
@@ -57,7 +57,7 @@ class PrintingController extends AbstractController
                 )
             );
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
         return (null);
@@ -89,7 +89,7 @@ class PrintingController extends AbstractController
             );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
         else
@@ -101,7 +101,7 @@ class PrintingController extends AbstractController
 
             if (!$render) {
                 return $this->render(
-                    'TisseoTidBundle:Printing:form.html.twig',
+                    'TisseoPaonBundle:Printing:form.html.twig',
                     array(
                         'form' => $form->createView(),
                         'title' => 'printing.create'

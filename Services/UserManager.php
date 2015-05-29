@@ -5,7 +5,7 @@
  *
  * @author vdegroote
  */
-namespace Tisseo\TidBundle\Services;
+namespace Tisseo\PaonBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Translation\TranslatorInterface;

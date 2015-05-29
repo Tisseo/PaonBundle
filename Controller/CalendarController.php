@@ -1,12 +1,12 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-use Tisseo\TidBundle\Form\Type\GridCalendarType;
+use Tisseo\PaonBundle\Form\Type\GridCalendarType;
 use Tisseo\EndivBundle\Entity\GridCalendar;
 use Tisseo\EndivBundle\Entity\LineVersion;
 
@@ -27,7 +27,7 @@ class CalendarController extends AbstractController
             $gridCalendar,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_tid_calendar_edit',
+                    'tisseo_paon_calendar_edit',
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
@@ -60,7 +60,7 @@ class CalendarController extends AbstractController
             $gridCalendar->setLineVersion($lineVersion);
 
             return $this->render(
-                'TisseoTidBundle:GridCalendar:new.html.twig',
+                'TisseoPaonBundle:GridCalendar:new.html.twig',
                 array(
                     'gridCalendar' => $gridCalendar
                 )
@@ -68,7 +68,7 @@ class CalendarController extends AbstractController
         }
 
         return $this->render(
-            'TisseoTidBundle:GridCalendar:form.html.twig',
+            'TisseoPaonBundle:GridCalendar:form.html.twig',
             array(
                 'form' => $form->createView()
             )
@@ -92,7 +92,7 @@ class CalendarController extends AbstractController
 
         $form = $this->buildForm($lineVersion);
         return $this->render(
-            'TisseoTidBundle:GridCalendar:form.html.twig',
+            'TisseoPaonBundle:GridCalendar:form.html.twig',
             array(
                 'form' => $form->createView()
             )
@@ -124,7 +124,7 @@ class CalendarController extends AbstractController
             $gridCalendarManager->attachGridCalendars($freshData);
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
 
@@ -133,7 +133,7 @@ class CalendarController extends AbstractController
         $gridMaskTypes = $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion);
 
         return $this->render(
-            'TisseoTidBundle:Calendar:edit.html.twig',
+            'TisseoPaonBundle:Calendar:edit.html.twig',
             array(
                 'title' => 'menu.grid_calendar_manage',
                 'lineVersion' => $lineVersion,

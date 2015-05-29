@@ -1,9 +1,9 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\TidBundle\Form\Type\LineType;
+use Tisseo\PaonBundle\Form\Type\LineType;
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineDatasource;
 use Tisseo\EndivBundle\Services\LineManager;
@@ -31,7 +31,7 @@ class LineController extends AbstractController
             $line,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_tid_line_edit',
+                    'tisseo_paon_line_edit',
                     array(
                         'lineId' => $lineId
                     )
@@ -65,7 +65,7 @@ class LineController extends AbstractController
                 )
             );
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_list')
+                $this->generateUrl('tisseo_paon_line_list')
             );
         }
         return (null);
@@ -86,7 +86,7 @@ class LineController extends AbstractController
         $render = $this->processForm($request, $form);
         if (!$render) {
             return $this->render(
-                'TisseoTidBundle:Line:form.html.twig',
+                'TisseoPaonBundle:Line:form.html.twig',
                 array(
                     'form' => $form->createView(),
                     'title' => ($lineId ? 'line.edit' : 'line.create')
@@ -106,7 +106,7 @@ class LineController extends AbstractController
         $this->isGranted('BUSINESS_LIST_LINE');
         $lineManager = $this->get('tisseo_endiv.line_manager');
         return $this->render(
-            'TisseoTidBundle:Line:list.html.twig',
+            'TisseoPaonBundle:Line:list.html.twig',
             array(
                 'pageTitle' => 'menu.line_manage',
                 'lines' => $lineManager->findAllLinesByPriority()

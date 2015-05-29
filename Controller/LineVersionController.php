@@ -1,11 +1,11 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\TidBundle\Form\Type\LineVersionEditType;
-use Tisseo\TidBundle\Form\Type\LineVersionCreateType;
-use Tisseo\TidBundle\Form\Type\LineVersionCloseType;
+use Tisseo\PaonBundle\Form\Type\LineVersionEditType;
+use Tisseo\PaonBundle\Form\Type\LineVersionCreateType;
+use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
 use Tisseo\EndivBundle\Entity\LineVersion;
 
 class LineVersionController extends AbstractController
@@ -46,7 +46,7 @@ class LineVersionController extends AbstractController
         if (!($this->foundLineVersion($lineVersion)))
         {
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
 
@@ -61,7 +61,7 @@ class LineVersionController extends AbstractController
             $lineVersion,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_tid_line_version_edit',
+                    'tisseo_paon_line_version_edit',
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
@@ -84,12 +84,12 @@ class LineVersionController extends AbstractController
             );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
 
         return $this->render(
-            'TisseoTidBundle:LineVersion:edit.html.twig',
+            'TisseoPaonBundle:LineVersion:edit.html.twig',
             array(
                 'form' => $form->createView(),
                 'lineVersion' => $lineVersion
@@ -114,7 +114,7 @@ class LineVersionController extends AbstractController
         if (!($this->foundLineVersion($lineVersion)))
         {
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
 
@@ -124,7 +124,7 @@ class LineVersionController extends AbstractController
             $lineVersion,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_tid_line_version_close',
+                    'tisseo_paon_line_version_close',
                     array(
                         'lineVersionId' => $lineVersion->getId()
                     )
@@ -146,12 +146,12 @@ class LineVersionController extends AbstractController
             );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
 
         return $this->render(
-            'TisseoTidBundle:LineVersion:close.html.twig',
+            'TisseoPaonBundle:LineVersion:close.html.twig',
             array(
                 'form' => $form->createView(),
                 'lineVersion' => $lineVersion
@@ -200,7 +200,7 @@ class LineVersionController extends AbstractController
                 $lineVersion,
                 array(
                     'action' => $this->generateUrl(
-                        'tisseo_tid_line_version_create',
+                        'tisseo_paon_line_version_create',
                         array(
                             'lineId' => $lineVersion->getLine()->getId()
                         )
@@ -226,12 +226,12 @@ class LineVersionController extends AbstractController
                 );
 
                 return $this->redirect(
-                    $this->generateUrl('tisseo_tid_line_version_list')
+                    $this->generateUrl('tisseo_paon_line_version_list')
                 );
             }
 
             return $this->render(
-                'TisseoTidBundle:LineVersion:create.html.twig',
+                'TisseoPaonBundle:LineVersion:create.html.twig',
                 array(
                     'form' => $form->createView(),
                     'lineVersion' => $lineVersion,
@@ -242,7 +242,7 @@ class LineVersionController extends AbstractController
         }
 
         return $this->render(
-            'TisseoTidBundle:LineVersion:create.html.twig',
+            'TisseoPaonBundle:LineVersion:create.html.twig',
             array(
                 'form' => null,
                 'lineVersion' => null,
@@ -263,7 +263,7 @@ class LineVersionController extends AbstractController
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $now = new \Datetime();
         return $this->render(
-            'TisseoTidBundle:LineVersion:list.html.twig',
+            'TisseoPaonBundle:LineVersion:list.html.twig',
             array(
                 'pageTitle' => 'menu.line_version_active',
                 'data' => $lineVersionManager->findActiveLineVersions($now, null, true)
@@ -294,7 +294,7 @@ class LineVersionController extends AbstractController
 
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         return $this->render(
-            'TisseoTidBundle:LineVersion:show.html.twig',
+            'TisseoPaonBundle:LineVersion:show.html.twig',
             array(
                 'title' => $title,
                 'history' => $history,
@@ -315,7 +315,7 @@ class LineVersionController extends AbstractController
         $lineManager = $this->get('tisseo_endiv.line_manager');
         $lines = $lineManager->findAllLinesByPriority();
         return $this->render(
-            'TisseoTidBundle:LineVersion:history.html.twig',
+            'TisseoPaonBundle:LineVersion:history.html.twig',
             array(
                 'pageTitle' => 'menu.line_version_history',
                 'lines' => $lines
@@ -344,7 +344,7 @@ class LineVersionController extends AbstractController
             )
         );
         return $this->redirect(
-            $this->generateUrl('tisseo_tid_line_version_list')
+            $this->generateUrl('tisseo_paon_line_version_list')
         );
     }
 
@@ -369,7 +369,7 @@ class LineVersionController extends AbstractController
         );
 
         return $this->redirect(
-            $this->generateUrl('tisseo_tid_line_version_list')
+            $this->generateUrl('tisseo_paon_line_version_list')
         );
     }
 }

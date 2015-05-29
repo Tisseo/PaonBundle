@@ -2,20 +2,20 @@
 requirejs.config({
     urlArgs: '{{ assets_version }}',
     paths: {
-        'jquery/textfill':                  'bundles/tisseotid/js/jquery.textfill.min',
-        'jquery/datatables':                'bundles/tisseotid/js/jquery.dataTables.min',
+        'jquery/textfill':                  'bundles/tisseopaon/js/jquery.textfill.min',
+        'jquery/datatables':                'bundles/tisseopaon/js/jquery.dataTables.min',
         jquery_ui_draggable:                'components/jquery-ui/ui/minified/jquery.ui.draggable.min',
         jquery_ui_droppable:                'components/jquery-ui/ui/minified/jquery.ui.droppable.min',
-        'tid/textfill':                     'bundles/tisseotid/js/textfill',
-        'tid/form':                         'bundles/tisseotid/js/form',
-        'tid/datatables':                   'bundles/tisseotid/js/datatables',
-        'tid/history/offer':                'bundles/tisseotid/js/LineVersion/history_line_versions',
-        'tid/create/offer':                 'bundles/tisseotid/js/LineVersion/create_line_versions',
-        'tid/create/calendar':              'bundles/tisseotid/js/Calendar/create_grid_calendars',
-        'tid/exceptions':                   'bundles/tisseotid/js/Exception/edit_exceptions',
-        'tid/edit/schema':                  'bundles/tisseotid/js/LineSchema/form_schema',
-        'tid/list/schemas':                 'bundles/tisseotid/js/LineSchema/list_schema'
-        //'tid/edit/line_group_gis':          'bundles/tisseotid/js/LineGroupGis/form_lineGroupGis'
+        'paon/textfill':                     'bundles/tisseopaon/js/textfill',
+        'paon/form':                         'bundles/tisseopaon/js/form',
+        'paon/datatables':                   'bundles/tisseopaon/js/datatables',
+        'paon/history/offer':                'bundles/tisseopaon/js/LineVersion/history_line_versions',
+        'paon/create/offer':                 'bundles/tisseopaon/js/LineVersion/create_line_versions',
+        'paon/create/calendar':              'bundles/tisseopaon/js/Calendar/create_grid_calendars',
+        'paon/exceptions':                   'bundles/tisseopaon/js/Exception/edit_exceptions',
+        'paon/edit/schema':                  'bundles/tisseopaon/js/LineSchema/form_schema',
+        'paon/list/schemas':                 'bundles/tisseopaon/js/LineSchema/list_schema'
+        //'paon/edit/line_group_gis':          'bundles/tisseopaon/js/LineGroupGis/form_lineGroupGis'
     },
     shim: {
         'jquery/textfill': {
@@ -24,13 +24,13 @@ requirejs.config({
         'jquery/datatables': {
             deps: ['jquery']
         },
-       'tid/textfill': {
+       'paon/textfill': {
             deps: ['jquery/textfill']
         },
-        'tid/datatables': {
+        'paon/datatables': {
             deps: ['jquery/datatables', 'jquery/textfill']
         },
-        'tid/exceptions': {
+        'paon/exceptions': {
             deps: ['jquery/datatables', 'jquery/textfill', 'translations/messages']
         },
         jquery_ui_droppable: {
@@ -42,6 +42,6 @@ requirejs.config({
             exports: "jQuery"
         }
     },
-    deps: ['utils', 'jquery', 'tid/form']
+    deps: ['utils', 'jquery', 'paon/form']
 });
 </script>

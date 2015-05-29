@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\DependencyInjection;
+namespace Tisseo\PaonBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('tisseo_tid', 'array');
+        $rootNode = $treeBuilder->root('tisseo_paon', 'array');
         $rootNode->children()
             ->arrayNode('data_exchange')
                 ->info('Configuration des imports/exports')

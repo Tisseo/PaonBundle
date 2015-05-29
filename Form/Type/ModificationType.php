@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +16,7 @@ class ModificationType extends AbstractType
     {
         $builder->add(
             'date',
-            'datepicker_tid',
+            'datepicker_paon',
             array(
                 'label' => 'modification.labels.date',
                 'required' => true,
@@ -62,6 +62,6 @@ class ModificationType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_modification';
+        return 'paon_modification';
     }
 }

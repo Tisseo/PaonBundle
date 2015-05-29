@@ -1,11 +1,11 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\TidBundle\Form\Type\LineDatasourceType;
+use Tisseo\PaonBundle\Form\Type\LineDatasourceType;
 
 class LineType extends AbstractType
 {
@@ -57,6 +57,6 @@ class LineType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line';
+        return 'paon_line';
     }
 }

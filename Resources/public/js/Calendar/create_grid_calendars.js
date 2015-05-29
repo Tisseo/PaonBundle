@@ -44,7 +44,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
             });
             var getForm = false;
             $.ajax({
-                url : Routing.generate('tisseo_tid_calendar_create')+"/"+line_id,
+                url : Routing.generate('tisseo_paon_calendar_create')+"/"+line_id,
                 type: 'POST',
                 data : data,
                 success: function(data) {
@@ -86,7 +86,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                 if (getForm === true)
                 {
                     $.ajax({
-                        url : Routing.generate('tisseo_tid_calendar_form')+"/"+line_id,
+                        url : Routing.generate('tisseo_paon_calendar_form')+"/"+line_id,
                         type: 'GET',
                         success: function(data) {
                             $("#new-grid-calendar").html(data);
@@ -126,7 +126,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                     data[lastIndex].gmt.push($(this).val());
             });
             $.ajax({
-                url : Routing.generate('tisseo_tid_calendar_edit')+"/"+line_id,
+                url : Routing.generate('tisseo_paon_calendar_edit')+"/"+line_id,
                 type: 'POST',
                 data : JSON.stringify(data),
                 success: function(data) {

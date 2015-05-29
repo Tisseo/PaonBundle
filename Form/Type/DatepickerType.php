@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -23,6 +23,6 @@ class DatepickerType extends AbstractType
 
     public function getName()
     {
-        return 'datepicker_tid';
+        return 'datepicker_paon';
     }
 }

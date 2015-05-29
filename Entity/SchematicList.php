@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Entity;
+namespace Tisseo\PaonBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Tisseo\EndivBundle\Entity\Schematic;

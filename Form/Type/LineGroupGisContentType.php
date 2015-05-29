@@ -1,12 +1,12 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Tisseo\TidBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineGroupGisContentType extends AbstractType
 {
@@ -50,6 +50,6 @@ class LineGroupGisContentType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_group_gis_content';
+        return 'paon_line_group_gis_content';
     }
 }

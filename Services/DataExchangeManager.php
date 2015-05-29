@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Services;
+namespace Tisseo\PaonBundle\Services;
 
 class DataExchangeManager
 {

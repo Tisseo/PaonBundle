@@ -1,13 +1,13 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineGroupGis;
 use Tisseo\EndivBundle\Entity\LineGroupGisContent;
-use Tisseo\TidBundle\Form\Type\LineGroupGisType;
+use Tisseo\PaonBundle\Form\Type\LineGroupGisType;
 
 
 class LineGroupGisController extends AbstractController
@@ -26,7 +26,7 @@ class LineGroupGisController extends AbstractController
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
 
         return $this->render(
-            'TisseoTidBundle:LineGroupGis:list.html.twig',
+            'TisseoPaonBundle:LineGroupGis:list.html.twig',
             array(
                 'pageTitle' => 'line_group_gis.title',
                 'groups' => $lineGroupGisManager->findAll()
@@ -49,7 +49,7 @@ class LineGroupGisController extends AbstractController
 
         $form = $this->createForm(new LineGroupGisType(), $lineGroupGis,
             array(
-                'action' => $this->generateUrl('tisseo_tid_line_group_gis_new'),
+                'action' => $this->generateUrl('tisseo_paon_line_group_gis_new'),
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
@@ -68,15 +68,15 @@ class LineGroupGisController extends AbstractController
                 );
 
                 return $this->redirect(
-                    $this->generateUrl('tisseo_tid_line_group_gis_list')
+                    $this->generateUrl('tisseo_paon_line_group_gis_list')
                 );
 
-                //return $this->forward('TisseoTidBundle:LineGroupGis:edit', array('id' => $result[2]->getId()));
+                //return $this->forward('TisseoPaonBundle:LineGroupGis:edit', array('id' => $result[2]->getId()));
             }
         }
 
         return $this->render(
-            'TisseoTidBundle:LineGroupGis:form.html.twig',
+            'TisseoPaonBundle:LineGroupGis:form.html.twig',
             array(
                 'form' => $form->createView(),
                 'is_new' => false,
@@ -109,7 +109,7 @@ class LineGroupGisController extends AbstractController
 
         $form = $this->createForm(new LineGroupGisType(), $lineGroupGis,
             array(
-                'action' => $this->generateUrl('tisseo_tid_line_group_gis_edit', array('id' => $id)),
+                'action' => $this->generateUrl('tisseo_paon_line_group_gis_edit', array('id' => $id)),
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
@@ -126,13 +126,13 @@ class LineGroupGisController extends AbstractController
                 );
 
                 return $this->redirect(
-                    $this->generateUrl('tisseo_tid_line_group_gis_list')
+                    $this->generateUrl('tisseo_paon_line_group_gis_list')
                 );
             }
         }
 
        return $this->render(
-            'TisseoTidBundle:LineGroupGis:form.html.twig',
+            'TisseoPaonBundle:LineGroupGis:form.html.twig',
             array(
                 'form' => $form->createView(),
                 'is_new' => false,
@@ -168,7 +168,7 @@ class LineGroupGisController extends AbstractController
         );
 
         return $this->redirect(
-            $this->generateUrl('tisseo_tid_line_group_gis_list')
+            $this->generateUrl('tisseo_paon_line_group_gis_list')
         );
     }
 

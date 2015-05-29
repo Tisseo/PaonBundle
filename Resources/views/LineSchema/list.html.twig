@@ -1,11 +1,11 @@
-{% extends "TisseoTidBundle::container.html.twig" %}
+{% extends "TisseoPaonBundle::container.html.twig" %}
 
-{% import "TisseoTidBundle::macros.html.twig" as render %}
+{% import "TisseoPaonBundle::macros.html.twig" as render %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/tisseotid/css/jquery.dataTables.min.css'
-                   filter='cssrewrite' output='css/datatables_tid.css' %}
+    {% stylesheets 'bundles/tisseopaon/css/jquery.dataTables.min.css'
+                   filter='cssrewrite' output='css/datatables_paon.css' %}
         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
     {% endstylesheets %}
 {% endblock %}
@@ -68,7 +68,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_tid_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a style="float:right;" class="btn btn-default" href="{{ path('tisseo_paon_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-list"></span> Schemas
                         </a>
                     </td>
@@ -84,7 +84,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        require(['tid/datatables']);
+        require(['paon/datatables']);
     </script>
     <script>
         require(['jquery'], function() {

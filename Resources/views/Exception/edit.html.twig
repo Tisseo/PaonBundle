@@ -1,17 +1,17 @@
-{% extends "TisseoTidBundle::container.html.twig" %}
+{% extends "TisseoPaonBundle::container.html.twig" %}
 
-{% import "TisseoTidBundle::macros.html.twig" as render %}
+{% import "TisseoPaonBundle::macros.html.twig" as render %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/tisseotid/css/jquery.dataTables.min.css'
-                   filter='cssrewrite' output='css/datatables_tid.css' %}
+    {% stylesheets 'bundles/tisseopaon/css/jquery.dataTables.min.css'
+                   filter='cssrewrite' output='css/datatables_paon.css' %}
         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
     {% endstylesheets %}
 {% endblock %}
 
 {% block breadcrumb %}
-    <a href="{{ path('tisseo_tid_line_version_list') }}" role="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {{ 'global.previous'|trans({}, 'messages') }}</a>
+    <a href="{{ path('tisseo_paon_line_version_list') }}" role="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {{ 'global.previous'|trans({}, 'messages') }}</a>
 {% endblock %}
 
 {% block main_content -%}
@@ -43,7 +43,7 @@
     <div id="{{ loop.index - 1 }}" class="exception-calendar">
         <h3>{{ gridCalendar[0].name }}</h3>
 
-        <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_tid_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
+        <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_paon_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
             <span class="glyphicon glyphicon-pencil"></span> {{ 'comment.edit'|trans({}, 'default') }}
         </a>
 
@@ -80,7 +80,7 @@
             </tbody>
         </table>
 
-        <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_tid_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
+        <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_paon_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
             <span class="glyphicon glyphicon-pencil"></span> {{ 'comment.edit'|trans({}, 'default') }}
         </a>
     </div>
@@ -92,7 +92,7 @@
     {{ parent() }}
     {% if data is not empty %}
     <script>
-        require(['tid/exceptions']);
+        require(['paon/exceptions']);
     </script>
     {% endif %}
 {% endblock %}

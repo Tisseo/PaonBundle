@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -8,6 +8,6 @@ class DefaultController extends AbstractController
 {
     public function indexAction($externalNetworkId = null)
     {
-        return $this->render('TisseoTidBundle:Default:index.html.twig');
+        return $this->render('TisseoPaonBundle:Default:index.html.twig');
     }
 }

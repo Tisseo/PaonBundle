@@ -1,13 +1,13 @@
 <?php
 
-namespace Tisseo\TidBundle\Controller;
+namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-use Tisseo\TidBundle\Form\Type\CommentType;
+use Tisseo\PaonBundle\Form\Type\CommentType;
 
 class ExceptionController extends AbstractController
 {
@@ -49,7 +49,7 @@ class ExceptionController extends AbstractController
             return $response;
         }
         return $this->render(
-            'TisseoTidBundle:Comment:form.html.twig',
+            'TisseoPaonBundle:Comment:form.html.twig',
             array(
                 'form' => $form->createView(),
                 'title' => 'comment.create'
@@ -90,7 +90,7 @@ class ExceptionController extends AbstractController
             );
 
             return $this->redirect(
-                $this->generateUrl('tisseo_tid_line_version_list')
+                $this->generateUrl('tisseo_paon_line_version_list')
             );
         }
 
@@ -100,7 +100,7 @@ class ExceptionController extends AbstractController
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         return $this->render(
-            'TisseoTidBundle:Exception:edit.html.twig',
+            'TisseoPaonBundle:Exception:edit.html.twig',
             array(
                 'title' => 'menu.comment_manage',
                 'lineVersion' => $lineVersion,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\DataFixtures\ORM;
+namespace Tisseo\PaonBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -18,9 +18,9 @@ class FixturesUser extends AbstractFixture implements OrderedFixtureInterface
             'username'  => 'utilisateur TID',
             'firstname' => 'utilisateur',
             'lastname'  => 'TID',
-            'email'     => 'user-tid@tisseo.fr',
-            'password'  => 'tid',
-            'roles'     => array('role-user-tid'),
+            'email'     => 'user-paon@tisseo.fr',
+            'password'  => 'paon',
+            'roles'     => array('role-user-paon'),
             'customer'  => 'customer-tisseo'
         ),
         array(
@@ -28,29 +28,29 @@ class FixturesUser extends AbstractFixture implements OrderedFixtureInterface
             'username'  => 'admin TID',
             'firstname' => 'admin',
             'lastname'  => 'TID',
-            'email'     => 'admin-tid@tisseo.fr',
+            'email'     => 'admin-paon@tisseo.fr',
             'password'  => 'admin',
-            'roles'     => array('role-admin-tid'),
+            'roles'     => array('role-admin-paon'),
             'customer'  => 'customer-tisseo'
         ),
         array(
             'id'        => null,
-            'username'  => 'user_tid_iv',
-            'firstname' => 'user tid iv',
+            'username'  => 'user_paon_iv',
+            'firstname' => 'user paon iv',
             'lastname'  => 'TID',
-            'email'     => 'user_tid_iv@tisseo.fr',
+            'email'     => 'user_paon_iv@tisseo.fr',
             'password'  => 'admin',
-            'roles'     => array('role-user-tid-iv'),
+            'roles'     => array('role-user-paon-iv'),
             'customer'  => 'customer-tisseo'
         ),
         array(
             'id'        => null,
-            'username'  => 'user_tid_sig',
-            'firstname' => 'user tid sig',
+            'username'  => 'user_paon_sig',
+            'firstname' => 'user paon sig',
             'lastname'  => 'TID',
-            'email'     => 'user_tid_sig@tisseo.fr',
+            'email'     => 'user_paon_sig@tisseo.fr',
             'password'  => 'admin',
-            'roles'     => array('role-user-tid-sig'),
+            'roles'     => array('role-user-paon-sig'),
             'customer'  => 'customer-tisseo'
         )
     );

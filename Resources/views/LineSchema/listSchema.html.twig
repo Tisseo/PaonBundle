@@ -1,5 +1,5 @@
 {% extends "::modal.html.twig" %}
-{% import "TisseoTidBundle::macros.html.twig" as render %}
+{% import "TisseoPaonBundle::macros.html.twig" as render %}
 
 {% block modal_title %}
     {{ 'line_schema.list.title'|trans({}, 'default') }} {{ render.line_number(schematics[0].line, 'line', 'small') }}
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-12">
             {{
-                include ("TisseoTidBundle:LineSchema:partial_table_list_schema.html.twig",
+                include ("TisseoPaonBundle:LineSchema:partial_table_list_schema.html.twig",
                     {'schematics': schematics}
                 )
             }}
@@ -41,6 +41,6 @@
 {% endblock %}
 {% block javascripts %}
 <script type="text/javascript">
-    require(['tid/edit/schema']);
+    require(['paon/edit/schema']);
 </script>
 {% endblock %}

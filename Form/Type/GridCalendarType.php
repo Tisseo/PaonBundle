@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -98,6 +98,6 @@ class GridCalendarType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_grid_calendar';
+        return 'paon_grid_calendar';
     }
 }

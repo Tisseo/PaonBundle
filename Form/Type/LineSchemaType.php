@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -85,6 +85,6 @@ class LineSchemaType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_schema';
+        return 'paon_line_schema';
     }
 }

@@ -1,6 +1,6 @@
-{% extends "TisseoTidBundle::datatable_list.html.twig" %}
+{% extends "TisseoPaonBundle::datatable_list.html.twig" %}
 
-{% import "TisseoTidBundle::macros.html.twig" as render %}
+{% import "TisseoPaonBundle::macros.html.twig" as render %}
 
 {% block list_title -%}
     {{'line_version.history.title'|trans({}, 'default')}}
@@ -39,6 +39,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        require(['tid/history/offer']);
+        require(['paon/history/offer']);
     </script>
 {% endblock %}

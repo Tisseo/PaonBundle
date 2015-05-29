@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Validator\Constraints;
+namespace Tisseo\PaonBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

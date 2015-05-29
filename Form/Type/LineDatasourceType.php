@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Form\Type;
+namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,6 +50,6 @@ class LineDatasourceType extends AbstractType
      */
     public function getName()
     {
-        return 'tid_line_datasource';
+        return 'paon_line_datasource';
     }
 }

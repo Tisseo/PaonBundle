@@ -1,6 +1,6 @@
 <?php
 
-namespace Tisseo\TidBundle\Tests\Controller;
+namespace Tisseo\PaonBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

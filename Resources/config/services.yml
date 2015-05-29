@@ -1,35 +1,35 @@
 parameters:
-    tisseo_tid.perimeter.class: Tisseo\TidBundle\Services\PerimeterManager
-    tisseo_tid.user.class: Tisseo\TidBundle\Services\UserManager
-    tisseo_tid.data_exchange_manager.class: Tisseo\TidBundle\Services\DataExchangeManager
+    tisseo_paon.perimeter.class: Tisseo\PaonBundle\Services\PerimeterManager
+    tisseo_paon.user.class: Tisseo\PaonBundle\Services\UserManager
+    tisseo_paon.data_exchange_manager.class: Tisseo\PaonBundle\Services\DataExchangeManager
 
 services:
-    tisseo_tid.perimeter_manager:
-        class: %tisseo_tid.perimeter.class%
+    tisseo_paon.perimeter_manager:
+        class: %tisseo_paon.perimeter.class%
         arguments: ['@doctrine.orm.default_entity_manager']
-    tisseo_tid.user_manager:
-        class: %tisseo_tid.user.class%
+    tisseo_paon.user_manager:
+        class: %tisseo_paon.user.class%
         arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
-    tisseo_tid.data_exchange_manager:
-        class: %tisseo_tid.data_exchange_manager.class%
-        arguments: ['%tisseo_tid.jenkins_server%', '%tisseo_tid.jenkins_user%', '%tisseo_tid.master_job_prefix%', '%tisseo_tid.atomic_job_prefix%']
+    tisseo_paon.data_exchange_manager:
+        class: %tisseo_paon.data_exchange_manager.class%
+        arguments: ['%tisseo_paon.jenkins_server%', '%tisseo_paon.jenkins_user%', '%tisseo_paon.master_job_prefix%', '%tisseo_paon.atomic_job_prefix%']
 
-    form.type.datepicker_tid:
-        class: Tisseo\TidBundle\Form\Type\DatepickerType
+    form.type.datepicker_paon:
+        class: Tisseo\PaonBundle\Form\Type\DatepickerType
         tags:
-            - { name: form.type, alias: datepicker_tid }
+            - { name: form.type, alias: datepicker_paon }
 
-    form.type.tid_line_group_gis:
-        class: Tisseo\TidBundle\Form\Type\LineGroupGisType
+    form.type.paon_line_group_gis:
+        class: Tisseo\PaonBundle\Form\Type\LineGroupGisType
         tags:
-            - { name: form.type, alias: tid_line_group_gis }
+            - { name: form.type, alias: paon_line_group_gis }
 
-    form.type.tid_list_schema:
-        class: Tisseo\TidBundle\Form\Type\ListSchemaType
+    form.type.paon_list_schema:
+        class: Tisseo\PaonBundle\Form\Type\ListSchemaType
         tags:
-            - { name: form.type, alias: tid_list_schema }
+            - { name: form.type, alias: paon_list_schema }
 
-    tisseo_tid.ajax_form_listener:
+    tisseo_paon.ajax_form_listener:
         class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
