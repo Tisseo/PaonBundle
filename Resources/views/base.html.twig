@@ -20,7 +20,7 @@
     - {{ pageTitle|trans }}
     {% endif %}
 {% endblock %}
-{% block navbar_brand %}<a href="{% if externalNetworkId %}{{ path('tisseo_paon_homepage', {'externalNetworkId':externalNetworkId }) }}{% else %}{{ path('tisseo_paon_homepage') }}{% endif %}">TID</a>{% endblock %}
+{% block navbar_brand %}<a href="{% if externalNetworkId %}{{ path('tisseo_paon_homepage', {'externalNetworkId':externalNetworkId }) }}{% else %}{{ path('tisseo_paon_homepage') }}{% endif %}">PAON</a>{% endblock %}
 
 {% block root_breadcrumb %}
     <ol class="breadcrumb">

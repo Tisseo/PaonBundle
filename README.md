@@ -1,7 +1,7 @@
-# TID Bundle
+# PAON Bundle
 
 ## Description
-TID application developped by Tisséo.
+PAON application developped by Tisséo.
 
 ## Requirements
 1. Language

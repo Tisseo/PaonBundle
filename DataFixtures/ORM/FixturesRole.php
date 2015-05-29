@@ -15,7 +15,7 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
 
     private $roles = array(
         array(
-            'name'          => 'User TID',
+            'name'          => 'User PAON',
             'reference'     => 'user-paon',
             'application'   => 'app-paon',
             'isEditable'    => true,
@@ -25,7 +25,7 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             )
         ),
         array(
-            'name'          => 'Admin TID',
+            'name'          => 'Admin PAON',
             'reference'     => 'admin-paon',
             'application'   => 'app-paon',
             'isEditable'    => true,
@@ -40,7 +40,7 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             )
         ),
         array(
-            'name'          => 'User TID IV',
+            'name'          => 'User PAON IV',
             'reference'     => 'user-paon-iv',
             'application'   => 'app-paon',
             'isEditable'    => true,
@@ -54,7 +54,7 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             )
         ),
         array(
-            'name'          => 'User TID SIG',
+            'name'          => 'User PAON SIG',
             'reference'     => 'user-paon-sig',
             'application'   => 'app-paon',
             'isEditable'    => true,
