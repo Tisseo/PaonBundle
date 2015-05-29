@@ -79,6 +79,7 @@ error:
     blank_value: Veuillez renseigner ce champs.
     unique_in_collection: Vous ne pouvez pas associer plusieurs fois le même objet.
     invalid_email: Adresse email invalide.
+    no_jobs: Aucune tâche disponible.
 
 menu:
     line_manage: Gestion des lignes

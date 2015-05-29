@@ -131,8 +131,11 @@ class DataExchangeManager
      */
     public function getJobsList()
     {
-        $url = "view/PAON/api/json?tree=jobs[name,color,lastBuild[number]]";
+        $url = "view/TID/api/json?tree=jobs[name,color,lastBuild[number]]";
         $jobsList = $this->callJenkins($url, true);
+
+        if (empty($jobsList))
+            return null;
 
         $jobs = array();
         foreach ($jobsList["jobs"] as $key => $val) {

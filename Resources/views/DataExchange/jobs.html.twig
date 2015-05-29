@@ -4,24 +4,29 @@
     {% if running %}
         <div class='alert alert-info alert-dismissable info'>
             <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-            {{'data_exchange.job_running'|trans({'%name%': running_job.name, '%user%': running_job.user}, 'default')}}
+            {{ 'data_exchange.job_running'|trans({'%name%': running_job.name, '%user%': running_job.user}, 'default') }}
         </div>
     {% endif %}
 {% endblock %}
 
 {% block table_head -%}
-    <th class="col-sm-10">{{'data_exchange.list.columns.job'|trans({}, 'default')}}</th>
-    <th class="col-sm-2">{{'global.actions'|trans({}, 'messages')}}</th>
+    <th class="col-sm-10">{{ 'data_exchange.list.columns.job'|trans({}, 'default') }}</th>
+    <th class="col-sm-2">{{ 'global.actions'|trans({}, 'messages') }}</th>
 {% endblock %}
 
 {% block table_body -%}
+    {% if jobs is empty %}
+    <tr>
+        <td colspan=2>{{ 'error.no_jobs'|trans({}, 'messages') }}</td>
+    </tr>
+    {% endif %}
     {% for job in jobs %}
     <tr>
         <td>
         {% if "launcher" in job|keys %}
-            <span style="color:{{job.color}};">{{ job.name }} - {{ 'data_exchange.launched_by'|trans({'%user%': job.launcher}, 'default') }}</span>
+            <span style="color:{{ job.color }};">{{ job.name }} - {{ 'data_exchange.launched_by'|trans({'%user%': job.launcher}, 'default') }}</span>
         {% else %}
-            <span style="color:{{job.color}};">{{ job.name }}</span>
+            <span style="color:{{ job.color }};">{{ job.name }}</span>
         {% endif %}
         </td>
         <td>
