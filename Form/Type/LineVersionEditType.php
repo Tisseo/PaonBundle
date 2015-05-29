@@ -144,7 +144,11 @@ class LineVersionEditType extends AbstractType
                     'class' => 'TisseoEndivBundle:Color',
                     'property' => 'name',
                     'empty_value' => '',
-                    'required' => true
+                    'required' => true,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('c')
+                            ->orderBy('c.name', 'ASC');
+                    }
                 )
             )
             ->add(
