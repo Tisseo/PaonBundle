@@ -1,0 +1,44 @@
+{% extends "TisseoPaonBundle::generic_list.html.twig" %}
+
+{% block table_head -%}
+    <th class="col-sm-10">{{ 'data_exchange.list.columns.job'|trans({}, 'default') }}</th>
+    <th class="col-sm-2">{{ 'global.actions'|trans({}, 'messages') }}</th>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {% image '@TisseoPaonBundle/Resources/public/images/ajax-loader.gif' %}
+        <img src="{{ asset_url }}" id="loading-indicator" style="display:none;"/>
+    {% endimage %}
+{% endblock %}
+
+{% block table_body -%}
+    {{ render(controller('TisseoPaonBundle:DataExchange:jobs')) }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    require(['jquery'], function() {
+        $(document).ready(function() {
+            setInterval(function() {
+                $('#loading-indicator').show().promise().then(function() {
+                    $.ajax({
+                        url : Routing.generate('tisseo_paon_data_exchange_jobs'),
+                        type: 'POST',
+                        data : null,
+                        success: function(data) {
+                            if (data.content)
+                            $("tbody").fadeOut().promise().then(function() {
+                                $(this).html(data.content).fadeIn();
+                            });
+                        }
+                    }).promise().then(function() {
+                        $('#loading-indicator').hide();
+                    });
+                });
+            }, 10000);
+        });
+    });
+</script>
+{% endblock %}

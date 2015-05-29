@@ -96,6 +96,11 @@ tisseo_paon_exception_comment:
 tisseo_paon_data_exchange_show:
     pattern: /data-exchange/show
     defaults: { _controller: TisseoPaonBundle:DataExchange:show }
+tisseo_paon_data_exchange_jobs:
+    pattern: /data-exchange/jobs
+    defaults: { _controller: TisseoPaonBundle:DataExchange:jobs }
+    options:
+        expose: true
 tisseo_paon_data_exchange_launch:
     pattern: /data-exchange/launch/{jobName}
     defaults: { _controller: TisseoPaonBundle:DataExchange:launch, jobName: null }

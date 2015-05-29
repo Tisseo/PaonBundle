@@ -8,12 +8,11 @@ class DataExchangeController extends AbstractController
 {
     /**
      * Launch
-     * @param Request $request
      * @param string $jobName
      *
      * Launch a job.
      */
-    public function launchAction(Request $request, $jobName)
+    public function launchAction($jobName)
     {
         $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
 
@@ -27,11 +26,22 @@ class DataExchangeController extends AbstractController
 
     /**
      * Show
-     * @param Request $request
      *
      * Display list of runnable jobs.
      */
-    public function showAction(Request $request)
+    public function showAction()
+    {
+        $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
+
+        return $this->render(
+            'TisseoPaonBundle:DataExchange:dataExchange.html.twig',
+            array(
+                'pageTitle' => 'menu.import_manage'
+            )
+        );
+    }
+
+    public function jobsAction()
     {
         $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
 
@@ -41,7 +51,6 @@ class DataExchangeController extends AbstractController
         return $this->render(
             'TisseoPaonBundle:DataExchange:jobs.html.twig',
             array(
-                'pageTitle' => 'menu.import_manage',
                 'jobs' => $dataExchangeManager->getJobsList(),
                 'running_job' => $runningJobData,
                 'running' => ($runningJobData === null ? false : true)
