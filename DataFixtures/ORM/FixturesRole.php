@@ -15,13 +15,15 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
 
     private $roles = array(
         array(
-            'name'          => 'User PAON',
-            'reference'     => 'user-paon',
+            'name'          => 'Consult PAON',
+            'reference'     => 'consult-paon',
             'application'   => 'app-paon',
             'isEditable'    => true,
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',
-                'BUSINESS_LIST_LINE_VERSION'
+                'BUSINESS_LIST_LINE_VERSION',
+                'BUSINESS_LIST_SCHEMA',
+                'BUSINESS_LIST_GROUP_GIS'
             )
         ),
         array(
@@ -36,7 +38,13 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
                 'BUSINESS_MANAGE_LINE_VERSION',
                 'BUSINESS_MANAGE_GRID_CALENDAR',
                 'BUSINESS_MANAGE_EXCEPTION',
-                'BUSINESS_MANAGE_DATA_EXCHANGE'
+                'BUSINESS_MANAGE_DATA_EXCHANGE',
+                'BUSINESS_LIST_SCHEMA',
+                'BUSINESS_MANAGE_NEW_SCHEMA',
+                'BUSINESS_MANAGE_ASK_SCHEMA',
+                'BUSINESS_LIST_GROUP_GIS',
+                'BUSINESS_MANAGE_GROUP_GIS'
+
             )
         ),
         array(
@@ -46,7 +54,12 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
             'isEditable'    => true,
             'permissions'   => array(
                 'BUSINESS_LIST_LINE',
+                'BUSINESS_MANAGE_LINE',
                 'BUSINESS_LIST_LINE_VERSION',
+                'BUSINESS_MANAGE_LINE_VERSION',
+                'BUSINESS_MANAGE_GRID_CALENDAR',
+                'BUSINESS_MANAGE_EXCEPTION',
+                'BUSINESS_MANAGE_DATA_EXCHANGE',
                 'BUSINESS_LIST_SCHEMA',
                 'BUSINESS_MANAGE_ASK_SCHEMA',
                 'BUSINESS_LIST_GROUP_GIS',
@@ -63,7 +76,8 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
                 'BUSINESS_LIST_LINE_VERSION',
                 'BUSINESS_LIST_SCHEMA',
                 'BUSINESS_MANAGE_NEW_SCHEMA',
-                'BUSINESS_LIST_GROUP_GIS'
+                'BUSINESS_LIST_GROUP_GIS',
+                'BUSINESS_MANAGE_GROUP_GIS'
             )
         )
     );

@@ -15,12 +15,12 @@ class FixturesUser extends AbstractFixture implements OrderedFixtureInterface
     private $users = array(
         array(
             'id'        => null,
-            'username'  => 'utilisateur PAON',
+            'username'  => 'consult PAON',
             'firstname' => 'utilisateur',
             'lastname'  => 'PAON',
-            'email'     => 'user-paon@tisseo.fr',
+            'email'     => 'consult-paon@tisseo.fr',
             'password'  => 'paon',
-            'roles'     => array('role-user-paon'),
+            'roles'     => array('role-consult-paon'),
             'customer'  => 'customer-tisseo'
         ),
         array(
