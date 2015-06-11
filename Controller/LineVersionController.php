@@ -280,7 +280,7 @@ class LineVersionController extends AbstractController
      */
     public function showAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->isGranted(array('BUSINESS_MANAGE_LINE_VERSION', 'BUSINESS_LIST_LINE_VERSION'));
 
         $history = false;
         $title = 'line_version.show';
