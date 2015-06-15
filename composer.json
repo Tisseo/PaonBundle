@@ -1,29 +1,32 @@
 {
     "name" : "tisseo/paon-bundle",
-    "description" : "An interface tool consisting in public transport data edition.",
+    "description" : "A web interface providing creation of public transport commercial offers",
     "type" : "symfony-bundle",
-    "authors" : [{
-        "name" : "Vincent Passama",
-        "email" : "vincent.passama@capgemini.com"
-    }],
-    "keywords" : [
-        "tisseo paon bundle"
+    "homepage": "https://github.com/Tisseo/PaonBundle",
+    "authors" : [
+        {
+            "name" : "Vincent Passama",
+            "email" : "vincent.passama@gmail.com"
+        },
+        {
+            "name" : "Rodolphe Duval",
+            "email" : "rdldvl@gmail.com"
+        },
+        {
+            "name" : "Pierre-Yves Claitte",
+            "email" : "pierre.cl@gmail.com"
+        }
     ],
-    "license" : "MIT",
+    "keywords" : [
+        "tisseo paon bundle endiv symfony nmm"
+    ],
+    "license" : "APGL-3.0",
     "require" : {
         "php": ">=5.4.3",
-        "tisseo/endiv-bundle": "dev-master",
-        "craue/formflow-bundle": "2.1.*"
+        "tisseo/endiv-bundle": "dev-master"
     },
     "autoload" : {
         "psr-0" : { "Tisseo\\PaonBundle\\" : "" }
     },
-    "target-dir" : "Tisseo/PaonBundle",
-    "repositories" : [{
-    }],
-    "extra" : {
-        "branch-alias" : {
-            "dev-master" : "0.9"
-        }
-    }
+    "target-dir" : "Tisseo/PaonBundle"
 }
