@@ -28,5 +28,6 @@
     "autoload" : {
         "psr-0" : { "Tisseo\\PaonBundle\\" : "" }
     },
-    "target-dir" : "Tisseo/PaonBundle"
+    "target-dir" : "Tisseo/PaonBundle",
+    "version" : "1.0.0"
 }
