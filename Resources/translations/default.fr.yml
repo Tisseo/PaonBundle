@@ -130,7 +130,8 @@ line_schema:
         ask_schematic: Demander un nouveau schéma
         deprecated: Déclarer un Schéma obsolète
     persisted: Schéma sauvegardé
-    warning_group: Attention, cette ligne appartient à un l'amalame
+    error_persist: Le schéma n'a pas été sauvegardé : %error%
+    warning_group: Attention, cette ligne appartient à l'amalgame %name%.
 
 line_group_gis:
     title: Liste des amalgames
@@ -142,7 +143,9 @@ line_group_gis:
             name: Amalgame
             line: lignes
     persisted: Amalgame sauvegardé
+    error_persist: L'amalgame n'a pas été sauvegardé : %error%
     removed: Amalgame supprimé
+    error_remove: L'amalgame n'a pas été supprimé : %error%
     not_found: Aucun groupe GIS trouvé pour cet id
     label:
         create: Créer un amalgame
