@@ -75,7 +75,7 @@
                 {% for property in form.Property %}
                     {% for lvProperty in lineVersion.lineVersionProperties %}
                         {% if lvProperty.property.id == property.vars.value %}
-                            {% if lvProperty.value == false %} 
+                            {% if lvProperty.value == false %}
                                 {{ form_row(property, {'checked': false}) }}
                             {% else %}
                                 {{ form_row(property) }}

@@ -44,7 +44,7 @@ class LineVersionEditType extends AbstractType
                     ")
                     ->setParameter('lv', $lineVersion);
                     $childLine = $query->getOneOrNullResult();
-                    
+
                     if (empty($childLine))
                         $lineNumber = "";
                     else

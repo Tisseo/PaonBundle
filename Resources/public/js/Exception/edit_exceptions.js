@@ -134,7 +134,7 @@ define(['jquery', 'datatables', 'paon/textfill', 'fosjsrouting', 'translations/m
 
                         if (label === "&nbsp;" || commentText === "&nbsp;")
                             label = commentText = "none";
-                        
+
                         if (!(label in data))
                             data[label] = {"comment": commentText, "trips": []};
                         data[label].trips.push(tripId);
@@ -158,7 +158,7 @@ define(['jquery', 'datatables', 'paon/textfill', 'fosjsrouting', 'translations/m
             }
         });
 
-        /** 
+        /**
          * Check each row in the panel for validation on comments' values
          * -- failure on : label == zz
          */
@@ -239,7 +239,7 @@ define(['jquery', 'datatables', 'paon/textfill', 'fosjsrouting', 'translations/m
         function fillNewComment(data, currentPanel) {
             var currentPanelApi = $(document).find(".exception-calendar.active .datatable").dataTable();
             var editedRows = currentPanel.rows(".edit-comment")[0];
-        
+
             $.each(editedRows, function(index, row) {
                 $(currentPanel.row(row).nodes()).removeClass("edit-comment").addClass("edited-row");
                 currentPanelApi.fnUpdate((data.label === null ? "&nbsp;" : data.label), row, 6);

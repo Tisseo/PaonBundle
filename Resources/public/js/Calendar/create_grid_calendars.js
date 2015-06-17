@@ -112,7 +112,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                     if (gridCalendar === "new") {
                         lastIndex = gridCalendar+"_"+index;
                         data[lastIndex] = { 'gmt': [], 'name': null, 'days': {} };
-                        data[lastIndex].name = $(this).parent().find('td.name').html(); 
+                        data[lastIndex].name = $(this).parent().find('td.name').html();
                         $(this).parent().find('td.day').each(function(idx) {
                             data[lastIndex].days[idx] = ($(this).children().hasClass('green-day') ? 1 : 0);
                         });
