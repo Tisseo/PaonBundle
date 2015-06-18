@@ -75,7 +75,7 @@ class LineSchemaController extends AbstractController
                 'pageTitle' => 'menu.schema_manage',
                 'lineId' => $lineId,
                 'schematicId' => $schematicId,
-                'schematics' => $schematicManager->findLineSchematics($lineId)
+                'schematics' => $schematicManager->findLineSchematics($lineId, 0, true)
             )
         );
 

@@ -54,8 +54,5 @@ require(['jquery','fosjsrouting'], function($) {
 
             });
         };
-
-
-
     });
 });
