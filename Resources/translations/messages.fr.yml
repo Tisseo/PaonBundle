@@ -39,6 +39,7 @@ global:
     direction: Direction
     remaining_chars: %nb_chars% caractères restant(s)
     please_choose: Veuillez choisir...
+    no_items_short: Aucun
     no_items: Aucun élément à afficher
     period_title: Dates
     validity_period:
@@ -130,6 +131,7 @@ line_version:
         wip: work in progress
         modifications: Modifications
         choose_schematic: Choisir un schéma
+        schematic: Schématique
         resolved_modifications: Résolution des modifications
         no_modifications: Aucune modification non résolue sur cette ligne.
         no_child_line: Pas de ligne soirée
@@ -146,6 +148,7 @@ line_version:
         close: Clôturer
         calendar: Calendriers
         exception: Exceptions
+
 line_schema:
     labels:
         name: Nom
