@@ -104,6 +104,7 @@ line:
     labels:
         number: Numéro de ligne
         physical_mode: Mode de transport
+        priority: Priorité
 
 printing:
     labels:

@@ -15,11 +15,14 @@
     <div class="form form-edit">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.number) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.physicalMode) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.priority) }}
                 </div>
             </div>
         {% for datasource in form.lineDatasources %}

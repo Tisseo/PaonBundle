@@ -9,6 +9,8 @@ Tisseo\EndivBundle\Entity\Line:
             - NotBlank: ~
             - Length:
                 max: 20
+        priority:
+            - NotBlank: ~
 Tisseo\EndivBundle\Entity\LineDatasource:
     properties:
         code:
