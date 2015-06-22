@@ -24,7 +24,7 @@
     {% if lines is empty %}
         <tr>
             <td>
-                {{'global.no_items'|trans}}
+                {{ 'global.no_items' | trans }}
             </td>
             <td></td><td></td>
         </tr>
@@ -32,7 +32,7 @@
         {% for line in lines %}
             <tr>
                 <td>
-                    {{ render.line_number(line, 'line', 'small') }}
+                    {{ render.line_number(line, 'line', 'free') }}
                 </td>
                 <td>
                     {{ line.physicalMode.name }}

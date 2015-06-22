@@ -5,12 +5,6 @@ define(['jquery', 'paon/textfill', 'datatables'], function($) {
             var datatable = $(this).DataTable({
                 "aaSorting": [],
                 "bPaginate": false,
-                "createdRow": function(row, data) {
-                    $(row).find("td:first .line-small").textfill({
-                        minFontPixels: 2,
-                        maxFontPixels: 15
-                    });
-                },
                 "aoColumnDefs" : [
                     {
                         "bSortable" : false,
