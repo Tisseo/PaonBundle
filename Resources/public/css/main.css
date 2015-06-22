@@ -101,6 +101,10 @@ li.child-line {
     line-height:62px;
     margin:10px 0;
 }
+.line-free {
+    height:30px;
+    line-height:32px;
+}
 .line-number {
     display: inline-block;
     border-radius:3px;

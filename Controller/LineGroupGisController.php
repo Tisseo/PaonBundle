@@ -60,18 +60,16 @@ class LineGroupGisController extends AbstractController
 
                 /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
                 $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
-                $result = $lineGroupGisManager->save($form->getData());
+                list($lineGroupGis, $message, $error) = $lineGroupGisManager->save($form->getData());
 
                 $this->addFlash(
-                    (($result[0]) ? 'success' : 'danger'),
-                    $this->get('translator')->trans($result[1], array(), 'default')
+                    (($error === null) ? 'success' : 'danger'),
+                    $this->get('translator')->trans($message, array('%error%' => $error), 'default')
                 );
 
                 return $this->redirect(
                     $this->generateUrl('tisseo_paon_line_group_gis_list')
                 );
-
-                //return $this->forward('TisseoPaonBundle:LineGroupGis:edit', array('id' => $result[2]->getId()));
             }
         }
 
@@ -114,15 +112,16 @@ class LineGroupGisController extends AbstractController
             )
         );
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST'))
+        {
             $form->handleRequest($request);
-            if ($form->isValid()) {
-
-                $result = $lineGroupGisManager->save($form->getData());
+            if ($form->isValid())
+            {
+                list($lineGroupGis, $message, $error) = $lineGroupGisManager->save($form->getData());
 
                 $this->addFlash(
-                    (($result[0]) ? 'success' : 'danger'),
-                    $this->get('translator')->trans($result[1], array(), 'default')
+                    (($error === null) ? 'success' : 'danger'),
+                    $this->get('translator')->trans($message, array('%error%' => $error), 'default')
                 );
 
                 return $this->redirect(
@@ -160,11 +159,11 @@ class LineGroupGisController extends AbstractController
             throw $this->createNotFoundException('line_group_gis.not_found : ' . $id);
         }
 
-        $result = $lineGroupGisManager->remove($lineGroupGis);
+        list($message, $error) = $lineGroupGisManager->remove($lineGroupGis);
 
         $this->addFlash(
-            (($result[0]) ? 'success' : 'danger'),
-            $this->get('translator')->trans($result[1], array(), 'default')
+            (($error === null) ? 'success' : 'danger'),
+            $this->get('translator')->trans($message, array('%error%' => $error), 'default')
         );
 
         return $this->redirect(

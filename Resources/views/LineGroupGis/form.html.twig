@@ -14,7 +14,7 @@
     {% if error %}
         <div class="alert alert-danger alert-dismissable danger">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ 'error.line_version_not_found'|trans }}
+            {{ 'error.line_version.not_found'|trans({}, 'messages') }}
         </div>
     {% endif %}
     {{ form_errors(form) }}

@@ -31,7 +31,7 @@
                     {{ 'line_version.labels.no_child_line'|trans({}, 'messages') }}
                 {% endif %}
                 </li>
-            </ul>   
+            </ul>
         </div>
         <div class="right-summary">
             {{ render.line_number(lineVersion, 'lineVersion', 'big') }}
@@ -54,7 +54,7 @@
             {% endif %}
             <br>
             <li>{{ 'line_version.labels.depot'|trans({}, 'messages') }} : {{ lineVersion.depot|capitalize }}</li>
-            <li>{{ 'line_version.labels.carto_file'|trans({}, 'messages') }} : {% if lineVersion.cartoFile %}{{ lineVersion.cartoFile }}{% else %}Aucun{% endif %}</li>
+            <li>{{ 'line_version.labels.schematic'|trans({}, 'messages') }} : {% if lineVersion.schematic %}{{ lineVersion.schematic.name }}{% else %}{{ 'global.no_items_short'|trans({}, 'messages') }}{% endif %}</li>
             <li>{{ 'line_version.labels.comment'|trans({}, 'messages') }} : {{ lineVersion.comment }}</li>
         </ul>
     </div>

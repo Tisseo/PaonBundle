@@ -30,6 +30,13 @@ class LineType extends AbstractType
             )
         );
         $builder->add(
+            'priority',
+            'number',
+            array(
+                'label' => 'line.labels.priority'
+            )
+        );
+        $builder->add(
             'lineDatasources',
             'collection',
             array(

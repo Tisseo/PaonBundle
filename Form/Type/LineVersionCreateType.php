@@ -102,14 +102,14 @@ class LineVersionCreateType extends AbstractType
                 array(
                     'label' => 'line_version.labels.child_line',
                     'class' => 'TisseoEndivBundle:LineVersion',
-                    'property' => 'line.number',
+                    'property' => 'numberAndVersion',
                     'empty_value' => '',
                     'required' => false,
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('lv')
                         ->join('lv.line', 'l')
-                        ->where('lv.startDate <= CURRENT_DATE()')
-                        ->andWhere('lv.endDate is null OR lv.endDate > CURRENT_DATE()')
+                        ->where('lv.endDate is null AND lv.plannedEndDate > CURRENT_DATE()')
+                        ->orWhere('lv.endDate > CURRENT_DATE()')
                         ->orderBy('l.number', 'ASC');
                     }
                 )
