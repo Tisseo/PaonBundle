@@ -156,7 +156,7 @@ line_schema:
         date: Date
         comment: Commentaire
         file: Schéma
-        submit_file: Déposer le fichier
+        submit: Enregistrer
 
 line_group_gis:
     title: Liste des amalgames
