@@ -1,4 +1,4 @@
-require(['jquery','fosjsrouting'], function($) {
+require(['jquery', 'fosjsrouting'], function($) {
     $(document).ready(function () {
         $(document).on('click', '.choose-schematic', function() {
             var target = $(document).find('.' + $(this).data('target') + ' > .listSchematic');

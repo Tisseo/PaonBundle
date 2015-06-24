@@ -31,12 +31,11 @@ class LineVersionController extends AbstractController
 
     /**
      * Edit
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * Handle Form display / Form validation for the edition view.
      */
-    public function editAction(Request $request, $lineVersionId)
+    public function editAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
@@ -70,7 +69,7 @@ class LineVersionController extends AbstractController
             )
         );
 
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
             $write = $lineVersionManager->save($form->getData());
 
@@ -99,12 +98,11 @@ class LineVersionController extends AbstractController
 
     /**
      * Close LineVersion
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * Handle Form display / Form validation for the closing view.
      */
-    public function closeAction(Request $request, $lineVersionId)
+    public function closeAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
@@ -132,7 +130,7 @@ class LineVersionController extends AbstractController
             )
         );
 
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
             $write = $lineVersionManager->save($form->getData());
 
@@ -161,11 +159,11 @@ class LineVersionController extends AbstractController
 
     /**
      * Create LineVersion
-     * @param Request $request
      */
-    public function createAction(Request $request, $lineId = null)
+    public function createAction($lineId = null)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $request = $this->getRequest();
 
         if ($lineId === null)
             $lineId = $request->request->get('lineId');
@@ -253,13 +251,13 @@ class LineVersionController extends AbstractController
 
     /**
      * List
-     * @param Request $request
      *
      * Display the list view of all LineVersion.
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $now = new \Datetime();
         return $this->render(
@@ -273,14 +271,19 @@ class LineVersionController extends AbstractController
 
     /**
      * Show
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * Display a LineVersion in a view.
      */
-    public function showAction(Request $request, $lineVersionId)
+    public function showAction($lineVersionId)
     {
-        $this->isGranted(array('BUSINESS_MANAGE_LINE_VERSION', 'BUSINESS_LIST_LINE_VERSION'));
+        $this->isGranted(
+            array(
+                'BUSINESS_MANAGE_LINE_VERSION',
+                'BUSINESS_LIST_LINE_VERSION'
+            )
+        );
+        $request = $this->getRequest();
 
         $history = false;
         $title = 'line_version.show';
@@ -305,36 +308,36 @@ class LineVersionController extends AbstractController
 
     /**
      * History
-     * @param Request $request
      *
      * Display a list of LineVersion with all their previous versions.
      */
-    public function historyAction(Request $request)
+    public function historyAction()
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+
         $lineManager = $this->get('tisseo_endiv.line_manager');
-        $lines = $lineManager->findAllLinesByPriority();
         return $this->render(
             'TisseoPaonBundle:LineVersion:history.html.twig',
             array(
                 'pageTitle' => 'menu.line_version_history',
-                'lines' => $lines
+                'lines' => $lineManager->findAllLinesByPriority()
             )
         );
     }
 
     /**
      * Clean
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * Launch a cleaning action in database for the related LineVersion.
      */
-    public function cleanAction(Request $request, $lineVersionId)
+    public function cleanAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
         $storedProcedureManager = $this->get('tisseo_endiv.stored_procedure_manager');
         $result = $storedProcedureManager->cleanLineVersion($lineVersionId);
+
         $this->get('session')->getFlashBag()->add(
             ($result ? 'success' : 'danger'),
             $this->get('translator')->trans(
@@ -343,6 +346,7 @@ class LineVersionController extends AbstractController
                 'default'
             )
         );
+
         return $this->redirect(
             $this->generateUrl('tisseo_paon_line_version_list')
         );
@@ -350,16 +354,17 @@ class LineVersionController extends AbstractController
 
     /**
      * Delete
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * Launch a deleting action in database for the related LineVersion.
      */
-    public function deleteAction(Request $request, $lineVersionId)
+    public function deleteAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $result = $lineVersionManager->delete($lineVersionId);
+
         $this->get('session')->getFlashBag()->add(
             ($result ? 'success' : 'danger'),
             $this->get('translator')->trans(

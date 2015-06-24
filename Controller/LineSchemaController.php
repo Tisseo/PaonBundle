@@ -13,12 +13,11 @@ class LineSchemaController extends AbstractController
 {
     /**
      * List
-     * @param Request $request
      *
      * Display the list view of all line.
      * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
@@ -36,10 +35,9 @@ class LineSchemaController extends AbstractController
 
     /**
      * @param integer $lineId
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
-    public function listSchemaAction($lineId, Request $request)
+    public function listSchemaAction($lineId)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
@@ -59,10 +57,9 @@ class LineSchemaController extends AbstractController
     /**
      * @param integer $lineId
      * @param integer $schematicId
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
-    public function choiceListSchemaAction($lineId, $schematicId = null, Request $request)
+    public function choiceListSchemaAction($lineId, $schematicId = null)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
@@ -85,13 +82,13 @@ class LineSchemaController extends AbstractController
 
     /**
      * @param integer $lineId
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function editSchemaAction($lineId, Request $request)
+    public function editSchemaAction($lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
+        $request = $this->getRequest();
 
         /** @var \Tisseo\EndivBundle\Services\LineManager $line */
         $lineManager = $this->get('tisseo_endiv.line_manager');
@@ -163,13 +160,13 @@ class LineSchemaController extends AbstractController
 
     /**
      * @param integer $lineId
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function askSchemaAction($lineId, Request $request)
+    public function askSchemaAction($lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_ASK_SCHEMA');
+        $request = $this->getRequest();
 
         $form = $this->createForm(new MailType(),
             array(
@@ -191,7 +188,7 @@ class LineSchemaController extends AbstractController
             throw new \Exception('Line id not found');
         }
 
-        if($request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
@@ -224,13 +221,13 @@ class LineSchemaController extends AbstractController
 
     /**
      * @param $lineId
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function deprecatedSchemaAction($lineId, Request $request)
+    public function deprecatedSchemaAction($lineId)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
+        $request = $this->getRequest();
 
         /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
         $schematicManager = $this->get('tisseo_endiv.schematic_manager');

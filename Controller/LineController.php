@@ -43,16 +43,15 @@ class LineController extends AbstractController
 
     /*
      * Process Form
-     * @param Request $request
      * @param Form $form
      *
      * If form is valid, save Line in database, then redirect to LineVersion
      * list view.
      * Else, return the actual form view with errors.
      */
-    private function processForm(Request $request, $form)
+    private function processForm($form)
     {
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
         $lineManager = $this->get('tisseo_endiv.line_manager');
         if ($form->isValid()) {
             $lineManager->save($form->getData());
@@ -73,17 +72,16 @@ class LineController extends AbstractController
 
     /**
      * Edit
-     * @param Request $request
      * @param integer $lineId
      *
      * Build a new form view or validate the sent form.
      */
-    public function editAction(Request $request, $lineId)
+    public function editAction($lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE');
         $lineManager = $this->get('tisseo_endiv.line_manager');
         $form = $this->buildForm($lineId, $lineManager);
-        $render = $this->processForm($request, $form);
+        $render = $this->processForm($form);
         if (!$render) {
             return $this->render(
                 'TisseoPaonBundle:Line:form.html.twig',

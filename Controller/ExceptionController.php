@@ -29,15 +29,14 @@ class ExceptionController extends AbstractController
 
     /*
      * Process Form
-     * @param Request $request
      * @param Form $form
      *
      * If form is valid, return its data in JSON array.
      * Else, return the actual form with errors.
      */
-    private function processForm(Request $request, $form)
+    private function processForm($form)
     {
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
             $response = new JsonResponse();
             $response->setData(
@@ -59,7 +58,6 @@ class ExceptionController extends AbstractController
 
     /**
      * Edit
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * If request's method is GET, display a pseudo-form (ajax/json) which
@@ -68,9 +66,10 @@ class ExceptionController extends AbstractController
      * Otherwise, the pseudo-form data is sent as AJAX POST request and is
      * decoded then will be used for database update.
      */
-    public function editAction(Request $request, $lineVersionId)
+    public function editAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
+        $request = $this->getRequest();
 
         // POST data from pseudo-form
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
@@ -102,7 +101,7 @@ class ExceptionController extends AbstractController
         return $this->render(
             'TisseoPaonBundle:Exception:edit.html.twig',
             array(
-                'title' => 'menu.comment_manage',
+                'pageTitle' => 'menu.exception_manage',
                 'lineVersion' => $lineVersion,
                 'data' => $gridCalendarManager->findRelatedTrips($lineVersion->getGridCalendars())
             )
@@ -111,13 +110,12 @@ class ExceptionController extends AbstractController
 
     /*
      * Comment
-     * @param Request $request
      *
      * Render a new CommentType form
      */
-    public function commentAction(Request $request)
+    public function commentAction()
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
-        return $this->processForm($request, $this->buildForm());
+        return $this->processForm($this->buildForm());
     }
 }

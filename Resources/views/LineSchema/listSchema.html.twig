@@ -1,46 +1,47 @@
 {% extends "::modal.html.twig" %}
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
+
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block modal_title %}
     {{ 'line_schema.list.title'|trans({}, 'default') }} {{ render.line_number(schematics[0].line, 'line', 'small') }}
 {% endblock %}
 
 {% block modal_body %}
-<div class="schema-content-list">
-    <div class="row">
-        <div class="col-md-12">
-            {{
-                include ("TisseoPaonBundle:LineSchema:partial_table_list_schema.html.twig",
-                    {'schematics': schematics}
-                )
-            }}
+    <div class="schema-content-list">
+        <div class="row">
+            <div class="col-md-12">
+                {{
+                    include ("TisseoPaonBundle:LineSchema:partial_table_list_schema.html.twig",
+                        {'schematics': schematics}
+                    )
+                }}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 action">
-            {% if is_granted('BUSINESS_LIST_SCHEMA') %}
-                <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="deprecated-schema" data-line_id="{{ lineId }}">
-                    {{ 'line_schema.label.deprecated'|trans({}, 'default') }}
+        <div class="row">
+            <div class="col-md-12 action">
+                {% if is_granted('BUSINESS_LIST_SCHEMA') %}
+                    <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="deprecated-schema" data-line_id="{{ lineId }}">
+                        {{ 'line_schema.label.deprecated'|trans({}, 'default') }}
+                    </a>
+                {% endif %}
+                {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
+                <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="edit-schema" data-line_id="{{ lineId }}">
+                    {{ 'line_schema.label.upload_file'|trans({}, 'default') }}
                 </a>
-            {% endif %}
-            {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
-            <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="edit-schema" data-line_id="{{ lineId }}">
-                {{ 'line_schema.label.upload_file'|trans({}, 'default') }}
-            </a>
-            {% endif %}
-            {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') %}
-            <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="ask-schema" data-line_id="{{ lineId }}">
-                {{ 'line_schema.label.ask_schematic'|trans({}, 'default') }}
-            </a>
-            {% endif %}
+                {% endif %}
+                {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') %}
+                <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="ask-schema" data-line_id="{{ lineId }}">
+                    {{ 'line_schema.label.ask_schematic'|trans({}, 'default') }}
+                </a>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
-<div class="target">
-</div>
+    <div class="target"></div>
 {% endblock %}
+
 {% block javascripts %}
-<script type="text/javascript">
-    require(['paon/edit/schema']);
-</script>
+    <script type="text/javascript">
+        require(['paon/edit/schema']);
+    </script>
 {% endblock %}

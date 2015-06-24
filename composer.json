@@ -23,6 +23,7 @@
     "license" : "APGL-3.0",
     "require" : {
         "php": ">=5.4.3",
+        "tisseo/core-bundle": "dev-master",
         "tisseo/endiv-bundle": "dev-master"
     },
     "autoload" : {

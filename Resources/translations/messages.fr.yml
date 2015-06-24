@@ -89,12 +89,7 @@ menu:
     line_version_active: Offres actuelles
     calendar_manage: Gestion des calendriers
     exception_manage: Gestion des exceptions
-    data_manage: Import Fiches Horaires
-    timetable_manage: Export Timetable
-    import_manage: Imports   /Exports
-    export_manage: Exports
-    import_fichor: Fiches horaires Hastus
-    export_timetable: Timetable
+    import_manage: Imports/Exports
     grid_calendar_manage: Edition des calendriers
     schema_manage: Gestion des schémas
     schema_list: Liste des schémas

@@ -37,14 +37,13 @@ class PrintingController extends AbstractController
 
     /**
      * Process form
-     * @param Request $request
      * @param Form $form
      *
      * Handle Form display / Form validation.
      */
-    private function processForm(Request $request, $form)
+    private function processForm($form)
     {
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
         $printingManager = $this->get('tisseo_endiv.printing_manager');
         if ($form->isValid()) {
             $printingManager->save($form->getData());
@@ -65,12 +64,11 @@ class PrintingController extends AbstractController
 
     /**
      * Create
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * Display a new Printing form.
      */
-    public function createAction(Request $request, $lineVersionId)
+    public function createAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
@@ -97,7 +95,7 @@ class PrintingController extends AbstractController
             $printing = new Printing($lineVersion);
 
             $form = $this->buildForm($printing);
-            $render = $this->processForm($request, $form);
+            $render = $this->processForm($form);
 
             if (!$render) {
                 return $this->render(

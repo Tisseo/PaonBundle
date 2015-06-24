@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% form_theme form 'TisseoPaonBundle:Form:fields.html.twig' %}
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
 
 {% block open_form %}
     {{ form_start(form) }}
@@ -37,6 +37,7 @@
         <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
     </button>
     <script>
+        {# TODO: CHECK POSSIBILITY OF A JS FILE INSTEAD #}
         require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function(){
             $('.input-range input').datepicker({
                 language: '{{ app.request.locale }}',

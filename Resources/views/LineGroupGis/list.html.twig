@@ -1,58 +1,49 @@
-{% extends "TisseoPaonBundle::datatable_list.html.twig" %}
+{% extends "TisseoCoreBundle::datatable_list.html.twig" %}
+{% set bundle = "TisseoPaonBundle" %}
 
 {% import "TisseoPaonBundle::macros.html.twig" as render %}
 
 {% block list_title -%}
-    {{'line_group_gis.title'|trans({}, 'default')}}
+    {{ 'line_group_gis.title'|trans({}, 'default') }}
     {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
         -
         <a href="{{ path('tisseo_paon_line_group_gis_new') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span> {{'line_group_gis.label.create'|trans({}, 'default')}}
+            <span class="glyphicon glyphicon-plus"></span> {{ 'line_group_gis.label.create'|trans({}, 'default') }}
         </a>
     {% endif %}
 {% endblock %}
 
 {% block table_head -%}
-    <th>{{'line_group_gis.list.columns.name'|trans({}, 'default')}}</th>
-    <th>{{'line_group_gis.list.columns.line'|trans({}, 'default')}}</th>
-    <th class="no-search no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
+    <th class="col-md-4">{{ 'line_group_gis.list.columns.name'|trans({}, 'default') }}</th>
+    <th class="col-md-5">{{ 'line_group_gis.list.columns.line'|trans({}, 'default') }}</th>
+    <th class="col-md-3 no-search no-sort">{{ 'global.actions'|trans }}</th>
 {% endblock %}
 
 {% block table_body -%}
-    {% if groups|length == 0 %}
+    {% for group in groups %}
         <tr>
             <td>
-                {{'global.no_items'|trans}}
+                {{ group.name }}
             </td>
-            <td></td><td></td>
+            <td>
+                <ul class="list-unstyled">
+                {% for line in group.lineGroupGisContents %}
+                    <li>{{ line.line.number }}</li>
+                {% else %}
+                <li>{{ 'global.no_items'|trans({}, 'messages') }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
+                <a class="btn btn-default" href="{{ path('tisseo_paon_line_group_gis_edit', {'lineGroupGisId': group.id }) }}" data-toggle="modal" data-target="#base-modal">
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'global.edit'|trans }}
+                </a>
+                <a class="btn btn-default" href="{{ path('tisseo_paon_line_group_gis_delete', {'lineGroupGisId': group.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'global.delete'|trans }}
+                </a>
+                {% endif %}
+            </td>
         </tr>
-    {% else %}
-
-        {% for group in groups %}
-            <tr>
-                <td>
-                    {{ group.name }}
-                </td>
-                <td>
-                    <ul>
-                    {% for line in group.lineGroupGisContents %}
-                        <li>{{ line.line.number }}</li>
-                    {% else %}
-                        <li>Ce groupe est vide</li>
-                    {% endfor %}
-                    </ul>
-                </td>
-                <td>
-                    {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
-                    <a class="btn btn-default" href="{{ path('tisseo_paon_line_group_gis_edit', {'id': group.id }) }}" data-toggle="modal" data-target="#base-modal">
-                        <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
-                    </a>
-                    <a class="btn btn-default" href="{{ path('tisseo_paon_line_group_gis_delete', {'id': group.id }) }}">
-                        <span class="glyphicon glyphicon-edit"></span> {{'global.delete'|trans({}, 'messages')}}
-                    </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-    {% endif %}
+    {% endfor %}
 {% endblock %}

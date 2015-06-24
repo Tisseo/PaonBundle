@@ -1,22 +1,17 @@
-{% extends "TisseoPaonBundle::container.html.twig" %}
+{% extends "TisseoCoreBundle::container.html.twig" %}
+{% set bundle = "TisseoPaonBundle" %}
+{% set datatable = true %}
 
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/tisseopaon/css/jquery.dataTables.min.css'
-                   filter='cssrewrite' output='css/datatables_paon.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
-    {% endstylesheets %}
-{% endblock %}
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block breadcrumb %}
-    <a href="{{ path('tisseo_paon_line_version_list') }}" role="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {{ 'global.previous'|trans({}, 'messages') }}</a>
+    {{ parent() }}
+    <a href="{{ path('tisseo_paon_line_version_list') }}" role="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {{ 'global.previous'|trans }}</a>
 {% endblock %}
 
 {% block main_content -%}
     {% if data is empty %}
-    <div class='alert alert-info alert-dismissable'>{{ 'exception.no_data'|trans({}, 'default') }}</div>
+        <div class='alert alert-info alert-dismissable'>{{ 'exception.no_data'|trans({}, 'default') }}</div>
     {% else %}
     <div class="head-info col-md-12">
         <div class="head-menu">
@@ -28,7 +23,7 @@
                     {% endfor %}
                 </select>
                 <button id="submit-exceptions" type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span> {{'global.save'|trans}}
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'global.save'|trans }}
                 </button>
             </div>
         </div>
@@ -62,15 +57,15 @@
                 {% for id, tripData in gridCalendar[1] %}
                 <tr class="comment">
                     <input type="hidden" value="{{ id }}"></input>
-                    <td>{{ tripData['trip'].name }}</td>
-                    <td>{{ render.pattern(tripData['trip'].tripCalendar.pattern) }}</td>
-                    <td>{{ tripData['start_name'] }}</td>
-                    <td>{{ tripData['start_time'] }}</td>
-                    <td>{{ tripData['end_name'] }}</td>
-                    <td>{{ tripData['end_time'] }}</td>
-                    {% if tripData['trip'].comment %}
-                    <td class="exception-label">{{ tripData['trip'].comment.label }}</td>
-                    <td class="exception-comment">{{ tripData['trip'].comment.commentText }}</td>
+                    <td>{{ tripData.trip.name }}</td>
+                    <td>{{ render.pattern(tripData.trip.tripCalendar.pattern) }}</td>
+                    <td>{{ tripData.start_name }}</td>
+                    <td>{{ tripData.start_time }}</td>
+                    <td>{{ tripData.end_name }}</td>
+                    <td>{{ tripData.end_time }}</td>
+                    {% if tripData.trip.comment %}
+                    <td class="exception-label">{{ tripData.trip.comment.label }}</td>
+                    <td class="exception-comment">{{ tripData.trip.comment.commentText }}</td>
                     {% else %}
                     <td class="exception-label">&nbsp;</td>
                     <td class="exception-comment">&nbsp;</td>

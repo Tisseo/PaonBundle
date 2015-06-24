@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% form_theme form 'TisseoPaonBundle:Form:fields.html.twig' %}
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
 
 {% block open_form %}
     {{ form_start(form) }}
@@ -34,13 +34,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <h3>{{'line_group_gis.form.associated_lines'|trans({}, 'default') }}</h3>
-            <ul class="lines" data-prototype="{{ form_widget(form.LineGroupGisContents.vars.prototype)|e }}">
+        <div class="col-md-5">
+            <h3>{{ 'line_group_gis.form.associated_lines'|trans({}, 'default') }}</h3>
+            <ul class="lines list-unstyled" data-prototype="{{ form_widget(form.LineGroupGisContents.vars.prototype)|e }}">
                 {% for LineGroupGisContent in form.LineGroupGisContents %}
-                    <li>
-                        {{ form_row(LineGroupGisContent.line) }}
-                    </li>
+                    <li>{{ form_row(LineGroupGisContent.line) }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -49,7 +47,7 @@
 
 {% block modal_actions %}
     <button type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'global.save'|trans }}
     </button>
 
     {{ form_row(form._token) }}
@@ -57,6 +55,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {# TODO: CHECK POSSIBILTY TO IMPORT A JS FILE INSTEAD #}
     <script type="text/javascript">
         require(['jquery'], function($){
             var collectionHolder = $('ul.lines');
@@ -95,7 +94,6 @@
                     $subFormLi.remove();
                 });
             }
-
 
             init();
         });

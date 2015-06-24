@@ -114,6 +114,7 @@ data_exchange:
 line_schema:
     title: Liste des schémas
     list:
+        schemas: Schémas
         title: Schémas de la ligne
         empty: Il n'y a aucun schéma.
         columns:

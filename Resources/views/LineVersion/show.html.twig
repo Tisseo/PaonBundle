@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block modal_dialog_classes %}
     modal-dialog-small
@@ -106,7 +106,7 @@
 {% endblock %}
 {% block modal_close_footer %}
     <script>
-        require(['paon/textfill'], function(){
+        require(['core/textfill'], function(){
             textfill(15, 30, '.line-big');
         });
     </script>
