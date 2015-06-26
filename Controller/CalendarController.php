@@ -39,7 +39,6 @@ class CalendarController extends AbstractController
 
     /*
      * Process Form
-     * @param Request $request
      * @param Form $form
      * @param integer $lineVersionId
      *
@@ -47,12 +46,12 @@ class CalendarController extends AbstractController
      * (as html table for view integration).
      * Else, return the actual form view with errors.
      */
-    private function processForm(Request $request, $form, $lineVersionId)
+    private function processForm($form, $lineVersionId)
     {
+        $request = $this->getRequest();
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
             $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
             $lineVersion = $lineVersionManager->find($lineVersionId);
@@ -101,7 +100,6 @@ class CalendarController extends AbstractController
 
     /**
      * Edit
-     * @param Request $request
      * @param integer $lineVersionId
      *
      * If request's method is GET, display a pseudo-form (ajax/json) which
@@ -110,14 +108,15 @@ class CalendarController extends AbstractController
      * Otherwise, the pseudo-form data is sent as AJAX POST request and is
      * decoded then will be used for database update.
      */
-    public function editAction(Request $request, $lineVersionId)
+    public function editAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
+        $request = $this->getRequest();
 
         $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
+        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
         {
             $data = json_decode($request->getContent(), true);
             $freshData = $lineVersionManager->updateGridCalendars($data, $lineVersionId);
@@ -129,38 +128,36 @@ class CalendarController extends AbstractController
         }
 
         $lineVersion = $lineVersionManager->findWithPreviousCalendars($lineVersionId);
-        $gridCalendars = $gridCalendarManager->findRelatedGridMaskTypes($lineVersion->getGridCalendars(), $lineVersion->getId());
-        $gridMaskTypes = $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion);
 
         return $this->render(
             'TisseoPaonBundle:Calendar:edit.html.twig',
             array(
                 'title' => 'menu.grid_calendar_manage',
                 'lineVersion' => $lineVersion,
-                'gridCalendars' => $gridCalendars,
-                'gridMaskTypes' => $gridMaskTypes,
+                'gridCalendars' => $gridCalendarManager->findRelatedGridMaskTypes($lineVersion->getGridCalendars(), $lineVersion->getId()),
+                'gridMaskTypes' => $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion),
             )
         );
     }
 
     /*
      * Create
-     * @param Request $request
      * @param ineteger $lineVersionId
      *
      * This function is called though ajax request and will launch GridCalendarType
      * form validation process.
      */
-    public function createAction(Request $request, $lineVersionId)
+    public function createAction($lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
+        $request = $this->getRequest();
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
+        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
         {
             $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
             $lineVersion = $lineVersionManager->find($lineVersionId);
 
-            return $this->processForm($request, $this->buildForm($lineVersion), $lineVersion->getId());
+            return $this->processForm($this->buildForm($lineVersion), $lineVersion->getId());
         }
         return (null);
     }

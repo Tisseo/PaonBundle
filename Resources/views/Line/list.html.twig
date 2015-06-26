@@ -1,50 +1,40 @@
-{% extends "TisseoPaonBundle::datatable_list.html.twig" %}
+{% extends "TisseoCoreBundle::datatable_list.html.twig" %}
+{% set bundle = "TisseoPaonBundle" %}
 
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block list_title -%}
     {{'line.list.title'|trans({}, 'default')}}
     {% if is_granted('BUSINESS_MANAGE_LINE') %}
         -
         <a href="{{ path('tisseo_paon_line_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span> {{'line.create'|trans({}, 'default')}}
+            <span class="glyphicon glyphicon-plus"></span> {{ 'line.create'|trans({}, 'default') }}
         </a>
     {% endif %}
 {% endblock %}
 
 {% block table_head -%}
-    <th>{{'line.list.columns.label'|trans({}, 'default')}}</th>
-    <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
-    {% if is_granted('BUSINESS_MANAGE_LINE') %}
-        <th class="no-search no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
-    {% endif %}
+    <th class="col-md-6">{{'line.list.columns.label'|trans({}, 'default')}}</th>
+    <th class="col-md-4">{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
+    <th class="col-md-2 no-search no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
 {% endblock %}
 
 {% block table_body -%}
-    {% if lines is empty %}
+    {% for line in lines %}
         <tr>
             <td>
-                {{ 'global.no_items' | trans }}
+                {{ render.line_number(line, 'line', 'free') }}
             </td>
-            <td></td><td></td>
+            <td>
+                {{ line.physicalMode.name }}
+            </td>
+            <td>
+                {% if is_granted('BUSINESS_MANAGE_LINE') %}
+                    <a class="btn btn-default" href="{{ path('tisseo_paon_line_edit', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
+                    </a>
+                {% endif %}
+            </td>
         </tr>
-    {% else %}
-        {% for line in lines %}
-            <tr>
-                <td>
-                    {{ render.line_number(line, 'line', 'free') }}
-                </td>
-                <td>
-                    {{ line.physicalMode.name }}
-                </td>
-                <td>
-                    {% if is_granted('BUSINESS_MANAGE_LINE') %}
-                        <a class="btn btn-default" href="{{ path('tisseo_paon_line_edit', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
-                            <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-    {% endif %}
+    {% endfor %}
 {% endblock %}

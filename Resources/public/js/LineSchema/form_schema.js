@@ -4,7 +4,6 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
         console.log('init form_schema');
     };
 
-
     $(document).on('click', '.action-button', function() {
         var modalContent = $(document).find('.modal-body');
         var target = modalContent.find('> .target ');
@@ -48,7 +47,5 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
         return false;
     });
 
-
     init();
-
 });

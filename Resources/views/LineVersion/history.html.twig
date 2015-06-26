@@ -1,39 +1,33 @@
-{% extends "TisseoPaonBundle::datatable_list.html.twig" %}
+{% extends "TisseoCoreBundle::datatable_list.html.twig" %}
+{% set bundle = 'TisseoPaonBundle' %}
 
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
+{% import "TisseoPaonBundle::macros.html.twig" as paonRender %}
 
 {% block list_title -%}
-    {{'line_version.history.title'|trans({}, 'default')}}
+    {{ 'line_version.history.title'|trans({}, 'default') }}
 {% endblock %}
 
 {% block table_head -%}
-    <th class="nat-sort">{{'line.list.columns.label'|trans({}, 'default')}}</th>
-    <th>{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
-    <th class="no-sort">{{'line.list.columns.offers'|trans({}, 'default')}}</th>
+    <th class="col-md-4">{{ 'line.list.columns.label'|trans({}, 'default') }}</th>
+    <th class="col-md-4">{{ 'line.list.columns.physical_mode'|trans({}, 'default') }}</th>
+    <th class="col-md-4 no-sort no-search">{{ 'line.list.columns.offers'|trans({}, 'default') }}</th>
 {% endblock %}
 
 {% block table_body -%}
-    {% if lines|length == 0 %}
+    {% for line in lines %}
         <tr>
-            <td colspan="3">
-                {{'global.no_items'|trans}}
+            <td>
+                {{ render.line_number(line, 'line', 'free') }}
+            </td>
+            <td>
+                {{ line.physicalMode.name }}
+            </td>
+            <td>
+                {{ paonRender.line_offers_history(line) }}
             </td>
         </tr>
-    {% else %}
-        {% for line in lines %}
-            <tr>
-                <td>
-                    {{ render.line_number(line, 'line', 'small') }}
-                </td>
-                <td>
-                    {{ line.physicalMode.name }}
-                </td>
-                <td>
-                    {{ render.line_offers_history(line) }}
-                </td>
-            </tr>
-        {% endfor %}
-    {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}

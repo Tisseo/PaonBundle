@@ -1,7 +1,9 @@
-{% form_theme form 'TisseoPaonBundle:Form:fields.html.twig' %}
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
+
 <div class="row">
     <div class="col-md-12">
         {{ form_start(form) }}
+        {# TODO: USE TRANSLATION #}
         <ul>
             <li>Objet : Demande de nouveau schéma - LIGNE {{ lineNumber }}</li>
             <li>Date : {{ "now"|date("d/m/Y") }}</li>

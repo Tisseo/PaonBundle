@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% form_theme form 'TisseoPaonBundle:Form:fields.html.twig' %}
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
 
 {% block common_modal %}
     <div id="new-comment">
@@ -18,8 +18,8 @@
 
 {% block modal_body %}
     {{ form_errors(form) }}
-        {{ form_row(form.label) }}
-        {{ form_row(form.commentText) }}
+    {{ form_row(form.label) }}
+    {{ form_row(form.commentText) }}
 {% endblock %}
 
 {% block modal_actions %}

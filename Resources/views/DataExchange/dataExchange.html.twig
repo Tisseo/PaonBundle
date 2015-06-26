@@ -1,13 +1,14 @@
-{% extends "TisseoPaonBundle::generic_list.html.twig" %}
+{% extends "TisseoCoreBundle::generic_list.html.twig" %}
+{% set bundle = "TisseoPaonBundle" %}
 
 {% block table_head -%}
-    <th class="col-sm-10">{{ 'data_exchange.list.columns.job'|trans({}, 'default') }}</th>
-    <th class="col-sm-2">{{ 'global.actions'|trans({}, 'messages') }}</th>
+    <th class="col-md-10">{{ 'data_exchange.list.columns.job'|trans({}, 'default') }}</th>
+    <th class="col-md-2">{{ 'global.actions'|trans({}, 'messages') }}</th>
 {% endblock %}
 
 {% block breadcrumb %}
     {{ parent() }}
-    {% image '@TisseoPaonBundle/Resources/public/images/ajax-loader.gif' %}
+    {% image '@TisseoCoreBundle/Resources/public/images/ajax-loader.gif' %}
         <img src="{{ asset_url }}" id="loading-indicator" style="display:none;"/>
     {% endimage %}
 {% endblock %}
@@ -19,6 +20,7 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
+    {# TODO: CHECK CREATION JS FILE INSTEAD #}
     require(['jquery'], function() {
         $(document).ready(function() {
             setInterval(function() {

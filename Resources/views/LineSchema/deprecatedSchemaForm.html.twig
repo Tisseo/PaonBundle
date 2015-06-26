@@ -1,5 +1,7 @@
-{% form_theme form 'TisseoPaonBundle:Form:fields.html.twig' %}
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
+
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
+
 <div class="row">
     <div class="col-md-12">
         {{ form_start(form) }}
@@ -12,8 +14,8 @@
             <tbody>
             {% for schematic in form.schematics %}
                 <tr>
-                    <td>{{ schematic.vars['value'].name }}</td>
-                    <td>{{ schematic.vars['value'].comment }}</td>
+                    <td>{{ schematic.vars.value.name }}</td>
+                    <td>{{ schematic.vars.value.comment }}</td>
                     <td>{{ form_widget(schematic) }}</td>
                 </tr>
             {% else %}

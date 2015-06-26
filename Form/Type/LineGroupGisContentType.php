@@ -5,12 +5,14 @@ namespace Tisseo\PaonBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 
 use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineGroupGisContentType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -25,6 +27,20 @@ class LineGroupGisContentType extends AbstractType
         ));
 
         $builder->setAction($options['action']);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        usort($view->children['line']->vars['choices'], function(ChoiceView $choice1, ChoiceView $choice2) {
+            $line1 = $choice1->data;
+            $line2 = $choice2->data;
+            if ($line1->getPriority() == $line2->getPriority())
+                return strnatcmp($line1->getNumber(), $line2->getNumber());
+            if ($line1->getPriority() > $line2->getPriority())
+                return 1;
+            if ($line1->getPriority() < $line2->getPriority())
+                return -1;
+        });
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

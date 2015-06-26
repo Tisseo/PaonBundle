@@ -1,4 +1,4 @@
-define(['jquery', 'datatables', 'paon/textfill', 'fosjsrouting', 'translations/messages'], function($) {
+define(['jquery', 'datatables', 'core/textfill', 'fosjsrouting', 'translations/messages'], function($) {
 
     // re-fill line-number text in colored div
     textfill(15, 30, '.line-big');

@@ -2,46 +2,18 @@
 requirejs.config({
     urlArgs: '{{ assets_version }}',
     paths: {
-        'jquery/textfill':                  'bundles/tisseopaon/js/jquery.textfill.min',
-        'jquery/datatables':                'bundles/tisseopaon/js/jquery.dataTables.min',
-        jquery_ui_draggable:                'components/jquery-ui/ui/minified/jquery.ui.draggable.min',
-        jquery_ui_droppable:                'components/jquery-ui/ui/minified/jquery.ui.droppable.min',
-        'paon/textfill':                     'bundles/tisseopaon/js/textfill',
-        'paon/form':                         'bundles/tisseopaon/js/form',
-        'paon/datatables':                   'bundles/tisseopaon/js/datatables',
         'paon/history/offer':                'bundles/tisseopaon/js/LineVersion/history_line_versions',
         'paon/create/offer':                 'bundles/tisseopaon/js/LineVersion/create_line_versions',
         'paon/create/calendar':              'bundles/tisseopaon/js/Calendar/create_grid_calendars',
         'paon/exceptions':                   'bundles/tisseopaon/js/Exception/edit_exceptions',
         'paon/edit/schema':                  'bundles/tisseopaon/js/LineSchema/form_schema',
         'paon/list/schemas':                 'bundles/tisseopaon/js/LineSchema/list_schema'
-        //'paon/edit/line_group_gis':          'bundles/tisseopaon/js/LineGroupGis/form_lineGroupGis'
     },
     shim: {
-        'jquery/textfill': {
-            deps: ['jquery']
-        },
-        'jquery/datatables': {
-            deps: ['jquery']
-        },
-       'paon/textfill': {
-            deps: ['jquery/textfill']
-        },
-        'paon/datatables': {
-            deps: ['jquery/datatables', 'jquery/textfill']
-        },
         'paon/exceptions': {
             deps: ['jquery/datatables', 'jquery/textfill', 'translations/messages']
-        },
-        jquery_ui_droppable: {
-            deps: ['jquery', 'jquery_ui_core', 'jquery_ui_mouse', 'jquery_ui_widget'],
-            exports: "jQuery"
-        },
-        jquery_ui_draggable: {
-            deps: ['jquery', 'jquery_ui_core', 'jquery_ui_mouse', 'jquery_ui_widget'],
-            exports: "jQuery"
         }
     },
-    deps: ['utils', 'jquery', 'paon/form']
+    deps: ['utils', 'jquery', 'core/form']
 });
 </script>

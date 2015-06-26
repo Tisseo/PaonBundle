@@ -15,10 +15,9 @@ class LineGroupGisController extends AbstractController
     /**
      * List all line group gis
      *
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_GROUP_GIS');
 
@@ -36,12 +35,12 @@ class LineGroupGisController extends AbstractController
 
     /**
      * Create new line group gis
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request) {
+    public function createAction() {
 
         $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $request = $this->getRequest();
 
         $lineGroupGis = new LineGroupGis();
         $lineGroupGisContent = new LineGroupGisContent();
@@ -86,28 +85,28 @@ class LineGroupGisController extends AbstractController
     /**
      * Edit a line group gis
      *
-     * @param integer $id line group GIS id
-     * @param Request $request
+     * @param integer $lineGroupGisId line group GIS id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id, Request $request)
+    public function editAction($lineGroupGisId)
     {
         $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $request = $this->getRequest();
 
         /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
 
         /** @var \Tisseo\EndivBundle\Entity\LineGroupGis $lineGroupGis */
-        $lineGroupGis = $lineGroupGisManager->find($id);
+        $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
         if (!$lineGroupGis) {
-            throw $this->createNotFoundException('line_group_gis.not_found : ' . $id);
+            throw $this->createNotFoundException('line_group_gis.not_found : ' . $lineGroupGisId);
         }
 
         $form = $this->createForm(new LineGroupGisType(), $lineGroupGis,
             array(
-                'action' => $this->generateUrl('tisseo_paon_line_group_gis_edit', array('id' => $id)),
+                'action' => $this->generateUrl('tisseo_paon_line_group_gis_edit', array('lineGroupGisId' => $lineGroupGisId)),
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
@@ -143,20 +142,19 @@ class LineGroupGisController extends AbstractController
     /**
      * Delete a line groupgis
      *
-     * @param $id line group gis  id
-     * @param Request $request
+     * @param $lineGroupGisId line group gis  id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id, Request $request)
+    public function deleteAction($lineGroupGisId)
     {
         /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
 
         /** @var \Tisseo\EndivBundle\Entity\LineGroupGis $lineGroupGis */
-        $lineGroupGis = $lineGroupGisManager->find($id);
+        $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
         if (!$lineGroupGis) {
-            throw $this->createNotFoundException('line_group_gis.not_found : ' . $id);
+            throw $this->createNotFoundException('line_group_gis.not_found : ' . $lineGroupGisId);
         }
 
         list($message, $error) = $lineGroupGisManager->remove($lineGroupGis);

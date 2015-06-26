@@ -1,6 +1,6 @@
 {% extends "::modal.html.twig" %}
 
-{% import "TisseoPaonBundle::macros.html.twig" as render %}
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block modal_title %}
     <div>
@@ -20,7 +20,7 @@
                     <tr>
                         <th>{{ 'grid_calendar.list.columns.label'|trans({}, 'default') }}</th>
                         {% for i in 1..7 %}
-                        <th>{{ ('global.short_days.'~i)|trans({}, 'messages') }}</th>
+                        <th>{{ ('global.short_days.'~i)|trans }}</th>
                         {% endfor %}
                         <th></th>
                     </tr>
@@ -83,7 +83,7 @@
                     <tr>
                         <th>{{ 'grid_mask_type.list.columns.label'|trans({}, 'default') }}</th>
                         {% for i in 1..7 %}
-                        <th>{{ ('global.short_days.'~i)|trans({}, 'messages') }}</th>
+                        <th>{{ ('global.short_days.'~i)|trans }}</th>
                         {% endfor %}
                     </tr>
                 </thead>
@@ -119,13 +119,14 @@
 
 {% block modal_close_footer %}
     <button id="submit-calendars" type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'global.save'|trans }}
     </button>
     <script>
-        require(['paon/textfill'], function() {
+        require(['core/textfill'], function() {
             textfill(2, 15, '.line-small');
         });
         require(['paon/create/calendar']);
+        {# TODO: USE A JS FILE INSTEAD #}
         require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {
             $.fn.liveDroppable = function() {
                 $(this).droppable({

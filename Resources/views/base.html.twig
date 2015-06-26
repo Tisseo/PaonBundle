@@ -1,9 +1,9 @@
-{% extends "::base.html.twig" %}
+{% extends "TisseoCoreBundle::base.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets 'bundles/tisseopaon/css/main.css'
-                   filter='cssrewrite' output='css/full_paon.css' %}
+                   filter='cssrewrite' output='css/paon.css' %}
         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
     {% endstylesheets %}
 {% endblock %}
@@ -20,6 +20,7 @@
     - {{ pageTitle|trans }}
     {% endif %}
 {% endblock %}
+
 {% block navbar_brand %}
     <a href="{% if externalNetworkId %}{{ path('tisseo_paon_homepage', {'externalNetworkId':externalNetworkId }) }}{% else %}{{ path('tisseo_paon_homepage') }}{% endif %}">PAON</a>
 {% endblock %}
@@ -39,14 +40,4 @@
             {% endif %}
         {% endblock %}
     </ol>
-{% endblock %}
-
-{% block body %}
-    {% block subheader %}
-    {% endblock %}
-    {% block container %}
-    {% endblock %}
-{% endblock %}
-
-{% block javascripts %}
 {% endblock %}
