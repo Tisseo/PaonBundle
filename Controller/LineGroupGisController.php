@@ -34,7 +34,7 @@ class LineGroupGisController extends AbstractController
     }
 
     /**
-     * Create new line group gis
+     * Create new LineGroupGis
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createAction() {
@@ -48,7 +48,7 @@ class LineGroupGisController extends AbstractController
 
         $form = $this->createForm(new LineGroupGisType(), $lineGroupGis,
             array(
-                'action' => $this->generateUrl('tisseo_paon_line_group_gis_new'),
+                'action' => $this->generateUrl('tisseo_paon_line_group_gis_create'),
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );

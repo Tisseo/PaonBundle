@@ -10,8 +10,8 @@
     </h1>
     {% for physicalMode, lines in data %}
         {% if lines is not empty %}
-            <a id="{{loop.index}}" class="physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
-            <table id="{{loop.index}}" class="table datatable">
+            <a id="{{loop.index}}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
+            <table id="{{loop.index}}" class="table datatable table-hover">
                 <thead>
                     <th class="col-md-1">{{ 'line_schema.list.columns.number'|trans({}, 'default') }}</th>
                     <th class="col-md-3">{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
@@ -78,7 +78,7 @@
     {{ parent() }}
     <script>
         require(['core/datatables'], function() {
-            datatable(false);
+            datatable(false, '50');
         });
     </script>
     <script>

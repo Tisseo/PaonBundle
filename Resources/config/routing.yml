@@ -147,8 +147,8 @@ tisseo_paon_schema_deprecated:
 tisseo_paon_line_group_gis_list:
     pattern: /line-schema/line-group/list
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:list }
-tisseo_paon_line_group_gis_new:
-    pattern: /line-schema/line-group/edit/new
+tisseo_paon_line_group_gis_create:
+    pattern: /line-schema/line-group/edit/create
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:create }
 tisseo_paon_line_group_gis_edit:
     pattern: /line-schema/line-group/edit/{lineGroupGisId}
