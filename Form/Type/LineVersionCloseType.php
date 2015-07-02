@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-
 use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineVersionCloseType extends AbstractType
@@ -60,7 +59,7 @@ class LineVersionCloseType extends AbstractType
             )
             ->add(
                 'endDate',
-                'datepicker_paon',
+                'tisseo_datepicker',
                 array(
                     'label' => 'line_version.labels.end_date',
                     'attr' => array(

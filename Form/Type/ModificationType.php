@@ -16,7 +16,7 @@ class ModificationType extends AbstractType
     {
         $builder->add(
             'date',
-            'datepicker_paon',
+            'tisseo_datepicker',
             array(
                 'label' => 'modification.labels.date',
                 'required' => true,
