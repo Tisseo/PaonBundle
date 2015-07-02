@@ -33,7 +33,7 @@ class PrintingType extends AbstractType
         );
         $builder->add(
             'date',
-            'datepicker_paon',
+            'tisseo_datepicker',
             array(
                 'label' => 'printing.labels.date',
                 'attr' => array(

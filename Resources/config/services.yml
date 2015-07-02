@@ -7,17 +7,14 @@ services:
     tisseo_paon.perimeter_manager:
         class: %tisseo_paon.perimeter.class%
         arguments: ['@doctrine.orm.default_entity_manager']
+    
     tisseo_paon.user_manager:
         class: %tisseo_paon.user.class%
         arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
+    
     tisseo_paon.data_exchange_manager:
         class: %tisseo_paon.data_exchange_manager.class%
         arguments: ['%tisseo_paon.jenkins_server%', '%tisseo_paon.jenkins_user%', '%tisseo_paon.master_job_prefix%', '%tisseo_paon.atomic_job_prefix%']
-
-    form.type.datepicker_paon:
-        class: Tisseo\PaonBundle\Form\Type\DatepickerType
-        tags:
-            - { name: form.type, alias: datepicker_paon }
 
     form.type.paon_line_group_gis:
         class: Tisseo\PaonBundle\Form\Type\LineGroupGisType

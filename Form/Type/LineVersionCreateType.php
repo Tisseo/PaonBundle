@@ -69,7 +69,7 @@ class LineVersionCreateType extends AbstractType
             )
             ->add(
                 'startDate',
-                'datepicker_paon',
+                'tisseo_datepicker',
                 array(
                     'label' => 'line_version.labels.start_date',
                     'attr' => array(
@@ -79,7 +79,7 @@ class LineVersionCreateType extends AbstractType
             )
             ->add(
                 'plannedEndDate',
-                'datepicker_paon',
+                'tisseo_datepicker',
                 array(
                     'label' => 'line_version.labels.planned_end_date',
                     'attr' => array(
