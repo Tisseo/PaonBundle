@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineVersionEditType extends AbstractType
 {

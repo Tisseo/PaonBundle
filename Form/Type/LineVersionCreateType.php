@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Doctrine\ORM\EntityRepository;
-use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 use Tisseo\EndivBundle\Services\ModificationManager;
 
 class LineVersionCreateType extends AbstractType

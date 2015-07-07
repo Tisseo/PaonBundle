@@ -6,7 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
+
+use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineVersionCloseType extends AbstractType
 {
