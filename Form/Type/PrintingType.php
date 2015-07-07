@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
 use Tisseo\EndivBundle\Entity\LineVersion;
-use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class PrintingType extends AbstractType
 {

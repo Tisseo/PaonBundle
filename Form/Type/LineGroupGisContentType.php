@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 
-use Tisseo\PaonBundle\Form\DataTransformer\EntityToIntTransformer;
+use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineGroupGisContentType extends AbstractType
 {
