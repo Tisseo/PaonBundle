@@ -23,12 +23,12 @@
     "license" : "APGL-3.0",
     "require" : {
         "php": ">=5.4.3",
-        "tisseo/endiv-bundle": "~1.0.5",
+        "tisseo/endiv-bundle": "~1.0.6",
         "tisseo/core-bundle": "~1.0.2"
     },
     "autoload" : {
         "psr-0" : { "Tisseo\\PaonBundle\\" : "" }
     },
     "target-dir" : "Tisseo/PaonBundle",
-    "version" : "1.0.5"
+    "version" : "1.0.6"
 }
