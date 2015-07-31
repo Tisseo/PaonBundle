@@ -2,14 +2,10 @@
 
 {{ form_start(form) }}
 {{ form_errors(form) }}
-<td>{{ form_row(form.name) }}</td>
-<td>{{ form_widget(form.monday) }}</td>
-<td>{{ form_widget(form.tuesday) }}</td>
-<td>{{ form_widget(form.wednesday) }}</td>
-<td>{{ form_widget(form.thursday) }}</td>
-<td>{{ form_widget(form.friday) }}</td>
-<td>{{ form_widget(form.saturday) }}</td>
-<td>{{ form_widget(form.sunday) }}</td>
+<td>{{ form_widget(form.name) }}</td>
+{% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
+    <td>{{ form_widget(attribute(form, day)) }}</td>
+{% endfor %}
 <td>
     <button id="apply-grid-calendar-form" type="submit" class="btn btn-success small-button">
         <span class="glyphicon glyphicon-plus"></span>

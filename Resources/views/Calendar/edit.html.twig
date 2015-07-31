@@ -30,13 +30,9 @@
                     <tr class="active">
                         <input type="hidden" class="grid-calendar-row" value="{{ gridCalendar[0].id }}"></input>
                         <td class="name">{{ gridCalendar[0].name }}</td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td class="day"><div class="calendar-day {% if gridCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
+                        <td><div class="calendar-day{% if attribute(gridCalendar[0], day) %} green-day {% else %} red-day {% endif %}"></div></td>
+                        {% endfor %}
                         <td><button class="btn btn-xs btn-danger small-button delete-calendar"><span class="glyphicon glyphicon-minus"></span></button></td>
                     </tr>
                 </tbody>
@@ -51,13 +47,9 @@
                     {% for tripCalendar in gridMaskType[1] %}
                     <tr>
                         <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
+                        <td><div class="calendar-day{% if attribute(tripCalendar[0], day) %} green-day {% else %} red-day {% endif %}"></div></td>
+                        {% endfor %}
                         <td></td>
                     </tr>
                     {% endfor %}
@@ -97,13 +89,9 @@
                     {% for tripCalendar in gridMaskType[1] %}
                     <tr>
                         <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].monday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].tuesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].wednesday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].thursday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].friday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].saturday %} green-day {% else %} red-day {% endif %}"></div></td>
-                        <td><div class="calendar-day {% if tripCalendar[0].sunday %} green-day {% else %} red-day {% endif %}"></div></td>
+                        {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
+                        <td><div class="calendar-day{% if attribute(tripCalendar[0], day) %} green-day {% else %} red-day {% endif %}"></div></td>
+                        {% endfor %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -126,7 +114,7 @@
             textfill(2, 15, '.line-small');
         });
         require(['paon/create/calendar']);
-        {# TODO: USE A JS FILE INSTEAD #}
+
         require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {
             $.fn.liveDroppable = function() {
                 $(this).droppable({
