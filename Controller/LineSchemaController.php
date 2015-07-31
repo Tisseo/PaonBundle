@@ -5,7 +5,6 @@ namespace Tisseo\PaonBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\PaonBundle\Form\Type\LineSchemaType;
-//use Tisseo\PaonBundle\Form\Type\ListSchemaType;
 use Tisseo\PaonBundle\Form\Type\MailType;
 use Tisseo\PaonBundle\Entity\SchematicList;
 
