@@ -11,10 +11,12 @@ Tisseo\EndivBundle\Entity\Line:
                 max: 20
         priority:
             - NotBlank: ~
+
 Tisseo\EndivBundle\Entity\LineDatasource:
     properties:
         code:
             - NotBlank: ~
+
 Tisseo\EndivBundle\Entity\Printing:
     properties:
         quantity:
@@ -23,10 +25,12 @@ Tisseo\EndivBundle\Entity\Printing:
                 value: 1
         date:
             - DateTime: ~
+
 Tisseo\EndivBundle\Entity\GridCalendar:
     properties:
         name:
             - NotBlank: ~
+
 Tisseo\EndivBundle\Entity\LineVersion:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
@@ -51,6 +55,7 @@ Tisseo\EndivBundle\Entity\LineVersion:
             - Tisseo\CoreBundle\Validator\Constraints\GreaterThanField:
                 groups: [close]
                 field: startDate
+
 Tisseo\EndivBundle\Entity\Comment:
     properties:
         label:

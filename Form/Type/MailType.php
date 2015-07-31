@@ -19,7 +19,7 @@ class MailType extends AbstractType
 
         $builder->add('to','text', array(
             'label' => 'Destinataire',
-            'constraints' => new splitedMail() //TODO: THERE IS A VALIDATION.YML, IS IT BETTER ?
+            'constraints' => new splitedMail()
         ));
 
         $builder->add('body','textarea', array(
