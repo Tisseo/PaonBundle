@@ -25,44 +25,62 @@ class LineSchemaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($this->isBatch) {
-
-            $builder->add('deprecated','checkbox', array(
-                'label' => false,
-                'required' => false
-            ));
-
-        } else {
-
-            $builder->add('name','hidden', array(
-                'label' => 'line_schema.labels.name',
-            ));
-
-            $date = new \DateTime('now');
-            $builder->add('date','text', array(
-                'label' => 'line_schema.labels.date',
-                'read_only' => true,
-                'data' => $date->format('d/m/Y'),
-                'mapped' => false
-            ));
-
-            $builder->add('comment','textarea', array(
-                'label' => 'line_schema.labels.comment'
-            ));
-
-            $builder->add('file','file', array(
-                'label' => 'line_schema.labels.file',
-                'required' => false
-            ));
-
-            $builder->add('deprecated','hidden', array(
-                'data' => 0
-            ));
-
-            $builder->setAction($options['action']);
+        if ($this->isBatch)
+        {
+            $builder->add(
+                'deprecated',
+                'checkbox',
+                array(
+                    'label' => false,
+                    'required' => false
+                )
+            );
         }
-
-
+        else
+        {
+            $builder
+                ->add(
+                    'name',
+                    'hidden',
+                    array(
+                        'label' => 'line_schema.labels.name'
+                    )
+                )
+                ->add(
+                    'date',
+                    'tisseo_datepicker',
+                    array(
+                        'label' => 'line_schema.labels.date',
+                        'attr' => array(
+                            'class' => 'input-date'
+                        )
+                    )
+                )
+                ->add(
+                    'comment',
+                    'textarea',
+                    array(
+                        'label' => 'line_schema.labels.comment'
+                    )
+                )
+                ->add(
+                    'file',
+                    'file',
+                    array(
+                        'label' => 'line_schema.labels.file',
+                    'required' => false
+                    )
+                )
+                ->add(
+                    'deprecated',
+                    'hidden',
+                    array(
+                        'data' => 0
+                    )
+                )
+                ->setAction($options['action'])
+            ;
+        }
     }
 
     /**

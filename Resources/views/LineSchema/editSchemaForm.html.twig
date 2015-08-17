@@ -3,12 +3,22 @@
 <div class="row">
     <div class="col-md-12">
         {{ form_start(form) }}
-
         {{ form_row(form.date) }}
         {{ form_row(form.comment) }}
         {{ form_row(form.file) }}
         <input type="submit" class="btn btn-success clearfix pull-right" value="{{ 'line_schema.labels.submit'|trans({}, 'messages') }}" >
         {{ form_end(form) }}
-
     </div>
 </div>
+
+<script>
+    require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
+        $(document).ready(function() {
+            $('.input-date').datepicker({
+                language: '{{ app.request.locale }}',
+                startView: 1,
+                autoclose: true
+            });
+        });
+    });
+</script>

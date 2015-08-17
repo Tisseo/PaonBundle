@@ -97,11 +97,9 @@ class LineSchemaController extends AbstractController
             throw new \Exception('Line id not found');
         }
 
-        $now = new \DateTime();
         $lineSchematic = new Schematic();
         $lineSchematic->setLine($line);
-        $lineSchematic->setName($line->getNumber() . '_' . $now->format('Ymd'));
-        $lineSchematic->setDate($now);
+        $lineSchematic->setDate(new \Datetime());
 
         $form = $this->createForm(
             new LineSchemaType(),
@@ -119,12 +117,13 @@ class LineSchemaController extends AbstractController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-
                 /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
                 $schematicManager = $this->get('tisseo_endiv.schematic_manager');
 
                 /** @var \Tisseo\EndivBundle\Services\LineGroupGisContentManager $lineGroupGisContentManager */
                 $lineGroupGisContentManager = $this->get('tisseo_endiv.line_group_gis_content_manager');
+                $lineSchematic = $form->getData();
+                $lineSchematic->setName($line->getNumber() . '_' . $lineSchematic->getDate()->format('Ymd'));
 
                 list($schematic, $message, $error) = $schematicManager->save($lineSchematic);
                 $this->addFlash(
