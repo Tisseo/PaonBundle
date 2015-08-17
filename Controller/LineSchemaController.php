@@ -81,13 +81,13 @@ class LineSchemaController extends AbstractController
 
     /**
      * @param integer $lineId
+     * @param boolean $addInfo
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function editSchemaAction($lineId)
+    public function editSchemaAction(Request $request, $lineId, $addInfo)
     {
         $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
-        $request = $this->getRequest();
 
         /** @var \Tisseo\EndivBundle\Services\LineManager $line */
         $lineManager = $this->get('tisseo_endiv.line_manager');
@@ -102,7 +102,7 @@ class LineSchemaController extends AbstractController
         $lineSchematic->setDate(new \Datetime());
 
         $form = $this->createForm(
-            new LineSchemaType(),
+            new LineSchemaType(false, $addInfo),
             $lineSchematic,
             array(
                 'action' => $this->generateUrl(
@@ -114,35 +114,33 @@ class LineSchemaController extends AbstractController
             )
         );
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
-                $schematicManager = $this->get('tisseo_endiv.schematic_manager');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
+            $schematicManager = $this->get('tisseo_endiv.schematic_manager');
 
-                /** @var \Tisseo\EndivBundle\Services\LineGroupGisContentManager $lineGroupGisContentManager */
-                $lineGroupGisContentManager = $this->get('tisseo_endiv.line_group_gis_content_manager');
-                $lineSchematic = $form->getData();
-                $lineSchematic->setName($line->getNumber() . '_' . $lineSchematic->getDate()->format('Ymd'));
+            /** @var \Tisseo\EndivBundle\Services\LineGroupGisContentManager $lineGroupGisContentManager */
+            $lineGroupGisContentManager = $this->get('tisseo_endiv.line_group_gis_content_manager');
+            $lineSchematic = $form->getData();
+            $lineSchematic->setName($line->getNumber() . '_' . $lineSchematic->getDate()->format('Ymd'));
 
-                list($schematic, $message, $error) = $schematicManager->save($lineSchematic);
+            list($schematic, $message, $error) = $schematicManager->save($lineSchematic);
+            $this->addFlash(
+                ($error === null ? 'success' : 'danger'),
+                $this->get('translator')->trans($message, array('%error%' => $error), 'default')
+            );
+
+            $lineGroupGisContents = $lineGroupGisContentManager->findByLine($schematic->getLine()->getId());
+            foreach ($lineGroupGisContents as $lineGroupGisContent) {
                 $this->addFlash(
-                    ($error === null ? 'success' : 'danger'),
-                    $this->get('translator')->trans($message, array('%error%' => $error), 'default')
-                );
-
-                $lineGroupGisContents = $lineGroupGisContentManager->findByLine($schematic->getLine()->getId());
-                foreach ($lineGroupGisContents as $lineGroupGisContent) {
-                    $this->addFlash(
-                        'warning',
-                        $this->get('translator')->trans('line_schema.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName()), 'default')
-                    );
-                }
-
-                return $this->redirect(
-                    $this->generateUrl('tisseo_paon_line_schema_list')
+                    'warning',
+                    $this->get('translator')->trans('line_schema.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName()), 'default')
                 );
             }
+
+            return $this->redirect(
+                $this->generateUrl('tisseo_paon_line_schema_list')
+            );
         }
 
         return $this->render(

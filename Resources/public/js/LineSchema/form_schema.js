@@ -1,9 +1,4 @@
-require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
-
-    var init = function() {
-        console.log('init form_schema');
-    };
-
+require(['jquery', 'fosjsrouting', 'translations/messages'], function($) {
     $(document).on('click', '.action-button', function() {
         var modalContent = $(document).find('.modal-body');
         var target = modalContent.find('> .target ');
@@ -17,6 +12,10 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
         var url = null;
         switch ( $(this).data('action') ) {
             case 'edit-schema':
+                url = Routing.generate('tisseo_paon_schema_edit', params);
+                break;
+            case 'add-info':
+                params.addInfo = 'true';
                 url = Routing.generate('tisseo_paon_schema_edit', params);
                 break;
             case 'ask-schema':
@@ -46,6 +45,4 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($){
         });
         return false;
     });
-
-    init();
 });

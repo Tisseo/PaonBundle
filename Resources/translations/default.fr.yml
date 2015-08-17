@@ -129,7 +129,8 @@ line_schema:
     label:
         upload_file: Déposer un fichier
         ask_schematic: Demander un nouveau schéma
-        deprecated: Déclarer un Schéma obsolète
+        deprecated: Déclarer un schéma obsolète
+        add_info: Ajouter une information
     persisted: Schéma sauvegardé
     error_persist: Le schéma n'a pas été sauvegardé : %error%
     warning_group: Attention, cette ligne appartient à l'amalgame %name%.
