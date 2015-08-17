@@ -17,22 +17,27 @@
                 }}
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 action">
-                {% if is_granted('BUSINESS_LIST_SCHEMA') %}
-                    <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="deprecated-schema" data-line_id="{{ lineId }}">
-                        {{ 'line_schema.label.deprecated'|trans({}, 'default') }}
-                    </a>
-                {% endif %}
+        <div class="col-md-12">
+            <div class="row" style='margin-bottom:5px;'>
+                    {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') %}
+                        <a class="btn btn-default btn-sm action-button" href="#" data-action="ask-schema" data-line_id="{{ lineId }}">
+                            {{ 'line_schema.label.ask_schematic'|trans({}, 'default') }}
+                        </a>
+                    {% endif %}
+                    {% if is_granted('BUSINESS_LIST_SCHEMA') %}
+                        <a class="btn btn-default btn-sm action-button" href="#" data-action="deprecated-schema" data-line_id="{{ lineId }}">
+                            {{ 'line_schema.label.deprecated'|trans({}, 'default') }}
+                        </a>
+                    {% endif %}
+            </div>
+            <div class="row">
                 {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
-                <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="edit-schema" data-line_id="{{ lineId }}">
-                    {{ 'line_schema.label.upload_file'|trans({}, 'default') }}
-                </a>
-                {% endif %}
-                {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') %}
-                <a style="float:right;" class="btn btn-default btn-sm action-button" href="#" data-action="ask-schema" data-line_id="{{ lineId }}">
-                    {{ 'line_schema.label.ask_schematic'|trans({}, 'default') }}
-                </a>
+                    <a class="btn btn-default btn-sm action-button" href="#" data-action="edit-schema" data-line_id="{{ lineId }}">
+                        {{ 'line_schema.label.upload_file'|trans({}, 'default') }}
+                    </a>
+                    <a class="btn btn-default btn-sm action-button" href="#" data-action="add-info" data-line_id="{{ lineId }}">
+                        {{ 'line_schema.label.add_info'|trans({}, 'default') }}
+                    </a>
                 {% endif %}
             </div>
         </div>

@@ -122,8 +122,8 @@ tisseo_paon_schema_choice_list:
     options:
         expose: true
 tisseo_paon_schema_edit:
-    pattern: /line-schema/{lineId}/schema/edit
-    defaults: { _controller: TisseoPaonBundle:LineSchema:editSchema }
+    pattern: /line-schema/{lineId}/schema/edit/{addInfo}
+    defaults: { _controller: TisseoPaonBundle:LineSchema:editSchema, addInfo: false }
     requirements:
         lineId: \d+
     options:

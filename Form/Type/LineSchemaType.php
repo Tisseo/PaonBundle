@@ -11,12 +11,15 @@ class LineSchemaType extends AbstractType
     /** @var bool $isBatch */
     protected $isBatch;
 
+    protected $addInfo;
+
     /**
      * @param bool $isBatch
      */
-    public function __construct($isBatch = false)
+    public function __construct($isBatch = false, $addInfo = false)
     {
         $this->isBatch = $isBatch;
+        $this->addInfo = $addInfo;
     }
 
     /**
@@ -47,28 +50,10 @@ class LineSchemaType extends AbstractType
                     )
                 )
                 ->add(
-                    'date',
-                    'tisseo_datepicker',
-                    array(
-                        'label' => 'line_schema.labels.date',
-                        'attr' => array(
-                            'class' => 'input-date'
-                        )
-                    )
-                )
-                ->add(
                     'comment',
                     'textarea',
                     array(
                         'label' => 'line_schema.labels.comment'
-                    )
-                )
-                ->add(
-                    'file',
-                    'file',
-                    array(
-                        'label' => 'line_schema.labels.file',
-                    'required' => false
                     )
                 )
                 ->add(
@@ -78,8 +63,46 @@ class LineSchemaType extends AbstractType
                         'data' => 0
                     )
                 )
-                ->setAction($options['action'])
             ;
+            if ($this->addInfo)
+            {
+                $builder
+                    ->add(
+                        'date',
+                        'date',
+                        array(
+                            'label' => 'line_schema.labels.date',
+                            'widget' => 'single_text',
+                            'read_only' => true,
+                            'format' => 'dd/MM/yyyy'
+                        )
+                    )
+                ;
+            }
+            else
+            {
+                $builder
+                    ->add(
+                        'date',
+                        'tisseo_datepicker',
+                        array(
+                            'label' => 'line_schema.labels.date',
+                            'attr' => array(
+                                'class' => 'input-date'
+                            )
+                        )
+                    )
+                    ->add(
+                        'file',
+                        'file',
+                        array(
+                            'label' => 'line_schema.labels.file',
+                            'required' => true
+                        )
+                    )
+                ;
+            }
+            $builder->setAction($options['action']);
         }
     }
 
