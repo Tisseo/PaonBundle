@@ -1,19 +1,16 @@
 <table class="table table-striped">
     <thead>
+        <th>{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
         <th>{{ 'line_schema.list.columns.file'|trans({}, 'default') }}</th>
-        <th>{{ 'line_schema.list.columns.modification'|trans({}, 'default') }}</th>
+        <th>{{ 'line_schema.list.columns.date'|trans({}, 'default') }}</th>
+        <th>{{ 'line_schema.list.columns.comment'|trans({}, 'default') }}</th>
     </thead>
     <tbody>
     {% for schematic in schematics %}
-        {% set class='' %}
-        {% if schematic.name is empty %}
-            {% set class='empty' %}
-        {% endif %}
-        {%  if schematicId is not empty and schematicId == schematic.id %}
-            {% set class='danger' %}
-        {% endif %}
-        <tr class="{{ class }}" data-schematic_id="{{ schematic.id }}">
+        <tr {% if schematicId is not empty and schematicId == schematic.id %}class="success"{% endif %} data-schematic_id="{{ schematic.id }}">
             <td>{{ schematic.name }}</td>
+            <td><input type="checkbox" disabled {% if schematic.filePath != none %}checked="checked"{% endif %}</td>
+            <td>{{ schematic.date|date('d/m/Y') }}</td>
             <td>{{ schematic.comment }}</td>
         </tr>
     {%  else  %}

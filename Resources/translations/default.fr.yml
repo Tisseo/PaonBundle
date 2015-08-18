@@ -119,13 +119,12 @@ line_schema:
         empty: Il n'y a aucun schéma.
         columns:
             file: Fichier
-            modification: Modification
+            comment: Commentaire
             number: Numéro
-            name: Nom de ligne
+            name: Nom
             group: Amalgame
             deprecated: Obsolète ?
-            schematic_date: Date
-            schematic_comment: Commentaire
+            date: Date
     label:
         upload_file: Déposer un fichier
         ask_schematic: Demander un nouveau schéma
