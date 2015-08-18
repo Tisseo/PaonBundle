@@ -199,7 +199,7 @@ class LineSchemaController extends AbstractController
      */
     public function deprecatedSchemaAction(Request $request, $lineId)
     {
-        $this->isGranted('BUSINESS_LIST_SCHEMA');
+        $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
         /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
         $schematicManager = $this->get('tisseo_endiv.schematic_manager');
