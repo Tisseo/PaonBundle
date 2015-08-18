@@ -16,6 +16,7 @@
 
 
 {% block modal_body %}
+    <div id="thumb"></div>
     <label class="control-label required" for="paon_line_version_line">{{ 'line.labels.number'|trans({}, 'messages') }}</label>
     <select id="paon_line_version_line" class="form-control">
         {% if not form %}

@@ -4,14 +4,20 @@
         <th>{{ 'line_schema.list.columns.file'|trans({}, 'default') }}</th>
         <th>{{ 'line_schema.list.columns.date'|trans({}, 'default') }}</th>
         <th>{{ 'line_schema.list.columns.comment'|trans({}, 'default') }}</th>
+        <th></th>
     </thead>
     <tbody>
     {% for schematic in schematics %}
         <tr {% if schematicId is not empty and schematicId == schematic.id %}class="success"{% endif %} data-schematic_id="{{ schematic.id }}">
             <td>{{ schematic.name }}</td>
-            <td><input type="checkbox" disabled {% if schematic.filePath != none %}checked="checked"{% endif %}</td>
+            <td><input type="checkbox" disabled {% if schematic.filePath %}checked="checked"{% endif %}</td>
             <td>{{ schematic.date|date('d/m/Y') }}</td>
             <td>{{ schematic.comment }}</td>
+            <td>
+                {% if schematic.filePath %}
+                <a href="{{ app.request.getbaseUrl() }}/{{ schematic.WebPath }}" target="_blank" data-toggle="popover" data-placement="bottom" data-container="#thumb" data-html="true" data-trigger="hover" data-content="<img src='/{{ schematic.WebPath }}' height='250px' width='600px' style='padding:10px;'>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                {% endif %}
+            </td>
         </tr>
     {%  else  %}
         <tr class="info">
@@ -22,3 +28,6 @@
     {% endfor %}
     </tbody>
 </table>
+<script>
+    $('[data-toggle="popover"]').popover();
+</script>
