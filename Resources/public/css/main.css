@@ -112,3 +112,7 @@ table .grid-mask-type {
 .schematic-min-width-field {
     width:60px;
 }
+/* popover thumb */
+#thumb .popover {
+    max-width:none;
+}
