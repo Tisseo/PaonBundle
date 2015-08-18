@@ -5,9 +5,7 @@
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block main_content -%}
-    <h1>
-        {{ 'line_schema.title'|trans({}, 'default') }}
-    </h1>
+    <h1>{{ 'line_schema.title'|trans({}, 'default') }}</h1>
     {% for physicalMode, lines in data %}
         {% if lines is not empty %}
             <a id="{{loop.index}}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
@@ -15,43 +13,24 @@
                 <thead>
                     <th class="col-md-1">{{ 'line_schema.list.columns.number'|trans({}, 'default') }}</th>
                     <th class="col-md-3">{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
-                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.schematic_date'|trans({}, 'default') }}</th>
-                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.schematic_comment'|trans({}, 'default') }}</th>
+                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.date'|trans({}, 'default') }}</th>
+                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.comment'|trans({}, 'default') }}</th>
                     <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.group'|trans({}, 'default') }}</th>
                     <th class="col-md-2 no-sort no-search">{{ 'global.actions'|trans }}</th>
                 </thead>
                 <tbody>
                 {% for line in lines %}
-                    {% set class = '' %}
-
-                    {% if line.schematics is defined and line.schematics|length > 0 %}
-                        {% set hasSchematic = true %}
-                        {% set lastSchematic = (line.schematics|length)-1 %}
-                        {%  if line.schematics[lastSchematic].filePath is empty %}
-                            {%  set class='schematic-updating' %}
-                        {% endif %}
-                    {% else %}
-                        {% set hasSchematic = false %}
-                    {% endif %}
-                    <tr class="{{ class }}">
-                        <td>
-                            {{ render.line_number(line, 'line', 'free') }}
-                        </td>
+                    {% set lastSchematic = line.schematics.last %}
+                    <tr{% if lastSchematic and lastSchematic.filePath is empty %} class="schematic-updating"{% endif %}>
+                        <td>{{ render.line_number(line, 'line', 'free') }}</td>
                         <td>
                             {% if line.LastLineVersion is defined %}
-                                {% set lineName = line.LastLineVersion.name %}
-                            {% else %}
-                                {% set lineName = '' %}
+                                <span>{{ line.LastLineVersion.name }}</span>
                             {% endif %}
-                            <span>{{ lineName }}</span>
                         </td>
-                        {% if hasSchematic %}
-                            <td>{{ line.schematics[lastSchematic].date|date('d/m/Y') }}</td>
-                            <td>{{ line.schematics[lastSchematic].comment }}</td>
-                        {% else %}
-                            <td></td>
-                            <td></td>
-                        {% endif %}
+                        {% set schematicDate = line.LastSchematicDate %}
+                        <td>{% if schematicDate != none %}{{ schematicDate|date('d/m/Y') }}{% endif %}</td>
+                        <td>{{ lastSchematic.comment }}</td>
                         <td>
                             {% if line.lineGroupGisContents is defined and line.lineGroupGisContents|length > 0 %}
                                 <ul>
