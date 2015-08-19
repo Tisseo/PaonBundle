@@ -12,8 +12,8 @@
 {% endblock %}
 
 {% block table_head -%}
-    <th class="col-md-4">{{ 'line_group_gis.list.columns.name'|trans({}, 'default') }}</th>
-    <th class="col-md-5">{{ 'line_group_gis.list.columns.line'|trans({}, 'default') }}</th>
+    <th class="col-md-2">{{ 'line_group_gis.list.columns.name'|trans({}, 'default') }}</th>
+    <th class="col-md-7">{{ 'line_group_gis.list.columns.line'|trans({}, 'default') }}</th>
     <th class="col-md-3 no-search no-sort">{{ 'global.actions'|trans }}</th>
 {% endblock %}
 
@@ -24,13 +24,26 @@
                 {{ group.name }}
             </td>
             <td>
-                <ul class="list-unstyled">
-                {% for line in group.lineGroupGisContents %}
-                    <li>{{ line.line.number }}</li>
-                {% else %}
-                    <li>{{ 'global.no_items'|trans }}</li>
-                {% endfor %}
-                </ul>
+                <table class="table table-condensed">
+                    <thead>
+                        <th>{{ 'line_group_gis.list.columns.line_number'|trans({}, 'default') }}</th>
+                        <th>{{ 'line_group_gis.list.columns.last_schematic'|trans({}, 'default') }}</th>
+                        <th>{{ 'line_group_gis.list.columns.last_usable_schematic'|trans({}, 'default') }}</th>
+                    </thead>
+                    <tbody>
+                        {% for line in group.lineGroupGisContents %}
+                            {% set lastSchematic = line.line.LastSchematic(true) %}
+                            {% set lastValidSchematic = line.line.LastValidSchematic %}
+                            <tr>
+                                <td>{{ line.line.number }}</td>
+                                <td>{% if lastSchematic %}{{ lastSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
+                                <td>{% if lastValidSchematic %}{{ lastValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3">{{ 'global.no_items'|trans }}</td><tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </td>
             <td>
                 {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}

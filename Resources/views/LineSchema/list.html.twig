@@ -28,8 +28,8 @@
                                 <span>{{ line.LastLineVersion.name }}</span>
                             {% endif %}
                         </td>
-                        {% set schematicDate = line.LastSchematicDate %}
-                        <td>{% if schematicDate != none %}{{ schematicDate|date('d/m/Y') }}{% endif %}</td>
+                        {% set schematic = line.LastSchematic %}
+                        <td>{% if schematic %}{{ schematic.date|date('d/m/Y') }}{% endif %}</td>
                         <td>{{ lastSchematic.comment }}</td>
                         <td>
                             {% if line.lineGroupGisContents is defined and line.lineGroupGisContents|length > 0 %}
