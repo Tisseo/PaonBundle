@@ -47,7 +47,12 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
+    <script>
         require(['paon/edit/schema']);
+    </script>
+    <script>
+        require(['core/textfill'], function() {
+            textfill(2, 15, '.line-small');
+        });
     </script>
 {% endblock %}
