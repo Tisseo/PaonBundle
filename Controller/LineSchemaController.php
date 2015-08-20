@@ -206,15 +206,16 @@ class LineSchemaController extends AbstractController
         $schematics = $schematicManager->findLineSchematics($lineId, 0);
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
-        if (empty($line)) {
+        if (empty($line))
             throw new \Exception('Line id not found');
-        }
 
         $schematicList = new SchematicList();
         foreach($schematics as $schematic)
             $schematicList->setSchematics($schematic);
 
-        $form = $this->createForm('paon_list_schema', $schematicList,
+        $form = $this->createForm(
+            'paon_list_schema',
+            $schematicList,
             array(
                 'action' => $this->generateUrl(
                     'tisseo_paon_schema_deprecated',

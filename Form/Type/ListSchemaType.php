@@ -9,19 +9,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ListSchemaType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('schematics', 'collection', array(
-            'type' => new LineSchemaType(true),
-            'label' => false
-        ));
-
-        $builder->setAction($options['action']);
+        $builder
+            ->add(
+                'schematics',
+                'collection', array(
+                    'type' => new LineSchemaType(true),
+                    'label' => false
+                )
+            )
+            ->setAction($options['action'])
+        ;
     }
 
     /**

@@ -7,20 +7,30 @@
         {{ form_start(form) }}
         <table class="table table-striped">
             <thead>
+                <th>{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
                 <th>{{ 'line_schema.list.columns.file'|trans({}, 'default') }}</th>
-                <th>{{ 'line_schema.list.columns.modification'|trans({}, 'default') }}</th>
+                <th>{{ 'line_schema.list.columns.date'|trans({}, 'default') }}</th>
+                <th>{{ 'line_schema.list.columns.comment'|trans({}, 'default') }}</th>
                 <th>{{ 'line_schema.list.columns.deprecated'|trans({}, 'default') }}</th>
+                <th></th>
             </thead>
             <tbody>
             {% for schematic in form.schematics %}
                 <tr>
                     <td>{{ schematic.vars.value.name }}</td>
+                    <td><input type="checkbox" disabled {% if schematic.vars.value.filePath %}checked="checked"{% endif %}</td>
+                    <td>{{ schematic.vars.value.date|date('d/m/Y') }}</td>
                     <td>{{ schematic.vars.value.comment }}</td>
                     <td>{{ form_widget(schematic) }}</td>
+                    <td>
+                        {% if schematic.vars.value.filePath %}
+                        <a href="{{ app.request.getbaseUrl() }}/{{ schematic.vars.value.WebPath }}" target="_blank" data-toggle="popover" data-placement="bottom" data-container="#thumb" data-html="true" data-trigger="hover" data-content="<img src='/{{ schematic.vars.value.WebPath }}' height='250px' width='600px' style='padding:10px;'>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% else %}
                 <tr class="info">
-                    <td colspan="3">
+                    <td colspan="6">
                         {{ 'line_schema.list.empty'|trans({}, 'default') }}
                     </td>
                 </tr>
@@ -28,8 +38,10 @@
             </tbody>
         </table>
 
-
-        <input type="submit" class="btn btn-success pull-right" value="{{ 'global.save'|trans({}, 'messages') }}" >
+        <input type="submit" class="btn btn-success pull-right" value="{{ 'global.save'|trans({}, 'messages') }}">
         {{ form_end(form) }}
     </div>
 </div>
+<script>
+    $('[data-toggle="popover"]').popover();
+</script>
