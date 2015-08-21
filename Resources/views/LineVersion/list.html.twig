@@ -128,19 +128,24 @@
                 datatable.toggle();
                 datatable.parent().toggle();
             });
+    </script>
+    <script>
+        require(['bootbox'], function(bootbox) {
             $(document).on("click", ".clean-offer", function(event) {
-                var link = this;
                 event.preventDefault();
-                if (confirm("{{ 'line_version.actions.clean_confirm'|trans({}, 'messages') }}")) {
-                    window.location.href = $(this).attr("href");
-                }
+                var self = this;
+                bootbox.confirm("{{ 'line_version.actions.clean_confirm'|trans({}, 'messages') }}", function(result) {
+                    if (result)
+                        window.location = self.href;
+                });
             });
             $(document).on("click", ".delete-offer", function(event) {
-                var link = this;
                 event.preventDefault();
-                if (confirm("{{ 'line_version.actions.delete_confirm'|trans({}, 'messages')|e('js') }}")) {
-                    window.location.href = $(this).attr("href");
-                }
+                var self = this;
+                bootbox.confirm("{{ 'line_version.actions.delete_confirm'|trans({}, 'messages') }}", function(result) {
+                    if (result)
+                        window.location = self.href;
+                });
             });
         });
     </script>
