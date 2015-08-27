@@ -6,49 +6,59 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tisseo\PaonBundle\Validator\Constraints\UniqueInCollection;
-
-use Tisseo\EndivBundle\Entity\Line;
-use Tisseo\EndivBundle\Entity\LineGroupGis;
-use Tisseo\EndivBundle\Entity\LineGroupGisContent;
 use Tisseo\PaonBundle\Form\Type\LineGroupGisContentType;
 
 class LineGroupGisType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $builder->add('name', 'text', array(
-            'label' => 'line_group_gis.labels.group_name',
-        ));
-
-        $builder->add('nbBus', 'text', array(
-            'label' => 'line_group_gis.labels.nb_bus'
-        ));
-
-        $builder->add('comment', 'textarea', array(
-            'label' => 'line_group_gis.labels.comment',
-        ));
-
-        $builder->add('name', 'text', array(
-            'label' => 'line_group_gis.labels.group_name',
-        ));
-
-        $builder->add('LineGroupGisContents', 'collection', array(
-            'type' => new LineGroupGisContentType(),
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-            'options' => array('em' => $options['em']),
-            'constraints' => new UniqueInCollection('line')
-        ));
-
-
-        $builder->setAction($options['action']);
+        $builder
+            ->add(
+                'name',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.line_group_gis.label.group_name'
+                )
+            )
+            ->add(
+                'nbBus',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.line_group_gis.label.nb_bus'
+                )
+            )
+            ->add(
+                'comment',
+                'textarea',
+                array(
+                    'label' => 'tisseo.paon.line_group_gis.label.comment'
+                )
+            )
+            ->add(
+                'name',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.line_group_gis.label.group_name'
+                )
+            )
+            ->add(
+                'LineGroupGisContents',
+                'collection',
+                array(
+                    'type' => new LineGroupGisContentType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'options' => array('em' => $options['em']),
+                    'constraints' => new UniqueInCollection('line')
+                )
+            )
+            ->setAction($options['action'])
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

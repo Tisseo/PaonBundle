@@ -1,22 +1,21 @@
-{% extends "TisseoCoreBundle::container.html.twig" %}
+{% extends "TisseoCoreBundle::datatable_list.html.twig" %}
 {% set bundle = "TisseoPaonBundle" %}
-{% set datatable = true %}
+{% set margin = '50' %}
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
-{% block main_content -%}
-    <h1>{{ 'line_schema.title'|trans({}, 'default') }}</h1>
+{% block content %}
     {% for physicalMode, lines in data %}
         {% if lines is not empty %}
             <a id="{{loop.index}}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
             <table id="{{loop.index}}" class="table datatable table-hover">
                 <thead>
-                    <th class="col-md-1">{{ 'line_schema.list.columns.number'|trans({}, 'default') }}</th>
-                    <th class="col-md-3">{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
-                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.date'|trans({}, 'default') }}</th>
-                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.comment'|trans({}, 'default') }}</th>
-                    <th class="col-md-2 no-sort">{{ 'line_schema.list.columns.group'|trans({}, 'default') }}</th>
-                    <th class="col-md-2 no-sort no-search">{{ 'global.actions'|trans }}</th>
+                    <th class="col-md-1">{{ 'tisseo.paon.line_schema.label.number'|trans }}</th>
+                    <th class="col-md-3">{{ 'tisseo.paon.line_schema.label.name'|trans }}</th>
+                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.line_schema.label.date'|trans }}</th>
+                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.line_schema.label.comment'|trans }}</th>
+                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.line_schema.label.group'|trans }}</th>
+                    <th class="col-md-2 no-sort no-search">{{ 'tisseo.global.actions'|trans }}</th>
                 </thead>
                 <tbody>
                 {% for line in lines %}
@@ -42,7 +41,7 @@
                         </td>
                         <td>
                             <a class="btn btn-default" href="{{ path('tisseo_paon_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                <span class="glyphicon glyphicon-list"></span> {{ 'line_schema.list.schemas'|trans({}, 'default') }}
+                                <span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.line_schema.action.list'|trans }}
                             </a>
                         </td>
                     </tr>
@@ -55,11 +54,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        require(['core/datatables'], function() {
-            datatable(false, '50');
-        });
-    </script>
     <script>
         require(['jquery'], function() {
             $(document).on("click", ".physical-mode", function() {

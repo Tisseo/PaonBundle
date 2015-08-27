@@ -2,9 +2,9 @@
 
 namespace Tisseo\PaonBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Tisseo\CoreBundle\Controller\CoreController;
 
-class DataExchangeController extends AbstractController
+class DataExchangeController extends CoreController
 {
     /**
      * Launch
@@ -21,7 +21,7 @@ class DataExchangeController extends AbstractController
         if ($dataExchangeManager->getRunningJob() === null)
             $dataExchangeManager->launchJob($jobName);
 
-        return $this->redirect($this->generateUrl('tisseo_paon_data_exchange_show'));
+        return $this->redirectToRoute('tisseo_paon_data_exchange_show');
     }
 
     /**
@@ -36,7 +36,8 @@ class DataExchangeController extends AbstractController
         return $this->render(
             'TisseoPaonBundle:DataExchange:dataExchange.html.twig',
             array(
-                'pageTitle' => 'menu.import_manage'
+                'navTitle' => 'tisseo.paon.menu.data_exchange',
+                'pageTitle' => 'tisseo.paon.data_exchange.title.show'
             )
         );
     }
@@ -52,7 +53,7 @@ class DataExchangeController extends AbstractController
             'TisseoPaonBundle:DataExchange:jobs.html.twig',
             array(
                 'jobs' => $dataExchangeManager->getJobsList(),
-                'running_job' => $runningJobData,
+                'runningJob' => $runningJobData,
                 'running' => ($runningJobData === null ? false : true)
             )
         );

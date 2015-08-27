@@ -14,20 +14,22 @@ class CommentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'label',
-            'text',
-            array(
-                'label' => 'comment.labels.label'
+        $builder
+            ->add(
+                'label',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.comment.label.label'
+                )
             )
-        );
-        $builder->add(
-            'commentText',
-            'textarea',
-            array(
-                'label' => 'comment.labels.comment_text'
+            ->add(
+                'commentText',
+                'textarea',
+                array(
+                    'label' => 'tisseo.paon.comment.label.text'
+                )
             )
-        );
+        ;
     }
 
     /**

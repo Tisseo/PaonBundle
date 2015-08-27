@@ -1,45 +1,11 @@
-define(['jquery', 'datatables', 'core/textfill', 'fosjsrouting', 'translations/messages'], function($) {
+define(['jquery', 'datatables', 'core/datatables', 'fosjsrouting', 'translations/messages'], function($) {
 
     // re-fill line-number text in colored div
     textfill(15, 30, '.line-big');
 
     $(document).ready(function() {
-        // build searchable/filtered tables for each gridCalendar
-        datatables = [];
-        $(".datatable").each(function(index) {
-            var datatable = $(this).DataTable({
-                "aaSorting": [],
-                "bAutoWidth": false,
-                "iDisplayLength": 25,
-                "aoColumnDefs" : [ {
-                    "bSortable" : false,
-                    "aTargets" : [ "no-sort" ]
-                } ],
-                "language": {
-                    "sProcessing":     "Traitement en cours...",
-                    "sSearch":         "Rechercher&nbsp;:",
-                    "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
-                    "sInfo":           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                    "sInfoEmpty":      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-                    "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                    "sInfoPostFix":    "",
-                    "sLoadingRecords": "Chargement en cours...",
-                    "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                    "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
-                    "oPaginate": {
-                        "sFirst":      "Premier",
-                        "sPrevious":   "Pr&eacute;c&eacute;dent",
-                        "sNext":       "Suivant",
-                        "sLast":       "Dernier"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
-                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                    },
-                },
-                "order": [[6, 'desc'],[0, 'asc']]
-            });
-            datatables[index] = datatable;
+        $.each(datatables, function(idx, datatable) {
+            datatable.order([[6, 'desc'],[0, 'asc']]).draw();
         });
 
         /**
@@ -100,7 +66,7 @@ define(['jquery', 'datatables', 'core/textfill', 'fosjsrouting', 'translations/m
                     fillNewComment(newData, currentPanel);
                     toggleAllCommentRows(currentPanel);
                     if ($(document).find('#main-container .alert-warning').length === 0) {
-                        var message = "<div class='alert alert-warning alert-dismissable danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+Translator.trans('exception.think_press_save', {}, 'messages')+"</div>";
+                        var message = "<div class='alert alert-warning alert-dismissable danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+Translator.trans('tisseo.paon.exception.message.save')+"</div>";
                         $("#main-container").prepend(message);
                     }
                     $("#base-modal").modal('hide');
@@ -152,7 +118,7 @@ define(['jquery', 'datatables', 'core/textfill', 'fosjsrouting', 'translations/m
             }
             else {
                 if ($(document).find('#main-container .alert-danger').length === 0) {
-                    var message = "<div class='alert alert-danger alert-dismissable danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+Translator.trans('exception.invalid_alert', {}, 'messages')+"</div>";
+                    var message = "<div class='alert alert-danger alert-dismissable danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+Translator.trans('tisseo.paon.exception.message.invalid')+"</div>";
                     $("#main-container").prepend(message);
                 }
             }

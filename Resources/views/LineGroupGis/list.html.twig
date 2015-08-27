@@ -1,20 +1,20 @@
 {% extends "TisseoCoreBundle::datatable_list.html.twig" %}
 {% set bundle = "TisseoPaonBundle" %}
 
-{% block list_title -%}
-    {{ 'line_group_gis.title'|trans({}, 'default') }}
+{% block list_title %}
+    {{ parent() }}
     {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
         -
         <a href="{{ path('tisseo_paon_line_group_gis_create') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span> {{ 'line_group_gis.label.create'|trans({}, 'default') }}
+            <span class="glyphicon glyphicon-plus"></span> {{ 'tisseo.paon.line_group_gis.action.create'|trans }}
         </a>
     {% endif %}
 {% endblock %}
 
 {% block table_head -%}
-    <th class="col-md-2">{{ 'line_group_gis.list.columns.name'|trans({}, 'default') }}</th>
-    <th class="col-md-7">{{ 'line_group_gis.list.columns.line'|trans({}, 'default') }}</th>
-    <th class="col-md-3 no-search no-sort">{{ 'global.actions'|trans }}</th>
+    <th class="col-md-2">{{ 'tisseo.paon.line_group_gis.label.name'|trans }}</th>
+    <th class="col-md-7">{{ 'tisseo.paon.line_group_gis.label.lines'|trans }}</th>
+    <th class="col-md-3 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
 {% endblock %}
 
 {% block table_body -%}
@@ -26,9 +26,9 @@
             <td>
                 <table class="table table-condensed">
                     <thead>
-                        <th>{{ 'line_group_gis.list.columns.line_number'|trans({}, 'default') }}</th>
-                        <th>{{ 'line_group_gis.list.columns.last_schematic'|trans({}, 'default') }}</th>
-                        <th>{{ 'line_group_gis.list.columns.last_usable_schematic'|trans({}, 'default') }}</th>
+                        <th>{{ 'tisseo.paon.line_group_gis.label.line_number'|trans }}</th>
+                        <th>{{ 'tisseo.paon.line_group_gis.label.last_schematic'|trans }}</th>
+                        <th>{{ 'tisseo.paon.line_group_gis.label.last_usable_schematic'|trans }}</th>
                     </thead>
                     <tbody>
                         {% for line in group.lineGroupGisContents %}
@@ -40,7 +40,7 @@
                                 <td>{% if lastValidSchematic %}{{ lastValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                             </tr>
                         {% else %}
-                            <tr><td colspan="3">{{ 'global.no_items'|trans }}</td><tr>
+                            <tr><td colspan="3">{{ 'tisseo.global.no_items'|trans }}</td><tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -48,10 +48,10 @@
             <td>
                 {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
                 <a class="btn btn-default" href="{{ path('tisseo_paon_line_group_gis_edit', {'lineGroupGisId': group.id }) }}" data-toggle="modal" data-target="#base-modal">
-                    <span class="glyphicon glyphicon-edit"></span> {{ 'global.edit'|trans }}
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'tisseo.global.edit'|trans }}
                 </a>
                 <a class="btn btn-default" href="{{ path('tisseo_paon_line_group_gis_delete', {'lineGroupGisId': group.id }) }}">
-                    <span class="glyphicon glyphicon-edit"></span> {{ 'global.delete'|trans }}
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'tisseo.global.delete'|trans }}
                 </a>
                 {% endif %}
             </td>

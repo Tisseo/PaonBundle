@@ -14,35 +14,37 @@ class ModificationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'date',
-            'tisseo_datepicker',
-            array(
-                'label' => 'modification.labels.date',
-                'required' => true,
-                'attr' => array(
-                    'data-from-date' => false,
-                    'class' => 'input-range'
+        $builder
+            ->add(
+                'date',
+                'tisseo_datepicker',
+                array(
+                    'label' => 'tisseo.paon.modification.label.date',
+                    'required' => true,
+                    'attr' => array(
+                        'data-from-date' => false,
+                        'class' => 'input-range'
+                    )
                 )
             )
-        );
-        $builder->add(
-            'author',
-            'text',
-            array(
-                'label' => 'modification.labels.author',
-                'required' => true
+            ->add(
+                'author',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.modification.label.author',
+                    'required' => true
+                )
             )
-        );
-        $builder->add(
-            'description',
-            'textarea',
-            array(
-                'label' => 'modification.labels.description',
-                'required' => true
+            ->add(
+                'description',
+                'textarea',
+                array(
+                    'label' => 'tisseo.paon.modification.label.description',
+                    'required' => true
+                )
             )
-        );
-        $builder->setAction($options['action']);
+            ->setAction($options['action'])
+        ;
     }
 
     /**

@@ -7,14 +7,14 @@ use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\PaonBundle\Form\Type\LineSchemaType;
 use Tisseo\PaonBundle\Form\Type\MailType;
 use Tisseo\PaonBundle\Entity\SchematicList;
+use Tisseo\CoreBundle\Controller\CoreController;
 
-class LineSchemaController extends AbstractController
+class LineSchemaController extends CoreController
 {
     /**
      * List
      *
-     * Display the list view of all line.
-     * @return \Symfony\Component\HttpFoundation\Response A Response instance
+     * Listing Lines and their LineSchematics
      */
     public function listAction()
     {
@@ -23,34 +23,41 @@ class LineSchemaController extends AbstractController
         return $this->render(
             'TisseoPaonBundle:LineSchema:list.html.twig',
             array(
-                'pageTitle' => 'menu.schema_manage',
+                'navTitle' => 'tisseo.paon.menu.schematic.manage',
+                'pageTitle' => 'tisseo.paon.line_schema.title.list',
                 'data' => $this->get('tisseo_endiv.line_manager')->findAllLinesWithSchematic(true)
             )
         );
     }
 
     /**
+     * List schema
      * @param integer $lineId
-     * @return \Symfony\Component\HttpFoundation\Response A Response instance
+     *
+     * Listing LineSchematic of a Line
      */
     public function listSchemaAction($lineId)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
+        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+
         return $this->render(
             'TisseoPaonBundle:LineSchema:listSchema.html.twig',
             array(
-                'pageTitle' => 'menu.schema_manage',
-                'lineId' => $lineId,
+                'title' => 'tisseo.paon.line_schema.title.list_form',
+                'line' => $line,
                 'schematics' => $this->get('tisseo_endiv.schematic_manager')->findLineSchematics($lineId)
             )
         );
     }
 
     /**
+     * Choice list schema
      * @param integer $lineId
      * @param integer $schematicId
-     * @return \Symfony\Component\HttpFoundation\Response A Response instance
+     *
+     * ?
      */
     public function choiceListSchemaAction($lineId, $schematicId = null)
     {
@@ -68,10 +75,11 @@ class LineSchemaController extends AbstractController
     }
 
     /**
+     * Edit schema
      * @param integer $lineId
      * @param boolean $addInfo
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     *
+     *
      */
     public function editSchemaAction(Request $request, $lineId, $addInfo)
     {
@@ -102,49 +110,48 @@ class LineSchemaController extends AbstractController
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $lineSchematic = $form->getData();
-            $lineSchematic->setName($line->getNumber() . '_' . $lineSchematic->getDate()->format('Ymd'));
-
-            list($schematic, $message, $error) = $this->get('tisseo_endiv.schematic_manager')->save($lineSchematic);
-            $this->addFlash(
-                ($error === null ? 'success' : 'danger'),
-                $this->get('translator')->trans($message, array('%error%' => $error), 'default')
-            );
-
-            $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($schematic->getLine()->getId());
-            foreach ($lineGroupGisContents as $lineGroupGisContent) {
-                $this->addFlash(
-                    'warning',
-                    $this->get('translator')->trans('line_schema.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName()), 'default')
-                );
+            try
+            {
+                $lineSchematic = $form->getData();
+                $lineSchematic->setName($line->getNumber() . '_' . $lineSchematic->getDate()->format('Ymd'));
+                $this->get('tisseo_endiv.schematic_manager')->save($lineSchematic);
+                $this->addFlash('success', 'tisseo.flash.success.edited');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
             }
 
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_schema_list')
-            );
+            $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
+
+            foreach ($lineGroupGisContents as $lineGroupGisContent)
+                $this->addFlash('warning', $this->get('translator')->trans('line_schema.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
+
+            return $this->redirectToRoute('tisseo_paon_line_schema_list');
         }
 
         return $this->render(
             'TisseoPaonBundle:LineSchema:editSchemaForm.html.twig',
             array(
+                'title' => 'line_schema.new',
                 'form' => $form->createView(),
                 'lineId' => $lineId,
-                'title' => 'line_schema.new'
             )
         );
-
     }
 
     /**
+     * Ask schema
      * @param integer $lineId
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     *
+     * Sending a mail for a LineSchema deposit
      */
     public function askSchemaAction(Request $request, $lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_ASK_SCHEMA');
 
-        $form = $this->createForm(new MailType(),
+        $form = $this->createForm(
+            new MailType(),
             array(
                 'to' => $this->container->getParameter('tisseo_paon.default_email_dest')
             ),
@@ -168,34 +175,32 @@ class LineSchemaController extends AbstractController
             $data = $form->getData();
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Demande de nouveau schéma - LIGNE ' . $line->getNumber())
+                ->setSubject($this->get('translator')->trans('tisseo.paon.line_schema.mail.object', array('%line%' => $line->getNumber())))
                 ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
                 ->setTo(explode(',', $data['to']))
                 ->setBody($data['body']);
 
             $this->get('mailer')->send($message);
-            $this->addFlash(
-                'success',
-                $this->get('translator')->trans('mailer.schematic.confirm.success', array(), 'messages')
-            );
+            $this->addFlash('success', 'tisseo.flash.success.sent');
 
-            return $this->redirect($this->generateUrl(tisseo_paon_line_schema_list));
+            return $this->redirectToRoute('tisseo_paon_line_schema_list');
         }
 
         return $this->render(
             'TisseoPaonBundle:LineSchema:askSchemaForm.html.twig',
             array(
+                'title' => 'tisseo.paon.line_schema.title.new',
                 'form' => $form->createView(),
-                'lineNumber' => $line->getNumber(),
-                'title' => 'Nouveau schema de la ligne '
+                'lineNumber' => $line->getNumber()
             )
         );
     }
 
     /**
+     * Deprecated schema
      * @param $lineId
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     *
+     * ?
      */
     public function deprecatedSchemaAction(Request $request, $lineId)
     {
@@ -230,17 +235,18 @@ class LineSchemaController extends AbstractController
         if ($form->isValid())
         {
             $data = $form->getData();
-            foreach ($data->schematics as $schematic)
+            try
             {
-                list($schematic, $message, $error) = $schematicManager->save($schematic);
-                $this->addFlash(
-                    ($error === null ? 'success' : 'danger'),
-                    $this->get('translator')->trans($message, array('%error%' => $error), 'default')
-                );
-                if ($error !== null)
-                    break;
+                foreach ($data->schematics as $schematic)
+                    $schematicManager->save($schematic);
+                $this->addFlash('success', 'tisseo.flash.success.edited');
             }
-            return $this->redirect($this->generateUrl('tisseo_paon_line_schema_list'));
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_line_schema_list');
         }
 
         return $this->render(

@@ -59,7 +59,7 @@ class DataExchangeManager
                 return $val;
             }
         }
-        // if no master job founded, search for any running job
+        // if no master job found, search for any running job
         foreach ($jsonData["jobs"] as $key => $val) {
             if (strpos($val["color"], "_anime") !== false)
                 return $val;
@@ -138,7 +138,7 @@ class DataExchangeManager
             return null;
 
         $jobs = array();
-        foreach ($jobsList["jobs"] as $key => $val) {
+        foreach ($jobsList["jobs"] as $val) {
             $job = array(
                 "name"=> str_replace($this->masterJob, "",  $val["name"]),
                 "color" => $val["color"],

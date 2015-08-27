@@ -9,25 +9,32 @@ use Tisseo\PaonBundle\Validator\Constraints\SplitedMail;
 
 class MailType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $builder->add('to','text', array(
-            'label' => 'Destinataire',
-            'constraints' => new splitedMail()
-        ));
-
-        $builder->add('body','textarea', array(
-            'label' => 'Message',
-            'max_length' => 255
-        ));
-
-        $builder->setAction($options['action']);
+        // TODO: use translator
+        $builder
+            ->add(
+                'to',
+                'text',
+                array(
+                    'label' => 'Destinataire',
+                    'constraints' => new splitedMail()
+                )
+            )
+            ->add(
+                'body',
+                'textarea',
+                array(
+                    'label' => 'Message',
+                    'max_length' => 255
+                )
+            )
+            ->setAction($options['action'])
+        ;
     }
 
     /**

@@ -5,9 +5,6 @@ namespace Tisseo\PaonBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
-
-use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineVersionCloseType extends AbstractType
 {
@@ -24,7 +21,7 @@ class LineVersionCloseType extends AbstractType
                 array(
                     'class' => 'TisseoEndivBundle:Line',
                     'property' => 'number',
-                    'label' => 'line.labels.number',
+                    'label' => 'tisseo.paon.line.label.number',
                     'read_only' => true,
                     'disabled' => true
                 )
@@ -33,7 +30,7 @@ class LineVersionCloseType extends AbstractType
                 'startDate',
                 'date',
                 array(
-                    'label' => 'line_version.labels.start_date',
+                    'label' => 'tisseo.paon.line_version.label.start_date',
                     'read_only' => true,
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy'
@@ -43,7 +40,7 @@ class LineVersionCloseType extends AbstractType
                 'plannedEndDate',
                 'date',
                 array(
-                    'label' => 'line_version.labels.planned_end_date',
+                    'label' => 'tisseo.paon.line_version.label.planned_end_date',
                     'read_only' => true,
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy'
@@ -53,7 +50,7 @@ class LineVersionCloseType extends AbstractType
                 'version',
                 'integer',
                 array(
-                    'label' => 'line_version.labels.version',
+                    'label' => 'tisseo.paon.line_version.label.version',
                     'precision' => 0,
                     'read_only' => true
                 )
@@ -62,7 +59,7 @@ class LineVersionCloseType extends AbstractType
                 'endDate',
                 'tisseo_datepicker',
                 array(
-                    'label' => 'line_version.labels.end_date',
+                    'label' => 'tisseo.paon.line_version.label.end_date',
                     'attr' => array(
                         'data-to-date' => true
                     )

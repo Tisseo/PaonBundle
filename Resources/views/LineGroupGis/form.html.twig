@@ -7,19 +7,11 @@
 {% endblock %}
 
 {% block modal_title %}
-    {{ 'line_group_gis.form.title'|trans({}, 'default') }}
+    {{ title|trans }}
 {% endblock %}
 
 {% block modal_body %}
-    {% if error %}
-        <div class="alert alert-danger alert-dismissable danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ 'error.line_version.not_found'|trans({}, 'messages') }}
-        </div>
-    {% endif %}
     {{ form_errors(form) }}
-
-
     <div class="row">
         <div class="col-md-6">
             {{ form_row(form.name) }}
@@ -35,7 +27,7 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <h3>{{ 'line_group_gis.form.associated_lines'|trans({}, 'default') }}</h3>
+            <h3>{{ 'tisseo.paon.line_group_gis.label.associated_lines'|trans }}</h3>
             <ul class="lines list-unstyled" data-prototype="{{ form_widget(form.LineGroupGisContents.vars.prototype)|e }}">
                 {% for LineGroupGisContent in form.LineGroupGisContents %}
                     <li>{{ form_row(LineGroupGisContent.line) }}</li>
@@ -47,7 +39,7 @@
 
 {% block modal_actions %}
     <button type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-pencil"></span> {{ 'global.save'|trans }}
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
     </button>
 
     {{ form_row(form._token) }}

@@ -4,56 +4,11 @@ namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Tisseo\PaonBundle\Form\Type\CommentType;
+use Tisseo\CoreBundle\Controller\CoreController;
 
-class ExceptionController extends AbstractController
+class ExceptionController extends CoreController
 {
-    /*
-     * Build Form
-     * @return Form $form
-     *
-     * Build a new CommentType form.
-     */
-    private function buildForm()
-    {
-        $form = $this->createForm(
-            new CommentType(),
-            null,
-            array()
-        );
-        return ($form);
-    }
-
-    /*
-     * Process Form
-     * @param Form $form
-     *
-     * If form is valid, return its data in JSON array.
-     * Else, return the actual form with errors.
-     */
-    private function processForm($form)
-    {
-        $form->handleRequest($this->getRequest());
-        if ($form->isValid()) {
-            $response = new JsonResponse();
-            $response->setData(
-                array(
-                    'label' => $form['label']->getData(),
-                    'commentText' => $form['commentText']->getData()
-                )
-            );
-            return $response;
-        }
-        return $this->render(
-            'TisseoPaonBundle:Comment:form.html.twig',
-            array(
-                'form' => $form->createView(),
-                'title' => 'comment.create'
-            )
-        );
-    }
-
     /**
      * Edit
      * @param integer $lineVersionId
@@ -64,31 +19,25 @@ class ExceptionController extends AbstractController
      * Otherwise, the pseudo-form data is sent as AJAX POST request and is
      * decoded then will be used for database update.
      */
-    public function editAction($lineVersionId)
+    public function editAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
-        $request = $this->getRequest();
 
-        // POST data from pseudo-form
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
             $data = json_decode($request->getContent(), true);
 
-            $tripManager = $this->get('tisseo_endiv.trip_manager');
-            $tripManager->updateComments($data);
+            try
+            {
+                $this->get('tisseo_endiv.trip_manager')->updateComments($data);
+                $this->addFlash('success', 'tisseo.flash.success.edited');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
 
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans(
-                    'exception.comments_updated',
-                    array(),
-                    'default'
-                )
-            );
-
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_version_list')
-            );
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
         }
 
         // GET pseudo-form view
@@ -99,7 +48,8 @@ class ExceptionController extends AbstractController
         return $this->render(
             'TisseoPaonBundle:Exception:edit.html.twig',
             array(
-                'pageTitle' => 'menu.exception_manage',
+                'navTitle' => 'tisseo.paon.menu.line_version.manage',
+                'pageTitle' => 'tisseo.paon.exception.title.edit',
                 'lineVersion' => $lineVersion,
                 'data' => $gridCalendarManager->findRelatedTrips($lineVersion->getGridCalendars())
             )
@@ -111,9 +61,33 @@ class ExceptionController extends AbstractController
      *
      * Render a new CommentType form
      */
-    public function commentAction()
+    public function commentAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
-        return $this->processForm($this->buildForm());
+
+        $form = $this->createForm(
+            new CommentType()
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            $response = new JsonResponse();
+            $response->setData(
+                array(
+                    'label' => $form['label']->getData(),
+                    'commentText' => $form['commentText']->getData()
+                )
+            );
+            return $response;
+        }
+
+        return $this->render(
+            'TisseoPaonBundle:Comment:form.html.twig',
+            array(
+                'title' => 'tisseo.paon.comment.title.edit',
+                'form' => $form->createView()
+            )
+        );
     }
 }

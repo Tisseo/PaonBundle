@@ -23,39 +23,41 @@ class PrintingType extends AbstractType
         $entityTransformer->setEntityRepository("TisseoEndivBundle:LineVersion");
         $entityTransformer->setEntityType("lineVersion");
 
-        $builder->add(
-            'quantity',
-            'number',
-            array(
-                'label' => 'printing.labels.quantity',
-                'precision' => 0
-            )
-        );
-        $builder->add(
-            'date',
-            'tisseo_datepicker',
-            array(
-                'label' => 'printing.labels.date',
-                'attr' => array(
-                    'data-from-date' => true
+        $builder
+            ->add(
+                'quantity',
+                'number',
+                array(
+                    'label' => 'tisseo.paon.printing.label.quantity',
+                    'precision' => 0
                 )
             )
-        );
-        $builder->add(
-            'comment',
-            'textarea',
-            array(
-                'label' => 'printing.labels.comment',
-                'required' => false
+            ->add(
+                'date',
+                'tisseo_datepicker',
+                array(
+                    'label' => 'tisseo.paon.printing.label.date',
+                    'attr' => array(
+                        'data-from-date' => true
+                    )
+                )
             )
-        );
-        $builder->add(
-            $builder->create(
-                'lineVersion',
-                'hidden'
-            )->addModelTransformer($entityTransformer)
-        );
-        $builder->setAction($options['action']);
+            ->add(
+                'comment',
+                'textarea',
+                array(
+                    'label' => 'tisseo.paon.printing.label.comment',
+                    'required' => false
+                )
+            )
+            ->add(
+                $builder->create(
+                    'lineVersion',
+                    'hidden'
+                )->addModelTransformer($entityTransformer)
+            )
+            ->setAction($options['action'])
+        ;
     }
 
     /**
