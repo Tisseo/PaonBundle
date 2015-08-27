@@ -2,8 +2,8 @@
 {% set bundle = "TisseoPaonBundle" %}
 
 {% block table_head -%}
-    <th class="col-md-10">{{ 'data_exchange.list.columns.job'|trans({}, 'default') }}</th>
-    <th class="col-md-2">{{ 'global.actions'|trans({}, 'messages') }}</th>
+    <th class="col-md-10">{{ 'tisseo.paon.data_exchange.label.job'|trans }}</th>
+    <th class="col-md-2">{{ 'tisseo.global.actions'|trans }}</th>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -18,8 +18,7 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script>
-    require(['paon/list/dataexchange']);
-</script>
+    <script>
+        require(['paon/list/dataexchange']);
+    </script>
 {% endblock %}

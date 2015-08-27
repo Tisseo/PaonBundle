@@ -14,23 +14,25 @@ class LineDatasourceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'datasource',
-            'entity',
-            array(
-                'class' => 'TisseoEndivBundle:Datasource',
-                'property' => 'name',
-                'label' => 'datasource.labels.name'
+        $builder
+            ->add(
+                'datasource',
+                'entity',
+                array(
+                    'class' => 'TisseoEndivBundle:Datasource',
+                    'property' => 'name',
+                    'label' => 'tisseo.paon.datasource.label.name'
+                )
             )
-        );
-        $builder->add(
-            'code',
-            'text',
-            array(
-                'label' => 'datasource.labels.code'
+            ->add(
+                'code',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.datasource.label.code'
+                )
             )
-        );
-        $builder->setAction($options['action']);
+            ->setAction($options['action'])
+        ;
     }
 
     /**

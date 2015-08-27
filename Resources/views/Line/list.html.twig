@@ -3,23 +3,23 @@
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
-{% block list_title -%}
-    {{'line.list.title'|trans({}, 'default')}}
+{% block list_title %}
+    {{ parent() }}
     {% if is_granted('BUSINESS_MANAGE_LINE') %}
         -
         <a href="{{ path('tisseo_paon_line_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span> {{ 'line.create'|trans({}, 'default') }}
+            <span class="glyphicon glyphicon-plus"></span> {{ 'tisseo.paon.line.action.create'|trans }}
         </a>
     {% endif %}
 {% endblock %}
 
-{% block table_head -%}
-    <th class="col-md-6">{{'line.list.columns.label'|trans({}, 'default')}}</th>
-    <th class="col-md-4">{{'line.list.columns.physical_mode'|trans({}, 'default')}}</th>
-    <th class="col-md-2 no-search no-sort">{{'global.actions'|trans({}, 'messages')}}</th>
+{% block table_head %}
+    <th class="col-md-6">{{ 'tisseo.paon.line.label.number'|trans }}</th>
+    <th class="col-md-4">{{ 'tisseo.paon.line.label.physical_mode'|trans }}</th>
+    <th class="col-md-2 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
 {% endblock %}
 
-{% block table_body -%}
+{% block table_body %}
     {% for line in lines %}
         <tr>
             <td>
@@ -31,7 +31,7 @@
             <td>
                 {% if is_granted('BUSINESS_MANAGE_LINE') %}
                     <a class="btn btn-default" href="{{ path('tisseo_paon_line_edit', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
-                        <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|trans({}, 'messages')}}
+                        <span class="glyphicon glyphicon-edit"></span> {{ 'tisseo.global.edit'|trans }}
                     </a>
                 {% endif %}
             </td>

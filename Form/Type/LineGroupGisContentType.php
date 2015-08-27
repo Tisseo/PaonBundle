@@ -9,8 +9,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 
-use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
-
 class LineGroupGisContentType extends AbstractType
 {
     /**
@@ -19,14 +17,19 @@ class LineGroupGisContentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('line','entity', array(
-            'label' => 'line_group_gis.labels.line',
-            'property' => 'number',
-            'em' => $options['em'],
-            'class' => 'Tisseo\EndivBundle\Entity\Line',
-        ));
-
-        $builder->setAction($options['action']);
+        $builder
+            ->add(
+                'line',
+                'entity',
+                array(
+                    'label' => 'tisseo.paon.line_group_gis.label.line',
+                    'property' => 'number',
+                    'em' => $options['em'],
+                    'class' => 'Tisseo\EndivBundle\Entity\Line',
+                )
+            )
+            ->setAction($options['action'])
+        ;
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options)
@@ -58,7 +61,6 @@ class LineGroupGisContentType extends AbstractType
         $resolver->setAllowedTypes(array(
             'em' => 'Doctrine\Common\Persistence\ObjectManager',
         ));
-
     }
 
     /**

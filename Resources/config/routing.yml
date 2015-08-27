@@ -66,17 +66,13 @@ tisseo_paon_calendar_edit:
     options:
         expose: true
 tisseo_paon_calendar_form:
-    pattern: /offers/add/calendar/{lineVersionId}
+    pattern: /calendars/add
     defaults: { _controller: TisseoPaonBundle:Calendar:renderForm }
-    requirements:
-        lineVersionId: \d+
     options:
         expose: true
 tisseo_paon_calendar_create:
-    pattern: /offers/create/calendar/{lineVersionId}
+    pattern: /calendars/create
     defaults: { _controller: TisseoPaonBundle:Calendar:create }
-    requirements:
-        lineVersionId: \d+
     options:
         expose: true
 

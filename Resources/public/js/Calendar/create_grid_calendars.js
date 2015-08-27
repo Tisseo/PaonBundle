@@ -1,4 +1,31 @@
 define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'], function($) {
+
+    createDroppable = function(container) {
+        $(container).droppable({
+            over: function(event, ui) {
+                $(this).find("tr:first").toggleClass("success");
+                $(this).find("tr:first").toggleClass("info");
+            },
+            out: function(event, ui) {
+                $(this).find("tr:first").toggleClass("success");
+                $(this).find("tr:first").toggleClass("info");
+            },
+            drop: function(event, ui) {
+                if ($(ui.draggable).find("tr:first td").length == 2) {
+                    $(ui.draggable).find("tr").append("<td></td>");
+                }
+                $(this).find("tr:first").toggleClass("success");
+                $(this).find("tr:first").toggleClass("info");
+                $(this).after(ui.draggable);
+                if ($(".grid-mask-type-table").children().length == 2)
+                {
+                    $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>"+Translator.trans('tisseo.paon.calendar.message.no_data')+"</span>");
+                    $(".grid-mask-type-table").next().fadeIn();
+                }
+            }
+        });
+    };
+
     $(document).ready(function() {
         /*
          * delete calendar button removes gridCalendar's <tbody> from left table in
@@ -6,6 +33,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
          * be deleted from the current LineVersion in database.
          */
         $(document).on('click', '.delete-calendar', function() {
+            $(this).attr('disabled', 'disabled');
             // handle no-data message placed after right table
             if ($(this).closest('tbody').next().hasClass("grid-mask-type") && $(".grid-mask-type-table").next().hasClass("no-data")) {
                 $(".grid-mask-type-table").next().fadeOut(300, function() {
@@ -34,7 +62,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
          * Otherwise, a new gridCalendar <tbody> is sent
          */
         $(document).on('click', '#apply-grid-calendar-form', function() {
-            var line_id = $("#line-version-id").val();
+            $(this).attr('disabled', 'disabled');
             var $inputs = $("#new-grid-calendar :input");
             var data = {};
             $inputs.each(function() {
@@ -44,7 +72,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
             });
             var getForm = false;
             $.ajax({
-                url : Routing.generate('tisseo_paon_calendar_create')+"/"+line_id,
+                url : Routing.generate('tisseo_paon_calendar_create'),
                 type: 'POST',
                 data : data,
                 success: function(data) {
@@ -56,29 +84,8 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                         {
                             getForm = true;
                             $(data.content).insertBefore("#grid-calendar tbody:last-child");
-                            /* This function is called in Calendar/edit.html
-                             * view, so it could be great to declare it and
-                             * call it from only one source */
-                            $(".new-droppable").droppable({
-                                over: function(event, ui) {
-                                    $(this).find("tr:first").addClass("success");
-                                },
-                                out: function(event, ui) {
-                                    $(this).find("tr:first").removeClass("success");
-                                },
-                                drop: function(event, ui) {
-                                    if ($(ui.draggable).find("tr:first td").length == 2) {
-                                        $(ui.draggable).find("tr").append("<td></td>");
-                                    }
-                                    $(this).find("tr:first").removeClass("success");
-                                    $(this).after(ui.draggable);
-                                    if ($(".grid-mask-type-table").children().length == 2)
-                                    {
-                                        $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>"+Translator.trans('calendar.labels.no_data', {}, 'messages')+"</span>");
-                                        $(".grid-mask-type-table").next().fadeIn();
-                                    }
-                                }
-                            }).removeClass("new-droppable");
+                            createDroppable(".new-droppable");
+                            $(".new-droppable").removeClass("new-droppable");
                         }
                     }
                 }
@@ -86,7 +93,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                 if (getForm === true)
                 {
                     $.ajax({
-                        url : Routing.generate('tisseo_paon_calendar_form')+"/"+line_id,
+                        url : Routing.generate('tisseo_paon_calendar_form'),
                         type: 'GET',
                         success: function(data) {
                             $("#new-grid-calendar").html(data);
@@ -101,7 +108,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
          * GridCalendar and link/unlink them to GridMaskType.
          */
         $(document).on('click', '#submit-calendars', function() {
-            var line_id = $("#line-version-id").val();
+            var lineId = $("#grid-calendar").data('line-version');
             var $inputs = $("#grid-calendar :input.grid-calendar-row, #grid-calendar :input.grid-mask-type-row");
             var data = {};
             var gridCalendar;
@@ -126,7 +133,7 @@ define(['jquery', 'jquery_ui_droppable', 'fosjsrouting', 'translations/messages'
                     data[lastIndex].gmt.push($(this).val());
             });
             $.ajax({
-                url : Routing.generate('tisseo_paon_calendar_edit')+"/"+line_id,
+                url : Routing.generate('tisseo_paon_calendar_edit')+"/"+lineId,
                 type: 'POST',
                 data : JSON.stringify(data),
                 success: function(data) {

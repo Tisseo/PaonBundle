@@ -116,3 +116,8 @@ table .grid-mask-type {
 #thumb .popover {
     max-width:none;
 }
+img.thumb {
+    height:250px;
+    width:600px;
+    padding:10px;'
+}

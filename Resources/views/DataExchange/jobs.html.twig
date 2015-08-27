@@ -3,31 +3,29 @@
         <td colspan=2>
             <div class='alert alert-info alert-dismissable info'>
                 <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                {{ 'data_exchange.job_running'|trans({'%name%': running_job.name, '%user%': running_job.user}, 'default') }}
+                {{ 'tisseo.paon.data_exchange.message.job_running'|trans({'%name%': runningJob.name, '%user%': runningJob.user}, 'default') }}
             </div>
         </td>
     </tr>
 {% endif %}
 
-{% if jobs is empty %}
-    <tr>
-        <td colspan=2>{{ 'error.no_jobs'|trans({}, 'messages') }}</td>
-    </tr>
-{% endif %}
-
 {% for job in jobs %}
-<tr>
-    <td>
-    {% if "launcher" in job|keys %}
-        <span style="color:{{ job.color }};">{{ job.name }} - {{ 'data_exchange.launched_by'|trans({'%user%': job.launcher}, 'default') }}</span>
-    {% else %}
-        <span style="color:{{ job.color }};">{{ job.name }}</span>
-    {% endif %}
-    </td>
-    <td>
-        <a href="{{ path('tisseo_paon_data_exchange_launch', {'jobName': job.name}) }}" role="button" class="btn btn-default {% if running %} disabled {% endif %}">
-            {{ 'data_exchange.launch_job'|trans({}, 'default') }}
-        </a>
-    </td>
-</tr>
+    <tr>
+        <td>
+        {% if "launcher" in job|keys %}
+            <span style="color:{{ job.color }};">{{ job.name }} - {{ 'tisseo.paon.data_exchange.message.launched_by'|trans({'%user%': job.launcher}, 'default') }}</span>
+        {% else %}
+            <span style="color:{{ job.color }};">{{ job.name }}</span>
+        {% endif %}
+        </td>
+        <td>
+            <a href="{{ path('tisseo_paon_data_exchange_launch', {'jobName': job.name}) }}" role="button" class="btn btn-default {% if running %} disabled {% endif %}">
+                {{ 'tisseo.paon.data_exchange.action.launch'|trans }}
+            </a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan=2>{{ 'tisseo.global.no_items'|trans }}</td>
+    </tr>
 {% endfor %}

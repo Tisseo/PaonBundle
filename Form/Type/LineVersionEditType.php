@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-
 use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class LineVersionEditType extends AbstractType
@@ -52,7 +51,7 @@ class LineVersionEditType extends AbstractType
 
                     $form->add('childLine', 'text',
                         array(
-                            'label' => 'line_version.labels.child_line',
+                            'label' => 'tisseo.paon.line_version.label.child_line',
                             'mapped' => false,
                             'read_only' => true,
                             'data' => $lineNumber
@@ -66,7 +65,7 @@ class LineVersionEditType extends AbstractType
                 array(
                     'class' => 'TisseoEndivBundle:Line',
                     'property' => 'number',
-                    'label' => 'line.labels.number',
+                    'label' => 'tisseo.paon.line.label.number',
                     'read_only' => true,
                     'disabled' => true
                 )
@@ -75,7 +74,7 @@ class LineVersionEditType extends AbstractType
                 'startDate',
                 'date',
                 array(
-                    'label' => 'line_version.labels.start_date',
+                    'label' => 'tisseo.paon.line_version.label.start_date',
                     'read_only' => true,
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy'
@@ -85,7 +84,7 @@ class LineVersionEditType extends AbstractType
                 'plannedEndDate',
                 'date',
                 array(
-                    'label' => 'line_version.labels.planned_end_date',
+                    'label' => 'tisseo.paon.line_version.label.planned_end_date',
                     'read_only' => true,
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy'
@@ -95,7 +94,7 @@ class LineVersionEditType extends AbstractType
                 'version',
                 'integer',
                 array(
-                    'label' => 'line_version.labels.version',
+                    'label' => 'tisseo.paon.line_version.label.version',
                     'precision' => 0,
                     'read_only' => true
                 )
@@ -104,28 +103,28 @@ class LineVersionEditType extends AbstractType
                 'name',
                 'text',
                 array(
-                    'label' => 'line_version.labels.name'
+                    'label' => 'tisseo.paon.line_version.label.name'
                 )
             )
             ->add(
                 'forwardDirection',
                 'text',
                 array(
-                    'label' => 'line_version.labels.forward'
+                    'label' => 'tisseo.paon.line_version.label.forward'
                 )
             )
             ->add(
                 'backwardDirection',
                 'text',
                 array(
-                    'label' => 'line_version.labels.backward'
+                    'label' => 'tisseo.paon.line_version.label.backward'
                 )
             )
             ->add(
                 'fgColor',
                 'entity',
                 array(
-                    'label' => 'line_version.labels.fg_color',
+                    'label' => 'tisseo.paon.line_version.label.fg_color',
                     'class' => 'TisseoEndivBundle:Color',
                     'property' => 'name',
                     'empty_value' => '',
@@ -140,7 +139,7 @@ class LineVersionEditType extends AbstractType
                 'bgColor',
                 'entity',
                 array(
-                    'label' => 'line_version.labels.bg_color',
+                    'label' => 'tisseo.paon.line_version.label.bg_color',
                     'class' => 'TisseoEndivBundle:Color',
                     'property' => 'name',
                     'empty_value' => '',
@@ -159,21 +158,21 @@ class LineVersionEditType extends AbstractType
                     'property' => 'name',
                     'expanded' => true,
                     'multiple' => true,
-                    'label' => 'line_version.labels.properties'
+                    'label' => 'tisseo.paon.line_version.label.properties'
                 )
             )
             ->add(
                 'depot',
                 'text',
                 array(
-                    'label' => 'line_version.labels.depot'
+                    'label' => 'tisseo.paon.line_version.label.depot'
                 )
             )
             ->add(
                 'button_schematic',
                 'button',
                 array(
-                    'label' => 'line_version.labels.choose_schematic',
+                    'label' => 'tisseo.paon.line_version.label.choose_schematic',
                     'attr' => array(
                         'class' => 'choose-schematic'
                     )
@@ -201,7 +200,7 @@ class LineVersionEditType extends AbstractType
                 'comment',
                 'textarea',
                 array(
-                    'label' => 'line_version.labels.comment',
+                    'label' => 'tisseo.paon.line_version.label.comment',
                     'required' => false
                 )
             )
@@ -209,7 +208,7 @@ class LineVersionEditType extends AbstractType
                 'modifications',
                 'collection',
                 array(
-                    'label' => 'line_version.labels.modifications',
+                    'label' => 'tisseo.paon.line_version.label.modifications',
                     'type' => new ModificationType(),
                     'allow_add' => true,
                     'by_reference' => false

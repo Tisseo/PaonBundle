@@ -15,36 +15,40 @@ class LineType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'number',
-            'text',
-            array('label' => 'line.labels.number')
-        );
-        $builder->add(
-            'physicalMode',
-            'entity',
-            array(
-                'class' => 'TisseoEndivBundle:PhysicalMode',
-                'property' => 'name',
-                'label' => 'line.labels.physical_mode'
+        $builder
+            ->add(
+                'number',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.line.label.number'
+                )
+            )    
+            ->add(
+                'physicalMode',
+                'entity',
+                array(
+                    'class' => 'TisseoEndivBundle:PhysicalMode',
+                    'property' => 'name',
+                    'label' => 'tisseo.paon.line.label.physical_mode'
+                )
             )
-        );
-        $builder->add(
-            'priority',
-            'number',
-            array(
-                'label' => 'line.labels.priority'
+            ->add(
+                'priority',
+                'integer',
+                array(
+                    'label' => 'tisseo.paon.line.label.priority'
+                )
             )
-        );
-        $builder->add(
-            'lineDatasources',
-            'collection',
-            array(
-                'type' => new LineDatasourceType(),
-                'by_reference' => false
+            ->add(
+                'lineDatasources',
+                'collection',
+                array(
+                    'type' => new LineDatasourceType(),
+                    'by_reference' => false
+                )
             )
-        );
-        $builder->setAction($options['action']);
+            ->setAction($options['action'])
+        ;
     }
 
     /**

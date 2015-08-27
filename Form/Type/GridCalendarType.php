@@ -5,7 +5,6 @@ namespace Tisseo\PaonBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
 
 class GridCalendarType extends AbstractType
 {
@@ -15,70 +14,61 @@ class GridCalendarType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'name',
-            'text',
-            array(
-                'label' => ' '
+        $builder
+            ->add(
+                'name',
+                'text'
             )
-        );
-        $builder->add(
-            'monday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.monday',
-                'required' => false
+            ->add(
+                'monday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->add(
-            'tuesday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.tuesday',
-                'required' => false
+            ->add(
+                'tuesday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->add(
-            'wednesday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.wednesday',
-                'required' => false
+            ->add(
+                'wednesday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->add(
-            'thursday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.thursday',
-                'required' => false
+            ->add(
+                'thursday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->add(
-            'friday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.friday',
-                'required' => false
+            ->add(
+                'friday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->add(
-            'saturday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.saturday',
-                'required' => false
+            ->add(
+                'saturday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->add(
-            'sunday',
-            'checkbox',
-            array(
-                'label' => 'grid_calendar.labels.sunday',
-                'required' => false
+            ->add(
+                'sunday',
+                'checkbox',
+                array(
+                    'required' => false
+                )
             )
-        );
-        $builder->setAction($options['action']);
+        ;
     }
 
     /**

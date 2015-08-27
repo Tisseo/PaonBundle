@@ -3,16 +3,15 @@
 <div class="row">
     <div class="col-md-12">
         {{ form_start(form) }}
-        {# TODO: USE TRANSLATION #}
         <ul>
-            <li>Objet : Demande de nouveau schéma - LIGNE {{ lineNumber }}</li>
-            <li>Date : {{ "now"|date("d/m/Y") }}</li>
-            <li>Auteur : {{ app.user.username }} </li>
+            <li>{{ 'tisseo.paon.line_schema.mail.object'|trans({ '%line%': lineNumber }) }}</li>
+            <li>{{ 'tisseo.paon.line_schema.mail.date'|trans({ '%date%': "now"|date("d/m/Y") }) }}</li>
+            <li>{{ 'tisseo.paon.line_schema.mail.author'|trans({ '%user%': app.user.username }) }}</li>
         </ul>
 
         {{ form_row(form.to) }}
         {{ form_row(form.body) }}
-        <input type="submit" class="btn btn-success pull-right" value="{{ 'global.send'|trans({}, 'messages') }}" >
+        <input type="submit" class="btn btn-success pull-right" value="{{ 'tisseo.global.send'|trans }}" >
         {{ form_end(form) }}
     </div>
 </div>

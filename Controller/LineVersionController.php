@@ -6,153 +6,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Tisseo\PaonBundle\Form\Type\LineVersionEditType;
 use Tisseo\PaonBundle\Form\Type\LineVersionCreateType;
 use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
+use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\LineVersion;
 
-class LineVersionController extends AbstractController
+class LineVersionController extends CoreController
 {
-    private function foundLineVersion(LineVersion $lineVersion = null)
-    {
-        if (empty($lineVersion))
-        {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                $this->get('translator')->trans(
-                    'line_version.not_found',
-                    array(),
-                    'default'
-                )
-            );
-
-            return false;
-        }
-
-        return true;
-    }
-
     /**
-     * Edit
-     * @param integer $lineVersionId
+     * List
      *
-     * Editing a LineVersion
+     * Listing current/future versions of LineVersions.
      */
-    public function editAction($lineVersionId)
+    public function listAction()
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
-
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        $lineVersion = $lineVersionManager->find($lineVersionId);
-
-        if (!($this->foundLineVersion($lineVersion)))
-        {
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_version_list')
-            );
-        }
-
-        // Update LineVersion -> LineVersionProperty -> Property relations
-        $propertyManager = $this->get('tisseo_endiv.property_manager');
-        $properties = $propertyManager->findAll();
-        $lineVersion->synchronizeLineVersionProperties($properties);
-
-        // Build the form and process its content
-        $form = $this->createForm(
-            new LineVersionEditType(),
-            $lineVersion,
-            array(
-                'action' => $this->generateUrl(
-                    'tisseo_paon_line_version_edit',
-                    array(
-                        'lineVersionId' => $lineVersion->getId()
-                    )
-                ),
-                'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
-            )
-        );
-
-        $form->handleRequest($this->getRequest());
-        if ($form->isValid()) {
-            $write = $lineVersionManager->save($form->getData());
-
-            $this->get('session')->getFlashBag()->add(
-                ($write[0] ? 'success' : 'danger'),
-                $this->get('translator')->trans(
-                    $write[1],
-                    array(),
-                    'default'
-                )
-            );
-
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_version_list')
-            );
-        }
+        $this->isGranted('BUSINESS_LIST_LINE_VERSION');
 
         return $this->render(
-            'TisseoPaonBundle:LineVersion:edit.html.twig',
+            'TisseoPaonBundle:LineVersion:list.html.twig',
             array(
-                'form' => $form->createView(),
-                'lineVersion' => $lineVersion
-            )
-        );
-    }
-
-    /**
-     * Close LineVersion
-     * @param integer $lineVersionId
-     *
-     * Closing a LineVersion by setting its endDate.
-     */
-    public function closeAction($lineVersionId)
-    {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
-
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        $lineVersion = $lineVersionManager->find($lineVersionId);
-
-        if (!($this->foundLineVersion($lineVersion)))
-        {
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_version_list')
-            );
-        }
-
-        // Build the form and process its content
-        $form = $this->createForm(
-            new LineVersionCloseType(),
-            $lineVersion,
-            array(
-                'action' => $this->generateUrl(
-                    'tisseo_paon_line_version_close',
-                    array(
-                        'lineVersionId' => $lineVersion->getId()
-                    )
-                )
-            )
-        );
-
-        $form->handleRequest($this->getRequest());
-        if ($form->isValid()) {
-            $write = $lineVersionManager->save($form->getData());
-
-            $this->get('session')->getFlashBag()->add(
-                ($write[0] ? 'success' : 'danger'),
-                $this->get('translator')->trans(
-                    $write[1],
-                    array(),
-                    'default'
-                )
-            );
-
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_version_list')
-            );
-        }
-
-        return $this->render(
-            'TisseoPaonBundle:LineVersion:close.html.twig',
-            array(
-                'form' => $form->createView(),
-                'lineVersion' => $lineVersion
+                'navTitle' => 'tisseo.paon.menu.line_version.manage',
+                'pageTitle' => 'tisseo.paon.line_version.title.list',
+                'data' => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions(new \Datetime(), null, true)
             )
         );
     }
@@ -171,99 +44,206 @@ class LineVersionController extends AbstractController
             $lineId = $request->request->get('lineId');
 
         $lineManager = $this->get('tisseo_endiv.line_manager');
-
-        $minDate = null;
-        if (!empty($lineId))
+        if (empty($lineId))
         {
-            $propertyManager = $this->get('tisseo_endiv.property_manager');
-            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-
-            $properties = $propertyManager->findAll();
-            $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);
-
-            // no previous offer on this line
-            if (empty($lineVersionResult))
-            {
-                $line = $lineManager->find($lineId);
-                $lineVersion = new LineVersion($properties, null, $line);
-            }
-            else
-            {
-                $lineVersion = new LineVersion($properties, $lineVersionResult, null);
-                $minDate = $lineVersionResult->getStartDate();
-                $minDate->add(new \DateInterval('P1D'));
-            }
-
-            $modificationManager = $this->get('tisseo_endiv.modification_manager');
-            $form = $this->createForm(
-                new LineVersionCreateType($modificationManager, ($lineVersion->getLine() !== null ? $lineVersion->getLine()->getId() : null)),
-                $lineVersion,
-                array(
-                    'action' => $this->generateUrl(
-                        'tisseo_paon_line_version_create',
-                        array(
-                            'lineId' => $lineVersion->getLine()->getId()
-                        )
-                    ),
-                    'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
-                )
-            );
-
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-
-                $user = $this->get('security.context')->getToken()->getUser();
-                $write = $lineVersionManager->create($form->getData(), $user->getUsername());
-
-                $this->get('session')->getFlashBag()->add(
-                    ($write[0] ? 'success' : 'danger'),
-                    $this->get('translator')->trans(
-                        $write[1],
-                        array(),
-                        'default'
-                    )
-                );
-
-                return $this->redirect(
-                    $this->generateUrl('tisseo_paon_line_version_list')
-                );
-            }
-
             return $this->render(
                 'TisseoPaonBundle:LineVersion:create.html.twig',
                 array(
-                    'form' => $form->createView(),
-                    'lineVersion' => $lineVersion,
-                    'lines' => $lineManager->findAllLinesByPriority(),
-                    'minDate' => $minDate
+                    'title' => 'tisseo.paon.line_version.title.create',
+                    'form' => null,
+                    'lineVersion' => null,
+                    'lines' => $lineManager->findAllLinesByPriority()
                 )
             );
+        }
+
+        $minDate = null;
+        $propertyManager = $this->get('tisseo_endiv.property_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+
+        $properties = $propertyManager->findAll();
+        $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);
+
+        // no previous offer on this line
+        if (empty($lineVersionResult))
+        {
+            $line = $lineManager->find($lineId);
+            $lineVersion = new LineVersion($properties, null, $line);
+        }
+        else
+        {
+            $lineVersion = new LineVersion($properties, $lineVersionResult, null);
+            $minDate = $lineVersionResult->getStartDate();
+            $minDate->add(new \DateInterval('P1D'));
+        }
+        
+        $modificationManager = $this->get('tisseo_endiv.modification_manager');
+        $form = $this->createForm(
+            new LineVersionCreateType($modificationManager, ($lineVersion->getLine() !== null ? $lineVersion->getLine()->getId() : null)),
+            $lineVersion,
+            array(
+                'action' => $this->generateUrl(
+                    'tisseo_paon_line_version_create',
+                    array(
+                        'lineId' => $lineVersion->getLine()->getId()
+                    )
+                ),
+                'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
+            )
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            try
+            {
+                $lineVersion = $form->getData();
+                $lineVersionDatasrc = new LineVersionDatasource();
+                $this->addPaonDatasource($lineVersionDatasrc);
+                $lineVersion->addLineVersionDatasource($lineVersionDatasrc);
+        
+                $lineVersionManager->create($lineVersion);
+                $this->addFlash('success', 'tisseo.flash.success.created');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
         }
 
         return $this->render(
             'TisseoPaonBundle:LineVersion:create.html.twig',
             array(
-                'form' => null,
-                'lineVersion' => null,
-                'lines' => $lineManager->findAllLinesByPriority()
+                'title' => 'tisseo.paon.line_version.title.create',
+                'form' => $form->createView(),
+                'lineVersion' => $lineVersion,
+                'lines' => $lineManager->findAllLinesByPriority(),
+                'minDate' => $minDate
             )
         );
     }
 
     /**
-     * List
+     * Edit
+     * @param integer $lineVersionId
      *
-     * Listing current/future versions of LineVersions.
+     * Editing a LineVersion
      */
-    public function listAction()
+    public function editAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $lineVersion = $lineVersionManager->find($lineVersionId);
+
+        if (empty($lineVersion))
+        {
+            $this->addFlash('warning', 'tisseo.paon.line_version.message.not_found');
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
+        }
+
+        // Update LineVersion -> LineVersionProperty -> Property relations
+        // TODO: Looking at the Log table, it seems the synchronization leads to
+        // a systematic UPDATE in database. Check if something better can be done.
+        $properties = $this->get('tisseo_endiv.property_manager')->findAll();
+        $lineVersion->synchronizeLineVersionProperties($properties);
+
+        $form = $this->createForm(
+            new LineVersionEditType(),
+            $lineVersion,
+            array(
+                'action' => $this->generateUrl(
+                    'tisseo_paon_line_version_edit',
+                    array(
+                        'lineVersionId' => $lineVersion->getId()
+                    )
+                ),
+                'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
+            )
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            try
+            {
+                $lineVersionManager->save($form->getData());
+                $this->addFlash('success', 'tisseo.flash.success.edited');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
+        }
 
         return $this->render(
-            'TisseoPaonBundle:LineVersion:list.html.twig',
+            'TisseoPaonBundle:LineVersion:edit.html.twig',
             array(
-                'pageTitle' => 'menu.line_version_active',
-                'data' => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions(new \Datetime(), null, true)
+                'title' => 'tisseo.paon.line_version.title.edit',
+                'form' => $form->createView(),
+                'lineVersion' => $lineVersion
+            )
+        );
+    }
+
+    /**
+     * Close LineVersion
+     * @param integer $lineVersionId
+     *
+     * Closing a LineVersion by setting its endDate.
+     */
+    public function closeAction(Request $request, $lineVersionId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+
+        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $lineVersion = $lineVersionManager->find($lineVersionId);
+
+        if (empty($lineVersion))
+        {
+            $this->addFlash('warning', 'tisseo.paon.line_version.message.not_found');
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
+        }
+
+        $form = $this->createForm(
+            new LineVersionCloseType(),
+            $lineVersion,
+            array(
+                'action' => $this->generateUrl(
+                    'tisseo_paon_line_version_close',
+                    array(
+                        'lineVersionId' => $lineVersion->getId()
+                    )
+                )
+            )
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            try
+            {
+                $lineVersionManager->save($form->getData());
+                $this->addFlash('success', 'tisseo.flash.success.created');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
+        }
+
+        return $this->render(
+            'TisseoPaonBundle:LineVersion:close.html.twig',
+            array(
+                'title' => 'tisseo.paon.line_version.title.close',
+                'form' => $form->createView(),
+                'lineVersion' => $lineVersion
             )
         );
     }
@@ -272,7 +252,7 @@ class LineVersionController extends AbstractController
      * Show
      * @param integer $lineVersionId
      *
-     * Display a LineVersion in a view.
+     * Showing LineVersion informations
      */
     public function showAction(Request $request, $lineVersionId)
     {
@@ -284,22 +264,21 @@ class LineVersionController extends AbstractController
         );
 
         $history = false;
-        $title = 'line_version.show';
+        $title = 'tisseo.paon.line_version.title.show';
 
         if ($request->isXmlHttpRequest())
         {
             $history = $request->get('history');
             if ($history)
-                $title = 'line_version.history.show';
+                $title = 'tisseo.paon.line_version.title.show_history';
         }
 
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         return $this->render(
             'TisseoPaonBundle:LineVersion:show.html.twig',
             array(
                 'title' => $title,
                 'history' => $history,
-                'lineVersion' => $lineVersionManager->find($lineVersionId)
+                'lineVersion' => $this->get('tisseo_endiv.line_version_manager')->find($lineVersionId)
             )
         );
     }
@@ -313,13 +292,12 @@ class LineVersionController extends AbstractController
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
 
-        $lineManager = $this->get('tisseo_endiv.line_manager');
-
         return $this->render(
             'TisseoPaonBundle:LineVersion:history.html.twig',
             array(
-                'pageTitle' => 'menu.line_version_history',
-                'lines' => $lineManager->findAllLinesByPriority()
+                'navTitle' => 'tisseo.paon.menu.line_version.manage',
+                'pageTitle' => 'tisseo.paon.line_version.title.history',
+                'lines' => $this->get('tisseo_endiv.line_manager')->findAllLinesByPriority()
             )
         );
     }
@@ -334,21 +312,17 @@ class LineVersionController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $storedProcedureManager = $this->get('tisseo_endiv.stored_procedure_manager');
-        $result = $storedProcedureManager->cleanLineVersion($lineVersionId);
+        try
+        {
+            $this->get('tisseo_endiv.stored_procedure_manager')->cleanLineVersion($lineVersionId);
+            $this->addFlash('success', 'tisseo.flash.success.cleaned');
+        }
+        catch (\Exception $e)
+        {
+            $this->addFlashException($e->getMessage());
+        }
 
-        $this->get('session')->getFlashBag()->add(
-            ($result ? 'success' : 'danger'),
-            $this->get('translator')->trans(
-                ($result ? 'line_version.clean' : 'line_version_not_clean'),
-                array(),
-                'default'
-            )
-        );
-
-        return $this->redirect(
-            $this->generateUrl('tisseo_paon_line_version_list')
-        );
+        return $this->redirectToRoute('tisseo_paon_line_version_list');
     }
 
     /**
@@ -361,23 +335,16 @@ class LineVersionController extends AbstractController
     {
         $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-
-        try {
-            $lineVersionManager->delete($lineVersionId);
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans(
-                    'line_version.deleted', array(), 'default'
-                )
-            );
-        } catch (\Exception $e) {
-            $this->get('session')->getFlashBag()->add('danger', $e->getMessage());
+        try
+        {
+            $this->get('tisseo_endiv.line_version_manager')->delete($lineVersionId);
+            $this->addFlash('success', 'tisseo.flash.success.deleted');
+        }
+        catch (\Exception $e)
+        {
+            $this->addFlashException($e->getMessage());
         }
 
-        return $this->redirect(
-            $this->generateUrl('tisseo_paon_line_version_list')
-        );
+        return $this->redirectToRoute('tisseo_paon_line_version_list');
     }
 }

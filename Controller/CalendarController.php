@@ -3,66 +3,30 @@
 namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-
 use Tisseo\PaonBundle\Form\Type\GridCalendarType;
+use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\GridCalendar;
 use Tisseo\EndivBundle\Entity\LineVersion;
 
-class CalendarController extends AbstractController
+class CalendarController extends CoreController
 {
     /*
-     * Build Form
-     * @param LineVersion $lineVersion
-     * @return Form $form
+     * Render Form
      *
-     * Build a new GridCalendarType form.
+     * This method is called through ajax request in order to display a new
+     * fresh GridCalendarType form when a previous one has just been
+     * submitted and validated.
      */
-    private function buildForm(LineVersion $lineVersion)
+    public function renderFormAction()
     {
-        $gridCalendar = new GridCalendar($lineVersion);
+        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
+
+        $gridCalendar = new GridCalendar();
+
         $form = $this->createForm(
             new GridCalendarType(),
-            $gridCalendar,
-            array(
-                'action' => $this->generateUrl(
-                    'tisseo_paon_calendar_edit',
-                    array(
-                        'lineVersionId' => $lineVersion->getId()
-                    )
-                )
-            )
+            $gridCalendar
         );
-        return ($form);
-    }
-
-    /*
-     * Process Form
-     * @param Form $form
-     * @param integer $lineVersionId
-     *
-     * If form is valid, return a new gridCalendar rendered in a specific view
-     * (as html table for view integration).
-     * Else, return the actual form view with errors.
-     */
-    private function processForm($form, $lineVersionId)
-    {
-        $request = $this->getRequest();
-        $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-
-            $lineVersion = $lineVersionManager->find($lineVersionId);
-            $gridCalendar = $form->getData();
-            $gridCalendar->setLineVersion($lineVersion);
-
-            return $this->render(
-                'TisseoPaonBundle:GridCalendar:new.html.twig',
-                array(
-                    'gridCalendar' => $gridCalendar
-                )
-            );
-        }
 
         return $this->render(
             'TisseoPaonBundle:GridCalendar:form.html.twig',
@@ -73,21 +37,37 @@ class CalendarController extends AbstractController
     }
 
     /*
-     * Render Form
-     * @param integer $lineVersionId
+     * Create
      *
-     * This method is called through ajax request in order to display a new
-     * fresh GridCalendarType form when a previous one has just been
-     * submitted and validated.
+     * This function is called though ajax request and will launch GridCalendarType
+     * form validation process.
      */
-    public function renderFormAction($lineVersionId)
+    public function createAction(Request $request)
     {
         $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        $lineVersion = $lineVersionManager->find($lineVersionId);
+        $this->isPostAjax($request);
 
-        $form = $this->buildForm($lineVersion);
+        $gridCalendar = new GridCalendar();
+
+        $form = $this->createForm(
+            new GridCalendarType(),
+            $gridCalendar
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            $gridCalendar = $form->getData();
+
+            return $this->render(
+                'TisseoPaonBundle:GridCalendar:new.html.twig',
+                array(
+                    'gridCalendar' => $gridCalendar
+                )
+            );
+        }
+
         return $this->render(
             'TisseoPaonBundle:GridCalendar:form.html.twig',
             array(
@@ -106,23 +86,28 @@ class CalendarController extends AbstractController
      * Otherwise, the pseudo-form data is sent as AJAX POST request and is
      * decoded then will be used for database update.
      */
-    public function editAction($lineVersionId)
+    public function editAction(Request $request, $lineVersionId)
     {
         $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
-        $request = $this->getRequest();
 
         $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
         {
-            $data = json_decode($request->getContent(), true);
-            $freshData = $lineVersionManager->updateGridCalendars($data, $lineVersionId);
-            $gridCalendarManager->attachGridCalendars($freshData);
+            try
+            {
+                $data = json_decode($request->getContent(), true);
+                $freshData = $lineVersionManager->updateGridCalendars($data, $lineVersionId);
+                $gridCalendarManager->attachGridCalendars($freshData);
+                $this->addFlash('success', 'tisseo.flash.success.edited');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
 
-            return $this->redirect(
-                $this->generateUrl('tisseo_paon_line_version_list')
-            );
+            return $this->redirectToRoute('tisseo_paon_line_version_list');
         }
 
         $lineVersion = $lineVersionManager->findWithPreviousCalendars($lineVersionId);
@@ -130,33 +115,11 @@ class CalendarController extends AbstractController
         return $this->render(
             'TisseoPaonBundle:Calendar:edit.html.twig',
             array(
-                'title' => 'menu.grid_calendar_manage',
+                'title' => 'tisseo.paon.calendar.title.edit',
                 'lineVersion' => $lineVersion,
                 'gridCalendars' => $gridCalendarManager->findRelatedGridMaskTypes($lineVersion->getGridCalendars(), $lineVersion->getId()),
                 'gridMaskTypes' => $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion),
             )
         );
-    }
-
-    /*
-     * Create
-     * @param ineteger $lineVersionId
-     *
-     * This function is called though ajax request and will launch GridCalendarType
-     * form validation process.
-     */
-    public function createAction($lineVersionId)
-    {
-        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
-        $request = $this->getRequest();
-
-        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
-        {
-            $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-            $lineVersion = $lineVersionManager->find($lineVersionId);
-
-            return $this->processForm($this->buildForm($lineVersion), $lineVersion->getId());
-        }
-        return (null);
     }
 }

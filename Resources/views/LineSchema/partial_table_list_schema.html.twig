@@ -1,14 +1,14 @@
 <table class="table table-striped">
     <thead>
-        <th>{{ 'line_schema.list.columns.name'|trans({}, 'default') }}</th>
-        <th>{{ 'line_schema.list.columns.file'|trans({}, 'default') }}</th>
-        <th>{{ 'line_schema.list.columns.date'|trans({}, 'default') }}</th>
-        <th>{{ 'line_schema.list.columns.comment'|trans({}, 'default') }}</th>
+        <th>{{ 'tisseo.paon.line_schema.label.name'|trans }}</th>
+        <th>{{ 'tisseo.paon.line_schema.label.file'|trans }}</th>
+        <th>{{ 'tisseo.paon.line_schema.label.date'|trans }}</th>
+        <th>{{ 'tisseo.paon.line_schema.label.comment'|trans }}</th>
         <th></th>
     </thead>
     <tbody>
     {% for schematic in schematics %}
-        <tr {% if schematicId is not empty and schematicId == schematic.id %}class="success"{% endif %} data-schematic_id="{{ schematic.id }}">
+        <tr {% if schematicId is not empty and schematicId == schematic.id %}class="success"{% endif %} data-schematic-id="{{ schematic.id }}">
             <td>{{ schematic.name }}</td>
             <td><input type="checkbox" disabled {% if schematic.filePath %}checked="checked"{% endif %}</td>
             <td>{{ schematic.date|date('d/m/Y') }}</td>
@@ -22,7 +22,7 @@
     {%  else  %}
         <tr class="info">
             <td colspan="5">
-                {{ 'line_schema.list.empty'|trans({}, 'default') }}
+                {{ 'tisseo.global.no_items'|trans }}
             </td>
         </tr>
     {% endfor %}

@@ -2,21 +2,15 @@
 
 {% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
 
+{% block modal_title %}
+    {{ title|trans }}
+{% endblock %}
+
 {% block open_form %}
     {{ form_start(form) }}
 {% endblock %}
 
-{% block modal_title %}
-    {{ 'line_version.closure'|trans({}, 'default') }}
-{% endblock %}
-
 {% block modal_body %}
-    {% if error %}
-    <div class="alert alert-danger alert-dismissable danger">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        {{ 'error.line_version.not_found'|trans({}, 'messages') }}
-    </div>
-    {% endif %}
     {{ form_errors(form) }}
     {{ form_row(form.line) }}
     <div class="form form-edit">
@@ -49,7 +43,7 @@
 
 {% block modal_actions %}
     <button type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
     </button>
     {{ form_end(form) }}
 

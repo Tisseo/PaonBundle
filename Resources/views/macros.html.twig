@@ -1,8 +1,6 @@
 {% macro line_offers_history(line) %}
     {% set lineVersions = line.HistoryLineVersions %}
-    {% if lineVersions is empty %}
-    <span>{{ 'line_version.no_offers'|trans({}, 'messages') }}</span>
-    {% else %}
+    {% if lineVersions is not empty %}
         <select style="max-width:60px;" id="paon_line_offers_{{ line.number }}" name="paon_line[offer]" class="select-offer form-control" data-toggle="modal" data-target="#base-modal">
             <option disabled="disabled" selected="selected"></option>
         {% for lineVersion in lineVersions %}

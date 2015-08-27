@@ -19,7 +19,6 @@ require(['jquery', 'fosjsrouting'], function($) {
 
                 },
                 'error':function(xhr) {
-                    console.log(xhr.responseText);
                     target.hide();
                 },
                 'complete': function() {
@@ -43,7 +42,7 @@ require(['jquery', 'fosjsrouting'], function($) {
                         elem.siblings().removeClass('danger');
                         elem.toggleClass('danger');
                         if (elem.hasClass('danger')) {
-                            $(document).find('#paon_line_version_schematic').val(elem.data('schematic_id'));
+                            $(document).find('#paon_line_version_schematic').val(elem.data('schematic-id'));
                         } else {
                             $(document).find('#paon_line_version_schematic').val('');
                         }

@@ -4,7 +4,7 @@
 
 {% block modal_title %}
     <div>
-        <span>{{ title|trans({}, 'messages') }} - {{ render.line_number(lineVersion, 'lineVersion', 'small') }}</span>
+        <span>{{ title|trans }} - {{ render.line_number(lineVersion, 'lineVersion', 'small') }}</span>
     </div>
 {% endblock %}
 
@@ -12,22 +12,22 @@
 <div class="calendar-container">
     <div class="col-md-6">
         <div class="title">
-            <h3>{{ 'calendar.grid_calendar_table'|trans({}, 'default') }}</h3>
+            <h3>{{ 'tisseo.paon.calendar.header.grid_calendar'|trans }}</h3>
         </div>
         <div class="table-responsive">
-            <table id="grid-calendar" class="table table-hover">
+            <table id="grid-calendar" class="table table-hover" data-line-version="{{ lineVersion.id }}">
                 <thead>
                     <tr>
-                        <th>{{ 'grid_calendar.list.columns.label'|trans({}, 'default') }}</th>
+                        <th>{{ 'tisseo.paon.grid_calendar.header.label'|trans }}</th>
                         {% for i in 1..7 %}
-                        <th>{{ ('global.short_days.'~i)|trans }}</th>
+                        <th>{{ ('tisseo.global.short_days.'~i)|trans }}</th>
                         {% endfor %}
                         <th></th>
                     </tr>
                 </thead>
                 {% for gridCalendar in gridCalendars %}
                 <tbody class="grid-calendar">
-                    <tr class="active">
+                    <tr class="success">
                         <input type="hidden" class="grid-calendar-row" value="{{ gridCalendar[0].id }}"></input>
                         <td class="name">{{ gridCalendar[0].name }}</td>
                         {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
@@ -37,29 +37,28 @@
                     </tr>
                 </tbody>
                     {% for gridMaskType in gridCalendar[1] %}
-                <tbody class="grid-mask-type">
-                    <tr class="warning">
-                        <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType[0].id }}"></input>
-                        <td><span>{{ gridMaskType[0].calendarPeriod }} {{ gridMaskType[0].calendarType }}</span></td>
-                        <td colspan="7"></td>
-                        <td></td>
-                    </tr>
-                    {% for tripCalendar in gridMaskType[1] %}
-                    <tr>
-                        <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
-                        {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
-                        <td><div class="calendar-day{% if attribute(tripCalendar[0], day) %} green-day {% else %} red-day {% endif %}"></div></td>
+                    <tbody class="grid-mask-type">
+                        <tr class="warning">
+                            <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType[0].id }}"></input>
+                            <td><span>{{ gridMaskType[0].calendarPeriod }} {{ gridMaskType[0].calendarType }}</span></td>
+                            <td colspan="7"></td>
+                            <td></td>
+                        </tr>
+                        {% for tripCalendar in gridMaskType[1] %}
+                        <tr>
+                            <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'tisseo.paon.calendar.label.services'|trans }}</span></td>
+                            {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
+                            <td><div class="calendar-day{% if attribute(tripCalendar[0], day) %} green-day {% else %} red-day {% endif %}"></div></td>
+                            {% endfor %}
+                            <td></td>
+                        </tr>
                         {% endfor %}
-                        <td></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+                    </tbody>
                     {% endfor %}
                 {% endfor %}
                 <tbody>
-                    <input type="hidden" id="line-version-id" value="{{ lineVersion.id }}"></input>
                     <tr id="new-grid-calendar">
-                        {{ render(controller('TisseoPaonBundle:Calendar:renderForm', {'lineVersionId': lineVersion.id } )) }}
+                        {{ render(controller('TisseoPaonBundle:Calendar:renderForm')) }}
                     </tr>
                 </tbody>
             </table>
@@ -67,15 +66,15 @@
     </div>
     <div class="col-md-6">
         <div class="title">
-            <h3>{{ 'calendar.grid_mask_table'|trans({}, 'default') }}</h3>
+            <h3>{{ 'tisseo.paon.calendar.header.grid_mask_type'|trans }}</h3>
         </div>
         <div class="table-responsive">
             <table class="table table-hover grid-mask-type-table">
                 <thead>
                     <tr>
-                        <th>{{ 'grid_mask_type.list.columns.label'|trans({}, 'default') }}</th>
+                        <th>{{ 'tisseo.paon.grid_mask_type.header.label'|trans }}</th>
                         {% for i in 1..7 %}
-                        <th>{{ ('global.short_days.'~i)|trans }}</th>
+                        <th>{{ ('tisseo.global.short_days.'~i)|trans }}</th>
                         {% endfor %}
                     </tr>
                 </thead>
@@ -88,7 +87,7 @@
                     </tr>
                     {% for tripCalendar in gridMaskType[1] %}
                     <tr>
-                        <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'calendar.labels.services'|trans({}, 'messages') }}</span></td>
+                        <td><span class="trip-calendar">&bull; {{ tripCalendar[1] }} {{ 'tisseo.paon.calendar.label.services'|trans }}</span></td>
                         {% for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] %}
                         <td><div class="calendar-day{% if attribute(tripCalendar[0], day) %} green-day {% else %} red-day {% endif %}"></div></td>
                         {% endfor %}
@@ -98,7 +97,7 @@
                 {% endfor %}
             </table>
             {% if gridMaskTypes is empty %}
-            <span class="no-data">{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>
+                <span class="no-data">{{ 'tisseo.paon.calendar.message.no_data'|trans }}</span>
             {% endif %}
         </div>
     </div>
@@ -107,36 +106,16 @@
 
 {% block modal_close_footer %}
     <button id="submit-calendars" type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-pencil"></span> {{ 'global.save'|trans }}
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
     </button>
     <script>
         require(['core/textfill'], function() {
             textfill(2, 15, '.line-small');
         });
-        require(['paon/create/calendar']);
 
-        require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable'], function($) {
+        require(['jquery', 'jquery_ui_droppable', 'jquery_ui_draggable', 'paon/create/calendar'], function($) {
             $.fn.liveDroppable = function() {
-                $(this).droppable({
-                    over: function(event, ui) {
-                        $(this).find("tr:first").addClass("success");
-                    },
-                    out: function(event, ui) {
-                        $(this).find("tr:first").removeClass("success");
-                    },
-                    drop: function(event, ui) {
-                        if ($(ui.draggable).find("tr:first td").length == 2) {
-                            $(ui.draggable).find("tr").append("<td></td>");
-                        }
-                        $(this).find("tr:first").removeClass("success");
-                        $(this).after(ui.draggable);
-                        if ($(".grid-mask-type-table").children().length == 2)
-                        {
-                            $(".grid-mask-type-table").after("<span style='display:none;' class='no-data'>{{ 'calendar.labels.no_data'|trans({}, 'messages') }}</span>");
-                            $(".grid-mask-type-table").next().fadeIn();
-                        }
-                    }
-                });
+                createDroppable(this);
             };
 
             $(document).find(".grid-calendar").liveDroppable();

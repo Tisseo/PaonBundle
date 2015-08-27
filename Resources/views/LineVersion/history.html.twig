@@ -4,14 +4,10 @@
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 {% import "TisseoPaonBundle::macros.html.twig" as paonRender %}
 
-{% block list_title -%}
-    {{ 'line_version.history.title'|trans({}, 'default') }}
-{% endblock %}
-
 {% block table_head -%}
-    <th class="col-md-4">{{ 'line.list.columns.label'|trans({}, 'default') }}</th>
-    <th class="col-md-4">{{ 'line.list.columns.physical_mode'|trans({}, 'default') }}</th>
-    <th class="col-md-4 no-sort no-search">{{ 'line.list.columns.offers'|trans({}, 'default') }}</th>
+    <th class="col-md-4">{{ 'tisseo.paon.line.label.label'|trans }}</th>
+    <th class="col-md-4">{{ 'tisseo.paon.line.label.physical_mode'|trans }}</th>
+    <th class="col-md-4 no-sort no-search">{{ 'tisseo.paon.line_version.label.history'|trans }}</th>
 {% endblock %}
 
 {% block table_body -%}

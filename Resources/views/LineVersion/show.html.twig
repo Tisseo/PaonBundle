@@ -7,28 +7,28 @@
 {% endblock %}
 
 {% block modal_title %}
-    {{ title|trans({}, 'default') }}
+    {{ title|trans }}
 {% endblock %}
 
 {% block modal_body %}
-    <h3>{{ 'global.summary'|trans({}, 'messages') }}</h3>
+    <h3>{{ 'tisseo.paon.line_version.header.summary'|trans }}</h3>
     <div class="form form-show">
         <div class="left-summary">
             <ul>
-                <li>{{ 'line_version.labels.version'|trans({}, 'messages') }} {{ lineVersion.version }}</li>
-                <li>{{ 'line_version.labels.start_date'|trans({}, 'messages') }} : {{ lineVersion.startDate|date('d/m/Y') }}</li>
-                <li>{{ 'line_version.labels.planned_end_date'|trans({}, 'messages') }} : {{ lineVersion.plannedEndDate|date('d/m/Y') }}</li>
+                <li>{{ 'tisseo.paon.line_version.label.version'|trans }} {{ lineVersion.version }}</li>
+                <li>{{ 'tisseo.paon.line_version.label.start_date'|trans }} : {{ lineVersion.startDate|date('d/m/Y') }}</li>
+                <li>{{ 'tisseo.paon.line_version.label.planned_end_date'|trans }} : {{ lineVersion.plannedEndDate|date('d/m/Y') }}</li>
                 {% if history  or lineVersion.endDate %}
-                <li class="bold">{{ 'line_version.labels.end_date'|trans({}, 'messages') }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
+                <li class="bold">{{ 'tisseo.paon.line_version.label.end_date'|trans }} : {{ lineVersion.endDate|date('d/m/Y') }}</li>
                 {% endif %}
                 <li class="child-line">
                 {% if lineVersion.IsParent %}
-                    {{ 'line_version.labels.child_line'|trans({}, 'messages') }} :
+                    {{ 'tisseo.paon.line_version.label.child_line'|trans }} :
                     {% for childLine in lineVersion.ChildLines %}
                         {{ render.line_number(childLine, 'lineVersion', 'small') }}
                     {% endfor %}
                 {% else %}
-                    {{ 'line_version.labels.no_child_line'|trans({}, 'messages') }}
+                    {{ 'tisseo.paon.line_version.message.no_child_line'|trans }}
                 {% endif %}
                 </li>
             </ul>
@@ -37,15 +37,15 @@
             {{ render.line_number(lineVersion, 'lineVersion', 'big') }}
         </div>
     </div>
-    <h3>{{ 'global.properties'|trans({}, 'messages') }}</h3>
+    <h3>{{ 'tisseo.paon.line_version.header.properties'|trans }}</h3>
     <div class="form form-show">
         <ul style="padding-left:20px;">
-            <li>{{ 'line_version.labels.name'|trans({}, 'messages') }} : {{ lineVersion.name }}</li>
-            <li>{{ 'line_version.labels.forward'|trans({}, 'messages') }} : {{ lineVersion.forwardDirection }}</li>
-            <li>{{ 'line_version.labels.backward'|trans({}, 'messages') }} : {{ lineVersion.backwardDirection }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.name'|trans }} : {{ lineVersion.name }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.forward'|trans }} : {{ lineVersion.forwardDirection }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.backward'|trans }} : {{ lineVersion.backwardDirection }}</li>
             <br>
-            <li>{{ 'line_version.labels.fg_color'|trans({}, 'messages') }} : {{ lineVersion.fgColor.name }}</li>
-            <li>{{ 'line_version.labels.bg_color'|trans({}, 'messages') }} : {{ lineVersion.bgColor.name }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.fg_color'|trans }} : {{ lineVersion.fgColor.name }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.bg_color'|trans }} : {{ lineVersion.bgColor.name }}</li>
             {% if lineVersion.lineVersionProperties is not empty %}
             <br>
             {% for lineVersionProperty in lineVersion.lineVersionProperties %}
@@ -53,57 +53,54 @@
             {% endfor %}
             {% endif %}
             <br>
-            <li>{{ 'line_version.labels.depot'|trans({}, 'messages') }} : {{ lineVersion.depot|capitalize }}</li>
-            <li>{{ 'line_version.labels.schematic'|trans({}, 'messages') }} : {% if lineVersion.schematic %}{{ lineVersion.schematic.name }}{% else %}{{ 'global.no_items_short'|trans({}, 'messages') }}{% endif %}</li>
-            <li>{{ 'line_version.labels.comment'|trans({}, 'messages') }} : {{ lineVersion.comment }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.depot'|trans }} : {{ lineVersion.depot|capitalize }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.schematic'|trans }} : {% if lineVersion.schematic %}{{ lineVersion.schematic.name }}{% else %}{{ 'tisseo.global.no_items_short'|trans }}{% endif %}</li>
+            <li>{{ 'tisseo.paon.line_version.label.comment'|trans }} : {{ lineVersion.comment }}</li>
         </ul>
     </div>
-    <h3>{{ 'global.printings'|trans({}, 'messages') }}</h3>
+    <h3>{{ 'tisseo.paon.line_version.header.printings'|trans }}</h3>
     <div class="form form-show">
-        {% if lineVersion.printings is empty %}
-        <span class="message">{{ 'line_version.no_printings'|trans({}, 'default') }}</span>
+        {% for printing in lineVersion.printings %}
+            <ul>
+                <li>{{ 'tisseo.paon.printing.label.quantity'|trans }} : {{ printing.quantity }}</li>
+                <li>{{ 'tisseo.paon.printing.label.date'|trans }} : {{ printing.date|date('d/m/Y') }}</li>
+                {% if printing.comment %}
+                <li>{{ 'tisseo.paon.printing.label.comment'|trans }} : {{ printing.comment }}</li>
+                {% endif %}
+            </ul>
         {% else %}
-            {% for printing in lineVersion.printings %}
-        <ul>
-            <li>{{ 'printing.labels.quantity'|trans({}, 'messages') }} : {{ printing.quantity }}</li>
-            <li>{{ 'printing.labels.date'|trans({}, 'messages') }} : {{ printing.date|date('d/m/Y') }}</li>
-            {% if printing.comment %}
-            <li>{{ 'printing.labels.comment'|trans({}, 'messages') }} : {{ printing.comment }}</li>
-            {% endif %}
-        </ul>
-            {% endfor %}
-        {% endif %}
+            <span class="message">{{ 'tisseo.global.no_items'|trans }}</span>
+        {% endfor %}
     </div>
-    <h3>{{ 'global.modifications'|trans({}, 'messages') }}</h3>
+    <h3>{{ 'tisseo.paon.line_version.header.modifications'|trans }}</h3>
     <div class="form form-show">
-        {% if lineVersion.modifications is empty %}
-        <span class="message">{{ 'line_version.no_modifications'|trans({}, 'default') }}</span>
+        {% for modification in lineVersion.modifications %}
+            <ul>
+                <li>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ 'tisseo.paon.modification.label.date'|trans }} : {{ modification.date|date('d/m/Y') }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ 'tisseo.paon.modification.label.author'|trans }} : {{ modification.author }}
+                        </div>
+                        <div class="col-md-4">
+                            {% if modification.resolvedIn %}
+                            {{ 'tisseo.paon.modification.label.resolved_in'|trans }} : {{ modification.resolvedIn.version }}
+                            {% else %}
+                            {{ 'tisseo.paon.modification.label.not_resolved'|trans({},'messages') }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                <li>{{ 'tisseo.paon.modification.label.description'|trans }} : {{ modification.description }}</li>
+            </ul>
         {% else %}
-            {% for modification in lineVersion.modifications %}
-        <ul>
-            <li>
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ 'modification.labels.date'|trans({}, 'messages') }} : {{ modification.date|date('d/m/Y') }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ 'modification.labels.author'|trans({}, 'messages') }} : {{ modification.author }}
-                    </div>
-                    <div class="col-md-4">
-                        {% if modification.resolvedIn %}
-                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn.version }}
-                        {% else %}
-                        {{ 'modification.labels.not_resolved'|trans({},'messages') }}
-                        {% endif %}
-                    </div>
-                </div>
-            </li>
-            <li>{{ 'modification.labels.description'|trans({}, 'messages') }} : {{ modification.description }}</li>
-        </ul>
-            {% endfor %}
-        {% endif %}
+            <span class="message">{{ 'tisseo.global.no_items'|trans }}</span>
+        {% endfor %}
     </div>
 {% endblock %}
+
 {% block modal_close_footer %}
     <script>
         require(['core/textfill'], function(){

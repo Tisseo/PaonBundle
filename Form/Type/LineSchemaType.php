@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class LineSchemaType extends AbstractType
 {
-    /** @var bool $isBatch */
     protected $isBatch;
 
     protected $addInfo;
@@ -46,14 +45,14 @@ class LineSchemaType extends AbstractType
                     'name',
                     'hidden',
                     array(
-                        'label' => 'line_schema.labels.name'
+                        'label' => 'tisseo.paon.line_schema.label.name'
                     )
                 )
                 ->add(
                     'comment',
                     'textarea',
                     array(
-                        'label' => 'line_schema.labels.comment'
+                        'label' => 'tisseo.paon.line_schema.label.comment'
                     )
                 )
                 ->add(
@@ -71,7 +70,7 @@ class LineSchemaType extends AbstractType
                         'date',
                         'date',
                         array(
-                            'label' => 'line_schema.labels.date',
+                            'label' => 'tisseo.paon.line_schema.label.date',
                             'widget' => 'single_text',
                             'read_only' => true,
                             'format' => 'dd/MM/yyyy'
@@ -86,7 +85,7 @@ class LineSchemaType extends AbstractType
                         'date',
                         'tisseo_datepicker',
                         array(
-                            'label' => 'line_schema.labels.date',
+                            'label' => 'tisseo.paon.line_schema.label.date',
                             'attr' => array(
                                 'class' => 'input-date'
                             )
@@ -96,7 +95,7 @@ class LineSchemaType extends AbstractType
                         'file',
                         'file',
                         array(
-                            'label' => 'line_schema.labels.file',
+                            'label' => 'tisseo.paon.line_schema.label.file',
                             'required' => true
                         )
                     )

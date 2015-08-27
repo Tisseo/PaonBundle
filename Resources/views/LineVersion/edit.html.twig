@@ -2,22 +2,16 @@
 
 {% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
 
+{% block modal_title %}
+    {{ title|trans }}
+{% endblock %}
+
 {% block open_form %}
     {{ form_start(form) }}
 {% endblock %}
 
-{% block modal_title %}
-    {{ 'line_version.edit'|trans({}, 'default') }}
-{% endblock %}
-
 {% block modal_body %}
     <div id="thumb"></div>
-    {% if error %}
-    <div class="alert alert-danger alert-dismissable danger">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        {{ 'error.line_version.not_found'|trans({}, 'messages') }}
-    </div>
-    {% endif %}
     {{ form_errors(form) }}
     {{ form_row(form.line) }}
 
@@ -113,21 +107,21 @@
             <li>
                 <div class="row">
                     <div class="col-md-4">
-                        {{ 'modification.labels.date'|trans({}, 'messages') }} : {{ modification.date|date('d/m/Y') }}
+                        {{ 'tisseo.paon.modification.label.date'|trans }} : {{ modification.date|date('d/m/Y') }}
                     </div>
                     <div class="col-md-4">
-                        {{ 'modification.labels.author'|trans({}, 'messages') }} : {{ modification.author }}
+                        {{ 'tisseo.paon.modification.label.author'|trans }} : {{ modification.author }}
                     </div>
                     <div class="col-md-4">
                         {% if modification.resolvedIn %}
-                        {{ 'modification.labels.resolved_in'|trans({}, 'messages') }} : {{ modification.resolvedIn.version }}
+                        {{ 'tisseo.paon.modification.label.resolved_in'|trans }} : {{ modification.resolvedIn.version }}
                         {% else %}
-                        {{ 'modification.labels.not_resolved'|trans({},'messages') }}
+                        {{ 'tisseo.paon.modification.label.not_resolved'|trans({},'messages') }}
                         {% endif %}
                     </div>
                 </div>
             </li>
-            <li>{{ 'modification.labels.description'|trans({}, 'messages') }} : {{ modification.description }}</li>
+            <li>{{ 'tisseo.paon.modification.label.description'|trans }} : {{ modification.description }}</li>
             {% endfor %}
         </ul>
         <ul class="modifications" data-prototype="{% filter escape %}{% include 'TisseoPaonBundle:Modification:form.html.twig' with {'form': form.modifications.vars.prototype} %}{% endfilter %}">
@@ -139,7 +133,7 @@
 
 {% block modal_actions %}
     <button type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-pencil"></span> {{'global.save'|trans}}
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
     </button>
     {{ form_end(form) }}
     <script type="text/javascript">

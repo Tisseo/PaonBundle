@@ -8,165 +8,153 @@ use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineGroupGis;
 use Tisseo\EndivBundle\Entity\LineGroupGisContent;
 use Tisseo\PaonBundle\Form\Type\LineGroupGisType;
+use Tisseo\CoreBundle\Controller\CoreController;
 
-
-class LineGroupGisController extends AbstractController
+class LineGroupGisController extends CoreController
 {
     /**
-     * List all line group gis
+     * List
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Listing LineGroupGis
      */
     public function listAction()
     {
         $this->isGranted('BUSINESS_LIST_GROUP_GIS');
 
-        /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
-        $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
-
         return $this->render(
             'TisseoPaonBundle:LineGroupGis:list.html.twig',
             array(
-                'pageTitle' => 'line_group_gis.title',
-                'groups' => $lineGroupGisManager->findAll()
+                'navTitle' => 'tisseo.paon.menu.schematic.manage',
+                'pageTitle' => 'tisseo.paon.line_group_gis.title.list',
+                'groups' => $this->get('tisseo_endiv.line_group_gis_manager')->findAll()
             )
         );
     }
 
     /**
-     * Create new LineGroupGis
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Create
+     *
+     * Creating LineGroupGis
      */
-    public function createAction() {
-
+    public function createAction(Request $request)
+    {
         $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
-        $request = $this->getRequest();
 
         $lineGroupGis = new LineGroupGis();
         $lineGroupGisContent = new LineGroupGisContent();
         $lineGroupGis->getLineGroupGisContents()->add($lineGroupGisContent);
 
-        $form = $this->createForm(new LineGroupGisType(), $lineGroupGis,
+        $form = $this->createForm(
+            new LineGroupGisType(),
+            $lineGroupGis,
             array(
                 'action' => $this->generateUrl('tisseo_paon_line_group_gis_create'),
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-
-                /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
-                $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
-                list($lineGroupGis, $message, $error) = $lineGroupGisManager->save($form->getData());
-
-                $this->addFlash(
-                    (($error === null) ? 'success' : 'danger'),
-                    $this->get('translator')->trans($message, array('%error%' => $error), 'default')
-                );
-
-                return $this->redirect(
-                    $this->generateUrl('tisseo_paon_line_group_gis_list')
-                );
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            try
+            {
+                $this->get('tisseo_endiv.line_group_gis_manager')->save($form->getData());
+                $this->addFlash('success', 'tisseo.flash.success.created');
             }
+            catch(\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_line_group_gis_list');
         }
 
         return $this->render(
             'TisseoPaonBundle:LineGroupGis:form.html.twig',
             array(
-                'form' => $form->createView(),
-                'is_new' => false,
-                'title' => 'line_group_gis.form.title'
+                'title' => 'tisseo.paon.line_group_gis.title.create',
+                'form' => $form->createView()
             )
         );
     }
 
     /**
-     * Edit a line group gis
+     * Edit
+     * @param integer $lineGroupGisId
      *
-     * @param integer $lineGroupGisId line group GIS id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Editing LineGroupGis
      */
-    public function editAction($lineGroupGisId)
+    public function editAction(Request $request, $lineGroupGisId)
     {
         $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
-        $request = $this->getRequest();
 
-        /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
-
-        /** @var \Tisseo\EndivBundle\Entity\LineGroupGis $lineGroupGis */
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
-        if (!$lineGroupGis) {
-            throw $this->createNotFoundException('line_group_gis.not_found : ' . $lineGroupGisId);
-        }
+        if (empty($lineGroupGis))
+            throw $this->createNotFoundException('Not found: '.$lineGroupGisId);
 
-        $form = $this->createForm(new LineGroupGisType(), $lineGroupGis,
+        $form = $this->createForm(
+            new LineGroupGisType(),
+            $lineGroupGis,
             array(
-                'action' => $this->generateUrl('tisseo_paon_line_group_gis_edit', array('lineGroupGisId' => $lineGroupGisId)),
+                'action' => $this->generateUrl(
+                    'tisseo_paon_line_group_gis_edit',
+                    array('lineGroupGisId' => $lineGroupGisId)
+                ),
                 'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
             )
         );
 
-        if ($request->isMethod('POST'))
+        $form->handleRequest($request);
+        if ($form->isValid())
         {
-            $form->handleRequest($request);
-            if ($form->isValid())
+            try
             {
-                list($lineGroupGis, $message, $error) = $lineGroupGisManager->save($form->getData());
-
-                $this->addFlash(
-                    (($error === null) ? 'success' : 'danger'),
-                    $this->get('translator')->trans($message, array('%error%' => $error), 'default')
-                );
-
-                return $this->redirect(
-                    $this->generateUrl('tisseo_paon_line_group_gis_list')
-                );
+                $lineGroupGisManager->save($form->getData());
+                $this->addFlash('success', 'tisseo.flash.success.edited');
             }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_line_group_gis_list');
         }
 
        return $this->render(
             'TisseoPaonBundle:LineGroupGis:form.html.twig',
             array(
-                'form' => $form->createView(),
-                'is_new' => false,
-                'title' => 'line_group_gis.form.title'
+                'title' => 'tisseo.paon.line_group_gis.title.edit',
+                'form' => $form->createView()
             )
         );
     }
 
     /**
-     * Delete a line groupgis
+     * Delete
+     * @param $lineGroupGisId
      *
-     * @param $lineGroupGisId line group gis  id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * Deleting LineGroupGis
      */
     public function deleteAction($lineGroupGisId)
     {
-        /** @var \Tisseo\EndivBundle\Services\LineGroupGisManager $lineGroupGisManager */
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
-
-        /** @var \Tisseo\EndivBundle\Entity\LineGroupGis $lineGroupGis */
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
-        if (!$lineGroupGis) {
-            throw $this->createNotFoundException('line_group_gis.not_found : ' . $lineGroupGisId);
+        if (empty($lineGroupGis))
+            throw $this->createNotFoundException('Not found: '.$lineGroupGisId);
+
+        try
+        {
+            $lineGroupGisManager->remove($lineGroupGis);
+            $this->addFlash('success', 'tisseo.flash.success.deleted');
+        }
+        catch (\Exception $e)
+        {
+            $this->addFlashException($e->getMessage());
         }
 
-        list($message, $error) = $lineGroupGisManager->remove($lineGroupGis);
-
-        $this->addFlash(
-            (($error === null) ? 'success' : 'danger'),
-            $this->get('translator')->trans($message, array('%error%' => $error), 'default')
-        );
-
-        return $this->redirect(
-            $this->generateUrl('tisseo_paon_line_group_gis_list')
-        );
+        return $this->redirectToRoute('tisseo_paon_line_group_gis_list');
     }
-
 }

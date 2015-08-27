@@ -1,21 +1,22 @@
-{% extends "TisseoCoreBundle::container.html.twig" %}
+{% extends "TisseoCoreBundle::datatable_list.html.twig" %}
 {% set bundle = "TisseoPaonBundle" %}
-{% set datatable = true %}
+{% set paginate = 'true' %}
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
 {% block breadcrumb %}
-    {{ parent() }}
-    <a href="{{ path('tisseo_paon_line_version_list') }}" role="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {{ 'global.previous'|trans }}</a>
+    <a href="{{ path('tisseo_boa_line_version_list') }}">
+        {{ 'tisseo.paon.line_version.title.list'|trans }}
+    </a>
 {% endblock %}
 
-{% block main_content -%}
+{% block content %}
     {% if data is empty %}
-        <div class='alert alert-info alert-dismissable'>{{ 'exception.no_data'|trans({}, 'default') }}</div>
+        <div class='alert alert-info alert-dismissable'>{{ 'tisseo.paon.exception.message.no_data'|trans }}</div>
     {% else %}
     <div class="head-info col-md-12">
         <div class="head-menu">
-            <div class="title-choice">{{ 'exception.choice'|trans({}, 'default') }}</div>
+            <div class="title-choice">{{ 'tisseo.paon.exception.header.calendar'|trans }}</div>
             <div class="choice">
                 <select id="grid-calendar" class="form-control">
                     {% for gridCalendar in data %}
@@ -23,7 +24,7 @@
                     {% endfor %}
                 </select>
                 <button id="submit-exceptions" type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span> {{ 'global.save'|trans }}
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'tisseo.global.save'|trans }}
                 </button>
             </div>
         </div>
@@ -39,19 +40,19 @@
         <h3>{{ gridCalendar[0].name }}</h3>
 
         <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_paon_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
-            <span class="glyphicon glyphicon-pencil"></span> {{ 'comment.edit'|trans({}, 'default') }}
+            <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.paon.exception.action.edit'|trans }}
         </a>
 
         <table class="table datatable">
             <thead>
-                <th class="col-sm-1">{{ 'trip.list.columns.name'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'trip.list.columns.days'|trans({}, 'default') }}</th>
-                <th class="col-sm-2">{{ 'trip.list.columns.start_stop'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'trip.list.columns.start_time'|trans({}, 'default') }}</th>
-                <th class="col-sm-2">{{ 'trip.list.columns.end_stop'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'trip.list.columns.end_time'|trans({}, 'default') }}</th>
-                <th class="col-sm-1">{{ 'comment.list.columns.label'|trans({}, 'default') }}</th>
-                <th class="col-sm-3">{{ 'comment.list.columns.comment_text'|trans({}, 'default') }}</th>
+                <th class="col-sm-1">{{ 'tisseo.paon.trip.label.name'|trans }}</th>
+                <th class="col-sm-1">{{ 'tisseo.paon.trip.label.days'|trans }}</th>
+                <th class="col-sm-2">{{ 'tisseo.paon.trip.label.start_stop'|trans }}</th>
+                <th class="col-sm-1">{{ 'tisseo.paon.trip.label.start_time'|trans }}</th>
+                <th class="col-sm-2">{{ 'tisseo.paon.trip.label.end_stop'|trans }}</th>
+                <th class="col-sm-1">{{ 'tisseo.paon.trip.label.end_time'|trans }}</th>
+                <th class="col-sm-1">{{ 'tisseo.paon.comment.label.label'|trans }}</th>
+                <th class="col-sm-3">{{ 'tisseo.paon.comment.label.text'|trans }}</th>
             </thead>
             <tbody>
                 {% for id, tripData in gridCalendar[1] %}
@@ -76,7 +77,7 @@
         </table>
 
         <a style="float:right;margin-bottom:20px;" href="{{ path('tisseo_paon_exception_comment') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-default edit-button" disabled="disabled">
-            <span class="glyphicon glyphicon-pencil"></span> {{ 'comment.edit'|trans({}, 'default') }}
+            <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.paon.exception.action.edit'|trans }}
         </a>
     </div>
     {% endfor %}

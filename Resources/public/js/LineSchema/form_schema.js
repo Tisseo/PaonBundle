@@ -1,4 +1,4 @@
-require(['jquery', 'fosjsrouting', 'translations/messages'], function($) {
+require(['jquery', 'fosjsrouting'], function($) {
     $(document).on('click', '.action-button', function() {
         var modalContent = $(document).find('.modal-body');
         var target = modalContent.find('> .target ');
@@ -6,7 +6,7 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($) {
         modalContent.find(' > .schema-content-list').hide();
 
         var params = {
-            'lineId': $(this).data('line_id')
+            'lineId': $(this).data('line-id')
         };
 
         var url = null;
@@ -25,7 +25,6 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($) {
                 url = Routing.generate('tisseo_paon_schema_deprecated', params);
                 break;
             default:
-                console.log('data-action undefined');
                 modalContent.show();
                 return false;
         }
@@ -39,7 +38,6 @@ require(['jquery', 'fosjsrouting', 'translations/messages'], function($) {
                 target.show();
             },
             'error':function(xhr) {
-                console.log(xhr.responseText);
                 modalContent.show();
             }
         });
