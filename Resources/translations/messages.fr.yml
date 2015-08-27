@@ -1,9 +1,0 @@
-error:
-    line_exists: Ce numéro de ligne est déja attribué.
-    line_version:
-        not_found: Cette ligne ne possède aucune offre.
-        already_exists: Cette offre existe déjà sur ce numéro de version.
-    comment:
-        label_length: Le label doit comporter 1 à 4 caractères.
-        label_type: Le label doit être composé de lettres.
-    no_jobs: Aucune tâche disponible.
