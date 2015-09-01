@@ -8,6 +8,7 @@ use Tisseo\PaonBundle\Form\Type\LineVersionCreateType;
 use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\LineVersion;
+use Tisseo\EndivBundle\Entity\LineVersionDatasource;
 
 class LineVersionController extends CoreController
 {
@@ -100,6 +101,7 @@ class LineVersionController extends CoreController
                 $lineVersion = $form->getData();
                 $lineVersionDatasrc = new LineVersionDatasource();
                 $this->addPaonDatasource($lineVersionDatasrc);
+                $lineVersionDatasrc->setLineVersion($lineVersion);
                 $lineVersion->addLineVersionDatasource($lineVersionDatasrc);
         
                 $lineVersionManager->create($lineVersion);
