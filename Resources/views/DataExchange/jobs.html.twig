@@ -3,7 +3,7 @@
         <td colspan=2>
             <div class='alert alert-info alert-dismissable info'>
                 <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                {{ 'tisseo.paon.data_exchange.message.job_running'|trans({'%name%': runningJob.name, '%user%': runningJob.user}, 'default') }}
+                {{ 'tisseo.paon.data_exchange.message.job_running'|trans({'%name%': runningJob.name, '%user%': runningJob.user}) }}
             </div>
         </td>
     </tr>
@@ -13,7 +13,7 @@
     <tr>
         <td>
         {% if "launcher" in job|keys %}
-            <span style="color:{{ job.color }};">{{ job.name }} - {{ 'tisseo.paon.data_exchange.message.launched_by'|trans({'%user%': job.launcher}, 'default') }}</span>
+            <span style="color:{{ job.color }};">{{ job.name }} - {{ 'tisseo.paon.data_exchange.message.launched_by'|trans({'%user%': job.launcher}) }}</span>
         {% else %}
             <span style="color:{{ job.color }};">{{ job.name }}</span>
         {% endif %}
