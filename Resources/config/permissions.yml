@@ -23,13 +23,16 @@ parameters:
             description: Droit de lancer des imports ou exports de données
         BUSINESS_LIST_SCHEMA:
             label: Accéder à la gestion des schémas
-            description: Afficher la liste des lignes
+            description: Afficher la liste des schématiques par ligne
         BUSINESS_MANAGE_NEW_SCHEMA:
             label: Accéder au formulaire d'ajout d'un nouveau schéma
-            description:
+            description: Déposer un fichier / Ajouter un commentaire
         BUSINESS_MANAGE_ASK_SCHEMA:
             label: Accéder au formulaire de demande d'un schéma
-            description:
+            description: Formulaire d'envoi de mail pour nouveau schéma
+        BUSINESS_MANAGE_DEPRECATE_SCHEMA:
+            label: Accéder au formulaire de déclaration de schéma obsolète
+            description: Déclarer un schéma obsolète
         BUSINESS_LIST_GROUP_GIS:
             label: Accéder à la liste des voussures
             description:

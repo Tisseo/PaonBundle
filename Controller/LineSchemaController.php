@@ -204,7 +204,7 @@ class LineSchemaController extends CoreController
      */
     public function deprecatedSchemaAction(Request $request, $lineId)
     {
-        $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
+        $this->isGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
 
         /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
         $schematicManager = $this->get('tisseo_endiv.schematic_manager');
