@@ -19,7 +19,7 @@ class SchematicList
         $this->schematics = new ArrayCollection();
     }
 
-    public function setSchematics(Schematic $schematic)
+    public function addSchematic(Schematic $schematic)
     {
         $this->schematics[] = $schematic;
     }

@@ -140,6 +140,14 @@ tisseo_paon_schematic_deprecate:
         lineId: \d+
     options:
         expose: true
+tisseo_paon_schematic_delete:
+    pattern: /line/{lineId}/schematic/delete/{schematicId}
+    defaults: { _controller: TisseoPaonBundle:Schematic:delete, schematicId: null }
+    requirements:
+        schematicId: -?\d+
+        lineId: \d+
+    options:
+        expose: true
 
 # Line Group Gis
 tisseo_paon_line_group_gis_list:

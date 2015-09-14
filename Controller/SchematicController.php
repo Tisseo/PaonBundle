@@ -3,6 +3,7 @@
 namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\PaonBundle\Entity\SchematicList;
 use Tisseo\PaonBundle\Form\Type\SchematicType;
@@ -219,7 +220,7 @@ class SchematicController extends CoreController
 
         $schematicList = new SchematicList();
         foreach($line->getFileSchematics() as $schematic)
-            $schematicList->setSchematics($schematic);
+            $schematicList->addSchematic($schematic);
 
         $form = $this->createForm(
             'paon_list_schematic',
@@ -257,6 +258,37 @@ class SchematicController extends CoreController
             array(
                 'form' => $form->createView(),
                 'schematics' => $line->getSchematics()
+            )
+        );
+    }
+
+    /**
+     * Delete schema
+     * @param $lineId
+     *
+     * Delete a Schematic
+     */
+    public function deleteAction(Request $request, $lineId, $schematicId = null)
+    {
+        $this->isGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
+
+        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
+            $this->get('tisseo_endiv.schematic_manager')->remove($schematicId);
+
+        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+
+        $schematics = new ArrayCollection();
+        foreach($line->getSchematics() as $schematic)
+        {
+            if ($schematic->getLineVersions()->isEmpty())
+                $schematics[] = $schematic;
+        }
+
+        return $this->render(
+            'TisseoPaonBundle:Schematic:delete.html.twig',
+            array(
+                'line' => $line,
+                'schematics' => $schematics
             )
         );
     }

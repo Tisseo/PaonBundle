@@ -15,16 +15,21 @@
             </div>
         </div>
         <div class="col-md-12">
-            {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') or is_granted('BUSINESS_MANAGE_DEPRECATE_SCHEMA') %}
+            {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') or is_granted('BUSINESS_MANAGE_DEPRECATE_SCHEMA') or is_granted('BUSINESS_MANAGE_DELETE_SCHEMA') %}
             <div class="row" style='margin-bottom:5px;'>
                 {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') %}
-                <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_ask', {'lineId': line.id }) }}">
+                    <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_ask', {'lineId': line.id }) }}">
                         {{ 'tisseo.paon.schematic.action.ask_schematic'|trans }}
                     </a>
                 {% endif %}
                 {% if is_granted('BUSINESS_MANAGE_DEPRECATE_SCHEMA') %}
                     <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_deprecate', {'lineId': line.id }) }}">
                         {{ 'tisseo.paon.schematic.action.deprecated'|trans }}
+                    </a>
+                {% endif %}
+                {% if is_granted('BUSINESS_MANAGE_DELETE_SCHEMA') %}
+                    <a class="btn btn-danger btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_delete', {'lineId': line.id }) }}">
+                        {{ 'tisseo.paon.schematic.action.delete'|trans }}
                     </a>
                 {% endif %}
             </div>

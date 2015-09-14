@@ -1,0 +1,31 @@
+<table class="table table-striped">
+    <thead>
+        <th>{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
+        <th>{{ 'tisseo.paon.schematic.label.date'|trans }}</th>
+        <th>{{ 'tisseo.paon.schematic.label.comment'|trans }}</th>
+        <th></th>
+    </thead>
+    <tbody>
+    {% for schematic in schematics %}
+        <tr data-schematic-id="{{ schematic.id }}">
+            <td>{{ schematic.name }}</td>
+            <td>{{ schematic.date|date('d/m/Y') }}</td>
+            <td>{{ schematic.comment }}</td>
+            <td>
+                <button class="btn btn-xs btn-danger small-button delete-schematic" data-url="{{ path('tisseo_paon_schematic_delete', { 'lineId': line.id, 'schematicId': schematic.id }) }}">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+            </td>
+        </tr>
+    {% else %}
+        <tr class="info">
+            <td colspan="4">
+                {{ 'tisseo.global.no_items'|trans }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script>
+    require(['paon/delete/schematic']);
+</script>

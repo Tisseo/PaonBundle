@@ -33,6 +33,9 @@ parameters:
         BUSINESS_MANAGE_DEPRECATE_SCHEMA:
             label: Accéder au formulaire de déclaration de schéma obsolète
             description: Déclarer un schéma obsolète
+        BUSINESS_MANAGE_DELETE_SCHEMA:
+            label: Accéder au formulaire de suppression de schema
+            description: Supprimer un schéma
         BUSINESS_LIST_GROUP_GIS:
             label: Accéder à la liste des voussures
             description:
