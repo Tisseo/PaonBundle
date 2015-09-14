@@ -1,0 +1,47 @@
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
+
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
+
+<div class="row">
+    <div class="col-md-12">
+        {{ form_start(form) }}
+        <table class="table table-striped">
+            <thead>
+                <th>{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
+                <th>{{ 'tisseo.paon.schematic.label.file'|trans }}</th>
+                <th>{{ 'tisseo.paon.schematic.label.date'|trans }}</th>
+                <th>{{ 'tisseo.paon.schematic.label.comment'|trans }}</th>
+                <th>{{ 'tisseo.paon.schematic.label.group_gis'|trans }}</th>
+                <th></th>
+            </thead>
+            <tbody>
+            {% for schematic in form.schematics %}
+                <tr>
+                    <td>{{ schematic.vars.value.name }}</td>
+                    <td><input type="checkbox" disabled {% if schematic.vars.value.filePath %}checked="checked"{% endif %}</td>
+                    <td>{{ schematic.vars.value.date|date('d/m/Y') }}</td>
+                    <td>{{ schematic.vars.value.comment }}</td>
+                    <td>{{ form_widget(schematic) }}</td>
+                    <td>
+                        {% if schematic.vars.value.filePath %}
+                        <a href="{{ app.request.getbaseUrl() }}/{{ schematic.vars.value.WebPath }}" target="_blank" data-toggle="popover" data-placement="bottom" data-container="#thumb" data-html="true" data-trigger="hover" data-content="<img class='thumb' src='/{{ schematic.vars.value.WebPath }}'>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr class="info">
+                    <td colspan="6">
+                        {{ 'tisseo.global.no_items'|trans }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <input type="submit" class="btn btn-success pull-right" value="{{ 'tisseo.global.save'|trans }}">
+        {{ form_end(form) }}
+    </div>
+</div>
+<script>
+    $('[data-toggle="popover"]').popover();
+</script>

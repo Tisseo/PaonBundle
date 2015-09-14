@@ -12,13 +12,16 @@ class SchematicType extends AbstractType
 
     protected $addInfo;
 
+    protected $groupGis;
+
     /**
      * @param bool $isBatch
      */
-    public function __construct($isBatch = false, $addInfo = false)
+    public function __construct($isBatch = false, $addInfo = false, $groupGis = false)
     {
         $this->isBatch = $isBatch;
         $this->addInfo = $addInfo;
+        $this->groupGis = $groupGis;
     }
 
     /**
@@ -31,6 +34,17 @@ class SchematicType extends AbstractType
         {
             $builder->add(
                 'deprecated',
+                'checkbox',
+                array(
+                    'label' => false,
+                    'required' => false
+                )
+            );
+        }
+        else if ($this->groupGis)
+        {
+            $builder->add(
+                'groupGis',
                 'checkbox',
                 array(
                     'label' => false,

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Tisseo\EndivBundle\Entity\Schematic;
 use Tisseo\PaonBundle\Entity\SchematicList;
 use Tisseo\PaonBundle\Form\Type\SchematicType;
+use Tisseo\PaonBundle\Form\Type\ListSchematicType;
 use Tisseo\PaonBundle\Form\Type\MailType;
 use Tisseo\CoreBundle\Controller\CoreController;
 
@@ -142,7 +143,7 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Ask schema
+     * Ask
      * @param integer $lineId
      *
      * Sending a mail for a Schematic deposit
@@ -205,7 +206,7 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Deprecate schema
+     * Deprecate
      * @param $lineId
      *
      * Setting a Schematic deprecated
@@ -223,7 +224,7 @@ class SchematicController extends CoreController
             $schematicList->addSchematic($schematic);
 
         $form = $this->createForm(
-            'paon_list_schematic',
+            new ListSchematicType(true, false),
             $schematicList,
             array(
                 'action' => $this->generateUrl(
@@ -263,14 +264,14 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Delete schema
+     * Delete
      * @param $lineId
      *
-     * Delete a Schematic
+     * Deleting a Schematic
      */
     public function deleteAction(Request $request, $lineId, $schematicId = null)
     {
-        $this->isGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
+        $this->isGranted('BUSINESS_MANAGE_DELETE_SCHEMA');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
             $this->get('tisseo_endiv.schematic_manager')->remove($schematicId);
@@ -289,6 +290,62 @@ class SchematicController extends CoreController
             array(
                 'line' => $line,
                 'schematics' => $schematics
+            )
+        );
+    }
+
+    /**
+     * Gis
+     * @param $lineId
+     *
+     * Setting a Schematic's groupGis attribute
+     */
+    public function gisAction(Request $request, $lineId)
+    {
+        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+
+        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+
+        $schematicList = new SchematicList();
+        foreach($line->getFileSchematics() as $schematic)
+            $schematicList->addSchematic($schematic);
+
+        $form = $this->createForm(
+            new ListSchematicType(false, true),
+            $schematicList,
+            array(
+                'action' => $this->generateUrl(
+                    'tisseo_paon_schematic_group_gis',
+                    array(
+                        'lineId' => $lineId
+                    )
+                )
+            )
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+            $data = $form->getData();
+            try
+            {
+                foreach ($data->schematics as $schematic)
+                    $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                $this->addFlash('success', 'tisseo.flash.success.edited');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
+
+            return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
+        }
+
+        return $this->render(
+            'TisseoPaonBundle:Schematic:group_gis.html.twig',
+            array(
+                'form' => $form->createView(),
+                'schematics' => $line->getSchematics()
             )
         );
     }

@@ -42,5 +42,3 @@ parameters:
         BUSINESS_MANAGE_GROUP_GIS:
             label: Administrer les voussures
             description:
-
-

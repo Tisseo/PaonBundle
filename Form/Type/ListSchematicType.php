@@ -8,6 +8,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ListSchematicType extends AbstractType
 {
+    protected $isBatch;
+
+    protected $groupGis;
+
+    /**
+     * @param bool $isBatch
+     */
+    public function __construct($isBatch = false, $groupGis = false)
+    {
+        $this->isBatch = $isBatch;
+        $this->groupGis = $groupGis;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -18,7 +31,7 @@ class ListSchematicType extends AbstractType
             ->add(
                 'schematics',
                 'collection', array(
-                    'type' => new SchematicType(true),
+                    'type' => new SchematicType($this->isBatch, false, $this->groupGis),
                     'label' => false
                 )
             )

@@ -148,6 +148,13 @@ tisseo_paon_schematic_delete:
         lineId: \d+
     options:
         expose: true
+tisseo_paon_schematic_group_gis:
+    pattern: /line/{lineId}/schematic/gis
+    defaults: { _controller: TisseoPaonBundle:Schematic:gis }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true
 
 # Line Group Gis
 tisseo_paon_line_group_gis_list:
