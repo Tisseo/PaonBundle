@@ -134,10 +134,10 @@
             <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
         </button>
         {{ form_end(form) }}
-        <script type="text/javascript">
+        <script>
             require(['paon/list/schemas']);
         </script>
-        <script type="text/javascript">
+        <script>
             require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
                 $(document).ready(function() {
                     $('.input-range input').datepicker({
@@ -153,48 +153,8 @@
                 });
             });
         </script>
-        <script type="text/javascript">
-            require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
-                var $collectionHolder;
-                var $addModificationLink = $('<button type="submit" class="btn btn-success small-button"><span class="glyphicon glyphicon-plus"></span></button>');
-                var $newLinkLi = $('<li></li>').append($addModificationLink);
-
-                $(document).ready(function() {
-                    $collectionHolder = $('ul.modifications');
-                    $collectionHolder.append($newLinkLi);
-                    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-                    $addModificationLink.on('click', function(e) {
-                        e.preventDefault();
-                        var $newFormLi = addModificationLinkForm($collectionHolder, $newLinkLi);
-                        $newFormLi.find('.input-range').datepicker({
-                            language: '{{ app.request.locale }}',
-                            startView: 1,
-                            autoclose: true
-                        });
-                    });
-                });
-
-                function addModificationLinkForm($collectionHolder, $newLinkLi) {
-                    var prototype = $collectionHolder.data('prototype');
-                    var index = $collectionHolder.data('index');
-                    var newForm = prototype.replace(/__name__/g, index);
-                    $collectionHolder.data('index', index + 1);
-
-                    var $newFormLi = $('<li></li>').append(newForm);
-                    $newFormLi.append('<button class="btn btn-xs btn-danger small-button remove-modification"><span class="glyphicon glyphicon-minus"></span></button>');
-                    $newLinkLi.before($newFormLi);
-                    $('.remove-modification').click(function(e) {
-                        e.preventDefault();
-                        $(this).parent().remove();
-                        return false;
-                    });
-                    return $newFormLi;
-                }
-            });
-        </script>
     {% endif %}
-    <script type="text/javascript">
+    <script>
         require(['paon/create/offer']);
     </script>
 {% endblock %}

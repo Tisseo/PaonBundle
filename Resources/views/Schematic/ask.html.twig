@@ -4,9 +4,9 @@
     <div class="col-md-12">
         {{ form_start(form) }}
         <ul>
-            <li>{{ 'tisseo.paon.line_schema.mail.object'|trans({ '%line%': lineNumber }) }}</li>
-            <li>{{ 'tisseo.paon.line_schema.mail.date'|trans({ '%date%': "now"|date("d/m/Y") }) }}</li>
-            <li>{{ 'tisseo.paon.line_schema.mail.author'|trans({ '%user%': app.user.username }) }}</li>
+            <li>{{ 'tisseo.paon.schematic.mail.object'|trans({ '%line%': lineNumber }) }}</li>
+            <li>{{ 'tisseo.paon.schematic.mail.date'|trans({ '%date%': "now"|date("d/m/Y") }) }}</li>
+            <li>{{ 'tisseo.paon.schematic.mail.author'|trans({ '%user%': app.user.username }) }}</li>
         </ul>
 
         {{ form_row(form.to) }}

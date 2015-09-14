@@ -6,8 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
-class ListSchemaType extends AbstractType
+class ListSchematicType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,7 +18,7 @@ class ListSchemaType extends AbstractType
             ->add(
                 'schematics',
                 'collection', array(
-                    'type' => new LineSchemaType(true),
+                    'type' => new SchematicType(true),
                     'label' => false
                 )
             )
@@ -44,6 +43,6 @@ class ListSchemaType extends AbstractType
      */
     public function getName()
     {
-        return 'paon_list_schema';
+        return 'paon_list_schematic';
     }
 }

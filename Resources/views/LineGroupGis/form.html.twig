@@ -26,67 +26,38 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5">
-            <h3>{{ 'tisseo.paon.line_group_gis.label.associated_lines'|trans }}</h3>
-            <ul class="lines list-unstyled" data-prototype="{{ form_widget(form.LineGroupGisContents.vars.prototype)|e }}">
-                {% for LineGroupGisContent in form.LineGroupGisContents %}
-                    <li>{{ form_row(LineGroupGisContent.line) }}</li>
-                {% endfor %}
-            </ul>
+        <div id="collection"
+            class="col-md-12"
+            data-prototype="
+                {% filter escape %}
+                    {{ include('TisseoPaonBundle:LineGroupGisContent:form.html.twig', {'form': form.LineGroupGisContents.vars.prototype }) }}
+                {% endfilter %}"
+            {#data-url="{{ path('tisseo.paon.schematic.list') }}"#}
+        >
+            <h4>{{ 'tisseo.paon.line_group_gis.label.associated_lines'|trans }}</h4>
+            {% for item in form.LineGroupGisContents %}
+                {{ include('TisseoPaonBundle:LineGroupGisContent:form.html.twig', {'form': item, 'number': loop.index }) }}
+            {% endfor %}
         </div>
     </div>
+    {{ form_widget(form.add, {'label': '<span class="glyphicon glyphicon-plus"></span>', 'attr': {'class': 'btn btn-success btn-xs small-button add-item-collection-btn'}}) }}
 {% endblock %}
 
 {% block modal_actions %}
     <button type="submit" class="btn btn-success">
         <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
     </button>
-
-    {{ form_row(form._token) }}
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_end(form) }}
 {% endblock %}
 
 {% block javascripts %}
-    {# TODO: CHECK POSSIBILTY TO IMPORT A JS FILE INSTEAD #}
-    <script type="text/javascript">
-        require(['jquery'], function($){
-            var collectionHolder = $('ul.lines');
-            var $addSubFormLink = $('<button type="submit" class="btn btn-success small-button"><span class="glyphicon glyphicon-plus"></span></button>');
-            var $newLinkLi = $('<li></li>').append($addSubFormLink);
-
-            var init = function() {
-                collectionHolder.append($newLinkLi);
-                collectionHolder.find('li').not(':last-child').each(function(){
-                   addSubFormDeleteLink($(this));
-                });
-
-                $addSubFormLink.on('click', function (e) {
-                    e.preventDefault();
-                    addSubForm(collectionHolder, $newLinkLi);
-                });
-
-                // Remove data-target attribute
-                $('.modal').find('button[type=submit]').removeData('target');
-            };
-
-            var addSubForm = function(collectionHolder, $newLinkLi) {
-                var prototype = collectionHolder.attr('data-prototype');
-                var newSubForm = prototype.replace(/__name__/g, collectionHolder.children().length);
-                var $newSubFormLi = $('<li></li>').append(newSubForm);
-                $newLinkLi.before($newSubFormLi);
-                addSubFormDeleteLink($newSubFormLi);
-            };
-
-            function addSubFormDeleteLink($subFormLi) {
-                var $removeSubForm = $('<button class="btn btn-xs btn-danger small-button remove-modification"><span class="glyphicon glyphicon-minus"></span></button>');
-                $subFormLi.append($removeSubForm);
-
-                $removeSubForm.on('click', function(e) {
-                    e.preventDefault();
-                    $subFormLi.remove();
-                });
-            }
-
+    <script>
+        require(['core/collection'], function(init) {
+            init();
+        });
+    </script>
+    <script>
+        require(['paon/edit/lgis'], function(init) {
             init();
         });
     </script>

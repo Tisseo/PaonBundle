@@ -57,6 +57,10 @@ class LineGroupGisType extends AbstractType
                     'constraints' => new UniqueInCollection('line')
                 )
             )
+            ->add(
+                'add',
+                'button'
+            )
             ->setAction($options['action'])
         ;
     }
@@ -64,17 +68,20 @@ class LineGroupGisType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'data_class' => 'Tisseo\EndivBundle\Entity\LineGroupGis',
+                array(
+                    'data_class' => 'Tisseo\EndivBundle\Entity\LineGroupGis',
+                    'attr' => array(
+                        'class' => 'form-with-collection'
+                    )
+                )
             )
-        );
-        $resolver->setRequired(array(
-            'em'
-        ));
-
-        $resolver->setAllowedTypes(array(
-            'em' => 'Doctrine\Common\Persistence\ObjectManager',
-        ));
+            ->setRequired(
+                array('em')
+            )
+            ->setAllowedTypes(
+                array('em' => 'Doctrine\Common\Persistence\ObjectManager')
+            )
+        ;
     }
 
     /**

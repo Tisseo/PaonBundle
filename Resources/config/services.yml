@@ -21,10 +21,10 @@ services:
         tags:
             - { name: form.type, alias: paon_line_group_gis }
 
-    form.type.paon_list_schema:
-        class: Tisseo\PaonBundle\Form\Type\ListSchemaType
+    form.type.paon_list_schematic:
+        class: Tisseo\PaonBundle\Form\Type\ListSchematicType
         tags:
-            - { name: form.type, alias: paon_list_schema }
+            - { name: form.type, alias: paon_list_schematic }
 
     tisseo_paon.ajax_form_listener:
         class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener

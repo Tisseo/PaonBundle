@@ -4,27 +4,27 @@ namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\EndivBundle\Entity\Schematic;
-use Tisseo\PaonBundle\Form\Type\LineSchemaType;
-use Tisseo\PaonBundle\Form\Type\MailType;
 use Tisseo\PaonBundle\Entity\SchematicList;
+use Tisseo\PaonBundle\Form\Type\SchematicType;
+use Tisseo\PaonBundle\Form\Type\MailType;
 use Tisseo\CoreBundle\Controller\CoreController;
 
-class LineSchemaController extends CoreController
+class SchematicController extends CoreController
 {
     /**
-     * List
+     * List with lines
      *
-     * Listing Lines and their LineSchematics
+     * Listing Lines and their Schematics
      */
-    public function listAction()
+    public function listWithLinesAction()
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
         return $this->render(
-            'TisseoPaonBundle:LineSchema:list.html.twig',
+            'TisseoPaonBundle:Schematic:list_with_lines.html.twig',
             array(
                 'navTitle' => 'tisseo.paon.menu.schematic.manage',
-                'pageTitle' => 'tisseo.paon.line_schema.title.list',
+                'pageTitle' => 'tisseo.paon.schematic.title.list',
                 'data' => $this->get('tisseo_endiv.line_manager')->findAllLinesWithSchematic(true)
             )
         );
@@ -34,42 +34,42 @@ class LineSchemaController extends CoreController
      * List schema
      * @param integer $lineId
      *
-     * Listing LineSchematic of a Line
+     * Listing Schematic of a Line
      */
-    public function listSchemaAction($lineId)
+    public function listAction($lineId)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 
         return $this->render(
-            'TisseoPaonBundle:LineSchema:listSchema.html.twig',
+            'TisseoPaonBundle:Schematic:list.html.twig',
             array(
-                'title' => 'tisseo.paon.line_schema.title.list_form',
-                'line' => $line,
-                'schematics' => $this->get('tisseo_endiv.schematic_manager')->findLineSchematics($lineId)
+                'title' => 'tisseo.paon.schematic.title.list_form',
+                'line' => $line
             )
         );
     }
 
     /**
-     * Choice list schema
+     * Choice
      * @param integer $lineId
      * @param integer $schematicId
      *
-     * ?
+     * Choosing a schematic from a list
      */
-    public function choiceListSchemaAction($lineId, $schematicId = null)
+    public function choiceAction($lineId, $schematicId = null)
     {
         $this->isGranted('BUSINESS_LIST_SCHEMA');
 
+        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+
         return $this->render(
-            'TisseoPaonBundle:LineSchema:choiceListSchema.html.twig',
+            'TisseoPaonBundle:Schematic:choice.html.twig',
             array(
                 'pageTitle' => 'menu.schema_manage',
-                'lineId' => $lineId,
-                'schematicId' => $schematicId,
-                'schematics' => $this->get('tisseo_endiv.schematic_manager')->findLineSchematics($lineId, 0, true)
+                'line' => $line,
+                'schematicId' => $schematicId
             )
         );
     }
@@ -79,9 +79,9 @@ class LineSchemaController extends CoreController
      * @param integer $lineId
      * @param boolean $addInfo
      *
-     *
+     * Uploading a Schematic
      */
-    public function editSchemaAction(Request $request, $lineId, $addInfo)
+    public function editAction(Request $request, $lineId, $addInfo)
     {
         $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
@@ -90,16 +90,16 @@ class LineSchemaController extends CoreController
             throw new \Exception('Line id not found');
         }
 
-        $lineSchematic = new Schematic();
-        $lineSchematic->setLine($line);
-        $lineSchematic->setDate(new \Datetime());
+        $schematic = new Schematic();
+        $schematic->setLine($line);
+        $schematic->setDate(new \Datetime());
 
         $form = $this->createForm(
-            new LineSchemaType(false, $addInfo),
-            $lineSchematic,
+            new SchematicType(false, $addInfo),
+            $schematic,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_paon_schema_edit',
+                    'tisseo_paon_schematic_edit',
                     array(
                         'lineId' => $lineId
                     )
@@ -112,9 +112,9 @@ class LineSchemaController extends CoreController
         {
             try
             {
-                $lineSchematic = $form->getData();
-                $lineSchematic->setName($line->getNumber() . '_' . $lineSchematic->getDate()->format('Ymd'));
-                $this->get('tisseo_endiv.schematic_manager')->save($lineSchematic);
+                $schematic = $form->getData();
+                $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
+                $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             }
             catch (\Exception $e)
@@ -125,15 +125,15 @@ class LineSchemaController extends CoreController
             $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
 
             foreach ($lineGroupGisContents as $lineGroupGisContent)
-                $this->addFlash('warning', $this->get('translator')->trans('line_schema.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
+                $this->addFlash('warning', $this->get('translator')->trans('schematic.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
 
-            return $this->redirectToRoute('tisseo_paon_line_schema_list');
+            return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
         }
 
         return $this->render(
-            'TisseoPaonBundle:LineSchema:editSchemaForm.html.twig',
+            'TisseoPaonBundle:Schematic:edit.html.twig',
             array(
-                'title' => 'line_schema.new',
+                'title' => 'schematic.new',
                 'form' => $form->createView(),
                 'lineId' => $lineId,
             )
@@ -144,9 +144,9 @@ class LineSchemaController extends CoreController
      * Ask schema
      * @param integer $lineId
      *
-     * Sending a mail for a LineSchema deposit
+     * Sending a mail for a Schematic deposit
      */
-    public function askSchemaAction(Request $request, $lineId)
+    public function askAction(Request $request, $lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_ASK_SCHEMA');
 
@@ -157,7 +157,7 @@ class LineSchemaController extends CoreController
             ),
             array(
             'action' => $this->generateUrl(
-                'tisseo_paon_schema_ask',
+                'tisseo_paon_schematic_ask',
                 array(
                     'lineId' => $lineId
                 )
@@ -172,24 +172,31 @@ class LineSchemaController extends CoreController
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $data = $form->getData();
+            try
+            {
+                $data = $form->getData();
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->get('translator')->trans('tisseo.paon.line_schema.mail.object', array('%line%' => $line->getNumber())))
-                ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
-                ->setTo(explode(',', $data['to']))
-                ->setBody($data['body']);
+                $message = \Swift_Message::newInstance()
+                    ->setSubject($this->get('translator')->trans('tisseo.paon.schematic.mail.object', array('%line%' => $line->getNumber())))
+                    ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
+                    ->setTo(explode(',', $data['to']))
+                    ->setBody($data['body']);
 
-            $this->get('mailer')->send($message);
-            $this->addFlash('success', 'tisseo.flash.success.sent');
+                $this->get('mailer')->send($message);
+                $this->addFlash('success', 'tisseo.flash.success.sent');
+            }
+            catch (\Exception $e)
+            {
+                $this->addFlashException($e->getMessage());
+            }
 
-            return $this->redirectToRoute('tisseo_paon_line_schema_list');
+            return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
         }
 
         return $this->render(
-            'TisseoPaonBundle:LineSchema:askSchemaForm.html.twig',
+            'TisseoPaonBundle:Schematic:ask.html.twig',
             array(
-                'title' => 'tisseo.paon.line_schema.title.new',
+                'title' => 'tisseo.paon.schematic.title.new',
                 'form' => $form->createView(),
                 'lineNumber' => $line->getNumber()
             )
@@ -197,33 +204,29 @@ class LineSchemaController extends CoreController
     }
 
     /**
-     * Deprecated schema
+     * Deprecate schema
      * @param $lineId
      *
-     * ?
+     * Setting a Schematic deprecated
      */
-    public function deprecatedSchemaAction(Request $request, $lineId)
+    public function deprecateAction(Request $request, $lineId)
     {
         $this->isGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
-
-        /** @var \Tisseo\EndivBundle\Services\SchematicManager $schematicManager */
-        $schematicManager = $this->get('tisseo_endiv.schematic_manager');
-        $schematics = $schematicManager->findLineSchematics($lineId, 0);
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
         if (empty($line))
             throw new \Exception('Line id not found');
 
         $schematicList = new SchematicList();
-        foreach($schematics as $schematic)
+        foreach($line->getFileSchematics() as $schematic)
             $schematicList->setSchematics($schematic);
 
         $form = $this->createForm(
-            'paon_list_schema',
+            'paon_list_schematic',
             $schematicList,
             array(
                 'action' => $this->generateUrl(
-                    'tisseo_paon_schema_deprecated',
+                    'tisseo_paon_schematic_deprecate',
                     array(
                         'lineId' => $lineId
                     )
@@ -238,7 +241,7 @@ class LineSchemaController extends CoreController
             try
             {
                 foreach ($data->schematics as $schematic)
-                    $schematicManager->save($schematic);
+                    $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             }
             catch (\Exception $e)
@@ -246,14 +249,14 @@ class LineSchemaController extends CoreController
                 $this->addFlashException($e->getMessage());
             }
 
-            return $this->redirectToRoute('tisseo_paon_line_schema_list');
+            return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
         }
 
         return $this->render(
-            'TisseoPaonBundle:LineSchema:deprecatedSchemaForm.html.twig',
+            'TisseoPaonBundle:Schematic:deprecate.html.twig',
             array(
                 'form' => $form->createView(),
-                'schematics' => $schematics,
+                'schematics' => $line->getSchematics()
             )
         );
     }

@@ -32,53 +32,6 @@ class LineGroupGisController extends CoreController
     }
 
     /**
-     * Create
-     *
-     * Creating LineGroupGis
-     */
-    public function createAction(Request $request)
-    {
-        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
-
-        $lineGroupGis = new LineGroupGis();
-        $lineGroupGisContent = new LineGroupGisContent();
-        $lineGroupGis->getLineGroupGisContents()->add($lineGroupGisContent);
-
-        $form = $this->createForm(
-            new LineGroupGisType(),
-            $lineGroupGis,
-            array(
-                'action' => $this->generateUrl('tisseo_paon_line_group_gis_create'),
-                'em' => $this->getDoctrine()->getManager($this->container->getParameter('endiv_database_connection'))
-            )
-        );
-
-        $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
-                $this->get('tisseo_endiv.line_group_gis_manager')->save($form->getData());
-                $this->addFlash('success', 'tisseo.flash.success.created');
-            }
-            catch(\Exception $e)
-            {
-                $this->addFlashException($e->getMessage());
-            }
-
-            return $this->redirectToRoute('tisseo_paon_line_group_gis_list');
-        }
-
-        return $this->render(
-            'TisseoPaonBundle:LineGroupGis:form.html.twig',
-            array(
-                'title' => 'tisseo.paon.line_group_gis.title.create',
-                'form' => $form->createView()
-            )
-        );
-    }
-
-    /**
      * Edit
      * @param integer $lineGroupGisId
      *
@@ -92,7 +45,11 @@ class LineGroupGisController extends CoreController
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
         if (empty($lineGroupGis))
-            throw $this->createNotFoundException('Not found: '.$lineGroupGisId);
+        {
+            $lineGroupGis = new LineGroupGis();
+            $lineGroupGisContent = new LineGroupGisContent();
+            $lineGroupGis->getLineGroupGisContents()->add($lineGroupGisContent);
+        }
 
         $form = $this->createForm(
             new LineGroupGisType(),
@@ -109,10 +66,13 @@ class LineGroupGisController extends CoreController
         $form->handleRequest($request);
         if ($form->isValid())
         {
+            $log = fopen('/tmp/test.log','a+');
+            fwrite($log, "\n".json_encode($request->request->all()));
+            fclose($log);
             try
             {
                 $lineGroupGisManager->save($form->getData());
-                $this->addFlash('success', 'tisseo.flash.success.edited');
+                $this->addFlash('success', (empty($lineGroupGisId) ? 'tisseo.flash.success.created' : 'tisseo.flash.success.edited'));
             }
             catch (\Exception $e)
             {

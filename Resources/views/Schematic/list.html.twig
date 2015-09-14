@@ -11,20 +11,20 @@
     <div class="schema-content-list">
         <div class="row">
             <div class="col-md-12">
-                {{ include ("TisseoPaonBundle:LineSchema:partial_table_list_schema.html.twig", { 'schematics': schematics }) }}
+                {{ include ("TisseoPaonBundle:Schematic:partial_table_list_schema.html.twig", { 'schematics': line.schematics }) }}
             </div>
         </div>
         <div class="col-md-12">
             {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') or is_granted('BUSINESS_MANAGE_DEPRECATE_SCHEMA') %}
             <div class="row" style='margin-bottom:5px;'>
                 {% if is_granted('BUSINESS_MANAGE_ASK_SCHEMA') %}
-                    <a class="btn btn-default btn-sm action-button" href="#" data-action="ask-schema" data-line-id="{{ line.id }}">
-                        {{ 'tisseo.paon.line_schema.action.ask_schematic'|trans }}
+                <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_ask', {'lineId': line.id }) }}">
+                        {{ 'tisseo.paon.schematic.action.ask_schematic'|trans }}
                     </a>
                 {% endif %}
                 {% if is_granted('BUSINESS_MANAGE_DEPRECATE_SCHEMA') %}
-                    <a class="btn btn-default btn-sm action-button" href="#" data-action="deprecated-schema" data-line-id="{{ line.id }}">
-                        {{ 'tisseo.paon.line_schema.action.deprecated'|trans }}
+                    <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_deprecate', {'lineId': line.id }) }}">
+                        {{ 'tisseo.paon.schematic.action.deprecated'|trans }}
                     </a>
                 {% endif %}
             </div>
@@ -32,11 +32,11 @@
 
             {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
             <div class="row">
-                    <a class="btn btn-default btn-sm action-button" href="#" data-action="edit-schema" data-line-id="{{ line.id }}">
-                        {{ 'tisseo.paon.line_schema.action.upload_file'|trans }}
+                    <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_edit', {'lineId': line.id }) }}">
+                        {{ 'tisseo.paon.schematic.action.upload_file'|trans }}
                     </a>
-                    <a class="btn btn-default btn-sm action-button" href="#" data-action="add-info" data-line-id="{{ line.id }}">
-                        {{ 'tisseo.paon.line_schema.action.add_info'|trans }}
+                    <a class="btn btn-default btn-sm action-button" href="#" data-url="{{ path('tisseo_paon_schematic_edit', {'lineId': line.id, addInfo: true }) }}">
+                        {{ 'tisseo.paon.schematic.action.add_info'|trans }}
                     </a>
             </div>
             {% endif %}
@@ -47,7 +47,7 @@
 
 {% block javascripts %}
     <script>
-        require(['paon/edit/schema']);
+        require(['paon/edit/schematic']);
     </script>
     <script>
         require(['core/textfill'], function() {

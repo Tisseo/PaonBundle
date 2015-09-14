@@ -101,39 +101,41 @@ tisseo_paon_data_exchange_launch:
     pattern: /data-exchange/launch/{jobName}
     defaults: { _controller: TisseoPaonBundle:DataExchange:launch, jobName: null }
 
-# Line schema administration
-tisseo_paon_line_schema_list:
-    pattern: /line-schema/list
-    defaults: { _controller: TisseoPaonBundle:LineSchema:list }
-tisseo_paon_schema_list:
-    pattern: /line-schema/{lineId}/schema/list
-    defaults: { _controller: TisseoPaonBundle:LineSchema:listSchema }
+# Schematic administration
+tisseo_paon_schematic_list_with_lines:
+    pattern: /line/schematic/list
+    defaults: { _controller: TisseoPaonBundle:Schematic:listWithLines }
     requirements:
         lineId: \d+
-tisseo_paon_schema_choice_list:
-    pattern: /line-schema/{lineId}/schema/choice/list/{schematicId}
-    defaults: { _controller: TisseoPaonBundle:LineSchema:choiceListSchema, schematicId: null }
+tisseo_paon_schematic_list:
+    pattern: /line/{lineId}/schematic/list
+    defaults: { _controller: TisseoPaonBundle:Schematic:list }
     requirements:
         lineId: \d+
-    options:
-        expose: true
-tisseo_paon_schema_edit:
-    pattern: /line-schema/{lineId}/schema/edit/{addInfo}
-    defaults: { _controller: TisseoPaonBundle:LineSchema:editSchema, addInfo: false }
+tisseo_paon_schematic_choice_list:
+    pattern: /line/{lineId}/schematic/choice/list/{schematicId}
+    defaults: { _controller: TisseoPaonBundle:Schematic:choiceListSchema, schematicId: null }
     requirements:
         lineId: \d+
     options:
         expose: true
-tisseo_paon_schema_ask:
-    pattern: /line-schema/{lineId}/schema/ask
-    defaults: { _controller: TisseoPaonBundle:LineSchema:askSchema }
+tisseo_paon_schematic_edit:
+    pattern: /line/{lineId}/schematic/edit/{addInfo}
+    defaults: { _controller: TisseoPaonBundle:Schematic:edit, addInfo: false }
     requirements:
         lineId: \d+
     options:
         expose: true
-tisseo_paon_schema_deprecated:
-    pattern: /line-schema/{lineId}/schema/deprecated
-    defaults: { _controller: TisseoPaonBundle:LineSchema:deprecatedSchema }
+tisseo_paon_schematic_ask:
+    pattern: /line/{lineId}/schematic/ask
+    defaults: { _controller: TisseoPaonBundle:Schematic:ask }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true
+tisseo_paon_schematic_deprecate:
+    pattern: /line/{lineId}/schematic/deprecate
+    defaults: { _controller: TisseoPaonBundle:Schematic:deprecate }
     requirements:
         lineId: \d+
     options:
@@ -143,14 +145,11 @@ tisseo_paon_schema_deprecated:
 tisseo_paon_line_group_gis_list:
     pattern: /line-schema/line-group/list
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:list }
-tisseo_paon_line_group_gis_create:
-    pattern: /line-schema/line-group/edit/create
-    defaults: { _controller: TisseoPaonBundle:LineGroupGis:create }
 tisseo_paon_line_group_gis_edit:
     pattern: /line-schema/line-group/edit/{lineGroupGisId}
-    defaults: { _controller: TisseoPaonBundle:LineGroupGis:edit }
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:edit, lineGroupGisId: null }
     requirements:
-        lineGroupGisId: \d+
+        lineGroupGisId: -?\d+
 tisseo_paon_line_group_gis_delete:
     pattern: /line-schema/line-group/delete/{lineGroupGisId}
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:delete }

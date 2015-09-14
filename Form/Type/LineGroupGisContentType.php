@@ -8,6 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Tisseo\EndivBundle\Entity\LineGroupGisContent;
 
 class LineGroupGisContentType extends AbstractType
 {
@@ -26,7 +29,62 @@ class LineGroupGisContentType extends AbstractType
                     'property' => 'number',
                     'em' => $options['em'],
                     'class' => 'Tisseo\EndivBundle\Entity\Line',
+                    'empty_value' => '',
+                    'attr' => array(
+                        'class' => 'line-select'
+                    )
                 )
+            )
+            ->addEventListener(FormEvents::PRE_SET_DATA,
+                function (FormEvent $event) use ($options) {
+                    $form = $event->getForm();
+                    $lineGroupGisContent = $event->getData();
+
+                    $log = fopen('/tmp/test.log','a+');
+                    $schematics = $selectedSchematic = null;
+                    if ($lineGroupGisContent instanceof LineGroupGisContent && $lineGroupGisContent->getLine() !== null)
+                    {
+                        fwrite($log, "\nOK");
+                        $em = $options['em'];
+                        $query = $em->createQuery("
+                            SELECT s
+                            FROM Tisseo\EndivBundle\Entity\Schematic s
+                            WHERE s.line = :line
+                        ")
+                        ->setParameter('line', $lineGroupGisContent->getLine()->getId());
+                        fwrite($log, "\n".$query->getSQL());
+                        $schematics = $query->getResult();
+
+                        foreach ($schematics as $schematic)
+                        {
+                            fwrite($log, "\nSCHEMATIC");
+                            if ($schematic->getGroupGis())
+                            {
+                                $selectedSchematic = $schematic;
+                                break;
+                            }
+                        }
+                    }
+                    $form
+                        ->add(
+                            'schematic',
+                            'choice',
+                            array(
+                                'label' => 'tisseo.paon.line_group_gis.label.schematic',
+                                'mapped' => false,
+                                'choices' => $schematics,
+                                'data' => $selectedSchematic,
+                                'attr' => array(
+                                    'class' => 'schematic-select'
+                                )
+                            )
+                        )
+                    ;
+                }
+            )
+            ->add(
+                'delete',
+                'button'
             )
             ->setAction($options['action'])
         ;

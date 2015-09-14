@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block modal_body %}
+    <div id="thumb"></div>
     <h3>{{ 'tisseo.paon.line_version.header.summary'|trans }}</h3>
     <div class="form form-show">
         <div class="left-summary">
@@ -54,7 +55,14 @@
             {% endif %}
             <br>
             <li>{{ 'tisseo.paon.line_version.label.depot'|trans }} : {{ lineVersion.depot|capitalize }}</li>
-            <li>{{ 'tisseo.paon.line_version.label.schematic'|trans }} : {% if lineVersion.schematic %}{{ lineVersion.schematic.name }}{% else %}{{ 'tisseo.global.no_items_short'|trans }}{% endif %}</li>
+            <li>
+                {% if lineVersion.schematic %}
+                    {{ 'tisseo.paon.line_version.label.schematic'|trans({'%date%': lineVersion.schematic.date|date('d/m/Y')}) }}
+                    <a href="{{ app.request.getbaseUrl() }}/{{ lineVersion.schematic.WebPath }}" target="_blank" data-toggle="popover" data-placement="bottom" data-container="#thumb" data-html="true" data-trigger="hover" data-content="<img src='/{{ lineVersion.schematic.WebPath }}' height='250px' width='600px' style='padding:10px;'>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                {% else %}
+                    {{ 'tisseo.paon.line_version.label.no_schematic'|trans }}
+                {% endif %}
+            </li>
             <li>{{ 'tisseo.paon.line_version.label.comment'|trans }} : {{ lineVersion.comment }}</li>
         </ul>
     </div>
@@ -106,5 +114,8 @@
         require(['core/textfill'], function(){
             textfill(15, 30, '.line-big');
         });
+    </script>
+    <script>
+        $('[data-toggle="popover"]').popover();
     </script>
 {% endblock %}

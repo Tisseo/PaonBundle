@@ -5,7 +5,7 @@
     {{ parent() }}
     {% if is_granted('BUSINESS_MANAGE_GROUP_GIS') %}
         -
-        <a href="{{ path('tisseo_paon_line_group_gis_create') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
+        <a href="{{ path('tisseo_paon_line_group_gis_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span> {{ 'tisseo.paon.line_group_gis.action.create'|trans }}
         </a>
     {% endif %}

@@ -10,16 +10,16 @@
             <a id="{{loop.index}}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
             <table id="{{loop.index}}" class="table datatable table-hover">
                 <thead>
-                    <th class="col-md-1">{{ 'tisseo.paon.line_schema.label.number'|trans }}</th>
-                    <th class="col-md-3">{{ 'tisseo.paon.line_schema.label.name'|trans }}</th>
-                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.line_schema.label.date'|trans }}</th>
-                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.line_schema.label.comment'|trans }}</th>
-                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.line_schema.label.group'|trans }}</th>
+                    <th class="col-md-1">{{ 'tisseo.paon.schematic.label.number'|trans }}</th>
+                    <th class="col-md-3">{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
+                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.date'|trans }}</th>
+                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.comment'|trans }}</th>
+                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.group'|trans }}</th>
                     <th class="col-md-2 no-sort no-search">{{ 'tisseo.global.actions'|trans }}</th>
                 </thead>
                 <tbody>
                 {% for line in lines %}
-                    {% set lastSchematic = line.schematics.last %}
+                    {% set lastSchematic = line.schematics.first %}
                     <tr{% if lastSchematic and lastSchematic.filePath is empty %} class="schematic-updating"{% endif %}>
                         <td>{{ render.line_number(line, 'line', 'free') }}</td>
                         <td>
@@ -27,7 +27,7 @@
                                 <span>{{ line.LastLineVersion.name }}</span>
                             {% endif %}
                         </td>
-                        {% set schematic = line.LastSchematic %}
+                        {% set schematic = line.LastSchematic(true) %}
                         <td>{% if schematic %}{{ schematic.date|date('d/m/Y') }}{% endif %}</td>
                         <td>{{ lastSchematic.comment }}</td>
                         <td>
@@ -40,8 +40,8 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a class="btn btn-default" href="{{ path('tisseo_paon_schema_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                <span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.line_schema.action.list'|trans }}
+                            <a class="btn btn-default" href="{{ path('tisseo_paon_schematic_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                                <span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.schematic.action.list'|trans }}
                             </a>
                         </td>
                     </tr>

@@ -31,11 +31,11 @@ class LineVersionCreateType extends AbstractType
             $lineVersion1 = $choice1->data;
             $lineVersion2 = $choice2->data;
             if ($lineVersion1->getLine()->getPriority() == $lineVersion2->getLine()->getPriority())
-            {   
+            {
                 $numberComparison = strnatcmp($lineVersion1->getLine()->getNumber(), $lineVersion2->getLine()->getNumber());
 
                 if ($numberComparison == 0)
-                    return ($lineVersion1->getVersion() < $lineVersion2->getVersion() ? -1 : 1); 
+                    return ($lineVersion1->getVersion() < $lineVersion2->getVersion() ? -1 : 1);
                 else
                     return $numberComparison;
             }

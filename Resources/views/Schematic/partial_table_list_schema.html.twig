@@ -1,9 +1,9 @@
 <table class="table table-striped">
     <thead>
-        <th>{{ 'tisseo.paon.line_schema.label.name'|trans }}</th>
-        <th>{{ 'tisseo.paon.line_schema.label.file'|trans }}</th>
-        <th>{{ 'tisseo.paon.line_schema.label.date'|trans }}</th>
-        <th>{{ 'tisseo.paon.line_schema.label.comment'|trans }}</th>
+        <th>{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
+        <th>{{ 'tisseo.paon.schematic.label.file'|trans }}</th>
+        <th>{{ 'tisseo.paon.schematic.label.date'|trans }}</th>
+        <th>{{ 'tisseo.paon.schematic.label.comment'|trans }}</th>
         <th></th>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
                 {% endif %}
             </td>
         </tr>
-    {%  else  %}
+    {% else %}
         <tr class="info">
             <td colspan="5">
                 {{ 'tisseo.global.no_items'|trans }}

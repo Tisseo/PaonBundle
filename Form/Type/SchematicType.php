@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class LineSchemaType extends AbstractType
+class SchematicType extends AbstractType
 {
     protected $isBatch;
 
@@ -45,14 +45,14 @@ class LineSchemaType extends AbstractType
                     'name',
                     'hidden',
                     array(
-                        'label' => 'tisseo.paon.line_schema.label.name'
+                        'label' => 'tisseo.paon.schematic.label.name'
                     )
                 )
                 ->add(
                     'comment',
                     'textarea',
                     array(
-                        'label' => 'tisseo.paon.line_schema.label.comment'
+                        'label' => 'tisseo.paon.schematic.label.comment'
                     )
                 )
                 ->add(
@@ -70,7 +70,7 @@ class LineSchemaType extends AbstractType
                         'date',
                         'date',
                         array(
-                            'label' => 'tisseo.paon.line_schema.label.date',
+                            'label' => 'tisseo.paon.schematic.label.date',
                             'widget' => 'single_text',
                             'read_only' => true,
                             'format' => 'dd/MM/yyyy'
@@ -85,7 +85,7 @@ class LineSchemaType extends AbstractType
                         'date',
                         'tisseo_datepicker',
                         array(
-                            'label' => 'tisseo.paon.line_schema.label.date',
+                            'label' => 'tisseo.paon.schematic.label.date',
                             'attr' => array(
                                 'class' => 'input-date'
                             )
@@ -95,7 +95,7 @@ class LineSchemaType extends AbstractType
                         'file',
                         'file',
                         array(
-                            'label' => 'tisseo.paon.line_schema.label.file',
+                            'label' => 'tisseo.paon.schematic.label.file',
                             'required' => true
                         )
                     )
@@ -125,6 +125,6 @@ class LineSchemaType extends AbstractType
      */
     public function getName()
     {
-        return 'paon_line_schema';
+        return 'paon_schematic';
     }
 }
