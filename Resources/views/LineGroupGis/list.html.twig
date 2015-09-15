@@ -29,15 +29,21 @@
                         <th>{{ 'tisseo.paon.line_group_gis.label.line_number'|trans }}</th>
                         <th>{{ 'tisseo.paon.line_group_gis.label.last_schematic'|trans }}</th>
                         <th>{{ 'tisseo.paon.line_group_gis.label.last_usable_schematic'|trans }}</th>
+                        <th>{{ 'tisseo.paon.line_group_gis.label.last_line_version_schematic'|trans }}</th>
+                        <th>{{ 'tisseo.paon.line_group_gis.label.last_gis_schematic'|trans }}</th>
                     </thead>
                     <tbody>
                         {% for lineGroup in group.lineGroupGisContents %}
                             {% set lastSchematic = lineGroup.line.LastSchematic(true) %}
-                            {% set lastValidSchematic = lineGroup.line.LastValidSchematic %}
-                            <tr>
+                            {% set firstValidSchematic = lineGroup.line.FirstValidSchematic %}
+                            {% set lastLineVersionSchematic = lineGroup.line.LastLineVersion.schematic %}
+                            {% set lastGisSchematic = lineGroup.line.LastGisSchematic %}
+                            <tr{% if lastGisSchematic.date|date_modify('+2 month') < lastLineVersionSchematic.date %} class="danger"{% elseif lastGisSchematic.date > lastLineVersionSchematic.date %} class="warning"{% endif %}>
                                 <td>{{ lineGroup.line.number }}</td>
                                 <td>{% if lastSchematic %}{{ lastSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
-                                <td>{% if lastValidSchematic %}{{ lastValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
+                                <td>{% if firstValidSchematic %}{{ firstValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
+                                <td>{% if lastLineVersionSchematic %}{{ lastLineVersionSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
+                                <td>{% if lastGisSchematic %}{{ lastGisSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                             </tr>
                         {% else %}
                             <tr><td colspan="3">{{ 'tisseo.global.no_items'|trans }}</td><tr>

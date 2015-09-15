@@ -114,7 +114,7 @@ tisseo_paon_schematic_list:
         lineId: \d+
 tisseo_paon_schematic_choice_list:
     pattern: /line/{lineId}/schematic/choice/list/{schematicId}
-    defaults: { _controller: TisseoPaonBundle:Schematic:choiceListSchema, schematicId: null }
+    defaults: { _controller: TisseoPaonBundle:Schematic:choice, schematicId: null }
     requirements:
         lineId: \d+
     options:

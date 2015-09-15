@@ -196,7 +196,7 @@ class LineVersionCreateType extends AbstractType
                 array(
                     'label' => 'tisseo.paon.line_version.label.choose_schematic',
                     'attr' => array(
-                        'class' => 'choose-schematic'
+                        'class' => 'choose-schematic btn-default'
                     )
                 )
             )

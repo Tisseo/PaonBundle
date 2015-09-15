@@ -174,14 +174,14 @@ class LineVersionEditType extends AbstractType
                 array(
                     'label' => 'tisseo.paon.line_version.label.choose_schematic',
                     'attr' => array(
-                        'class' => 'choose-schematic'
+                        'class' => 'choose-schematic btn-default'
                     )
                 )
             )
 
             /*
              * This field is mandatory but must be hidden
-             * it will be hiddent and positioned with css for allow use html5 validation
+             * it will be hidden and positioned with css for allow use html5 validation
              * See classes specified into attribute : class
              * TODO :  This system will be removed
              */

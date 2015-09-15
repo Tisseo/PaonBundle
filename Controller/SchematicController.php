@@ -127,7 +127,7 @@ class SchematicController extends CoreController
             $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
 
             foreach ($lineGroupGisContents as $lineGroupGisContent)
-                $this->addFlash('warning', $this->get('translator')->trans('schematic.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
+                $this->addFlash('warning', $this->get('translator')->trans('tisseo.paon.schematic.message.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
 
             return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
         }
