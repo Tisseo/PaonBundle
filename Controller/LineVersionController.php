@@ -60,21 +60,20 @@ class LineVersionController extends CoreController
 
         $minDate = null;
         $propertyManager = $this->get('tisseo_endiv.property_manager');
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
         $properties = $propertyManager->findAll();
-        $lineVersionResult = $lineVersionManager->findLastLineVersionOfLine($lineId);
+        $line = $lineManager->find($lineId);
+        $lastLineVersion = $line->getLastLineVersion();
 
         // no previous offer on this line
-        if (empty($lineVersionResult))
+        if (empty($lastLineVersion))
         {
-            $line = $lineManager->find($lineId);
             $lineVersion = new LineVersion($properties, null, $line);
         }
         else
         {
-            $lineVersion = new LineVersion($properties, $lineVersionResult, null);
-            $minDate = $lineVersionResult->getStartDate();
+            $lineVersion = new LineVersion($properties, $lastLineVersion, null);
+            $minDate = $lastLineVersion->getStartDate();
             $minDate->add(new \DateInterval('P1D'));
         }
         
@@ -104,7 +103,7 @@ class LineVersionController extends CoreController
                 $lineVersionDatasrc->setLineVersion($lineVersion);
                 $lineVersion->addLineVersionDatasource($lineVersionDatasrc);
         
-                $lineVersionManager->create($lineVersion);
+                $this->get('tisseo_endiv.line_version_manager')->create($lineVersion);
                 $this->addFlash('success', 'tisseo.flash.success.created');
             }
             catch (\Exception $e)
@@ -299,7 +298,8 @@ class LineVersionController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.line_version.manage',
                 'pageTitle' => 'tisseo.paon.line_version.title.history',
-                'lines' => $this->get('tisseo_endiv.line_manager')->findAllLinesByPriority()
+                'lines' => $this->get('tisseo_endiv.line_manager')->findAllLinesByPriority(),
+                'now' => new \Datetime()
             )
         );
     }

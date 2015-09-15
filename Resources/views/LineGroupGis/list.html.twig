@@ -31,11 +31,11 @@
                         <th>{{ 'tisseo.paon.line_group_gis.label.last_usable_schematic'|trans }}</th>
                     </thead>
                     <tbody>
-                        {% for line in group.lineGroupGisContents %}
-                            {% set lastSchematic = line.line.LastSchematic(true) %}
-                            {% set lastValidSchematic = line.line.LastValidSchematic %}
+                        {% for lineGroup in group.lineGroupGisContents %}
+                            {% set lastSchematic = lineGroup.line.LastSchematic(true) %}
+                            {% set lastValidSchematic = lineGroup.line.LastValidSchematic %}
                             <tr>
-                                <td>{{ line.line.number }}</td>
+                                <td>{{ lineGroup.line.number }}</td>
                                 <td>{% if lastSchematic %}{{ lastSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                                 <td>{% if lastValidSchematic %}{{ lastValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                             </tr>

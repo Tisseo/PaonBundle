@@ -2,16 +2,16 @@
 {% set bundle = 'TisseoPaonBundle' %}
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
-{% import "TisseoPaonBundle::macros.html.twig" as paonRender %}
 
-{% block table_head -%}
-    <th class="col-md-4">{{ 'tisseo.paon.line.label.label'|trans }}</th>
+{% block table_head %}
+    <th class="col-md-4">{{ 'tisseo.paon.line.label.number'|trans }}</th>
     <th class="col-md-4">{{ 'tisseo.paon.line.label.physical_mode'|trans }}</th>
     <th class="col-md-4 no-sort no-search">{{ 'tisseo.paon.line_version.label.history'|trans }}</th>
 {% endblock %}
 
-{% block table_body -%}
+{% block table_body %}
     {% for line in lines %}
+        {% set lineVersions = line.HistoryLineVersions(now) %}
         <tr>
             <td>
                 {{ render.line_number(line, 'line', 'free') }}
@@ -20,7 +20,14 @@
                 {{ line.physicalMode.name }}
             </td>
             <td>
-                {{ paonRender.line_offers_history(line) }}
+                {% if lineVersions is not empty %}
+                    <select style="max-width:60px;" id="paon_line_offers_{{ line.number }}" name="paon_line[offer]" class="select-offer form-control" data-toggle="modal" data-target="#base-modal">
+                        <option disabled="disabled" selected="selected"></option>
+                    {% for lineVersion in lineVersions %}
+                        <option value="{{ lineVersion.id }}">{{ lineVersion.version }}</option>
+                    {% endfor %}
+                    </select>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}
