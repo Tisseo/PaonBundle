@@ -40,24 +40,22 @@ class LineGroupGisContentType extends AbstractType
                     $form = $event->getForm();
                     $lineGroupGisContent = $event->getData();
 
-                    $log = fopen('/tmp/test.log','a+');
                     $schematics = $selectedSchematic = null;
                     if ($lineGroupGisContent instanceof LineGroupGisContent && $lineGroupGisContent->getLine() !== null)
                     {
-                        fwrite($log, "\nOK");
                         $em = $options['em'];
                         $query = $em->createQuery("
                             SELECT s
                             FROM Tisseo\EndivBundle\Entity\Schematic s
                             WHERE s.line = :line
+                            AND s.filePath IS NOT NULL
+                            AND s.deprecated = FALSE
                         ")
-                        ->setParameter('line', $lineGroupGisContent->getLine()->getId());
-                        fwrite($log, "\n".$query->getSQL());
+                        ->setParameter('line', $lineGroupGisContent->getLine());
                         $schematics = $query->getResult();
 
                         foreach ($schematics as $schematic)
                         {
-                            fwrite($log, "\nSCHEMATIC");
                             if ($schematic->getGroupGis())
                             {
                                 $selectedSchematic = $schematic;
@@ -68,11 +66,13 @@ class LineGroupGisContentType extends AbstractType
                     $form
                         ->add(
                             'schematic',
-                            'choice',
+                            'entity',
                             array(
                                 'label' => 'tisseo.paon.line_group_gis.label.schematic',
                                 'mapped' => false,
+                                'class' => 'Tisseo\EndivBundle\Entity\Schematic',
                                 'choices' => $schematics,
+                                'property' => 'datestring',
                                 'data' => $selectedSchematic,
                                 'attr' => array(
                                     'class' => 'schematic-select'

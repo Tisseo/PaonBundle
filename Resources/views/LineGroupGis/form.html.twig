@@ -32,7 +32,6 @@
                 {% filter escape %}
                     {{ include('TisseoPaonBundle:LineGroupGisContent:form.html.twig', {'form': form.LineGroupGisContents.vars.prototype }) }}
                 {% endfilter %}"
-            {#data-url="{{ path('tisseo.paon.schematic.list') }}"#}
         >
             <h4>{{ 'tisseo.paon.line_group_gis.label.associated_lines'|trans }}</h4>
             {% for item in form.LineGroupGisContents %}
@@ -52,13 +51,8 @@
 
 {% block javascripts %}
     <script>
-        require(['core/collection'], function(init) {
-            init();
-        });
-    </script>
-    <script>
-        require(['paon/edit/lgis'], function(init) {
-            init();
+        require(['core/collection', 'paon/edit/lgis'], function(initCollection, initLgis) {
+            initCollection(initLgis);
         });
     </script>
 {% endblock %}

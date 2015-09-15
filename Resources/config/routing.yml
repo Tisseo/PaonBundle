@@ -158,15 +158,22 @@ tisseo_paon_schematic_group_gis:
 
 # Line Group Gis
 tisseo_paon_line_group_gis_list:
-    pattern: /line-schema/line-group/list
+    pattern: /line-group-gis/list
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:list }
 tisseo_paon_line_group_gis_edit:
-    pattern: /line-schema/line-group/edit/{lineGroupGisId}
+    pattern: /line-group-gis/edit/{lineGroupGisId}
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:edit, lineGroupGisId: null }
     requirements:
         lineGroupGisId: -?\d+
 tisseo_paon_line_group_gis_delete:
-    pattern: /line-schema/line-group/delete/{lineGroupGisId}
+    pattern: /line-group-gis/delete/{lineGroupGisId}
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:delete }
     requirements:
         lineGroupGisId: \d+
+tisseo_paon_line_group_gis_schematics:
+    pattern: /line-group-gis/line/{lineId}/schematics
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:schematics }
+    requirements:
+        lineId: \d+
+    options:
+        expose: true

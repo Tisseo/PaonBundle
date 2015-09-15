@@ -26,7 +26,7 @@ class LineGroupGisType extends AbstractType
             )
             ->add(
                 'nbBus',
-                'text',
+                'integer',
                 array(
                     'label' => 'tisseo.paon.line_group_gis.label.nb_bus'
                 )
