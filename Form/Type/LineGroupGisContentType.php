@@ -56,7 +56,7 @@ class LineGroupGisContentType extends AbstractType
 
                         foreach ($schematics as $schematic)
                         {
-                            if ($schematic->getGroupGis())
+                            if ($schematic->getGroupGis() && $lineGroupGisContent->getLine() == $schematic->getLine())
                             {
                                 $selectedSchematic = $schematic;
                                 break;
