@@ -1,8 +1,10 @@
 {
     "name" : "tisseo/paon-bundle",
-    "description" : "A web interface providing creation of public transport commercial offers",
     "type" : "symfony-bundle",
+    "description" : "Back office interface providing public transport 'TID' database administration and commercial offers creation.",
+    "keywords" : ["Tisseo paon bundle NMM"],
     "homepage": "https://github.com/Tisseo/PaonBundle",
+    "license": "AGPLv3",
     "authors" : [
         {
             "name" : "Vincent Passama",
@@ -17,14 +19,10 @@
             "email" : "pierre.cl@gmail.com"
         }
     ],
-    "keywords" : [
-        "tisseo paon bundle endiv symfony nmm"
-    ],
-    "license" : "APGL-3.0",
     "require" : {
         "php": ">=5.4.3",
-        "tisseo/core-bundle": "dev-master",
-        "tisseo/endiv-bundle": "dev-master"
+        "tisseo/endiv-bundle": "~1.0.0",
+        "tisseo/core-bundle": "~1.0.0"
     },
     "autoload" : {
         "psr-0" : { "Tisseo\\PaonBundle\\" : "" }
