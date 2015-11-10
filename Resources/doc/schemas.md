@@ -39,7 +39,7 @@ Nom, présence d'un fichier, date, commentaire, prévisualisation des schémas
 ### Demande de nouveau schéma par l'IV
 
 Au clic sur le bouton "Demander un nouveau schéma", une nouvelle interface de
-composition de mail s'afficheavec l'objet, la date et l'auteur pré-rempli et
+composition de mail s'affiche avec l'objet, la date et l'auteur pré-rempli et
 deux fenêtre de saisie : destinataire et Message
 
 ###Déclarer qu'un schéma est utilisé dans une voussure

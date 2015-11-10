@@ -23,6 +23,6 @@ de fiches horaires.
 # Spécifications
 
 - [Gestion des lignes](lines.md)
-- [Gestion des offres](line_verions.md)
+- [Gestion des offres](line_versions.md)
 - [Imports/Exports](import_export.md)
 - [Gestion des schémas](schemas.md)
