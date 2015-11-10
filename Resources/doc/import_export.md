@@ -1,7 +1,10 @@
 # Import / Exports
 
-Cette interface présente l'ensemble des actions d'import et d'export de données liées à la base TID mais aussi de voir si des taches sont en cours, et par qui elles ont étés lancées.
-De plus, si une tache est en cours, alors l'application bloquera le déclenchement d'autres job et les boutons devront êtres grisés.
+Cette interface présente l'ensemble des actions d'import et d'export de données
+liées à la base TID mais aussi de voir si des taches sont en cours, et par qui
+elles ont étés lancées.
+De plus, si une tache est en cours, alors l'application bloquera le déclenchement
+d'autres job et les boutons devront êtres grisés.
 
 En pratique, les taches possibles sont des jobs jenkins.
 
