@@ -1,13 +1,18 @@
 # Liste des offres
 
 Cette interface présente l'ensemble des lignes (_line_) enregistrées en base. 
-Le numéro de la ligne (_line.number_) et le mode de transport associé (_physical_mode.name_) sont affichés. Si la ligne est associée à au moins une offre (_line_version_), le numéro de ligne est stylisé en utilisant les couleur de texte (_line_version.fg_color_id_) et de fond (_line_version.fg_color_id_) renseignées. Sinon, le numéro est affiché avec le style par défaut. 
+Le numéro de la ligne (_line.number_) et le mode de transport associé (_physical_mode.name_) sont affichés.
+Si la ligne est associée à au moins une offre (_line_version_), le numéro de ligne est stylisé en utilisant
+les couleur de texte (_line_version.fg_color_id_) et de fond (_line_version.fg_color_id_) renseignées.
+Sinon, le numéro est affiché avec le style par défaut. 
 
 # Liste des offres actuelles
 
 Cette interface présente l'ensemble des lignes (_line_) enregistrées en base. 
-Le numéro de la ligne (_line.number_) et le mode de transport associé (_physical_mode.name_) sont affichés. Si la ligne est associée à au moins une offre (_line_version_), le numéro de ligne est stylisé en utilisant les couleur de texte (_line_version.fg_color_id_) et de fond (_line_version.fg_color_id_) renseignées. Sinon, le numéro est affiché avec le style par défaut. 
-
+Le numéro de la ligne (_line.number_) et le mode de transport associé (_physical_mode.name_) sont affichés.
+Si la ligne est associée à au moins une offre (_line_version_), le numéro de ligne est stylisé en utilisant
+les couleurs de texte (_line_version.fg_color_id_) et de fond (_line_version.fg_color_id_) renseignées.
+Sinon, le numéro est affiché avec le style par défaut. 
 
 # Création d'une ligne
 
@@ -34,7 +39,7 @@ Source de données|Select|_datasource.name_|_line_datasource.datasource_id_
 
 ### Description
 
-Une fois l'import FH terminé, l'opérateur saisit les nouvelles grilles horaires qui apparaitront dans TimeTable.
+Une fois l'import FH terminé, l'opérateur saisit les nouvelles grilles horaires qui apparaitront dans Timetable.
 
 ### Champs en base
 
@@ -76,9 +81,12 @@ trip_sunday|Label|_trip_calendar.sunday_|-|Circulation du service le dimanche
 
 ### Description
 
-L'utilisateur affecte les différents calendriers présents dans les données dans les différentes grilles horaires par drag and drop. Au fur et à mesure que les calendriers sont affectés, ils disparaissent de la liste des calendriers restants.
-Lorsqu'un grid _mask_type est affecté à un grid_calendar, un nouvel enregistrement se fait dans la table : _grid_link_calendar_mask_type_.
-Les calendriers peuvent ne pas être affectés à une grille (ils n'apparaitront pas dans TimeTable).
+L'utilisateur affecte les différents calendriers présents dans les données dans les
+différentes grilles horaires par drag and drop. Au fur et à mesure que les calendriers
+sont affectés, ils disparaissent de la liste des calendriers restants.
+Lorsqu'un grid _mask_type est affecté à un grid_calendar, un nouvel enregistrement se fait
+dans la table : _grid_link_calendar_mask_type_.
+Les calendriers peuvent ne pas être affectés à une grille (ils n'apparaitront pas dans Timetable).
 Une grille peut ne pas avoir de calendrier (elle apparaitra vide dans TiemTable).
 
 ### Champs en base
@@ -87,7 +95,6 @@ Une grille peut ne pas avoir de calendrier (elle apparaitra vide dans TiemTable)
 -----------|----------|--------------|------------|-----------
 Grid|Label|_grid_calendar.name_|_grid_link_calendar_mask_type.grid_calendar_id_|
 calendar|Label|_grid_mask_type.calendar_type_ && _grid_mask_type.calendar_period_|_grid_link_calendar_mask_type.grid_mask_type_id_|
-
 
 # Gestion des exceptions
 
