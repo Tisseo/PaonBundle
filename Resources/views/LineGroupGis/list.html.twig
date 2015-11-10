@@ -8,6 +8,12 @@
         <a href="{{ path('tisseo_paon_line_group_gis_edit') }}" data-toggle="modal" data-target="#base-modal" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span> {{ 'tisseo.paon.line_group_gis.action.create'|trans }}
         </a>
+        <a
+            href="{{ path('tisseo_core_export_csv', {service: 'tisseo_endiv.line_group_gis_manager'}) }}"
+            class="btn btn-default"
+        >
+            <span class="glyphicon glyphicon-export"></span> {{ 'tisseo.paon.line_group_gis.action.export'|trans }}
+        </a>
     {% endif %}
 {% endblock %}
 

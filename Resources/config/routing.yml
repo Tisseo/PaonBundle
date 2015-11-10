@@ -177,3 +177,8 @@ tisseo_paon_line_group_gis_schematics:
         lineId: \d+
     options:
         expose: true
+
+# Export route
+tisseo_core:
+    resource: "@TisseoCoreBundle/Resources/config/routing.yml"
+    prefix: /

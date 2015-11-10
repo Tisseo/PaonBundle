@@ -21,12 +21,15 @@ class LineVersionController extends CoreController
     {
         $this->isGranted('BUSINESS_LIST_LINE_VERSION');
 
+        $now = new \Datetime();
+
         return $this->render(
             'TisseoPaonBundle:LineVersion:list.html.twig',
             array(
-                'navTitle' => 'tisseo.paon.menu.line_version.manage',
+                'navTitle'  => 'tisseo.paon.menu.line_version.manage',
                 'pageTitle' => 'tisseo.paon.line_version.title.list',
-                'data' => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions(new \Datetime(), null, true)
+                'data'      => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions(new \Datetime(), null, true),
+                'now'       => $now
             )
         );
     }
