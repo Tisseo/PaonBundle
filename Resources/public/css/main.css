@@ -116,6 +116,12 @@ table .grid-mask-type {
 #thumb .popover {
     max-width:none;
 }
+tr.customDanger td{
+    background-color:#ba6a6a;
+}
+tr.customWarning td{
+    background-color:#E5AB3F;
+}
 img.thumb {
     height:250px;
     width:600px;

@@ -44,7 +44,7 @@
                             {% set firstValidSchematic = lineGroup.line.FirstValidSchematic %}
                             {% set lastLineVersionSchematic = lineGroup.line.LastLineVersion.schematic %}
                             {% set lastGisSchematic = lineGroup.line.LastGisSchematic %}
-                            <tr{% if lastGisSchematic.date|date_modify('+2 month') < lastLineVersionSchematic.date %} class="danger"{% elseif lastGisSchematic.date > lastLineVersionSchematic.date %} class="warning"{% endif %}>
+                            <tr{% if lastGisSchematic.date|date_modify('+2 month') < lastLineVersionSchematic.date %} class="customDanger"{% elseif lastGisSchematic.date > lastLineVersionSchematic.date %} class="customWarning"{% endif %}>
                                 <td>{{ lineGroup.line.number }}</td>
                                 <td>{% if lastSchematic %}{{ lastSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                                 <td>{% if firstValidSchematic %}{{ firstValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
