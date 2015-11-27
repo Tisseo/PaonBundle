@@ -307,7 +307,7 @@ class SchematicController extends CoreController
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 
         $schematicList = new SchematicList();
-        foreach($line->getFileSchematics(5) as $schematic)
+        foreach($line->getFileSchematics() as $schematic)
             $schematicList->addSchematic($schematic);
 
         $form = $this->createForm(
