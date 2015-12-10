@@ -118,7 +118,7 @@
                                                 {{ 'tisseo.paon.line_version.action.clean'|trans }}
                                             </a>
                                         </li>
-                                        {% if lineVersion.startDate|date('Ymd') > now %}
+                                        {% if lineVersion.startDate > now %}
                                         <li>
                                             <a
                                                 href="{{ path('tisseo_paon_line_version_delete', {'lineVersionId': lineVersion.id}) }}"
