@@ -105,8 +105,9 @@ tisseo_paon_data_exchange_launch:
 tisseo_paon_schematic_list_with_lines:
     pattern: /line/schematic/list
     defaults: { _controller: TisseoPaonBundle:Schematic:listWithLines }
-    requirements:
-        lineId: \d+
+tisseo_paon_schematic_export:
+    pattern: /line/schematic/export
+    defaults: { _controller: TisseoPaonBundle:Schematic:export }
 tisseo_paon_schematic_list:
     pattern: /line/{lineId}/schematic/list
     defaults: { _controller: TisseoPaonBundle:Schematic:list }

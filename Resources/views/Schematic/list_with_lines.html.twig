@@ -4,6 +4,16 @@
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
+{% block list_title %}
+    {{ parent() }}
+        -
+    {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
+        <a href="{{ path('tisseo_paon_schematic_export') }}" class="btn btn-default" data-toggle="modal" data-target="#base-modal">
+            <span class="glyphicon glyphicon-export"></span> {{ 'tisseo.paon.schematic.action.export'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     {% for physicalMode, lines in data %}
         {% if lines is not empty %}
