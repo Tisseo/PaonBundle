@@ -54,6 +54,23 @@ class SchematicController extends CoreController
     }
 
     /**
+     * Export schemas
+     *
+     * choosing a start date for exporting schematics as csv
+     */
+    public function exportAction()
+    {
+        $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
+
+        return $this->render(
+            'TisseoPaonBundle:Schematic:export.html.twig',
+            array(
+                'title' => 'tisseo.paon.schematic.title.export',
+            )
+        );
+    }
+
+    /**
      * Choice
      * @param integer $lineId
      * @param integer $schematicId

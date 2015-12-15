@@ -1,0 +1,32 @@
+{% extends "::modal.html.twig" %}
+
+{% block modal_title %}
+    {{ title|trans }}
+{% endblock %}
+
+{% block modal_body %}
+    <div id="export-form" class="form form-edit">
+        <div class="col-md-6">
+            <div style="margin-bottom:8px" class="bold">{{ 'tisseo.paon.schematic.label.start_date'|trans }}</div>
+            <input style="margin-bottom:5px" type="text" id="start-date" class="form-control input-date">
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_actions %}
+    {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
+            <button id="schematic-export-button" class="btn btn-success" href="#" data-url="{{ path('tisseo_core_export_csv', {'service': 'tisseo_endiv.schematic_manager' }) }}">
+                {{ 'tisseo.paon.schematic.action.export'|trans }}
+            </button>
+    {% endif %}
+
+    <script>
+        require(['paon/export/schematic', 'bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
+            $('.input-date').datepicker({
+                language: '{{ app.request.locale }}',
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+    </script>
+{% endblock %}
