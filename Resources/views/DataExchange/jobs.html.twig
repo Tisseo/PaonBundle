@@ -19,9 +19,16 @@
         {% endif %}
         </td>
         <td>
-            <a href="{{ path('tisseo_paon_data_exchange_launch', {'jobName': job.name}) }}" role="button" class="btn btn-default {% if running %} disabled {% endif %}">
+            {% if running %}
+                -
+            {% else %}
+            <a {% if job.name == 'Import FH' %}id="launch-job-import-fh" {% endif %}
+                href="{{ path('tisseo_paon_data_exchange_launch', {'jobName': job.name}) }}"
+                role="button"
+                class="btn btn-default">
                 {{ 'tisseo.paon.data_exchange.action.launch'|trans }}
             </a>
+            {% endif %}
         </td>
     </tr>
 {% else %}

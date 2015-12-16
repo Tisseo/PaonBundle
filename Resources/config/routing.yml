@@ -100,6 +100,8 @@ tisseo_paon_data_exchange_jobs:
 tisseo_paon_data_exchange_launch:
     pattern: /data-exchange/launch/{jobName}
     defaults: { _controller: TisseoPaonBundle:DataExchange:launch, jobName: null }
+    options:
+        expose: true
 
 # Schematic administration
 tisseo_paon_schematic_list_with_lines:

@@ -8,7 +8,7 @@ define(['jquery', 'fosjsrouting'], function($) {
                     data : null,
                     success: function(data) {
                         if (data.content)
-                        $("tbody").fadeOut().promise().then(function() {
+                        $('.table-jobs tbody').fadeOut().promise().then(function() {
                             $(this).html(data.content).fadeIn();
                         });
                     }
