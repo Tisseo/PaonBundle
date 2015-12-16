@@ -21,16 +21,26 @@ class DataExchangeManager
      * Request Jenkins
      * @param string $url
      * @param boolean $returnJson
+     * @param array $params
      *
      * Call Jenkins by generating a curl request.
      * If $returnJson is true, return the response data as JSON.
+     *
+     * @return mixed
      */
-    private function callJenkins($url, $returnJson = false)
+    private function callJenkins($url, $returnJson = false, $params = array())
     {
         $request =  curl_init();
+        curl_setopt($request, CURLINFO_HEADER_OUT, true);
         curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($request, CURLOPT_POST, 1);
         curl_setopt($request, CURLOPT_USERPWD, $this->jenkinsUser);
+
+        if (count($params) > 0) {
+            curl_setopt($request, CURLOPT_POST, count(http_build_query($params)));
+            curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query($params));
+        }
+
         curl_setopt($request, CURLOPT_URL, $this->jenkinsServer.$url);
 
         $response = curl_exec($request);
@@ -80,11 +90,18 @@ class DataExchangeManager
         $url = "job/".str_replace(" ", "%20", $jobName)."/".$number."/api/json?tree=actions[causes[userName,upstreamProject]],building";
         $jsonData = $this->callJenkins($url, true);
 
-        if (array_key_exists("userName", $jsonData["actions"][0]["causes"][0]))
-            return $jsonData["actions"][0]["causes"][0]["userName"];
+        foreach( $jsonData["actions"] as $key => $action) {
+            if(is_array($action) && count($action) > 0) {
 
-        if (array_key_exists("upstreamProject", $jsonData["actions"][0]["causes"][0]))
-            return str_replace($this->masterJob, "", str_replace($this->atomicJob, "", $jsonData["actions"][0]["causes"][0]["upstreamProject"]));
+                if (array_key_exists("userName", $action["causes"][0])) {
+                    return $action["causes"][0]["userName"];
+                }
+
+                if (array_key_exists("upstreamProject", $action["causes"][0])) {
+                    return str_replace($this->masterJob, "", str_replace($this->atomicJob, "", $action["causes"][0]["upstreamProject"]));
+                }
+            }
+        }
 
         return "";
     }
@@ -92,13 +109,14 @@ class DataExchangeManager
     /**
      * Launch job
      * @param string $jobName
+     * @param array $params
      *
      * Launch a specific job.
      */
-    public function launchJob($jobName)
+    public function launchJob($jobName, $params = array())
     {
         $url = "job/".str_replace(" ", "%20", $this->masterJob.$jobName)."/build";
-        $this->callJenkins($url, false);
+        $this->callJenkins($url, false, $params);
     }
 
     /**
@@ -144,6 +162,9 @@ class DataExchangeManager
                 "color" => $val["color"],
             );
 
+            // MASTER JOB - Import FH must be ordered last
+            $job['order'] = ($val['name'] == 'IV - MASTER JOB - Import FH') ? (count($jobsList)) : 0 ;
+
             if ($job["color"] == "blue")
                 $job["color"] = "green";
 
@@ -156,6 +177,32 @@ class DataExchangeManager
             array_push($jobs, $job);
         }
 
+        usort($jobs, function($a, $b) {
+            if ($a['order'] == $b['order']) return 0;
+            return ($a['order'] < $b['order']) ? -1 : 1;
+        });
+
         return $jobs;
+    }
+
+    public function buildRequestParam($jobName, $params)
+    {
+        switch($jobName) {
+            case 'Import FH':
+                $parameters = [
+                    'json' => json_encode([
+                        'parameter' => [[
+                            'name' => 'import_list',
+                            'value' => implode(',', $params)
+                        ]]
+                    ])
+                ];
+
+                break;
+            default:
+                throw new \Exception('job inconnu');
+        }
+
+        return $parameters;
     }
 }

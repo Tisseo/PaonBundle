@@ -13,12 +13,20 @@
     {% endimage %}
 {% endblock %}
 
+{% block table_classes %}table-hover table-jobs{% endblock %}
 {% block table_body -%}
     {{ render(controller('TisseoPaonBundle:DataExchange:jobs')) }}
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+
+    {{ render(controller('TisseoPaonBundle:DataExchange:lines')) }}
 {% endblock %}
 
 {% block javascripts %}
     <script>
         require(['paon/list/dataexchange']);
+        require(['paon/importfh/dataexchange']);
     </script>
 {% endblock %}

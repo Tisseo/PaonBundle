@@ -1,0 +1,34 @@
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading header-ribbon">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.data_exchange.title.line_import_fh'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-fixed">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'tisseo.paon.data_exchange.label.line_number'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for line in lines %}
+                        <tr>
+                            <td>
+                                {% for lineDatasource in line.lineDatasources %}
+                                    <input type="checkbox" class="ckLine" value="{{ lineDatasource.code }}" name="ckLine[]">
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ render.line_number(line, 'line', 'free') }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
