@@ -31,7 +31,7 @@ class TisseoPaonExtension extends Extension
 
         # DataExchange configuration
         $container->setParameter('tisseo_paon.jenkins_server', $config['data_exchange']['jenkins_server']);
-        $container->setParameter('tisseo_paon.jenkins_user', $config['data_exchange']['jenkins_user']);
+        $container->setParameter('tisseo_paon.jenkins_users', $config['data_exchange']['jenkins_users']);
         $container->setParameter('tisseo_paon.master_job_prefix', $config['data_exchange']['jobs']['master_prefix']);
         $container->setParameter('tisseo_paon.atomic_job_prefix', $config['data_exchange']['jobs']['atomic_prefix']);
     }

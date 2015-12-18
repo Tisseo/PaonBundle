@@ -14,7 +14,7 @@ services:
 
     tisseo_paon.data_exchange_manager:
         class: %tisseo_paon.data_exchange_manager.class%
-        arguments: ['%tisseo_paon.jenkins_server%', '%tisseo_paon.jenkins_user%', '%tisseo_paon.master_job_prefix%', '%tisseo_paon.atomic_job_prefix%']
+        arguments: ['%tisseo_paon.jenkins_server%', '%tisseo_paon.jenkins_users%', '%tisseo_paon.master_job_prefix%', '%tisseo_paon.atomic_job_prefix%']
 
     form.type.paon_line_group_gis:
         class: Tisseo\PaonBundle\Form\Type\LineGroupGisType
