@@ -2,6 +2,8 @@
 
 namespace Tisseo\PaonBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\EndivBundle\TisseoEndivBundle;
@@ -18,7 +20,10 @@ class DataExchangeController extends CoreController
      */
     public function launchAction(Request $request, $jobName)
     {
-        $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
+        $this->isGranted([
+            'BUSINESS_MANAGE_DATA_EXCHANGE',
+            'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
+        ]);
 
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         // Check no master jobs are currently running and launch the job if it's clear
@@ -30,8 +35,8 @@ class DataExchangeController extends CoreController
             } else {
                 $params = array();
             }
-
-            $dataExchangeManager->launchJob($jobName, $params);
+            $role = $this->getJenkinsRole($dataExchangeManager);
+            $dataExchangeManager->launchJob($jobName, $params, $role);
         }
 
 
@@ -45,7 +50,10 @@ class DataExchangeController extends CoreController
      */
     public function showAction()
     {
-        $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
+        $this->isGranted([
+                'BUSINESS_MANAGE_DATA_EXCHANGE',
+                'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
+        ]);
 
         return $this->render(
             'TisseoPaonBundle:DataExchange:dataExchange.html.twig',
@@ -56,25 +64,57 @@ class DataExchangeController extends CoreController
         );
     }
 
+    /**
+     * @return Response
+     * @throws \Exception
+     */
     public function jobsAction()
     {
-        $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE');
+        $this->isGranted([
+            'BUSINESS_MANAGE_DATA_EXCHANGE',
+            'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
+        ]);
 
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         $runningJobData = $dataExchangeManager->buildRunningJobData();
 
+        $role = $this->getJenkinsRole($dataExchangeManager);
+
         return $this->render(
             'TisseoPaonBundle:DataExchange:jobs.html.twig',
             array(
-                'jobs' => $dataExchangeManager->getJobsList(),
+                'jobs' => $dataExchangeManager->getJobsList($role),
                 'runningJob' => $runningJobData,
                 'running' => ($runningJobData === null ? false : true)
             )
         );
     }
 
+    /**
+     * Gets the lines to select for Import FH task
+     *
+     * @return Response
+     * @throws \Exception
+     */
     public function linesAction()
     {
+        $this->isGranted([
+            'BUSINESS_MANAGE_DATA_EXCHANGE',
+            'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
+        ]);
+
+        /**
+         * TODO : Very ugly, if there is not a task with a specified name, then the method return an empty response
+         * TODO : List of tasks depends of current user profile.
+         * TODO : Need to refactor source code
+        */
+        $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
+        $role = $this->getJenkinsRole($dataExchangeManager);
+        $jobs = $dataExchangeManager->getJobsList($role);
+        if ($jobs[(count($jobs)-1)]['name'] != 'Import FH') {
+            return new Response();
+        }
+
         $lines = $this->get('tisseo_endiv.line_manager')->findByDataSource(1);
 
         return $this->render(
@@ -83,5 +123,32 @@ class DataExchangeController extends CoreController
                 'lines' => $lines
             )
         );
+    }
+
+    /**
+     * Returns the role who must be used to launch task
+     *
+     * @param null $dataExchangeManager instance of tisseo data exchange manager
+     * @return string
+     * @throws \Exception
+     */
+    private function getJenkinsRole($dataExchangeManager = null)
+    {
+        if (is_null($dataExchangeManager)) {
+            $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
+        }
+
+        try {
+            $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE_ROOT');
+            $role = $dataExchangeManager::ROLE_ADMIN;
+        } catch(\Exception $e) {
+            if ($e instanceof AccessDeniedException) {
+                $role = $dataExchangeManager::ROLE_IV;
+            } else {
+                throw new \Exception($e->getMessage(), $e->getCode(), $e);
+            }
+        }
+
+        return $role;
     }
 }

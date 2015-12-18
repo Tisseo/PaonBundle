@@ -39,6 +39,7 @@ class FixturesRole extends AbstractFixture implements OrderedFixtureInterface
                 'BUSINESS_MANAGE_GRID_CALENDAR',
                 'BUSINESS_MANAGE_EXCEPTION',
                 'BUSINESS_MANAGE_DATA_EXCHANGE',
+                'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT',
                 'BUSINESS_LIST_SCHEMA',
                 'BUSINESS_MANAGE_NEW_SCHEMA',
                 'BUSINESS_MANAGE_ASK_SCHEMA',

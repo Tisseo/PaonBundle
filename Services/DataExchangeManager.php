@@ -2,25 +2,50 @@
 
 namespace Tisseo\PaonBundle\Services;
 
+use Symfony\Component\Security\Acl\Exception\Exception;
+
+
 class DataExchangeManager
 {
     private $jenkinsServer;
-    private $jenkinsUser;
+    private $jenkinsUsers;
     private $masterJob;
     private $atomicJob;
 
-    public function __construct($jenkinsServer, $jenkinsUser, $masterJob, $atomicJob)
+    /**
+     * @const string ROLE_ADMIN
+     */
+    const ROLE_ADMIN ='admin';
+
+    /**
+     * @const string ROLE_IV
+     */
+    const ROLE_IV ='iv';
+
+    public function __construct($jenkinsServer, $jenkinsUsers, $masterJob, $atomicJob)
     {
         $this->jenkinsServer = $jenkinsServer;
-        $this->jenkinsUser = $jenkinsUser;
+        $this->jenkinsUsers = $jenkinsUsers;
         $this->masterJob = $masterJob;
         $this->atomicJob = $atomicJob;
+    }
+
+    private function chooseJenkinsUser($role) {
+
+        foreach ($this->jenkinsUsers as $key => $user) {
+            if ($user['profil'] == $role) {
+                return $user['user'];
+            }
+        }
+
+        Throw new \Exception('tisseo.paon.jenkins.user_not_found',500);
     }
 
     /**
      * Request Jenkins
      * @param string $url
      * @param boolean $returnJson
+     * @param string $role
      * @param array $params
      *
      * Call Jenkins by generating a curl request.
@@ -28,13 +53,14 @@ class DataExchangeManager
      *
      * @return mixed
      */
-    private function callJenkins($url, $returnJson = false, $params = array())
+    private function callJenkins($url, $returnJson = false, $role = self::ROLE_ADMIN, $params = array())
     {
+        $jenkinsUser = $this->chooseJenkinsUser($role);
         $request =  curl_init();
         curl_setopt($request, CURLINFO_HEADER_OUT, true);
         curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($request, CURLOPT_POST, 1);
-        curl_setopt($request, CURLOPT_USERPWD, $this->jenkinsUser);
+        curl_setopt($request, CURLOPT_USERPWD, $jenkinsUser);
 
         if (count($params) > 0) {
             curl_setopt($request, CURLOPT_POST, count(http_build_query($params)));
@@ -61,7 +87,7 @@ class DataExchangeManager
     public function getRunningJob()
     {
         $url = "view/IV%20-%20FLUX%20DE%20DONNEE/api/json?tree=jobs[name,color,lastBuild[number]]";
-        $jsonData = $this->callJenkins($url, true);
+        $jsonData = $this->callJenkins($url, true, self::ROLE_ADMIN);
 
         // search for master job running
         foreach ($jsonData["jobs"] as $key => $val) {
@@ -88,7 +114,7 @@ class DataExchangeManager
     public function getLauncher($jobName, $number)
     {
         $url = "job/".str_replace(" ", "%20", $jobName)."/".$number."/api/json?tree=actions[causes[userName,upstreamProject]],building";
-        $jsonData = $this->callJenkins($url, true);
+        $jsonData = $this->callJenkins($url, true, self::ROLE_ADMIN);
 
         foreach( $jsonData["actions"] as $key => $action) {
             if(is_array($action) && count($action) > 0) {
@@ -113,10 +139,10 @@ class DataExchangeManager
      *
      * Launch a specific job.
      */
-    public function launchJob($jobName, $params = array())
+    public function launchJob($jobName, $params = array(), $role = self::ROLE_ADMIN)
     {
         $url = "job/".str_replace(" ", "%20", $this->masterJob.$jobName)."/build";
-        $this->callJenkins($url, false, $params);
+        $this->callJenkins($url, false, $role, $params);
     }
 
     /**
@@ -147,10 +173,10 @@ class DataExchangeManager
      *
      * Get all jobs list.
      */
-    public function getJobsList()
+    public function getJobsList($role)
     {
         $url = "view/TID/api/json?tree=jobs[name,color,lastBuild[number]]";
-        $jobsList = $this->callJenkins($url, true);
+        $jobsList = $this->callJenkins($url, true, $role);
 
         if (empty($jobsList))
             return null;
