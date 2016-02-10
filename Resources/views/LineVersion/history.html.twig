@@ -12,6 +12,7 @@
 {% block table_body %}
     {% for line in lines %}
         {% set lineVersions = line.HistoryLineVersions(now) %}
+        {% dump(line.lineVersions|length) %}
         <tr>
             <td>
                 {{ render.line_number(line, 'line', 'free') }}
