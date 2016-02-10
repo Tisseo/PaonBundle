@@ -163,8 +163,11 @@ class LineVersionEditType extends AbstractType
             )
             ->add(
                 'depot',
-                'text',
+                'entity',
                 array(
+                    'class' => 'TisseoEndivBundle:Depot',
+                    'property' => 'shortName',
+                    'empty_value' => '',
                     'label' => 'tisseo.paon.line_version.label.depot'
                 )
             )
