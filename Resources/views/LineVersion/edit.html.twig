@@ -79,13 +79,16 @@
                     {% endfor %}
                 {% endfor %}
             </li>
+            <li>
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_row(form.depot) }}
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label required" for="paon_line_version_button_chematic" style="width: 100%; height: 15px;"></label>
+                            <label class="control-label required" for="paon_line_version_button_chematic" style="width: 100%; height: 5px;"></label>
                             {{ form_widget(form.button_schematic,
                                 {'attr': { 'data-target': 'target' } })
                             }}
