@@ -180,6 +180,11 @@ tisseo_paon_line_group_gis_schematics:
         lineId: \d+
     options:
         expose: true
+tisseo_paon_line_group_gis_printing_create:
+    pattern: /line-group-gis/add/printings/{lineGroupGisId}
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:addPrintings }
+    requirements:
+        lineGroupGisId: \d+
 
 # Export route
 tisseo_core:

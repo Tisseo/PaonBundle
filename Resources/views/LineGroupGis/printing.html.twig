@@ -1,0 +1,57 @@
+{% extends "::modal.html.twig" %}
+
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
+
+{% block modal_title %}
+    {{ title|trans }}
+{% endblock %}
+
+{% block open_form %}
+    {{ form_start(form) }}
+{% endblock %}
+
+{% block modal_body %}
+    {{ form_errors(form) }}
+    <div class="form form-edit">
+        <div class="col-md-12">
+            <ul>
+                <li>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.quantity) }}
+                        </div>
+                        <div class="col-md-6 input-range">
+                            {{ form_row(form.date) }}
+                        </div>
+                    </div>
+                </li>
+                <li>{{ form_row(form.comment) }}</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_actions %}
+    {{ form_end(form) }}
+    <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
+    </button>
+    <script>
+        {# TODO: CHECK POSSIBILITY OF A JS FILE INSTEAD #}
+        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function(){
+            $('.input-range input').datepicker({
+                language: '{{ app.request.locale }}',
+                startView: 1,
+                autoclose: true
+            }).on(
+                'changeDate',
+                function(){
+                    var date = $(this).datepicker('getDate');
+                    if (!isNaN(date.getTime())) {
+                        date.setDate(date.getDate() + 1);
+                    }
+                }
+            );
+        });
+    </script>
+{% endblock %}

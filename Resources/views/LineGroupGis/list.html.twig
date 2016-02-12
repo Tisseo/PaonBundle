@@ -14,12 +14,19 @@
         >
             <span class="glyphicon glyphicon-export"></span> {{ 'tisseo.paon.line_group_gis.action.export'|trans }}
         </a>
+        <a
+            href="{{ path('tisseo_core_export_csv', {service: 'tisseo_endiv.printing_line_group_gis_manager'}) }}"
+            class="btn btn-default"
+        >
+            <span class="glyphicon glyphicon-export"></span> {{ 'tisseo.paon.line_group_gis.action.printing_export'|trans }}
+        </a>
     {% endif %}
 {% endblock %}
 
 {% block table_head -%}
     <th class="col-md-2">{{ 'tisseo.paon.line_group_gis.label.name'|trans }}</th>
-    <th class="col-md-7">{{ 'tisseo.paon.line_group_gis.label.lines'|trans }}</th>
+    <th class="col-md-1">{{ 'tisseo.paon.line_group_gis.label.printings'|trans }}</th>
+    <th class="col-md-6">{{ 'tisseo.paon.line_group_gis.label.lines'|trans }}</th>
     <th class="col-md-3 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
 {% endblock %}
 
@@ -28,6 +35,18 @@
         <tr>
             <td>
                 {{ group.name }}
+            </td>
+            <td class="text-center">
+                {{ group.totalPrintings }}
+                <a
+                    href="{{ path('tisseo_paon_line_group_gis_printing_create', {'lineGroupGisId': group.id}) }}"
+                    class="btn btn-xs btn-success small-link pull-right"
+                    data-toggle="modal"
+                    data-target="#base-modal"
+                    onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
+                >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
             </td>
             <td>
                 <table class="table table-condensed">
