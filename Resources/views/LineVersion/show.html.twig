@@ -54,7 +54,7 @@
             {% endfor %}
             {% endif %}
             <br>
-            <li>{{ 'tisseo.paon.line_version.label.depot'|trans }} : {{ lineVersion.depot.shortName|capitalize }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.depot'|trans }} : {{ lineVersion.depot.longName|capitalize }}</li>
             <li>
                 {% if lineVersion.schematic %}
                     {{ 'tisseo.paon.line_version.label.schematic'|trans({'%date%': lineVersion.schematic.date|date('d/m/Y')}) }}

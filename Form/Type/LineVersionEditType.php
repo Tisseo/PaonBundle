@@ -166,7 +166,7 @@ class LineVersionEditType extends AbstractType
                 'entity',
                 array(
                     'class' => 'TisseoEndivBundle:Depot',
-                    'property' => 'shortName',
+                    'property' => 'longName',
                     'empty_value' => '',
                     'label' => 'tisseo.paon.line_version.label.depot'
                 )
