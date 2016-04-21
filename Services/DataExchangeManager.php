@@ -32,8 +32,8 @@ class DataExchangeManager
 
     private function chooseJenkinsUser($role) {
 
-        foreach ($this->jenkinsUsers as $key => $user) {
-            if ($user['profil'] == $role) {
+        foreach ($this->jenkinsUsers as $user) {
+            if ($user['profile'] == $role) {
                 return $user['user'];
             }
         }

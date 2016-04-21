@@ -172,7 +172,7 @@ class SchematicController extends CoreController
         $form = $this->createForm(
             new MailType(),
             array(
-                'to' => $this->container->getParameter('tisseo_paon.default_email_dest')
+                'to' => implode(',', $this->container->getParameter('tisseo_paon.default_email_dest'))
             ),
             array(
             'action' => $this->generateUrl(
