@@ -37,6 +37,7 @@
                     <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.printings'|trans }}</th>
                     <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.version'|trans }}</th>
                     <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.start_date'|trans }}</th>
+                    <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.end_date'|trans }}</th>
                     <th class="col-md-2 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
                 </thead>
                 <tbody>
@@ -65,6 +66,13 @@
                         </td>
                         <td>
                             {{ render.line_version_startDate(lineVersion, now) }}
+                        </td>
+                        <td>
+                            {%- if lineVersion.endDate -%}
+                                {{ lineVersion.endDate|date('d/m/Y') }}
+                            {%- elseif lineVersion.plannedEndDate -%}
+                                {{ lineVersion.plannedEndDate|date('d/m/Y') }}
+                            {%- endif -%}
                         </td>
                         <td>
                             <div class="btn-group">
