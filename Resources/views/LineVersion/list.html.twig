@@ -42,6 +42,7 @@
                 </thead>
                 <tbody>
                 {% for lineVersion in lineVersions %}
+                    {{ lineVersion.ProcessStatus(now) }}
                     <tr>
                         <td>
                             {{ render.line_number(lineVersion, 'lineVersion', 'free') }}
@@ -65,13 +66,13 @@
                             {{ lineVersion.version }}
                         </td>
                         <td>
-                            {{ render.line_version_startDate(lineVersion, now) }}
+                            {{ render.line_version_date(lineVersion, 'startDate') }}
                         </td>
                         <td>
                             {%- if lineVersion.endDate -%}
-                                {{ lineVersion.endDate|date('d/m/Y') }}
+                                {{ render.line_version_date(lineVersion, 'endDate') }}
                             {%- elseif lineVersion.plannedEndDate -%}
-                                {{ lineVersion.plannedEndDate|date('d/m/Y') }}
+                                {{ render.line_version_date(lineVersion, 'plannedEndDate') }}
                             {%- endif -%}
                         </td>
                         <td>
