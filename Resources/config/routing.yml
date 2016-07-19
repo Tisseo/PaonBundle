@@ -1,6 +1,6 @@
 tisseo_paon_homepage:
     pattern:  /
-    defaults: { _controller: TisseoPaonBundle:Default:index }
+    defaults: { _controller: TisseoPaonBundle:LineVersion:list }
 
 # Line routes
 tisseo_paon_line_list:

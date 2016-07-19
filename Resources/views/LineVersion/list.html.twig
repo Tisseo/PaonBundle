@@ -29,8 +29,8 @@
 {% block content %}
     {% for physicalMode, lineVersions in data %}
         {% if lineVersions is not empty %}
-            <a id="{{ loop.index }}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{ physicalMode|lower }}"></span>{{ physicalMode }}</a>
-            <table id="{{ loop.index }}" class="table datatable table-hover">
+            <a id="{{ loop.index0 }}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{ physicalMode|lower }}"></span>{{ physicalMode }}</a>
+            <table id="{{ loop.index0 }}" class="table datatable table-hover">
                 <thead>
                     <th class="col-md-1">{{ 'tisseo.paon.line_version.label.number'|trans }}</th>
                     <th class="col-md-5">{{ 'tisseo.paon.line_version.label.name'|trans }}</th>
