@@ -67,6 +67,8 @@ tisseo:
                 schematic: Date du schéma : %date%
                 no_schematic: Aucun schéma
                 resolved_modifications: Résolution des modifications
+                num_audio: Numéro audiotel
+                text2speech: Nom text-2-speech
             action:
                 create: Créer une offre
                 publication: Publication
