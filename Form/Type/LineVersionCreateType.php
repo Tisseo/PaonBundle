@@ -173,6 +173,20 @@ class LineVersionCreateType extends AbstractType
                 )
             )
             ->add(
+                'numAudio',
+                'integer',
+                array(
+                    'label' => 'tisseo.paon.line_version.label.num_audio'
+                )
+            )
+            ->add(
+                'text2speech',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.line_version.label.text2speech'
+                )
+            )
+            ->add(
                 'Property',
                 'entity',
                 array(

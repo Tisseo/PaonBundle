@@ -47,11 +47,14 @@
             <br>
             <li>{{ 'tisseo.paon.line_version.label.fg_color'|trans }} : {{ lineVersion.fgColor.name }}</li>
             <li>{{ 'tisseo.paon.line_version.label.bg_color'|trans }} : {{ lineVersion.bgColor.name }}</li>
-            {% if lineVersion.lineVersionProperties is not empty %}
             <br>
-            {% for lineVersionProperty in lineVersion.lineVersionProperties %}
-            <li>{{ lineVersionProperty.property.name }} : <input type="checkbox" onclick="return false;" {% if lineVersionProperty.value %}checked{% endif %}></li>
-            {% endfor %}
+            <li>{{ 'tisseo.paon.line_version.label.num_audio'|trans }} : {{ lineVersion.numAudio }}</li>
+            <li>{{ 'tisseo.paon.line_version.label.text2speech'|trans }} : {{ lineVersion.text2speech }}</li>
+            {% if lineVersion.lineVersionProperties is not empty %}
+                <br>
+                {% for lineVersionProperty in lineVersion.lineVersionProperties %}
+                    <li>{{ lineVersionProperty.property.name }} : <input type="checkbox" onclick="return false;" {% if lineVersionProperty.value %}checked{% endif %}></li>
+                {% endfor %}
             {% endif %}
             <br>
             <li>{{ 'tisseo.paon.line_version.label.depot'|trans }} : {{ lineVersion.depot.longName|capitalize }}</li>
