@@ -13,7 +13,7 @@ tisseo:
                 manage: Gestion des schémas
                 list: Liste des schémas
                 gis_group: Gestion des voussures
-
+            line_validation: Validation des lignes
         line:
             title:
                 list: Lignes
@@ -26,6 +26,24 @@ tisseo:
                 priority: Priorité
             action:
                 create: Créer une ligne
+
+        line_status:
+            title:
+                validate: Validation de ligne
+                suspend: Suspension de ligne
+            label:
+                status: Statut actuel
+                comment: Commentaires
+            action:
+                validate: Valider
+                suspend: Susprendre
+            status:
+                1: Nouvelles données
+                2: Données importées
+                3: Lignes en cours de modifications
+            mail:
+                object: Suspension ligne %line%
+                body: Les méthodes BUS TRAM travaillent sur cette ligne, merci de suspendre tout travail d'IV.
 
         line_version:
             title:

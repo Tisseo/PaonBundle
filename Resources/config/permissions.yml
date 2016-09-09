@@ -47,3 +47,6 @@ parameters:
         BUSINESS_MANAGE_GROUP_GIS:
             label: Administrer les voussures
             description:
+        BUSINESS_VALIDATE_LINES_EXPLOITATION:
+            label: Valider les lignes exploit
+            description:
