@@ -115,7 +115,7 @@ class DataExchangeController extends CoreController
             return new Response();
         }
 
-        $lines = $this->get('tisseo_endiv.line_manager')->findByDataSource(1);
+        $lines = $this->get('tisseo_endiv.line_manager')->findByDataSourceSortByStatus(1);
 
         return $this->render(
             'TisseoPaonBundle:DataExchange:lines.html.twig',

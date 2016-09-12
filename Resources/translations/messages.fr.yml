@@ -40,7 +40,7 @@ tisseo:
             status:
                 1: Nouvelles données
                 2: Données importées
-                3: Lignes en cours de modifications
+                3: Ligne en cours de modification
             mail:
                 object: Suspension ligne %line%
                 body: Les méthodes BUS TRAM travaillent sur cette ligne, merci de suspendre tout travail d'IV.
