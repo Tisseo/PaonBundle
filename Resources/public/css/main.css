@@ -125,5 +125,14 @@ tr.customWarning td{
 img.thumb {
     height:250px;
     width:600px;
-    padding:10px;'
+    padding:10px;
+}
+tr.line-status-1 {
+    background-color:#ABC2D8
+}
+tr.line-status-2 {
+    background-color:#98C798
+}
+tr.line-status-3 {
+    background-color:#FFB2B2
 }
