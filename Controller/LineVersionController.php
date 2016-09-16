@@ -9,6 +9,7 @@ use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\LineVersion;
 use Tisseo\EndivBundle\Entity\LineVersionDatasource;
+use Tisseo\EndivBundle\Entity\Datasource;
 
 class LineVersionController extends CoreController
 {
@@ -101,11 +102,12 @@ class LineVersionController extends CoreController
             try
             {
                 $lineVersion = $form->getData();
-                $lineVersionDatasrc = new LineVersionDatasource();
-                $this->addPaonDatasource($lineVersionDatasrc);
-                $lineVersionDatasrc->setLineVersion($lineVersion);
-                $lineVersion->addLineVersionDatasource($lineVersionDatasrc);
-        
+                $this->get('tisseo_endiv.datasource_manager')->fill(
+                    $lineVersion,
+                    Datasource::IV_SRC,
+                    $this->getUser()->getUsername()
+                );
+
                 $this->get('tisseo_endiv.line_version_manager')->create($lineVersion);
                 $this->addFlash('success', 'tisseo.flash.success.created');
             }

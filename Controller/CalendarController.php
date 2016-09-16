@@ -46,7 +46,7 @@ class CalendarController extends CoreController
     {
         $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
-        $this->isPostAjax($request);
+        $this->isAjax($request, Request::METHOD_POST);
 
         $gridCalendar = new GridCalendar();
 
