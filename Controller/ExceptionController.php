@@ -3,7 +3,6 @@
 namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Tisseo\PaonBundle\Form\Type\CommentType;
 use Tisseo\CoreBundle\Controller\CoreController;
 
@@ -21,7 +20,7 @@ class ExceptionController extends CoreController
      */
     public function editAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_EXCEPTION');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
         {
@@ -63,7 +62,7 @@ class ExceptionController extends CoreController
      */
     public function commentAction(Request $request)
     {
-        $this->isGranted('BUSINESS_MANAGE_EXCEPTION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_EXCEPTION');
 
         $form = $this->createForm(
             new CommentType()
@@ -72,14 +71,10 @@ class ExceptionController extends CoreController
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $response = new JsonResponse();
-            $response->setData(
-                array(
-                    'label' => $form['label']->getData(),
-                    'commentText' => $form['commentText']->getData()
-                )
-            );
-            return $response;
+            return $this->prepareJsonResponse(array(
+                'label' => $form['label']->getData(),
+                'commentText' => $form['commentText']->getData()
+            ));
         }
 
         return $this->render(

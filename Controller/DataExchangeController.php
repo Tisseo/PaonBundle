@@ -20,10 +20,10 @@ class DataExchangeController extends CoreController
      */
     public function launchAction(Request $request, $jobName)
     {
-        $this->isGranted([
+        $this->denyAccessUnlessGranted(array(
             'BUSINESS_MANAGE_DATA_EXCHANGE',
             'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
-        ]);
+        ));
 
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         // Check no master jobs are currently running and launch the job if it's clear
@@ -50,10 +50,10 @@ class DataExchangeController extends CoreController
      */
     public function showAction()
     {
-        $this->isGranted([
+        $this->denyAccessUnlessGranted(array(
                 'BUSINESS_MANAGE_DATA_EXCHANGE',
                 'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
-        ]);
+        ));
 
         return $this->render(
             'TisseoPaonBundle:DataExchange:dataExchange.html.twig',
@@ -70,10 +70,10 @@ class DataExchangeController extends CoreController
      */
     public function jobsAction()
     {
-        $this->isGranted([
+        $this->denyAccessUnlessGranted(array(
             'BUSINESS_MANAGE_DATA_EXCHANGE',
             'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
-        ]);
+        ));
 
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         $runningJobData = $dataExchangeManager->buildRunningJobData();
@@ -98,10 +98,10 @@ class DataExchangeController extends CoreController
      */
     public function linesAction()
     {
-        $this->isGranted([
+        $this->denyAccessUnlessGranted(array(
             'BUSINESS_MANAGE_DATA_EXCHANGE',
             'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
-        ]);
+        ));
 
         /**
          * TODO : Very ugly, if there is not a task with a specified name, then the method return an empty response
@@ -139,7 +139,7 @@ class DataExchangeController extends CoreController
         }
 
         try {
-            $this->isGranted('BUSINESS_MANAGE_DATA_EXCHANGE_ROOT');
+            $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DATA_EXCHANGE_ROOT');
             $role = $dataExchangeManager::ROLE_ADMIN;
         } catch(\Exception $e) {
             if ($e instanceof AccessDeniedException) {
