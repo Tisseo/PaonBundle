@@ -19,7 +19,7 @@ class CalendarController extends CoreController
      */
     public function renderFormAction()
     {
-        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
         $gridCalendar = new GridCalendar();
 
@@ -44,7 +44,7 @@ class CalendarController extends CoreController
      */
     public function createAction(Request $request)
     {
-        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
         $this->isAjax($request, Request::METHOD_POST);
 
@@ -88,7 +88,7 @@ class CalendarController extends CoreController
      */
     public function editAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_GRID_CALENDAR');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
         $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');

@@ -20,7 +20,7 @@ class LineController extends CoreController
      */
     public function listAction()
     {
-        $this->isGranted('BUSINESS_LIST_LINE');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE');
 
         return $this->render(
             'TisseoPaonBundle:Line:list.html.twig',
@@ -40,7 +40,7 @@ class LineController extends CoreController
      */
     public function editAction(Request $request, $lineId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE');
 
         $lineManager = $this->get('tisseo_endiv.line_manager');
         $line = $lineManager->find($lineId);
@@ -97,7 +97,7 @@ class LineController extends CoreController
      */
     public function validationListAction()
     {
-        $this->isGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
+        $this->denyAccessUnlessGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
 
         return $this->render(
             'TisseoPaonBundle:Line:validation_list.html.twig',
@@ -118,7 +118,7 @@ class LineController extends CoreController
      */
     public function validateSuspendAction(Request $request, $lineId, $suspend)
     {
-        $this->isGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
+        $this->denyAccessUnlessGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
 
         $lineManager = $this->get('tisseo_endiv.line_manager');
         $line = $lineManager->find($lineId);
@@ -186,5 +186,4 @@ class LineController extends CoreController
             )
         );
     }
-
 }

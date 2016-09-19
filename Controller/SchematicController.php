@@ -20,7 +20,7 @@ class SchematicController extends CoreController
      */
     public function listWithLinesAction()
     {
-        $this->isGranted('BUSINESS_LIST_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_SCHEMA');
 
         return $this->render(
             'TisseoPaonBundle:Schematic:list_with_lines.html.twig',
@@ -40,7 +40,7 @@ class SchematicController extends CoreController
      */
     public function listAction($lineId)
     {
-        $this->isGranted('BUSINESS_LIST_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_SCHEMA');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 
@@ -60,7 +60,7 @@ class SchematicController extends CoreController
      */
     public function exportAction()
     {
-        $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
         return $this->render(
             'TisseoPaonBundle:Schematic:export.html.twig',
@@ -79,7 +79,7 @@ class SchematicController extends CoreController
      */
     public function choiceAction($lineId, $schematicId = null)
     {
-        $this->isGranted('BUSINESS_LIST_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_SCHEMA');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 
@@ -102,7 +102,7 @@ class SchematicController extends CoreController
      */
     public function editAction(Request $request, $lineId, $addInfo)
     {
-        $this->isGranted('BUSINESS_MANAGE_NEW_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
         if (empty($line)) {
@@ -167,7 +167,7 @@ class SchematicController extends CoreController
      */
     public function askAction(Request $request, $lineId)
     {
-        $this->isGranted('BUSINESS_MANAGE_ASK_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_ASK_SCHEMA');
 
         $form = $this->createForm(
             new MailType(),
@@ -230,7 +230,7 @@ class SchematicController extends CoreController
      */
     public function deprecateAction(Request $request, $lineId)
     {
-        $this->isGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
         if (empty($line))
@@ -288,7 +288,7 @@ class SchematicController extends CoreController
      */
     public function deleteAction(Request $request, $lineId, $schematicId = null)
     {
-        $this->isGranted('BUSINESS_MANAGE_DELETE_SCHEMA');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DELETE_SCHEMA');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
             $this->get('tisseo_endiv.schematic_manager')->remove($schematicId);
@@ -319,7 +319,7 @@ class SchematicController extends CoreController
      */
     public function gisAction(Request $request, $lineId)
     {
-        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 

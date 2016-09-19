@@ -4,7 +4,6 @@ namespace Tisseo\PaonBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineGroupGis;
 use Tisseo\EndivBundle\Entity\LineGroupGisContent;
@@ -22,7 +21,7 @@ class LineGroupGisController extends CoreController
      */
     public function listAction()
     {
-        $this->isGranted('BUSINESS_LIST_GROUP_GIS');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_GROUP_GIS');
 
         return $this->render(
             'TisseoPaonBundle:LineGroupGis:list.html.twig',
@@ -42,7 +41,7 @@ class LineGroupGisController extends CoreController
      */
     public function editAction(Request $request, $lineGroupGisId)
     {
-        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
@@ -105,7 +104,7 @@ class LineGroupGisController extends CoreController
      */
     public function deleteAction($lineGroupGisId)
     {
-        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
@@ -134,13 +133,15 @@ class LineGroupGisController extends CoreController
      */
     public function schematicsAction($lineId)
     {
-        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
-        $response = new JsonResponse();
-        $response->setData($line->getGisSchematics());
 
-        return $response;
+        if (empty($line)) {
+            return $this->prepareJsonResponse(array());
+        }
+
+        return $this->prepareJsonResponse($line->getGisSchematics());
     }
 
     /**
@@ -151,7 +152,7 @@ class LineGroupGisController extends CoreController
      */
     public function addPrintingsAction(Request $request, $lineGroupGisId)
     {
-        $this->isGranted('BUSINESS_MANAGE_GROUP_GIS');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
@@ -203,5 +204,4 @@ class LineGroupGisController extends CoreController
             )
         );
     }
-
 }

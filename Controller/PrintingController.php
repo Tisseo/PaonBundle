@@ -19,7 +19,7 @@ class PrintingController extends CoreController
      */
     public function createAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
