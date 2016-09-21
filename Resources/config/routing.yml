@@ -133,8 +133,8 @@ tisseo_paon_schematic_choice_list:
     options:
         expose: true
 tisseo_paon_schematic_edit:
-    pattern: /line/{lineId}/schematic/edit/{addInfo}
-    defaults: { _controller: TisseoPaonBundle:Schematic:edit, addInfo: false }
+    pattern: /line/{lineId}/schematic/edit
+    defaults: { _controller: TisseoPaonBundle:Schematic:edit }
     requirements:
         lineId: \d+
     options:

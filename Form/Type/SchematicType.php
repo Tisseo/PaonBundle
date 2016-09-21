@@ -10,17 +10,14 @@ class SchematicType extends AbstractType
 {
     protected $isBatch;
 
-    protected $addInfo;
-
     protected $groupGis;
 
     /**
      * @param bool $isBatch
      */
-    public function __construct($isBatch = false, $addInfo = false, $groupGis = false)
+    public function __construct($isBatch = false, $groupGis = false)
     {
         $this->isBatch = $isBatch;
-        $this->addInfo = $addInfo;
         $this->groupGis = $groupGis;
     }
 
@@ -76,45 +73,26 @@ class SchematicType extends AbstractType
                         'data' => 0
                     )
                 )
+                ->add(
+                    'date',
+                    'tisseo_datepicker',
+                    array(
+                        'label' => 'tisseo.paon.schematic.label.date',
+                        'attr' => array(
+                            'class' => 'input-date'
+                        )
+                    )
+                )
+                ->add(
+                    'file',
+                    'file',
+                    array(
+                        'label' => 'tisseo.paon.schematic.label.file',
+                        'required' => true
+                    )
+                )
             ;
-            if ($this->addInfo)
-            {
-                $builder
-                    ->add(
-                        'date',
-                        'date',
-                        array(
-                            'label' => 'tisseo.paon.schematic.label.date',
-                            'widget' => 'single_text',
-                            'read_only' => true,
-                            'format' => 'dd/MM/yyyy'
-                        )
-                    )
-                ;
-            }
-            else
-            {
-                $builder
-                    ->add(
-                        'date',
-                        'tisseo_datepicker',
-                        array(
-                            'label' => 'tisseo.paon.schematic.label.date',
-                            'attr' => array(
-                                'class' => 'input-date'
-                            )
-                        )
-                    )
-                    ->add(
-                        'file',
-                        'file',
-                        array(
-                            'label' => 'tisseo.paon.schematic.label.file',
-                            'required' => true
-                        )
-                    )
-                ;
-            }
+
             $builder->setAction($options['action']);
         }
     }
