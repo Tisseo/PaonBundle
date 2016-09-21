@@ -96,11 +96,10 @@ class SchematicController extends CoreController
     /**
      * Edit schema
      * @param integer $lineId
-     * @param boolean $addInfo
      *
      * Uploading a Schematic
      */
-    public function editAction(Request $request, $lineId, $addInfo)
+    public function editAction(Request $request, $lineId)
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
@@ -111,10 +110,9 @@ class SchematicController extends CoreController
 
         $schematic = new Schematic();
         $schematic->setLine($line);
-        $schematic->setDate(new \Datetime());
 
         $form = $this->createForm(
-            new SchematicType(false, $addInfo),
+            new SchematicType(false),
             $schematic,
             array(
                 'action' => $this->generateUrl(
@@ -132,6 +130,7 @@ class SchematicController extends CoreController
             try
             {
                 $schematic = $form->getData();
+                $schematic->setDate(new \Datetime());
                 $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
                 $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
@@ -191,8 +190,7 @@ class SchematicController extends CoreController
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            try
-            {
+            try {
                 $data = $form->getData();
 
                 $message = \Swift_Message::newInstance()
@@ -201,12 +199,23 @@ class SchematicController extends CoreController
                     ->setTo(explode(',', $data['to']))
                     ->setBody($data['body']);
 
+                $schematic = new Schematic();
+                $schematic->setLine($line);
+                $schematic->setDate(new \Datetime());
+                $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
+                $schematic->setComment($data['body']);
+                $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->get('mailer')->send($message);
+
                 $this->addFlash('success', 'tisseo.flash.success.sent');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
+            }
+
+            $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
+
+            foreach ($lineGroupGisContents as $lineGroupGisContent) {
+                $this->addFlash('warning', $this->get('translator')->trans('tisseo.paon.schematic.message.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
             }
 
             return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
