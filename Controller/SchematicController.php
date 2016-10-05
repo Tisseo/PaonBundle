@@ -27,7 +27,7 @@ class SchematicController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.schematic.manage',
                 'pageTitle' => 'tisseo.paon.schematic.title.list',
-                'data' => $this->get('tisseo_endiv.line_manager')->findAllLinesWithSchematic(true)
+                'data' => $this->get('tisseo_endiv.manager.line')->findAllLinesWithSchematic(true)
             )
         );
     }
@@ -42,7 +42,7 @@ class SchematicController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_SCHEMA');
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
         return $this->render(
             'TisseoPaonBundle:Schematic:list.html.twig',
@@ -81,7 +81,7 @@ class SchematicController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_SCHEMA');
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
         return $this->render(
             'TisseoPaonBundle:Schematic:choice.html.twig',
@@ -103,7 +103,7 @@ class SchematicController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
         if (empty($line)) {
             throw new \Exception('Line id not found');
         }
@@ -181,7 +181,7 @@ class SchematicController extends CoreController
             )
         ));
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
         if (empty($line)) {
             throw new \Exception('Line id not found');
         }
@@ -240,7 +240,7 @@ class SchematicController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
         if (empty($line))
             throw new \Exception('Line id not found');
 
@@ -301,7 +301,7 @@ class SchematicController extends CoreController
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
             $this->get('tisseo_endiv.schematic_manager')->remove($schematicId);
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
         $schematics = new ArrayCollection();
         foreach($line->getSchematics() as $schematic)
@@ -329,7 +329,7 @@ class SchematicController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
         $schematicList = new SchematicList();
         foreach($line->getFileSchematics() as $schematic)

@@ -27,7 +27,7 @@ class LineController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.line',
                 'pageTitle' => 'tisseo.paon.line.title.list',
-                'lines' => $this->get('tisseo_endiv.line_manager')->findAllLinesByPriority()
+                'lines' => $this->get('tisseo_endiv.manager.line')->findAll()
             )
         );
     }
@@ -42,11 +42,10 @@ class LineController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE');
 
-        $lineManager = $this->get('tisseo_endiv.line_manager');
+        $lineManager = $this->get('tisseo_endiv.manager.line');
         $line = $lineManager->find($lineId);
 
-        if (empty($line))
-        {
+        if (empty($line)) {
             $line = new Line();
             $lineDatasource = new LineDatasource();
             $line->addLineDatasource($lineDatasource);
@@ -104,7 +103,7 @@ class LineController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.line_validation',
                 'pageTitle' => 'tisseo.paon.line.title.list',
-                'lines' => $this->get('tisseo_endiv.line_manager')->findByDataSource(1)
+                'lines' => $this->get('tisseo_endiv.manager.line')->findByDataSource(1)
             )
         );
     }
@@ -120,7 +119,7 @@ class LineController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
 
-        $lineManager = $this->get('tisseo_endiv.line_manager');
+        $lineManager = $this->get('tisseo_endiv.manager.line');
         $line = $lineManager->find($lineId);
 
         $lineStatus = new LineStatus();

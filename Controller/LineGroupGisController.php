@@ -135,7 +135,7 @@ class LineGroupGisController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
-        $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
         if (empty($line)) {
             return $this->prepareJsonResponse(array());

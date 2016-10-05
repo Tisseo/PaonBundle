@@ -14,9 +14,7 @@ use Tisseo\EndivBundle\Entity\Datasource;
 class LineVersionController extends CoreController
 {
     /**
-     * List
-     *
-     * Listing current/future versions of LineVersions.
+     * Listing current/future versions of LineVersions
      */
     public function listAction()
     {
@@ -29,8 +27,26 @@ class LineVersionController extends CoreController
             array(
                 'navTitle'  => 'tisseo.paon.menu.line_version.manage',
                 'pageTitle' => 'tisseo.paon.line_version.title.list',
-                'data'      => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions(new \Datetime(), null, true),
+                'data'      => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions($now, true),
                 'now'       => $now
+            )
+        );
+    }
+
+    /**
+     * Listing previous versions of LineVersions
+     */
+    public function historyAction()
+    {
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE_VERSION');
+
+        return $this->render(
+            'TisseoPaonBundle:LineVersion:history.html.twig',
+            array(
+                'navTitle' => 'tisseo.paon.menu.line_version.manage',
+                'pageTitle' => 'tisseo.paon.line_version.title.history',
+                'lines' => $this->get('tisseo_endiv.manager.line')->findAllWithPastVersions(),
+                'now' => new \Datetime()
             )
         );
     }
@@ -48,7 +64,7 @@ class LineVersionController extends CoreController
         if ($lineId === null)
             $lineId = $request->request->get('lineId');
 
-        $lineManager = $this->get('tisseo_endiv.line_manager');
+        $lineManager = $this->get('tisseo_endiv.manager.line');
         if (empty($lineId))
         {
             return $this->render(
@@ -70,12 +86,9 @@ class LineVersionController extends CoreController
         $lastLineVersion = $line->getLastLineVersion();
 
         // no previous offer on this line
-        if (empty($lastLineVersion))
-        {
+        if (empty($lastLineVersion)) {
             $lineVersion = new LineVersion($properties, null, $line);
-        }
-        else
-        {
+        } else {
             $lineVersion = new LineVersion($properties, $lastLineVersion, null);
             $minDate = $lastLineVersion->getStartDate();
             $minDate->add(new \DateInterval('P1D'));
@@ -97,10 +110,8 @@ class LineVersionController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineVersion = $form->getData();
                 $this->get('tisseo_endiv.datasource_manager')->fill(
                     $lineVersion,
@@ -283,26 +294,6 @@ class LineVersionController extends CoreController
                 'title' => $title,
                 'history' => $history,
                 'lineVersion' => $this->get('tisseo_endiv.line_version_manager')->find($lineVersionId)
-            )
-        );
-    }
-
-    /**
-     * History
-     *
-     * Listing all previous versions of LineVersions.
-     */
-    public function historyAction()
-    {
-        $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE_VERSION');
-
-        return $this->render(
-            'TisseoPaonBundle:LineVersion:history.html.twig',
-            array(
-                'navTitle' => 'tisseo.paon.menu.line_version.manage',
-                'pageTitle' => 'tisseo.paon.line_version.title.history',
-                'lines' => $this->get('tisseo_endiv.line_manager')->findAllLinesByPriority(),
-                'now' => new \Datetime()
             )
         );
     }
