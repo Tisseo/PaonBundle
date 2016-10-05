@@ -7,6 +7,7 @@ define(['jquery', 'fosjsrouting'], function($) {
                 data : { history: true },
                 success: function(data) {
                     $('.modal-content').html(data);
+                    $('#base-modal').modal("show");
                 }
             });
             $(this).prop('selectedIndex', 0);

@@ -9,6 +9,7 @@ use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\LineVersion;
 use Tisseo\EndivBundle\Entity\LineVersionDatasource;
+use Tisseo\EndivBundle\Entity\Datasource;
 
 class LineVersionController extends CoreController
 {
@@ -19,7 +20,7 @@ class LineVersionController extends CoreController
      */
     public function listAction()
     {
-        $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE_VERSION');
 
         $now = new \Datetime();
 
@@ -42,7 +43,7 @@ class LineVersionController extends CoreController
      */
     public function createAction(Request $request, $lineId = null)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         if ($lineId === null)
             $lineId = $request->request->get('lineId');
@@ -101,11 +102,12 @@ class LineVersionController extends CoreController
             try
             {
                 $lineVersion = $form->getData();
-                $lineVersionDatasrc = new LineVersionDatasource();
-                $this->addPaonDatasource($lineVersionDatasrc);
-                $lineVersionDatasrc->setLineVersion($lineVersion);
-                $lineVersion->addLineVersionDatasource($lineVersionDatasrc);
-        
+                $this->get('tisseo_endiv.datasource_manager')->fill(
+                    $lineVersion,
+                    Datasource::IV_SRC,
+                    $this->getUser()->getUsername()
+                );
+
                 $this->get('tisseo_endiv.line_version_manager')->create($lineVersion);
                 $this->addFlash('success', 'tisseo.flash.success.created');
             }
@@ -137,7 +139,7 @@ class LineVersionController extends CoreController
      */
     public function editAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
@@ -202,7 +204,7 @@ class LineVersionController extends CoreController
      */
     public function closeAction(Request $request, $lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
@@ -260,12 +262,10 @@ class LineVersionController extends CoreController
      */
     public function showAction(Request $request, $lineVersionId)
     {
-        $this->isGranted(
-            array(
-                'BUSINESS_MANAGE_LINE_VERSION',
-                'BUSINESS_LIST_LINE_VERSION'
-            )
-        );
+        $this->denyAccessUnlessGranted(array(
+            'BUSINESS_MANAGE_LINE_VERSION',
+            'BUSINESS_LIST_LINE_VERSION'
+        ));
 
         $history = false;
         $title = 'tisseo.paon.line_version.title.show';
@@ -294,7 +294,7 @@ class LineVersionController extends CoreController
      */
     public function historyAction()
     {
-        $this->isGranted('BUSINESS_LIST_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE_VERSION');
 
         return $this->render(
             'TisseoPaonBundle:LineVersion:history.html.twig',
@@ -315,7 +315,7 @@ class LineVersionController extends CoreController
      */
     public function cleanAction($lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         try
         {
@@ -338,7 +338,7 @@ class LineVersionController extends CoreController
      */
     public function deleteAction($lineVersionId)
     {
-        $this->isGranted('BUSINESS_MANAGE_LINE_VERSION');
+        $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
         try
         {

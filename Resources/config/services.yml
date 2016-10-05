@@ -1,27 +1,18 @@
-parameters:
-    tisseo_paon.perimeter.class: Tisseo\PaonBundle\Services\PerimeterManager
-    tisseo_paon.user.class: Tisseo\PaonBundle\Services\UserManager
-    tisseo_paon.data_exchange_manager.class: Tisseo\PaonBundle\Services\DataExchangeManager
-
 services:
-    tisseo_paon.perimeter_manager:
-        class: %tisseo_paon.perimeter.class%
-        arguments: ['@doctrine.orm.default_entity_manager']
-
-    tisseo_paon.user_manager:
-        class: %tisseo_paon.user.class%
-        arguments: ['@doctrine.orm.default_entity_manager', '@translator', '@service_container']
-
     tisseo_paon.data_exchange_manager:
-        class: %tisseo_paon.data_exchange_manager.class%
-        arguments: ['%tisseo_paon.jenkins_server%', '%tisseo_paon.jenkins_users%', '%tisseo_paon.master_job_prefix%', '%tisseo_paon.atomic_job_prefix%']
+        class: 'Tisseo\PaonBundle\Services\DataExchangeManager'
+        arguments:
+            - '%tisseo_paon.jenkins_server%'
+            - '%tisseo_paon.jenkins_users%'
+            - '%tisseo_paon.master_job_prefix%'
+            - '%tisseo_paon.atomic_job_prefix%'
 
     form.type.paon_line_group_gis:
-        class: Tisseo\PaonBundle\Form\Type\LineGroupGisType
+        class: 'Tisseo\PaonBundle\Form\Type\LineGroupGisType'
         tags:
             - { name: form.type, alias: paon_line_group_gis }
 
     tisseo_paon.ajax_form_listener:
-        class: CanalTP\SamCoreBundle\EventListener\AjaxFormListener
+        class: 'CanalTP\SamCoreBundle\EventListener\AjaxFormListener'
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

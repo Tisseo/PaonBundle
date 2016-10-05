@@ -1,0 +1,29 @@
+{% extends "::modal.html.twig" %}
+{% import "TisseoCoreBundle::macros.html.twig" as render %}
+
+{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
+
+{% block modal_title %}
+    {{ title|trans }} - {{ render.line_number(line, 'line', 'free') }}
+{% endblock %}
+
+{% block open_form %}
+    {{ form_start(form) }}
+{% endblock %}
+
+{% block modal_body %}
+    {{ form_errors(form) }}
+
+    <div class="form form-edit">
+        <div class="col-md-12">
+            {{ form_row(form.comment) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_actions %}
+    <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

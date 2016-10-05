@@ -10,6 +10,16 @@ tisseo_paon_line_edit:
     pattern: /lines/edit/{lineId}
     defaults: { _controller: TisseoPaonBundle:Line:edit, lineId: null }
 
+# Line validation
+tisseo_paon_line_validation_list:
+    pattern: /lines/validation/list
+    defaults: { _controller: TisseoPaonBundle:Line:validationList }
+tisseo_paon_line_validate_suspend:
+    pattern: /lines/validation/validate/{lineId}/{suspend}
+    defaults: { _controller: TisseoPaonBundle:Line:validateSuspend, suspend:null }
+    requirements:
+        lineId: \d+
+
 # LineVersion routes
 tisseo_paon_line_version_list:
     pattern: /offers/list
@@ -123,8 +133,8 @@ tisseo_paon_schematic_choice_list:
     options:
         expose: true
 tisseo_paon_schematic_edit:
-    pattern: /line/{lineId}/schematic/edit/{addInfo}
-    defaults: { _controller: TisseoPaonBundle:Schematic:edit, addInfo: false }
+    pattern: /line/{lineId}/schematic/edit
+    defaults: { _controller: TisseoPaonBundle:Schematic:edit }
     requirements:
         lineId: \d+
     options:
