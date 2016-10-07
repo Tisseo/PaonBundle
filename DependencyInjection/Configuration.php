@@ -59,6 +59,12 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('default_email_exp')->isRequired()->end()
                 ->end()
             ->end()
+            ->arrayNode('referential_datasources')
+                ->info('Referential datasource used to retrieve a list of importable offers')
+                ->defaultValue(array('hastus'))
+                ->requiresAtLeastOneElement()
+                ->prototype('scalar')->end()
+            ->end()
         ->end();
 
         return $treeBuilder;

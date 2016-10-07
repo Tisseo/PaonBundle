@@ -28,7 +28,7 @@ class ExceptionController extends CoreController
 
             try
             {
-                $this->get('tisseo_endiv.trip_manager')->updateComments($data);
+                $this->get('tisseo_endiv.manager.trip')->updateComments($data);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             }
             catch (\Exception $e)
@@ -40,8 +40,8 @@ class ExceptionController extends CoreController
         }
 
         // GET pseudo-form view
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
-        $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.manager.line_version');
+        $gridCalendarManager = $this->get('tisseo_endiv.manager.grid_calendar');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         return $this->render(

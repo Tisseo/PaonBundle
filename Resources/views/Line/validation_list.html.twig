@@ -1,5 +1,7 @@
 {% extends "TisseoCoreBundle::datatable_list.html.twig" %}
 {% set bundle = "TisseoPaonBundle" %}
+{% set navTitle = "tisseo.paon.menu.line_validation" %}
+{% set pageTitle = "tisseo.paon.line.title.list" %}
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
@@ -26,7 +28,7 @@
                     {{ lastLineVersion.depot.longName }}
                 </td>
                 <td>
-                    {% if line.currentStatus is not null %} {{ ('tisseo.paon.line_status.status.' ~ line.currentStatus.status)|trans  }} {% endif %}
+                    {% if line.currentStatus is not null %}{{ ('tisseo.paon.line_status.status.' ~ line.currentStatus.status)|trans }}{% endif %}
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_VALIDATE_LINES_EXPLOITATION') %}

@@ -31,7 +31,6 @@ class LineDatasourceType extends AbstractType
                     'label' => 'tisseo.paon.datasource.label.code'
                 )
             )
-            ->setAction($options['action'])
         ;
     }
 
@@ -52,6 +51,6 @@ class LineDatasourceType extends AbstractType
      */
     public function getName()
     {
-        return 'paon_line_datasource';
+        return 'tisseo_paon_line_datasource';
     }
 }

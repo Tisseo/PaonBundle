@@ -19,10 +19,11 @@
                 {{ line.physicalMode.name }}
             </td>
             <td>
-                {% if line.lineVersions is not empty %}
+                {% set lineVersions = line.PastLineVersions %}
+                {% if lineVersions is not empty %}
                     <select style="max-width:60px;" id="paon_line_offers_{{ line.number }}" name="paon_line[offer]" class="select-offer form-control">
                         <option disabled="disabled" selected="selected"></option>
-                    {% for lineVersion in line.lineVersions %}
+                    {% for lineVersion in lineVersions %}
                         <option value="{{ lineVersion.id }}">{{ lineVersion.version }}</option>
                     {% endfor %}
                     </select>

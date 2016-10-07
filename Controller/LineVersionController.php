@@ -20,15 +20,13 @@ class LineVersionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE_VERSION');
 
-        $now = new \Datetime();
-
         return $this->render(
             'TisseoPaonBundle:LineVersion:list.html.twig',
             array(
                 'navTitle'  => 'tisseo.paon.menu.line_version.manage',
                 'pageTitle' => 'tisseo.paon.line_version.title.list',
-                'data'      => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions($now, true),
-                'now'       => $now
+                'data'      => $this->get('tisseo_endiv.manager.line_version')->findActiveLineVersions(true),
+                'now'       => new \Datetime()
             )
         );
     }
@@ -79,7 +77,7 @@ class LineVersionController extends CoreController
         }
 
         $minDate = null;
-        $propertyManager = $this->get('tisseo_endiv.property_manager');
+        $propertyManager = $this->get('tisseo_endiv.manager.property');
 
         $properties = $propertyManager->findAll();
         $line = $lineManager->find($lineId);
@@ -94,7 +92,7 @@ class LineVersionController extends CoreController
             $minDate->add(new \DateInterval('P1D'));
         }
         
-        $modificationManager = $this->get('tisseo_endiv.modification_manager');
+        $modificationManager = $this->get('tisseo_endiv.manager.modification');
         $form = $this->createForm(
             new LineVersionCreateType($modificationManager, ($lineVersion->getLine() !== null ? $lineVersion->getLine()->getId() : null)),
             $lineVersion,
@@ -113,13 +111,13 @@ class LineVersionController extends CoreController
         if ($form->isValid()) {
             try {
                 $lineVersion = $form->getData();
-                $this->get('tisseo_endiv.datasource_manager')->fill(
+                $this->get('tisseo_endiv.manager.datasource')->fill(
                     $lineVersion,
                     Datasource::IV_SRC,
                     $this->getUser()->getUsername()
                 );
 
-                $this->get('tisseo_endiv.line_version_manager')->create($lineVersion);
+                $this->get('tisseo_endiv.manager.line_version')->create($lineVersion);
                 $this->addFlash('success', 'tisseo.flash.success.created');
             }
             catch (\Exception $e)
@@ -152,7 +150,7 @@ class LineVersionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.manager.line_version');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         if (empty($lineVersion))
@@ -164,7 +162,7 @@ class LineVersionController extends CoreController
         // Update LineVersion -> LineVersionProperty -> Property relations
         // TODO: Looking at the Log table, it seems the synchronization leads to
         // a systematic UPDATE in database. Check if something better can be done.
-        $properties = $this->get('tisseo_endiv.property_manager')->findAll();
+        $properties = $this->get('tisseo_endiv.manager.property')->findAll();
         $lineVersion->synchronizeLineVersionProperties($properties);
 
         $form = $this->createForm(
@@ -217,7 +215,7 @@ class LineVersionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.manager.line_version');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         if (empty($lineVersion))
@@ -293,7 +291,7 @@ class LineVersionController extends CoreController
             array(
                 'title' => $title,
                 'history' => $history,
-                'lineVersion' => $this->get('tisseo_endiv.line_version_manager')->find($lineVersionId)
+                'lineVersion' => $this->get('tisseo_endiv.manager.line_version')->find($lineVersionId)
             )
         );
     }
@@ -310,7 +308,7 @@ class LineVersionController extends CoreController
 
         try
         {
-            $this->get('tisseo_endiv.stored_procedure_manager')->cleanLineVersion($lineVersionId);
+            $this->get('tisseo_endiv.manager.stored_procedure')->cleanLineVersion($lineVersionId);
             $this->addFlash('success', 'tisseo.flash.success.cleaned');
         }
         catch (\Exception $e)
@@ -333,7 +331,7 @@ class LineVersionController extends CoreController
 
         try
         {
-            $this->get('tisseo_endiv.line_version_manager')->delete($lineVersionId);
+            $this->get('tisseo_endiv.manager.line_version')->delete($lineVersionId);
             $this->addFlash('success', 'tisseo.flash.success.deleted');
         }
         catch (\Exception $e)

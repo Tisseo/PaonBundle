@@ -14,8 +14,6 @@ use Tisseo\CoreBundle\Controller\CoreController;
 class SchematicController extends CoreController
 {
     /**
-     * List with lines
-     *
      * Listing Lines and their Schematics
      */
     public function listWithLinesAction()
@@ -25,18 +23,15 @@ class SchematicController extends CoreController
         return $this->render(
             'TisseoPaonBundle:Schematic:list_with_lines.html.twig',
             array(
-                'navTitle' => 'tisseo.paon.menu.schematic.manage',
-                'pageTitle' => 'tisseo.paon.schematic.title.list',
-                'data' => $this->get('tisseo_endiv.manager.line')->findAllLinesWithSchematic(true)
+                'data' => $this->get('tisseo_endiv.manager.line')->findAllWithSchematic(true)
             )
         );
     }
 
     /**
-     * List schema
-     * @param integer $lineId
-     *
      * Listing Schematic of a Line
+     *
+     * @param integer $lineId
      */
     public function listAction($lineId)
     {
@@ -46,36 +41,25 @@ class SchematicController extends CoreController
 
         return $this->render(
             'TisseoPaonBundle:Schematic:list.html.twig',
-            array(
-                'title' => 'tisseo.paon.schematic.title.list_form',
-                'line' => $line
-            )
+            array('line' => $line)
         );
     }
 
     /**
-     * Export schemas
-     *
-     * choosing a start date for exporting schematics as csv
+     * Choosing a start date to export schematics as csv
      */
     public function exportAction()
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_NEW_SCHEMA');
 
-        return $this->render(
-            'TisseoPaonBundle:Schematic:export.html.twig',
-            array(
-                'title' => 'tisseo.paon.schematic.title.export',
-            )
-        );
+        return $this->render('TisseoPaonBundle:Schematic:export.html.twig');
     }
 
     /**
-     * Choice
+     * Choosing a schematic from a list
+     *
      * @param integer $lineId
      * @param integer $schematicId
-     *
-     * Choosing a schematic from a list
      */
     public function choiceAction($lineId, $schematicId = null)
     {
@@ -86,7 +70,6 @@ class SchematicController extends CoreController
         return $this->render(
             'TisseoPaonBundle:Schematic:choice.html.twig',
             array(
-                'pageTitle' => 'menu.schema_manage',
                 'line' => $line,
                 'schematicId' => $schematicId
             )
@@ -94,10 +77,9 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Edit schema
-     * @param integer $lineId
-     *
      * Uploading a Schematic
+     *
+     * @param integer $lineId
      */
     public function editAction(Request $request, $lineId)
     {
@@ -131,7 +113,7 @@ class SchematicController extends CoreController
             {
                 $schematic = $form->getData();
                 $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
-                $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                $this->get('tisseo_endiv.manager.schematic')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             }
             catch (\Exception $e)
@@ -139,7 +121,7 @@ class SchematicController extends CoreController
                 $this->addFlashException($e->getMessage());
             }
 
-            $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
+            $lineGroupGisContents = $this->get('tisseo_endiv.manager.line_group_gis_content')->findBy(array('line' => $lineId));
 
             foreach ($lineGroupGisContents as $lineGroupGisContent)
                 $this->addFlash('warning', $this->get('translator')->trans('tisseo.paon.schematic.message.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
@@ -158,10 +140,9 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Ask
-     * @param integer $lineId
-     *
      * Sending a mail for a Schematic deposit
+     *
+     * @param integer $lineId
      */
     public function askAction(Request $request, $lineId)
     {
@@ -203,7 +184,7 @@ class SchematicController extends CoreController
                 $schematic->setDate(new \Datetime());
                 $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
                 $schematic->setComment($data['body']);
-                $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                $this->get('tisseo_endiv.manager.schematic')->save($schematic);
                 $this->get('mailer')->send($message);
 
                 $this->addFlash('success', 'tisseo.flash.success.sent');
@@ -211,7 +192,7 @@ class SchematicController extends CoreController
                 $this->addFlashException($e->getMessage());
             }
 
-            $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
+            $lineGroupGisContents = $this->get('tisseo_endiv.manager.line_group_gis_content')->findBy(array('line' => $lineId));
 
             foreach ($lineGroupGisContents as $lineGroupGisContent) {
                 $this->addFlash('warning', $this->get('translator')->trans('tisseo.paon.schematic.message.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
@@ -231,10 +212,9 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Deprecate
-     * @param $lineId
-     *
      * Setting a Schematic deprecated
+     *
+     * @param $lineId
      */
     public function deprecateAction(Request $request, $lineId)
     {
@@ -268,7 +248,7 @@ class SchematicController extends CoreController
             try
             {
                 foreach ($data->schematics as $schematic)
-                    $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                    $this->get('tisseo_endiv.manager.schematic')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             }
             catch (\Exception $e)
@@ -289,17 +269,17 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Delete
-     * @param $lineId
-     *
      * Deleting a Schematic
+     *
+     * @param integer $lineId
+     * @param integer $schematicId
      */
     public function deleteAction(Request $request, $lineId, $schematicId = null)
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DELETE_SCHEMA');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
-            $this->get('tisseo_endiv.schematic_manager')->remove($schematicId);
+            $this->get('tisseo_endiv.manager.schematic')->remove($schematicId);
 
         $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
@@ -320,10 +300,9 @@ class SchematicController extends CoreController
     }
 
     /**
-     * Gis
-     * @param $lineId
-     *
      * Setting a Schematic's groupGis attribute
+     *
+     * @param $lineId
      */
     public function gisAction(Request $request, $lineId)
     {
@@ -355,7 +334,7 @@ class SchematicController extends CoreController
             try
             {
                 foreach ($data->schematics as $schematic)
-                    $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                    $this->get('tisseo_endiv.manager.schematic')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             }
             catch (\Exception $e)

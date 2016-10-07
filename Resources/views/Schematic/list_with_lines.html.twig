@@ -1,6 +1,8 @@
 {% extends "TisseoCoreBundle::datatable_list.html.twig" %}
 {% set bundle = "TisseoPaonBundle" %}
 {% set margin = '50' %}
+{% set navTitle = 'tisseo.paon.menu.schematic.manage' %}
+{% set pageTitle = 'tisseo.paon.schematic.title.list' %}
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
@@ -17,8 +19,8 @@
 {% block content %}
     {% for physicalMode, lines in data %}
         {% if lines is not empty %}
-            <a id="{{loop.index0}}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
-            <table id="{{loop.index0}}" class="table datatable table-hover">
+            <a id="{{ loop.index0 }}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{ physicalMode|lower }}"></span>{{ physicalMode }}</a>
+            <table id="{{ loop.index0 }}" class="table datatable table-hover">
                 <thead>
                     <th class="col-md-1">{{ 'tisseo.paon.schematic.label.number'|trans }}</th>
                     <th class="col-md-3">{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
@@ -31,11 +33,9 @@
                 {% for line in lines %}
                     {% set lastSchematic = line.schematics.first %}
                     <tr{% if lastSchematic and lastSchematic.filePath is empty %} class="schematic-updating"{% endif %}>
-                        <td>{{ render.line_number(line, 'line', 'free') }}</td>
+                        <td>{{ render.line_number(line.LastLineVersion, 'lineVersion', 'free') }}</td>
                         <td>
-                            {% if line.LastLineVersion is defined %}
-                                <span>{{ line.LastLineVersion.name }}</span>
-                            {% endif %}
+                            <span>{{ line.LastLineVersion.name }}</span>
                         </td>
                         {% set schematic = line.LastSchematic(true) %}
                         <td>{% if schematic %}{{ schematic.date|date('d/m/Y') }}{% endif %}</td>

@@ -28,7 +28,7 @@ class LineGroupGisController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.schematic.manage',
                 'pageTitle' => 'tisseo.paon.line_group_gis.title.list',
-                'groups' => $this->get('tisseo_endiv.line_group_gis_manager')->findAll()
+                'groups' => $this->get('tisseo_endiv.manager.line_group_gis')->findAll()
             )
         );
     }
@@ -43,7 +43,7 @@ class LineGroupGisController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
-        $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
+        $lineGroupGisManager = $this->get('tisseo_endiv.manager.line_group_gis');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
         if (empty($lineGroupGis))
@@ -75,7 +75,7 @@ class LineGroupGisController extends CoreController
                 $schematics = array();
                 foreach($form['LineGroupGisContents'] as $lineGroupContent)
                     $schematics[] = $lineGroupContent['schematic']->getData()->getId();
-                $this->get('tisseo_endiv.schematic_manager')->updateGroupGis($schematics, true);
+                $this->get('tisseo_endiv.manager.schematic')->updateGroupGis($schematics, true);
 
                 $this->addFlash('success', (empty($lineGroupGisId) ? 'tisseo.flash.success.created' : 'tisseo.flash.success.edited'));
             }
@@ -106,7 +106,7 @@ class LineGroupGisController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
-        $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
+        $lineGroupGisManager = $this->get('tisseo_endiv.manager.line_group_gis');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
         if (empty($lineGroupGis))
@@ -154,7 +154,7 @@ class LineGroupGisController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
-        $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
+        $lineGroupGisManager = $this->get('tisseo_endiv.manager.line_group_gis');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
         if (empty($lineGroupGis))
@@ -185,7 +185,7 @@ class LineGroupGisController extends CoreController
         {
             try
             {
-                $this->get('tisseo_endiv.printing_line_group_gis_manager')->save($form->getData());
+                $this->get('tisseo_endiv.manager.printing_line_group_gis')->save($form->getData());
                 $this->addFlash('success', 'tisseo.flash.success.created');
             }
             catch (\Exception $e)

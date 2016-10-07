@@ -22,7 +22,7 @@ class LineType extends AbstractType
                 array(
                     'label' => 'tisseo.paon.line.label.number'
                 )
-            )    
+            )
             ->add(
                 'physicalMode',
                 'entity',
@@ -68,6 +68,6 @@ class LineType extends AbstractType
      */
     public function getName()
     {
-        return 'paon_line';
+        return 'tisseo_paon_line';
     }
 }

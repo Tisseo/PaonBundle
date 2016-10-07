@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\EndivBundle\TisseoEndivBundle;
+use Tisseo\EndivBundle\Utils\Sorting;
 
 class DataExchangeController extends CoreController
 {
@@ -103,11 +103,10 @@ class DataExchangeController extends CoreController
             'BUSINESS_MANAGE_DATA_EXCHANGE_ROOT'
         ));
 
-        /**
-         * TODO : Very ugly, if there is not a task with a specified name, then the method return an empty response
-         * TODO : List of tasks depends of current user profile.
-         * TODO : Need to refactor source code
-        */
+        // TODO: 
+        // If there is not a task with a specified name, then the method return an empty response
+        // List of tasks depends of current user profile.
+        // Need to refactor source code
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         $role = $this->getJenkinsRole($dataExchangeManager);
         $jobs = $dataExchangeManager->getJobsList($role);
@@ -115,7 +114,8 @@ class DataExchangeController extends CoreController
             return new Response();
         }
 
-        $lines = $this->get('tisseo_endiv.manager.line')->findByDataSourceSortByStatus(1);
+        $datasources = $this->container->getParameter('tisseo_paon.referential_datasources');
+        $lines = $this->get('tisseo_endiv.manager.line')->findImportable($datasources, Sorting::SORT_LINES_BY_STATUS);
 
         return $this->render(
             'TisseoPaonBundle:DataExchange:lines.html.twig',

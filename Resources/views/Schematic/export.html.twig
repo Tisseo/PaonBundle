@@ -1,4 +1,5 @@
 {% extends "::modal.html.twig" %}
+{% set title = 'tisseo.paon.schematic.title.export' %}
 
 {% block modal_title %}
     {{ title|trans }}
@@ -15,9 +16,9 @@
 
 {% block modal_actions %}
     {% if is_granted('BUSINESS_MANAGE_NEW_SCHEMA') %}
-            <button id="schematic-export-button" class="btn btn-success" href="#" data-url="{{ path('tisseo_core_export_csv', {'service': 'tisseo_endiv.schematic_manager' }) }}">
-                {{ 'tisseo.paon.schematic.action.export'|trans }}
-            </button>
+        <button id="schematic-export-button" class="btn btn-success" href="#" data-url="{{ path('tisseo_core_export_csv', {'service': 'tisseo_endiv.manager.schematic' }) }}">
+            {{ 'tisseo.paon.schematic.action.export'|trans }}
+        </button>
     {% endif %}
 
     <script>

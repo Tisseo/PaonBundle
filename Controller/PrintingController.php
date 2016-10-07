@@ -21,7 +21,7 @@ class PrintingController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $lineVersionManager = $this->get('tisseo_endiv.manager.line_version');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
         if (empty($lineVersion))
@@ -52,7 +52,7 @@ class PrintingController extends CoreController
         {
             try
             {
-                $this->get('tisseo_endiv.printing_manager')->save($form->getData());
+                $this->get('tisseo_endiv.manager.printing')->save($form->getData());
                 $this->addFlash('success', 'tisseo.flash.success.created');
             }
             catch (\Exception $e)

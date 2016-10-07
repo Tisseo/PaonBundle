@@ -90,8 +90,8 @@ class CalendarController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GRID_CALENDAR');
 
-        $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
-        $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
+        $gridCalendarManager = $this->get('tisseo_endiv.manager.grid_calendar');
+        $lineVersionManager = $this->get('tisseo_endiv.manager.line_version');
 
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
         {

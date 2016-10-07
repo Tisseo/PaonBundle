@@ -1,7 +1,6 @@
 {% extends "::modal.html.twig" %}
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
-
-{% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
+{% set title = (suspend ? 'tisseo.paon.line_status.title.suspend' : 'tisseo.paon.line_status.title.validate') %}
 
 {% block modal_title %}
     {{ title|trans }} - {{ render.line_number(line, 'line', 'free') }}

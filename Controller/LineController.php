@@ -8,14 +8,11 @@ use Tisseo\PaonBundle\Form\Type\LineStatusType;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineStatus;
-use Tisseo\EndivBundle\Entity\LineDatasource;
-use Tisseo\EndivBundle\Services\LineManager;
+use Tisseo\EndivBundle\Utils\Sorting;
 
 class LineController extends CoreController
 {
     /**
-     * List
-     *
      * Listing Lines
      */
     public function listAction()
@@ -23,20 +20,16 @@ class LineController extends CoreController
         $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE');
 
         return $this->render(
-            'TisseoPaonBundle:Line:list.html.twig',
-            array(
-                'navTitle' => 'tisseo.paon.menu.line',
-                'pageTitle' => 'tisseo.paon.line.title.list',
+            'TisseoPaonBundle:Line:list.html.twig', array(
                 'lines' => $this->get('tisseo_endiv.manager.line')->findAll()
             )
         );
     }
 
     /**
-     * Edit
-     * @param integer $lineId
+     * Creating or editing a Line
      *
-     * Creating/editing Line
+     * @param integer $lineId
      */
     public function editAction(Request $request, $lineId)
     {
@@ -46,9 +39,7 @@ class LineController extends CoreController
         $line = $lineManager->find($lineId);
 
         if (empty($line)) {
-            $line = new Line();
-            $lineDatasource = new LineDatasource();
-            $line->addLineDatasource($lineDatasource);
+            $line = $lineManager->create();
         }
 
         $form = $this->createForm(
@@ -57,23 +48,17 @@ class LineController extends CoreController
             array(
                 'action' => $this->generateUrl(
                     'tisseo_paon_line_edit',
-                    array(
-                        'lineId' => $lineId
-                    )
+                    array('lineId' => $lineId)
                 )
             )
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineManager->save($form->getData());
                 $this->addFlash('success', ($lineId ? 'tisseo.flash.success.edited' : 'tisseo.flash.success.created'));
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -98,22 +83,21 @@ class LineController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
 
+        $datasources = $this->container->getParameter('tisseo_paon.referential_datasources');
+        $lines = $this->get('tisseo_endiv.manager.line')->findImportable($datasources, Sorting::SORT_LINES_BY_NUMBER);
+
         return $this->render(
-            'TisseoPaonBundle:Line:validation_list.html.twig',
-            array(
-                'navTitle' => 'tisseo.paon.menu.line_validation',
-                'pageTitle' => 'tisseo.paon.line.title.list',
-                'lines' => $this->get('tisseo_endiv.manager.line')->findByDataSource(1)
+            'TisseoPaonBundle:Line:validation_list.html.twig', array(
+                'lines' => $lines
             )
         );
     }
 
     /**
-     * Validate
+     * Validating Line
+     *
      * @param integer $lineId
      * @param integer $suspend
-     *
-     * Validating Line
      */
     public function validateSuspendAction(Request $request, $lineId, $suspend)
     {
@@ -139,10 +123,8 @@ class LineController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineStatus = $form->getData();
 
                 $lineStatus->setLine($line);
@@ -150,12 +132,11 @@ class LineController extends CoreController
                 $lineStatus->setLogin($this->get('security.token_storage')->getToken()->getUser()->getUsername());
 
                 //if $suspend parameter is given, then the line gets suspended (status = 3), otherwise it gets validated (status = 1)
-                $lineStatus->setStatus($suspend ? 3 : 1);
+                $lineStatus->setStatus($suspend ? LineStatus::SUSPENDED : LineStatus::VALIDATED);
 
-                $this->get('tisseo_endiv.line_status_manager')->save($lineStatus);
+                $this->get('tisseo_endiv.manager.line_status')->save($lineStatus);
 
-                if ($suspend)
-                {
+                if ($suspend) {
                     $message = \Swift_Message::newInstance()
                     ->setSubject($this->get('translator')->trans('tisseo.paon.line_status.mail.object', array('%line%' => $line->getNumber())))
                     ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
@@ -166,9 +147,7 @@ class LineController extends CoreController
                 }
 
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -178,7 +157,6 @@ class LineController extends CoreController
         return $this->render(
             'TisseoPaonBundle:Line:validation_form.html.twig',
             array(
-                'title' => ($suspend ? 'tisseo.paon.line_status.title.suspend' : 'tisseo.paon.line_status.title.validate'),
                 'line' => $line,
                 'form' => $form->createView(),
                 'suspend' => $suspend
