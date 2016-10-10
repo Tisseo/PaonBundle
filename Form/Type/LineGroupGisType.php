@@ -39,13 +39,6 @@ class LineGroupGisType extends AbstractType
                 )
             )
             ->add(
-                'name',
-                'text',
-                array(
-                    'label' => 'tisseo.paon.line_group_gis.label.group_name'
-                )
-            )
-            ->add(
                 'LineGroupGisContents',
                 'collection',
                 array(

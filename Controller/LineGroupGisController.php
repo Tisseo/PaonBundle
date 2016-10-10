@@ -26,8 +26,6 @@ class LineGroupGisController extends CoreController
         return $this->render(
             'TisseoPaonBundle:LineGroupGis:list.html.twig',
             array(
-                'navTitle' => 'tisseo.paon.menu.schematic.manage',
-                'pageTitle' => 'tisseo.paon.line_group_gis.title.list',
                 'groups' => $this->get('tisseo_endiv.manager.line_group_gis')->findAll()
             )
         );
