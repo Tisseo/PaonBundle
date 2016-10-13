@@ -37,3 +37,17 @@ services:
         class: 'CanalTP\SamCoreBundle\EventListener\AjaxFormListener'
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    tisseo_paon.doctrine.schematic_listener:
+        class: 'Tisseo\PaonBundle\Listener\SchematicUploadListener'
+        arguments: ['%tisseo_paon.schematics_directory%']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
+
+    tisseo_paon.twig.extension.globals_extension:
+        class: 'Tisseo\PaonBundle\Twig\Extension\GlobalsExtension'
+        arguments: ['%tisseo_paon.schematics_relative_directory%']
+        tags:
+            - { name: twig.extension }

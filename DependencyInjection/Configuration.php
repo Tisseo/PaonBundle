@@ -65,6 +65,8 @@ class Configuration implements ConfigurationInterface
                 ->requiresAtLeastOneElement()
                 ->prototype('scalar')->end()
             ->end()
+            ->scalarNode('schematics_directory')->defaultValue('%kernel.root_dir%/../web/uploads/schematics')->cannotBeEmpty()->end()
+            ->scalarNode('schematics_relative_directory')->defaultValue('uploads/schematics')->cannotBeEmpty()->end()
         ->end();
 
         return $treeBuilder;

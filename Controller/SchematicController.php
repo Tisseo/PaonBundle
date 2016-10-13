@@ -311,8 +311,9 @@ class SchematicController extends CoreController
         $line = $this->get('tisseo_endiv.manager.line')->find($lineId);
 
         $schematicList = new SchematicList();
-        foreach($line->getFileSchematics() as $schematic)
+        foreach($line->getFileSchematics() as $schematic) {
             $schematicList->addSchematic($schematic);
+        }
 
         $form = $this->createForm(
             new ListSchematicType(false, true),
@@ -328,17 +329,14 @@ class SchematicController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $data = $form->getData();
-            try
-            {
-                foreach ($data->schematics as $schematic)
+            try {
+                foreach ($data->schematics as $schematic) {
                     $this->get('tisseo_endiv.manager.schematic')->save($schematic);
+                }
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 

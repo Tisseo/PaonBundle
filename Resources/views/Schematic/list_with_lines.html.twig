@@ -32,7 +32,7 @@
                 <tbody>
                 {% for line in lines %}
                     {% set lastSchematic = line.schematics.first %}
-                    <tr{% if lastSchematic and lastSchematic.filePath is empty %} class="schematic-updating"{% endif %}>
+                    <tr{% if lastSchematic and lastSchematic.file is empty %} class="schematic-updating"{% endif %}>
                         <td>{{ render.line_number(line.LastLineVersion, 'lineVersion', 'free') }}</td>
                         <td>
                             <span>{{ line.LastLineVersion.name }}</span>
@@ -50,7 +50,13 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a class="btn btn-default" href="{{ path('tisseo_paon_schematic_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                            <a
+                                class="btn btn-default"
+                                href="{{ path('tisseo_paon_schematic_list', {'lineId': line.id}) }}"
+                                data-toggle="modal"
+                                data-target="#base-modal"
+                                onclick="return $('.modal-dialog').addClass('modal-dialog-large');"
+                            >
                                 <span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.schematic.action.list'|trans }}
                             </a>
                         </td>

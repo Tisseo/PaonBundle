@@ -48,7 +48,7 @@ class LineGroupGisContentType extends AbstractType
                             SELECT s
                             FROM Tisseo\EndivBundle\Entity\Schematic s
                             WHERE s.line = :line
-                            AND s.filePath IS NOT NULL
+                            AND s.file IS NOT NULL
                             AND s.deprecated = FALSE
                         ")
                         ->setParameter('line', $lineGroupGisContent->getLine());

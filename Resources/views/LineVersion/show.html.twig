@@ -61,8 +61,18 @@
             <li>
                 {% if lineVersion.schematic %}
                     {{ 'tisseo.paon.line_version.label.schematic'|trans({'%date%': lineVersion.schematic.date|date('d/m/Y')}) }}
-                    <a href="{{ app.request.getbaseUrl() }}/{{ lineVersion.schematic.WebPath }}" target="_blank" data-toggle="popover" data-placement="bottom" data-container="#thumb" data-html="true" data-trigger="hover" data-content="<img src='/{{ lineVersion.schematic.WebPath }}' height='250px' width='600px' style='padding:10px;'>"><span class="glyphicon glyphicon-eye-open"></span></a>
-                {% else %}
+                    <a
+                        href="{{ asset(schematics_directory ~ '/' ~ lineVersion.schematic.file.Filename) }}"
+                        target="_blank"
+                        data-toggle="popover"
+                        data-placement="bottom"
+                        data-container="#thumb"
+                        data-html="true"
+                        data-trigger="hover"
+                        data-content="<img class='thumb' src='{{ asset(schematics_directory ~ '/' ~ lineVersion.schematic.file.Filename) }}'>"
+                    >
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>                {% else %}
                     {{ 'tisseo.paon.line_version.label.no_schematic'|trans }}
                 {% endif %}
             </li>

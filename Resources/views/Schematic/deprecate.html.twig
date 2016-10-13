@@ -18,13 +18,24 @@
             {% for schematic in form.schematics %}
                 <tr>
                     <td>{{ schematic.vars.value.name }}</td>
-                    <td><input type="checkbox" disabled {% if schematic.vars.value.filePath %}checked="checked"{% endif %}</td>
+                    <td><input type="checkbox" disabled {% if schematic.vars.value.file %}checked="checked"{% endif %}</td>
                     <td>{{ schematic.vars.value.date|date('d/m/Y') }}</td>
                     <td>{{ schematic.vars.value.comment }}</td>
                     <td>{{ form_widget(schematic) }}</td>
                     <td>
-                        {% if schematic.vars.value.filePath %}
-                        <a href="{{ app.request.getbaseUrl() }}/{{ schematic.vars.value.WebPath }}" target="_blank" data-toggle="popover" data-placement="bottom" data-container="#thumb" data-html="true" data-trigger="hover" data-content="<img class='thumb' src='/{{ schematic.vars.value.WebPath }}'>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        {% if schematic.vars.value.file %}
+                        <a
+                            href="{{ asset(schematics_directory ~ '/' ~ schematic.vars.value.file.Filename) }}"
+                            target="_blank"
+                            data-toggle="popover"
+                            data-placement="bottom"
+                            data-container="#thumb"
+                            data-html="true"
+                            data-trigger="hover"
+                            data-content="<img class='thumb' src='{{ asset(schematics_directory ~ '/' ~ schematic.vars.value.file.Filename) }}'>"
+                        >
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
                         {% endif %}
                     </td>
                 </tr>
