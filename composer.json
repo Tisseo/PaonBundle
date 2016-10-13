@@ -11,8 +11,8 @@
         "tisseo/core-bundle": "dev-refactor"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "~2.8|~3.1",
-        "phpunit/phpunit": "~4.8|~5.0"
+        "symfony/phpunit-bridge": "~2.7",
+        "phpunit/phpunit": "~4.8"
     },
     "autoload" : {
         "psr-4" : { "Tisseo\\PaonBundle\\" : "" }
