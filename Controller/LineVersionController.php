@@ -71,7 +71,7 @@ class LineVersionController extends CoreController
                     'title' => 'tisseo.paon.line_version.title.create',
                     'form' => null,
                     'lineVersion' => null,
-                    'lines' => $lineManager->findAllLinesByPriority()
+                    'lines' => $lineManager->findAll()
                 )
             );
         }
@@ -134,7 +134,7 @@ class LineVersionController extends CoreController
                 'title' => 'tisseo.paon.line_version.title.create',
                 'form' => $form->createView(),
                 'lineVersion' => $lineVersion,
-                'lines' => $lineManager->findAllLinesByPriority(),
+                'lines' => $lineManager->findAll(),
                 'minDate' => $minDate
             )
         );
