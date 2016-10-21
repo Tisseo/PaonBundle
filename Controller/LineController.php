@@ -49,7 +49,7 @@ class LineController extends CoreController
         {
             $line = new Line();
             $lineDatasource = new LineDatasource();
-            $line->addLineDatasources($lineDatasource);
+            $line->addLineDatasource($lineDatasource);
         }
 
         $form = $this->createForm(
