@@ -88,7 +88,7 @@ class SchematicType extends AbstractType
                     'file',
                     array(
                         'label' => 'tisseo.paon.schematic.label.file',
-                        'required' => true
+                        'required' => false
                     )
                 )
             ;
