@@ -130,7 +130,6 @@ class SchematicController extends CoreController
             try
             {
                 $schematic = $form->getData();
-                $schematic->setDate(new \Datetime());
                 $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
                 $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
