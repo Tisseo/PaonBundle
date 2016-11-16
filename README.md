@@ -14,9 +14,6 @@ It's particular role is to provide commercial offers creation and management.
 This bundle is only working with [CanalTP](https://github.com/CanalTP)
 [NMM](https://github.com/CanalTP/NmmPortalBundle) portal.
 
-The PaonBundle is linked to [PaonBridgeBundle](https://github.com/Tisseo/PaonBridgeBundle)
-in order to integrate the application in NMM portal.
-
 Requirements
 ------------
 
@@ -46,17 +43,12 @@ Installation
         "type": "git",
         "url": "https://github.com/Tisseo/PaonBundle.git"
     },
-    {
-        "type": "git",
-        "url": "https://github.com/Tisseo/PaonBridgeBundle.git"
-    },
     //...
 ],
 "require": {
     "tisseo/endiv-bundle": "dev-master",
     "tisseo/core-bundle": "dev-master",
-    "tisseo/boa-bundle": "dev-master",
-    "tisseo/boa-bridge-bundle": "dev-master"
+    "tisseo/paon-bundle": "dev-master",
     // ...
 }
 ```
@@ -67,7 +59,6 @@ Installation
 $bundles = array(
     new Tisseo\EndivBundle\TisseoEndivBundle(),
     new Tisseo\CoreBundle\TisseoCoreBundle(),
-    new Tisseo\PaonBridgeBundle\TisseoPaonBridgeBundle(),
     new Tisseo\PaonBundle\TisseoPaonBundle(),
     // ...
 );
@@ -98,13 +89,6 @@ tisseo_paon:
         default_email_dest: user@foo.bar
         default_email_exp:  paon@foo.bar
 ```
-
-Contributing
-------------
-
-- Vincent Passama - vincent.passama@gmail.com
-- Rodolphe Duval - rdldvl@gmail.com
-- Pierre-Yves Claitte - pierre.cl@gmail.com
 
 Todo
 ----

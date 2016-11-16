@@ -1,4 +1,27 @@
 services:
+    sam.business_module.paon:
+        class: 'Tisseo\PaonBundle\Permission\BusinessPermissionModule'
+        arguments: ['%paon.permissions%']
+        public: false
+    sam.business_permission_manager.paon:
+        class: 'Tisseo\PaonBundle\Permission\BusinessPermissionManager'
+        arguments: ['@sam.business_module.paon']
+        public: false
+    sam.business_perimeter_manager.paon:
+        class: 'Tisseo\PaonBundle\Perimeter\BusinessPerimeterManager'
+        arguments: ['@nmm.perimeter_manager']
+        public: false
+    sam.menu_manager.paon:
+        class: 'Tisseo\PaonBundle\Menu\MenuManager'
+        arguments: ['@service_container']
+        public: false
+    sam.business_component.paon:
+        class: 'Tisseo\PaonBundle\Component\BusinessComponent'
+        arguments: ['@sam.business_permission_manager.paon', '@sam.business_perimeter_manager.paon', '@sam.menu_manager.paon']
+        public: false
+        tags:
+            - { name: 'sam.app_business_component', canonical_app_name: 'paon' }
+
     tisseo_paon.data_exchange_manager:
         class: 'Tisseo\PaonBundle\Services\DataExchangeManager'
         arguments:
@@ -6,12 +29,10 @@ services:
             - '%tisseo_paon.jenkins_users%'
             - '%tisseo_paon.master_job_prefix%'
             - '%tisseo_paon.atomic_job_prefix%'
-
     form.type.paon_line_group_gis:
         class: 'Tisseo\PaonBundle\Form\Type\LineGroupGisType'
         tags:
             - { name: form.type, alias: paon_line_group_gis }
-
     tisseo_paon.ajax_form_listener:
         class: 'CanalTP\SamCoreBundle\EventListener\AjaxFormListener'
         tags:
