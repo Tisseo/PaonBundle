@@ -2,6 +2,7 @@
 
 namespace Tisseo\PaonBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Tisseo\PaonBundle\Form\Type\LineType;
 use Tisseo\PaonBundle\Form\Type\LineStatusType;
@@ -34,6 +35,7 @@ class LineController extends CoreController
 
     /**
      * Edit
+     *
      * @param integer $lineId
      *
      * Creating/editing Line
@@ -45,8 +47,7 @@ class LineController extends CoreController
         $lineManager = $this->get('tisseo_endiv.line_manager');
         $line = $lineManager->find($lineId);
 
-        if (empty($line))
-        {
+        if (empty($line)) {
             $line = new Line();
             $lineDatasource = new LineDatasource();
             $line->addLineDatasource($lineDatasource);
@@ -66,15 +67,11 @@ class LineController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineManager->save($form->getData());
                 $this->addFlash('success', ($lineId ? 'tisseo.flash.success.edited' : 'tisseo.flash.success.created'));
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -104,17 +101,20 @@ class LineController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.line_validation',
                 'pageTitle' => 'tisseo.paon.line.title.list',
-                'lines' => $this->get('tisseo_endiv.line_manager')->findByDataSource(1)
+                'lines' => $this->get('tisseo_endiv.line_manager')->findByDataSource(1),
+                'tableCheckboxes' => true
             )
         );
     }
 
     /**
      * Validate
+     *
      * @param integer $lineId
      * @param integer $suspend
      *
      * Validating Line
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function validateSuspendAction(Request $request, $lineId, $suspend)
     {
@@ -140,10 +140,8 @@ class LineController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineStatus = $form->getData();
 
                 $lineStatus->setLine($line);
@@ -155,21 +153,19 @@ class LineController extends CoreController
 
                 $this->get('tisseo_endiv.line_status_manager')->save($lineStatus);
 
-                if ($suspend)
-                {
+                if ($suspend) {
                     $message = \Swift_Message::newInstance()
-                    ->setSubject($this->get('translator')->trans('tisseo.paon.line_status.mail.object', array('%line%' => $line->getNumber())))
-                    ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
-                    ->setTo($this->container->getParameter('tisseo_paon.line_validation.default_email_dest'))
-                    ->setBody($this->get('translator')->trans('tisseo.paon.line_status.mail.body'));
+                        ->setSubject($this->get('translator')->trans('tisseo.paon.line_status.mail.object',
+                            array('%line%' => $line->getNumber())))
+                        ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
+                        ->setTo($this->container->getParameter('tisseo_paon.line_validation.default_email_dest'))
+                        ->setBody($this->get('translator')->trans('tisseo.paon.line_status.mail.body'));
 
                     $this->get('mailer')->send($message);
                 }
 
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -185,5 +181,19 @@ class LineController extends CoreController
                 'suspend' => $suspend
             )
         );
+    }
+
+    /**
+     * Batch the Validation/Suspension process
+     *
+     * @param Request $request
+     * @param $suspend
+     * @return JsonResponse
+     */
+    public function validateSuspendBatchAction(Request $request, $suspend)
+    {
+        dump($request);
+
+        return new JsonResponse(null, 200);
     }
 }

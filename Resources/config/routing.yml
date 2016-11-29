@@ -19,6 +19,9 @@ tisseo_paon_line_validate_suspend:
     defaults: { _controller: TisseoPaonBundle:Line:validateSuspend, suspend:null }
     requirements:
         lineId: \d+
+tisseo_paon_line_validate_suspend_batch:
+    pattern: /lines/validation/validate/{suspend}
+    defaults: { _controller: TisseoPaonBundle:Line:validateSuspendBatch, suspend:null }
 
 # LineVersion routes
 tisseo_paon_line_version_list:
