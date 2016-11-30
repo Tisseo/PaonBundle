@@ -124,7 +124,6 @@ class LineController extends CoreController
         $line = $lineManager->find($lineId);
 
         $lineStatus = new LineStatus();
-
         $form = $this->createForm(
             new LineStatusType(),
             $lineStatus,
@@ -147,23 +146,14 @@ class LineController extends CoreController
                 $lineStatus->setLine($line);
                 $lineStatus->setDateTime(new \DateTime());
                 $lineStatus->setLogin($this->get('security.token_storage')->getToken()->getUser()->getUsername());
-
                 //if $suspend parameter is given, then the line gets suspended (status = 3), otherwise it gets validated (status = 1)
                 $lineStatus->setStatus($suspend ? 3 : 1);
 
                 $this->get('tisseo_endiv.line_status_manager')->save($lineStatus);
 
                 if ($suspend) {
-                    $message = \Swift_Message::newInstance()
-                        ->setSubject($this->get('translator')->trans('tisseo.paon.line_status.mail.object',
-                            array('%line%' => $line->getNumber())))
-                        ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
-                        ->setTo($this->container->getParameter('tisseo_paon.line_validation.default_email_dest'))
-                        ->setBody($this->get('translator')->trans('tisseo.paon.line_status.mail.body'));
-
-                    $this->get('mailer')->send($message);
+                    $this->sendSuspendMail($line);
                 }
-
                 $this->addFlash('success', 'tisseo.flash.success.edited');
             } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
@@ -189,11 +179,76 @@ class LineController extends CoreController
      * @param Request $request
      * @param $suspend
      * @return JsonResponse
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function validateSuspendBatchAction(Request $request, $suspend)
     {
-        dump($request);
+
+        $this->denyAccessUnlessGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
+
+        $requestParams = $request->request->all();
+        if (count($requestParams['lines'])) {
+            try {
+                $this->processLines($requestParams['lines'], $suspend);
+                $this->addFlash('success', 'tisseo.flash.success.edited');
+            } catch (\Exception $e) {
+                $this->addFlashException($e->getMessage());
+
+                return new JsonResponse($e->getMessage(), 500);
+            }
+        }
 
         return new JsonResponse(null, 200);
+    }
+
+    /**
+     * @param $linesIds
+     * @param $suspend
+     * @return bool|string
+     * @throws \Exception
+     */
+    private function processLines($linesIds, $suspend)
+    {
+
+        $lineManager = $this->get('tisseo_endiv.line_manager');
+        foreach ($linesIds as $lineId) {
+            try {
+                $line = $lineManager->find($lineId);
+
+                $lineStatus = new LineStatus();
+                $lineStatus->setLine($line);
+                $lineStatus->setDateTime(new \DateTime());
+                $lineStatus->setLogin($this->get('security.token_storage')->getToken()->getUser()->getUsername());
+                $lineStatus->setStatus($suspend ? 3 : 1);
+
+                $this->get('tisseo_endiv.line_status_manager')->save($lineStatus);
+
+                if ($suspend) {
+                    $this->sendSuspendMail($line);
+                }
+            } catch (\Exception $e) {
+                throw new \Exception($e->getMessage());
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Send mail
+     *
+     * @param $line
+     * @throws \InvalidArgumentException
+     */
+    private function sendSuspendMail($line)
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->get('translator')->trans('tisseo.paon.line_status.mail.object',
+                array('%line%' => $line->getNumber())))
+            ->setFrom($this->container->getParameter('tisseo_paon.default_email_exp'))
+            ->setTo($this->container->getParameter('tisseo_paon.line_validation.default_email_dest'))
+            ->setBody($this->get('translator')->trans('tisseo.paon.line_status.mail.body'));
+
+        $this->get('mailer')->send($message);
     }
 }
