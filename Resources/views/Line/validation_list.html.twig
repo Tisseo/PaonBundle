@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block table_head %}
-    <th class="col-md-3">{{ 'tisseo.paon.line.label.number'|trans }}</th>
+    <th class="no-search no-sort">{{ render.checkbox(null,true) }}</th>
+    <th class="col-md-3 ">{{ 'tisseo.paon.line.label.number'|trans }}</th>
     <th class="col-md-3">{{ 'tisseo.paon.line_version.label.depot'|trans }}</th>
     <th class="col-md-3">{{ 'tisseo.paon.line_status.label.status'|trans }}</th>
     <th class="col-md-3 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
@@ -19,6 +20,7 @@
         {% set lastLineVersion = line.currentOrFutureLineVersion %}
         {% if lastLineVersion is not null %}
             <tr>
+                <td>{{ render.checkbox(line) }}</td>
                 <td>
                     {{ render.line_number(line, 'line', 'free') }}
                 </td>
@@ -26,14 +28,18 @@
                     {{ lastLineVersion.depot.longName }}
                 </td>
                 <td>
-                    {% if line.currentStatus is not null %} {{ ('tisseo.paon.line_status.status.' ~ line.currentStatus.status)|trans  }} {% endif %}
+                    {% if line.currentStatus is not null %} {{ ('tisseo.paon.line_status.status.' ~ line.currentStatus.status)|trans }} {% endif %}
                 </td>
                 <td>
                     {% if is_granted('BUSINESS_VALIDATE_LINES_EXPLOITATION') %}
-                        <a class="btn btn-default" href="{{ path('tisseo_paon_line_validate_suspend', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a class="btn btn-default"
+                           href="{{ path('tisseo_paon_line_validate_suspend', {'lineId': line.id}) }}"
+                           data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-edit"></span> {{ 'tisseo.paon.line_status.action.validate'|trans }}
                         </a>
-                        <a class="btn btn-default" href="{{ path('tisseo_paon_line_validate_suspend', {'lineId': line.id, 'suspend': 1}) }}" data-toggle="modal" data-target="#base-modal">
+                        <a class="btn btn-default"
+                           href="{{ path('tisseo_paon_line_validate_suspend', {'lineId': line.id, 'suspend': 1}) }}"
+                           data-toggle="modal" data-target="#base-modal">
                             <span class="glyphicon glyphicon-edit"></span> {{ 'tisseo.paon.line_status.action.suspend'|trans }}
                         </a>
                     {% endif %}

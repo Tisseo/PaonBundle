@@ -36,7 +36,9 @@ tisseo:
                 comment: Commentaires
             action:
                 validate: Valider
+                validate_selected: Valider les lignes sélectionnées
                 suspend: Susprendre
+                suspend_selected: Suspendre les lignes sélectionnées
             status:
                 1: Nouvelles données
                 2: Données importées
