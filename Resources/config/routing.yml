@@ -14,11 +14,18 @@ tisseo_paon_line_edit:
 tisseo_paon_line_validation_list:
     pattern: /lines/validation/list
     defaults: { _controller: TisseoPaonBundle:Line:validationList }
+    options:
+        expose: true
 tisseo_paon_line_validate_suspend:
     pattern: /lines/validation/validate/{lineId}/{suspend}
     defaults: { _controller: TisseoPaonBundle:Line:validateSuspend, suspend:null }
     requirements:
         lineId: \d+
+tisseo_paon_line_validate_suspend_batch:
+    pattern: /lines/validation/validate/batch/{suspend}
+    defaults: { _controller: TisseoPaonBundle:Line:validateSuspendBatch, suspend:null }
+    options:
+        expose: true
 
 # LineVersion routes
 tisseo_paon_line_version_list:
