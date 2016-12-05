@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped schematic_list">
     <thead>
         <th>{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
         <th>{{ 'tisseo.paon.schematic.label.file'|trans }}</th>
@@ -30,4 +30,11 @@
 </table>
 <script>
     $('[data-toggle="popover"]').popover();
+    require(['bundles/tisseopaon/js/Schematic/table_more'], function () {
+        $('.schematic_list').showMore({
+            limit: 3,
+            showMoreText: '{{ 'tisseo.paon.schematic.table_more.more' |trans }}',
+            showLessText: '{{ 'tisseo.paon.schematic.table_more.less' |trans }}'
+        });
+    });
 </script>
