@@ -137,6 +137,20 @@ tr.line-status-3 {
     background-color:#FFB2B2
 }
 
+.schematic_list tfoot > tr, .schematic_list tfoot {
+    background: transparent;
+}
+
+.schematic_list tfoot > tr > th {
+    text-align: center;
+    font-weight: normal;
+}
+
+.schematic_list tfoot > tr > th > a {
+    color: #777;
+    text-decoration: none;
+}
+
 .schematic_list tfoot > tr > th > a:hover {
     color: #000;
     text-decoration: none;
