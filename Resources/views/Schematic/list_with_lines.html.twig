@@ -29,19 +29,19 @@
                 </thead>
                 <tbody>
                 {% for line in lines %}
-                    {% set lastSchematic = line.schematics.first %}
-                    <tr{% if lastSchematic and lastSchematic.filePath is empty %} class="schematic-updating"{% endif %}>
+                    {% set lastSchematic = line.LastSchematic %}
+                    <tr{% if lastSchematic and not lastSchematic.filePath %} class="schematic-updating"{% endif %}>
                         <td>{{ render.line_number(line, 'line', 'free') }}</td>
-                        <td>
-                            {% if line.LastLineVersion is defined %}
-                                <span>{{ line.LastLineVersion.name }}</span>
-                            {% endif %}
-                        </td>
-                        {% set schematic = line.LastSchematic(true) %}
-                        <td>{% if schematic %}{{ schematic.date|date('d/m/Y') }}{% endif %}</td>
+                        <td><span>{{ line.CurrentLineVersion.name }}</span></td>
+                        {% if lastSchematic.filePath %}
+                            {% set schematicWithFile = lastSchematic %}
+                        {% else %}
+                            {% set schematicWithFile = line.LastSchematic(true) %}
+                        {% endif %}
+                        <td>{%- if schematicWithFile -%}{{- schematicWithFile.date|date('d/m/Y') -}}{%- endif -%}</td>
                         <td>{{ lastSchematic.comment }}</td>
                         <td>
-                            {% if line.lineGroupGisContents is defined and line.lineGroupGisContents|length > 0 %}
+                            {% if line.lineGroupGisContents|length > 0 %}
                                 <ul>
                                 {% for lineGroupGisContent in line.lineGroupGisContents %}
                                     <li>{{ lineGroupGisContent.lineGroupGis.name }}</li>

@@ -27,7 +27,7 @@ class SchematicController extends CoreController
             array(
                 'navTitle' => 'tisseo.paon.menu.schematic.manage',
                 'pageTitle' => 'tisseo.paon.schematic.title.list',
-                'data' => $this->get('tisseo_endiv.line_manager')->findAllLinesWithSchematic(true)
+                'data' => $this->get('tisseo_endiv.line_manager')->findAllWithSchematics()
             )
         );
     }
@@ -332,8 +332,9 @@ class SchematicController extends CoreController
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 
         $schematicList = new SchematicList();
-        foreach($line->getFileSchematics() as $schematic)
+        foreach($line->getFileSchematics() as $schematic) {
             $schematicList->addSchematic($schematic);
+        }
 
         $form = $this->createForm(
             new ListSchematicType(false, true),

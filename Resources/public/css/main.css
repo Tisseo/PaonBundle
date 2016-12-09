@@ -136,3 +136,55 @@ tr.line-status-2 {
 tr.line-status-3 {
     background-color:#FFB2B2
 }
+
+.schematic_list tfoot > tr, .schematic_list tfoot {
+    background: transparent;
+}
+
+.schematic_list tfoot > tr > th {
+    text-align: center;
+    font-weight: normal;
+}
+
+.schematic_list tfoot > tr > th > a {
+    color: #777;
+    text-decoration: none;
+}
+
+.schematic_list tfoot > tr > th > a:hover {
+    color: #000;
+    text-decoration: none;
+    -webkit-transition: all 250ms ease;
+    -moz-transition: all 250ms ease;
+    -ms-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    transition: all 250ms ease;
+}
+
+.schematic_list tfoot > tr > th > a > i{
+    -webkit-transition: all ease 250ms;
+    -moz-transition: all ease 250ms;
+    -ms-transition: all ease 250ms;
+    -o-transition: all ease 250ms;
+    transition: all ease 250ms;
+
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.schematic_list tfoot.folded > tr > th > a > i {
+    -webkit-transition: all ease 250ms;
+    -moz-transition: all ease 250ms;
+    -ms-transition: all ease 250ms;
+    -o-transition: all ease 250ms;
+    transition: all ease 250ms;
+
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
