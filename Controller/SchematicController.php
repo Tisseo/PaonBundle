@@ -330,6 +330,8 @@ class SchematicController extends CoreController
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
+        if (empty($line))
+            throw new \Exception('Line id not found');
 
         $schematicList = new SchematicList();
         foreach($line->getFileSchematics() as $schematic) {
