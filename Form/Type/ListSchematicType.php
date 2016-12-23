@@ -31,7 +31,7 @@ class ListSchematicType extends AbstractType
             ->add(
                 'schematics',
                 'collection', array(
-                    'type' => new SchematicType($this->isBatch, false, $this->groupGis),
+                    'type' => new SchematicType($this->isBatch, $this->groupGis),
                     'label' => false
                 )
             )
