@@ -3,7 +3,7 @@
 {% form_theme form 'TisseoCoreBundle:Form:fields.html.twig' %}
 
 {% block open_form %}
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr':{'novalidate':true}}) }}
 {% endblock %}
 
 {% block modal_title %}
@@ -23,6 +23,11 @@
     <div class="row">
         <div class="col-md-12">
             {{ form_row(form.comment) }}
+        </div>
+    </div>
+    <div class="row hidden">
+        <div class="col-md-12">
+            {{ form_widget(form.deprecated) }}
         </div>
     </div>
     <div class="row">
@@ -45,16 +50,29 @@
 {% endblock %}
 
 {% block modal_actions %}
-    <button type="submit" class="btn btn-success">
+    <button type="submit" class="btn btn-success submit">
         <span class="glyphicon glyphicon-pencil"></span> {{ 'tisseo.global.save'|trans }}
     </button>
+    {%  if (form.vars.data.id) %}
+        <button type="button" class="btn btn-primary" id="deprecated">
+            <span class="glyphicon glyphicon-hand-down"></span> {{ 'tisseo.paon.line_group_gis.label.deprecated_action'|trans }}
+        </button>
+    {% endif %}
     {{ form_end(form) }}
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        require(['core/collection', 'paon/edit/lgis'], function(initCollection, initLgis) {
+        require(['core/collection', 'paon/edit/lgis', 'jquery'], function(initCollection, initLgis, $) {
             initCollection(initLgis);
+
+            $('#deprecated').on('click', function (evt){
+                evt.preventDefault();
+                $('#paon_line_group_gis_deprecated').attr('checked', true);
+                $(this).attr('disabled',true);
+                $('.submit').trigger('click');
+                return true;
+            });
         });
     </script>
 {% endblock %}

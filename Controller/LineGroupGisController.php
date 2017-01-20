@@ -19,16 +19,25 @@ class LineGroupGisController extends CoreController
      *
      * Listing LineGroupGis
      */
-    public function listAction()
+    public function listAction($deprecated)
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_GROUP_GIS');
+
+        if($deprecated){
+            $groups = $this->get('tisseo_endiv.line_group_gis_manager')->findAll();
+        }else{
+            $groups = $this->get('tisseo_endiv.line_group_gis_manager')->findBy(
+                array('deprecated' => false)
+            );
+        }
 
         return $this->render(
             'TisseoPaonBundle:LineGroupGis:list.html.twig',
             array(
                 'navTitle' => 'tisseo.paon.menu.schematic.manage',
                 'pageTitle' => 'tisseo.paon.line_group_gis.title.list',
-                'groups' => $this->get('tisseo_endiv.line_group_gis_manager')->findAll()
+                'groups' => $groups,
+                'deprecated' => $deprecated
             )
         );
     }

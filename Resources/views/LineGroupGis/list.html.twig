@@ -23,6 +23,18 @@
     {% endif %}
 {% endblock %}
 
+{% block table_head_tr %}
+    <tr>
+        <th colspan="4">
+            <div class="checkbox checkbox-head">
+                <label> {{ 'tisseo.paon.line_group_gis.label.show_past_voussure'|trans }}
+                    <input type="checkbox" class="checkbox deprecated-checkbox" />
+                </label>
+            </div>
+        </th>
+    </tr>
+{% endblock %}
+
 {% block table_head -%}
     <th class="col-md-2">{{ 'tisseo.paon.line_group_gis.label.name'|trans }}</th>
     <th class="col-md-1">{{ 'tisseo.paon.line_group_gis.label.printings'|trans }}</th>
@@ -88,4 +100,12 @@
             </td>
         </tr>
     {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        require(['paon/list/lgis'], function(list) {
+            list.voussure_checkbox({{ deprecated ? 1:0 }});
+        });
+    </script>
 {% endblock %}
