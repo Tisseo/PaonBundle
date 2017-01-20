@@ -182,6 +182,8 @@ tisseo_paon_line_group_gis_list:
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:list, deprecated: null }
     requirements:
             deprecated: 'deprecated'
+    options:
+        expose: true
 tisseo_paon_line_group_gis_edit:
     pattern: /line-group-gis/edit/{lineGroupGisId}
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:edit, lineGroupGisId: null }
