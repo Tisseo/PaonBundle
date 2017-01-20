@@ -10,6 +10,7 @@ use Tisseo\PaonBundle\Form\Type\LineGroupGisContentType;
 
 class LineGroupGisType extends AbstractType
 {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -43,6 +44,13 @@ class LineGroupGisType extends AbstractType
                 'text',
                 array(
                     'label' => 'tisseo.paon.line_group_gis.label.group_name'
+                )
+            )
+            ->add(
+                'deprecated',
+                'checkbox',
+                array(
+                    'label' => 'tisseo.paon.line_group_gis.label.deprecated_action'
                 )
             )
             ->add(

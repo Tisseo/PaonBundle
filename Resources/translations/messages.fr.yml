@@ -247,6 +247,8 @@ tisseo:
                 associated_lines: Lignes associées
                 schematic: Schématique
                 printings: Tirages
+                show_past_voussure: Affichez les obsolètes
+                deprecated_action: Rendre obsolète
             action:
                 create: Créer une voussure
                 export: Export des voussures
