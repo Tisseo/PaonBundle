@@ -16,7 +16,7 @@ define(['jquery', 'fosjsrouting'], function ($) {
         checkbox.on('click', function (evt){
             evt.preventDefault();
             if(deprecated){
-                location.href = Routing.generate('tisseo_paon_line_group_gis_list', {})
+                location.href = Routing.generate('tisseo_paon_line_group_gis_list');
             }else{
                 location.href = Routing.generate('tisseo_paon_line_group_gis_list', {'deprecated':'deprecated'});
             }
