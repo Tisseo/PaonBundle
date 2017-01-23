@@ -178,8 +178,12 @@ tisseo_paon_schematic_group_gis:
 
 # Line Group Gis
 tisseo_paon_line_group_gis_list:
-    pattern: /line-group-gis/list
-    defaults: { _controller: TisseoPaonBundle:LineGroupGis:list }
+    pattern: /line-group-gis/list/{deprecated}
+    defaults: { _controller: TisseoPaonBundle:LineGroupGis:list, deprecated: null }
+    requirements:
+            deprecated: 'deprecated'
+    options:
+        expose: true
 tisseo_paon_line_group_gis_edit:
     pattern: /line-group-gis/edit/{lineGroupGisId}
     defaults: { _controller: TisseoPaonBundle:LineGroupGis:edit, lineGroupGisId: null }
