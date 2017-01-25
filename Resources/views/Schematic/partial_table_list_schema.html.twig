@@ -30,7 +30,7 @@
     <tfoot class="show-toggle-container">
         <tr>
             <th colspan="5">
-                <a href="#" class="show-toggle-trigger"><i class="glyphicon glyphicon-chevron-down"></i> <span class="show-toggle-text">{{ 'tisseo.paon.schematic.table_more.more'|trans }}</span></a>
+                <a href="#" class="show-toggle-trigger"><i class="glyphicon glyphicon-chevron-down"></i> <span class="show-toggle-text">{{ 'tisseo.toggle_rows.more'|trans }}</span></a>
             </th>
         </tr>
     </tfoot>
@@ -40,8 +40,8 @@
     require(['core/toggle-rows'], function () {
         $('.toggle-list').showMore({
             limit: 3,
-            showMoreText: '{{ 'tisseo.paon.schematic.table_more.more' |trans }}',
-            showLessText: '{{ 'tisseo.paon.schematic.table_more.less' |trans }}'
+            showMoreText: '{{ 'tisseo.toggle_rows.more' |trans }}',
+            showLessText: '{{ 'tisseo.toggle_rows.less' |trans }}'
         });
     });
 </script>
