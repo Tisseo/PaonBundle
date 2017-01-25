@@ -223,9 +223,6 @@ tisseo:
                 object: Objet : Demande de nouveau schéma - LIGNE %line%
                 author: Auteur : %user%
                 date: Date : %date%
-            table_more:
-                more: Afficher les anciens éléments
-                less: Cacher les anciens éléments
 
         line_group_gis:
             title:
