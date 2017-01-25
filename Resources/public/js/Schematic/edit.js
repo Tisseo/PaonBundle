@@ -12,12 +12,10 @@ require(['jquery'], function($) {
             'url': $(this).data('url'),
             'cache': false,
             'success': function(data) {
-                console.log('success');
                 target.html(data);
                 target.show();
             },
             'error':function(xhr) {
-                console.log(xhr);
                 modalContent.show();
             }
         });
