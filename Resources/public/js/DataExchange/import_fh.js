@@ -9,7 +9,7 @@ define(['jquery', 'bootbox', 'fosjsrouting', 'translations/messages'], function(
         event.preventDefault();
         var self = this;
 
-        if (countSelectedCk() == 0) {
+        if (countSelectedCk() === 0) {
             bootbox.alert(Translator.trans('tisseo.paon.data_exchange.alert.import_fh'));
             return false;
         }

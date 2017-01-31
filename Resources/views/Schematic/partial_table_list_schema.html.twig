@@ -1,4 +1,4 @@
-<table class="table table-striped schematic_list">
+<table class="table table-striped toggle-list">
     <thead>
         <th>{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
         <th>{{ 'tisseo.paon.schematic.label.file'|trans }}</th>
@@ -27,14 +27,21 @@
         </tr>
     {% endfor %}
     </tbody>
+    <tfoot class="show-toggle-container">
+        <tr>
+            <th colspan="5">
+                <a href="#" class="show-toggle-trigger"><i class="glyphicon glyphicon-chevron-down"></i> <span class="show-toggle-text">{{ 'tisseo.toggle_rows.more'|trans }}</span></a>
+            </th>
+        </tr>
+    </tfoot>
 </table>
 <script>
     $('[data-toggle="popover"]').popover();
-    require(['bundles/tisseopaon/js/Schematic/table_more'], function () {
-        $('.schematic_list').showMore({
+    require(['core/toggle-rows'], function () {
+        $('.toggle-list').showMore({
             limit: 3,
-            showMoreText: '{{ 'tisseo.paon.schematic.table_more.more' |trans }}',
-            showLessText: '{{ 'tisseo.paon.schematic.table_more.less' |trans }}'
+            showMoreText: '{{ 'tisseo.toggle_rows.more' |trans }}',
+            showLessText: '{{ 'tisseo.toggle_rows.less' |trans }}'
         });
     });
 </script>
