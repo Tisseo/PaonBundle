@@ -24,6 +24,7 @@ tisseo:
                 physical_mode: Mode de transport
                 offers: Offres
                 priority: Priorité
+                code_ticketing: Code billetique
             action:
                 create: Créer une ligne
 

@@ -36,7 +36,15 @@ class LineType extends AbstractType
                 'priority',
                 'integer',
                 array(
-                    'label' => 'tisseo.paon.line.label.priority'
+                    'label' => 'tisseo.paon.line.label.priority',
+                )
+            )
+            ->add(
+                'codeTicketing',
+                'text',
+                array(
+                    'label' => 'tisseo.paon.line.label.code_ticketing',
+                    'required' => false,
                 )
             )
             ->add(
