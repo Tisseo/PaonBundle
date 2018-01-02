@@ -9,7 +9,7 @@
     {% for schematic in schematics %}
         <tr data-schematic-id="{{ schematic.id }}">
             <td>{{ schematic.name }}</td>
-            <td>{{ schematic.date|date('d/m/Y') }}</td>
+            <td>{{ schematic.date|date('d/m/Y H:m') }}</td>
             <td>{{ schematic.comment }}</td>
             <td>
                 <button class="btn btn-xs btn-danger small-button delete-schematic" data-url="{{ path('tisseo_paon_schematic_delete', { 'lineId': line.id, 'schematicId': schematic.id }) }}">

@@ -76,6 +76,8 @@ class SchematicController extends CoreController
      * @param integer $schematicId
      *
      * Choosing a schematic from a list
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function choiceAction($lineId, $schematicId = null)
     {
@@ -98,6 +100,10 @@ class SchematicController extends CoreController
      * @param integer $lineId
      *
      * Uploading a Schematic
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $lineId)
     {
@@ -162,6 +168,10 @@ class SchematicController extends CoreController
      * @param integer $lineId
      *
      * Sending a mail for a Schematic deposit
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function askAction(Request $request, $lineId)
     {
@@ -235,6 +245,10 @@ class SchematicController extends CoreController
      * @param $lineId
      *
      * Setting a Schematic deprecated
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deprecateAction(Request $request, $lineId)
     {
@@ -293,6 +307,8 @@ class SchematicController extends CoreController
      * @param $lineId
      *
      * Deleting a Schematic
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $lineId, $schematicId = null)
     {
@@ -324,6 +340,10 @@ class SchematicController extends CoreController
      * @param $lineId
      *
      * Setting a Schematic's groupGis attribute
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function gisAction(Request $request, $lineId)
     {
