@@ -14,11 +14,10 @@
 </div>
 
 <script>
-    require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
+    require(['smalot/bootstrap-datetimepicker', 'smalot/bootstrap-datetimepicker/{{ app.request.locale }}'], function() {
         $(document).ready(function() {
-            $('.input-date').datepicker({
+            $('.input-date').datetimepicker({
                 language: '{{ app.request.locale }}',
-                startView: 1,
                 autoclose: true
             });
         });

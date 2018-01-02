@@ -1,6 +1,7 @@
 {% extends "TisseoCoreBundle::datatable_list.html.twig" %}
 {% set bundle = "TisseoPaonBundle" %}
 {% set margin = '50' %}
+{% set datetimepicker = 'true' %}
 
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
 
@@ -38,7 +39,7 @@
                         {% else %}
                             {% set schematicWithFile = line.LastSchematic(true) %}
                         {% endif %}
-                        <td>{%- if schematicWithFile -%}{{- schematicWithFile.date|date('d/m/Y') -}}{%- endif -%}</td>
+                        <td>{%- if schematicWithFile -%}{{- schematicWithFile.date|date('d/m/Y H:m') -}}{%- endif -%}</td>
                         <td>{{ lastSchematic.comment }}</td>
                         <td>
                             {% if line.lineGroupGisContents|length > 0 %}

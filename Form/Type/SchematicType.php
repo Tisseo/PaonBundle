@@ -75,7 +75,7 @@ class SchematicType extends AbstractType
                 )
                 ->add(
                     'date',
-                    'tisseo_datepicker',
+                    'tisseo_datetimepicker',
                     array(
                         'label' => 'tisseo.paon.schematic.label.date',
                         'attr' => array(

@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ schematic.vars.value.name }}</td>
                     <td><input type="checkbox" disabled {% if schematic.vars.value.filePath %}checked="checked"{% endif %}</td>
-                    <td>{{ schematic.vars.value.date|date('d/m/Y') }}</td>
+                    <td>{{ schematic.vars.value.date|date('d/m/Y H:m') }}</td>
                     <td>{{ schematic.vars.value.comment }}</td>
                     <td>{{ form_widget(schematic) }}</td>
                     <td>
