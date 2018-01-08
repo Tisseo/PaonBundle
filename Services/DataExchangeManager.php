@@ -2,9 +2,6 @@
 
 namespace Tisseo\PaonBundle\Services;
 
-use Symfony\Component\Security\Acl\Exception\Exception;
-
-
 class DataExchangeManager
 {
     private $jenkinsServer;
@@ -15,12 +12,12 @@ class DataExchangeManager
     /**
      * @const string ROLE_ADMIN
      */
-    const ROLE_ADMIN ='admin';
+    const ROLE_ADMIN = 'admin';
 
     /**
      * @const string ROLE_IV
      */
-    const ROLE_IV ='iv';
+    const ROLE_IV = 'iv';
 
     public function __construct($jenkinsServer, $jenkinsUsers, $masterJob, $atomicJob)
     {
@@ -30,23 +27,24 @@ class DataExchangeManager
         $this->atomicJob = $atomicJob;
     }
 
-    private function chooseJenkinsUser($role) {
-
+    private function chooseJenkinsUser($role)
+    {
         foreach ($this->jenkinsUsers as $user) {
             if ($user['profile'] == $role) {
                 return $user['user'];
             }
         }
 
-        Throw new \Exception('tisseo.paon.jenkins.user_not_found',500);
+        throw new \Exception('tisseo.paon.jenkins.user_not_found', 500);
     }
 
     /**
      * Request Jenkins
+     *
      * @param string $url
-     * @param boolean $returnJson
+     * @param bool   $returnJson
      * @param string $role
-     * @param array $params
+     * @param array  $params
      *
      * Call Jenkins by generating a curl request.
      * If $returnJson is true, return the response data as JSON.
@@ -56,7 +54,7 @@ class DataExchangeManager
     private function callJenkins($url, $returnJson = false, $role = self::ROLE_ADMIN, $params = array())
     {
         $jenkinsUser = $this->chooseJenkinsUser($role);
-        $request =  curl_init();
+        $request = curl_init();
         curl_setopt($request, CURLINFO_HEADER_OUT, true);
         curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($request, CURLOPT_POST, 1);
@@ -73,8 +71,9 @@ class DataExchangeManager
         curl_close($request);
 
         $data = null;
-        if ($returnJson)
+        if ($returnJson) {
             $data = json_decode($response, true);
+        }
 
         return $data;
     }
@@ -86,19 +85,20 @@ class DataExchangeManager
      */
     public function getRunningJob()
     {
-        $url = "view/IV%20-%20FLUX%20DE%20DONNEE/api/json?tree=jobs[name,color,lastBuild[number]]";
+        $url = 'view/IV%20-%20FLUX%20DE%20DONNEE/api/json?tree=jobs[name,color,lastBuild[number]]';
         $jsonData = $this->callJenkins($url, true, self::ROLE_ADMIN);
 
         // search for master job running
-        foreach ($jsonData["jobs"] as $key => $val) {
-            if (strpos($val["name"], $this->masterJob) !== false && strpos($val["color"], "_anime") !== false) {
+        foreach ($jsonData['jobs'] as $key => $val) {
+            if (strpos($val['name'], $this->masterJob) !== false && strpos($val['color'], '_anime') !== false) {
                 return $val;
             }
         }
         // if no master job found, search for any running job
-        foreach ($jsonData["jobs"] as $key => $val) {
-            if (strpos($val["color"], "_anime") !== false)
+        foreach ($jsonData['jobs'] as $key => $val) {
+            if (strpos($val['color'], '_anime') !== false) {
                 return $val;
+            }
         }
         // no running job (in view "FLUX DE DONNEES")
         return null;
@@ -106,6 +106,7 @@ class DataExchangeManager
 
     /**
      * Get launcher
+     *
      * @param string $jobName
      * @param string $number
      *
@@ -113,35 +114,35 @@ class DataExchangeManager
      */
     public function getLauncher($jobName, $number)
     {
-        $url = "job/".str_replace(" ", "%20", $jobName)."/".$number."/api/json?tree=actions[causes[userName,upstreamProject]],building";
+        $url = 'job/'.str_replace(' ', '%20', $jobName).'/'.$number.'/api/json?tree=actions[causes[userName,upstreamProject]],building';
         $jsonData = $this->callJenkins($url, true, self::ROLE_ADMIN);
 
-        foreach( $jsonData["actions"] as $key => $action) {
-            if(is_array($action) && count($action) > 0) {
-
-                if (array_key_exists("userName", $action["causes"][0])) {
-                    return $action["causes"][0]["userName"];
+        foreach ($jsonData['actions'] as $key => $action) {
+            if (is_array($action) && count($action) > 0) {
+                if (array_key_exists('userName', $action['causes'][0])) {
+                    return $action['causes'][0]['userName'];
                 }
 
-                if (array_key_exists("upstreamProject", $action["causes"][0])) {
-                    return str_replace($this->masterJob, "", str_replace($this->atomicJob, "", $action["causes"][0]["upstreamProject"]));
+                if (array_key_exists('upstreamProject', $action['causes'][0])) {
+                    return str_replace($this->masterJob, '', str_replace($this->atomicJob, '', $action['causes'][0]['upstreamProject']));
                 }
             }
         }
 
-        return "";
+        return '';
     }
 
     /**
      * Launch job
+     *
      * @param string $jobName
-     * @param array $params
+     * @param array  $params
      *
      * Launch a specific job.
      */
     public function launchJob($jobName, $params = array(), $role = self::ROLE_ADMIN)
     {
-        $url = "job/".str_replace(" ", "%20", $this->masterJob.$jobName)."/build";
+        $url = 'job/'.str_replace(' ', '%20', $this->masterJob.$jobName).'/build';
         $this->callJenkins($url, false, $role, $params);
     }
 
@@ -153,15 +154,14 @@ class DataExchangeManager
     public function buildRunningJobData()
     {
         $runningJob = $this->getRunningJob();
-        if ($runningJob !== null)
-        {
-            $number = $runningJob["lastBuild"]["number"];
-            $user = $this->getLauncher($runningJob["name"], $number);
+        if ($runningJob !== null) {
+            $number = $runningJob['lastBuild']['number'];
+            $user = $this->getLauncher($runningJob['name'], $number);
 
             return array(
-                "name"=> str_replace($this->masterJob, "" ,  str_replace($this->atomicJob, "", $runningJob["name"])),
-                "number" => $number,
-                "user" => $user
+                'name' => str_replace($this->masterJob, '', str_replace($this->atomicJob, '', $runningJob['name'])),
+                'number' => $number,
+                'user' => $user
             );
         }
 
@@ -175,36 +175,41 @@ class DataExchangeManager
      */
     public function getJobsList($role)
     {
-        $url = "view/TID/api/json?tree=jobs[name,color,lastBuild[number]]";
+        $url = 'view/TID/api/json?tree=jobs[name,color,lastBuild[number]]';
         $jobsList = $this->callJenkins($url, true, $role);
 
-        if (empty($jobsList))
+        if (empty($jobsList)) {
             return null;
+        }
 
         $jobs = array();
-        foreach ($jobsList["jobs"] as $val) {
+        foreach ($jobsList['jobs'] as $val) {
             $job = array(
-                "name"=> str_replace($this->masterJob, "",  $val["name"]),
-                "color" => $val["color"],
+                'name' => str_replace($this->masterJob, '', $val['name']),
+                'color' => $val['color'],
             );
 
             // MASTER JOB - Import FH must be ordered last
-            $job['order'] = ($val['name'] == 'IV - MASTER JOB - Import FH') ? (count($jobsList)) : 0 ;
+            $job['order'] = ($val['name'] == 'IV - MASTER JOB - Import FH') ? (count($jobsList)) : 0;
 
-            if ($job["color"] == "blue")
-                $job["color"] = "green";
+            if ($job['color'] == 'blue') {
+                $job['color'] = 'green';
+            }
 
-            if (strpos($job["color"], "_anime") !== false) {
-                $job["number"] = $val["lastBuild"]["number"];
-                $job["launcher"] = $this->getLauncher($val["name"], $job["number"]);
-                $job["color"] = "blue";
+            if (strpos($job['color'], '_anime') !== false) {
+                $job['number'] = $val['lastBuild']['number'];
+                $job['launcher'] = $this->getLauncher($val['name'], $job['number']);
+                $job['color'] = 'blue';
             }
 
             array_push($jobs, $job);
         }
 
-        usort($jobs, function($a, $b) {
-            if ($a['order'] == $b['order']) return 0;
+        usort($jobs, function ($a, $b) {
+            if ($a['order'] == $b['order']) {
+                return 0;
+            }
+
             return ($a['order'] < $b['order']) ? -1 : 1;
         });
 
@@ -213,7 +218,7 @@ class DataExchangeManager
 
     public function buildRequestParam($jobName, $params)
     {
-        switch($jobName) {
+        switch ($jobName) {
             case 'Import FH':
                 $parameters = [
                     'json' => json_encode([

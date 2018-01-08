@@ -16,63 +16,49 @@
 {% endblock %}
 
 {% block content %}
-    {% for physicalMode, lines in data %}
-        {% if lines is not empty %}
-            <a id="{{loop.index0}}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{physicalMode|lower}}"></span>{{ physicalMode }}</a>
-            <table id="{{loop.index0}}" class="table datatable table-hover">
-                <thead>
-                    <th class="col-md-1">{{ 'tisseo.paon.schematic.label.number'|trans }}</th>
-                    <th class="col-md-3">{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
-                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.date'|trans }}</th>
-                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.comment'|trans }}</th>
-                    <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.group_gis'|trans }}</th>
-                    <th class="col-md-2 no-sort no-search">{{ 'tisseo.global.actions'|trans }}</th>
-                </thead>
-                <tbody>
-                {% for line in lines %}
-                    {% set lastSchematic = line.LastSchematic %}
-                    <tr{% if lastSchematic and not lastSchematic.filePath %} class="schematic-updating"{% endif %}>
-                        <td>{{ render.line_number(line, 'line', 'free') }}</td>
-                        <td><span>{{ line.CurrentLineVersion.name }}</span></td>
-                        {% if lastSchematic.filePath %}
-                            {% set schematicWithFile = lastSchematic %}
-                        {% else %}
-                            {% set schematicWithFile = line.LastSchematic(true) %}
-                        {% endif %}
-                        <td>{%- if schematicWithFile -%}{{- schematicWithFile.date|date('d/m/Y H:m') -}}{%- endif -%}</td>
-                        <td>{{ lastSchematic.comment }}</td>
-                        <td>
-                            {% if line.lineGroupGisContents|length > 0 %}
-                                <ul>
-                                {% for lineGroupGisContent in line.lineGroupGisContents %}
-                                    <li>{{ lineGroupGisContent.lineGroupGis.name }}</li>
-                                {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a class="btn btn-default" href="{{ path('tisseo_paon_schematic_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
-                                <span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.schematic.action.list'|trans }}
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    {% endfor %}
+   <table id="{{loop.index0}}" class="table datatable table-hover">
+        <thead>
+            <th class="col-md-1">{{ 'tisseo.paon.schematic.label.number'|trans }}</th>
+            <th class="col-md-3">{{ 'tisseo.paon.schematic.label.name'|trans }}</th>
+            <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.date'|trans }}</th>
+            <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.comment'|trans }}</th>
+            <th class="col-md-2 no-sort">{{ 'tisseo.paon.schematic.label.group_gis'|trans }}</th>
+            <th class="col-md-2 no-sort no-search">{{ 'tisseo.global.actions'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for line in data %}
+            {#{% for line in lines %}#}
+            {% set lastSchematic = line.LastSchematic %}
+            <tr{% if lastSchematic and not lastSchematic.filePath %} class="schematic-updating"{% endif %}>
+                <td>{{ render.line_number(line, 'line', 'free') }}</td>
+                <td><span>{{ line.CurrentLineVersion.name }}</span></td>
+                {% if lastSchematic.filePath %}
+                    {% set schematicWithFile = lastSchematic %}
+                {% else %}
+                    {% set schematicWithFile = line.LastSchematic(true) %}
+                {% endif %}
+                <td>{%- if schematicWithFile -%}{{- schematicWithFile.date|date('d/m/Y H:m') -}}{%- endif -%}</td>
+                <td>{{ lastSchematic.comment }}</td>
+                <td>
+                    {% if line.lineGroupGisContents|length > 0 %}
+                        <ul>
+                        {% for lineGroupGisContent in line.lineGroupGisContents %}
+                            <li>{{ lineGroupGisContent.lineGroupGis.name }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-default" href="{{ path('tisseo_paon_schematic_list', {'lineId': line.id}) }}" data-toggle="modal" data-target="#base-modal">
+                        <span class="glyphicon glyphicon-list"></span> {{ 'tisseo.paon.schematic.action.list'|trans }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        require(['jquery'], function() {
-            $(document).on("click", ".physical-mode", function() {
-                var id = $(this).attr('id');
-                var datatable =  $('#'+id+".datatable");
-                datatable.toggle();
-                datatable.parent().toggle();
-            });
-        });
-    </script>
 {% endblock %}

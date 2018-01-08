@@ -21,22 +21,25 @@ class SchematicController extends CoreController
     public function listWithLinesAction()
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_SCHEMA');
+        $data = $this->get('tisseo_endiv.line_manager')->findAllWithSchematics(false);
 
         return $this->render(
             'TisseoPaonBundle:Schematic:list_with_lines.html.twig',
             array(
                 'navTitle' => 'tisseo.paon.menu.schematic.manage',
                 'pageTitle' => 'tisseo.paon.schematic.title.list',
-                'data' => $this->get('tisseo_endiv.line_manager')->findAllWithSchematics()
+                'data' => $data,
             )
         );
     }
 
     /**
      * List schema
-     * @param integer $lineId
+     *
+     * @param int $lineId
      *
      * Listing Schematic of a Line
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction($lineId)
     {
@@ -72,8 +75,9 @@ class SchematicController extends CoreController
 
     /**
      * Choice
-     * @param integer $lineId
-     * @param integer $schematicId
+     *
+     * @param int $lineId
+     * @param int $schematicId
      *
      * Choosing a schematic from a list
      *
@@ -97,7 +101,8 @@ class SchematicController extends CoreController
 
     /**
      * Edit schema
-     * @param integer $lineId
+     *
+     * @param int $lineId
      *
      * Uploading a Schematic
      *
@@ -131,24 +136,21 @@ class SchematicController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $schematic = $form->getData();
-                $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
+                $schematic->setName($line->getNumber().'_'.$schematic->getDate()->format('Ymd'));
                 $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
             $lineGroupGisContents = $this->get('tisseo_endiv.line_group_gis_content_manager')->findByLine($lineId);
 
-            foreach ($lineGroupGisContents as $lineGroupGisContent)
+            foreach ($lineGroupGisContents as $lineGroupGisContent) {
                 $this->addFlash('warning', $this->get('translator')->trans('tisseo.paon.schematic.message.warning_group', array('%name%' => $lineGroupGisContent->getLineGroupGis()->getName())));
+            }
 
             return $this->redirectToRoute('tisseo_paon_schematic_list_with_lines');
         }
@@ -165,7 +167,8 @@ class SchematicController extends CoreController
 
     /**
      * Ask
-     * @param integer $lineId
+     *
+     * @param int $lineId
      *
      * Sending a mail for a Schematic deposit
      *
@@ -197,8 +200,7 @@ class SchematicController extends CoreController
         }
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             try {
                 $data = $form->getData();
 
@@ -211,7 +213,7 @@ class SchematicController extends CoreController
                 $schematic = new Schematic();
                 $schematic->setLine($line);
                 $schematic->setDate(new \Datetime());
-                $schematic->setName($line->getNumber() . '_' . $schematic->getDate()->format('Ymd'));
+                $schematic->setName($line->getNumber().'_'.$schematic->getDate()->format('Ymd'));
                 $schematic->setComment($data['body']);
                 $this->get('tisseo_endiv.schematic_manager')->save($schematic);
                 $this->get('mailer')->send($message);
@@ -242,6 +244,7 @@ class SchematicController extends CoreController
 
     /**
      * Deprecate
+     *
      * @param $lineId
      *
      * Setting a Schematic deprecated
@@ -255,12 +258,13 @@ class SchematicController extends CoreController
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DEPRECATE_SCHEMA');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
-        if (empty($line))
+        if (empty($line)) {
             throw new \Exception('Line id not found');
-
+        }
         $schematicList = new SchematicList();
-        foreach($line->getFileSchematics() as $schematic)
+        foreach ($line->getFileSchematics() as $schematic) {
             $schematicList->addSchematic($schematic);
+        }
 
         $form = $this->createForm(
             new ListSchematicType(true, false),
@@ -276,17 +280,14 @@ class SchematicController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $data = $form->getData();
-            try
-            {
-                foreach ($data->schematics as $schematic)
+            try {
+                foreach ($data->schematics as $schematic) {
                     $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                }
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -304,6 +305,7 @@ class SchematicController extends CoreController
 
     /**
      * Delete
+     *
      * @param $lineId
      *
      * Deleting a Schematic
@@ -314,16 +316,17 @@ class SchematicController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DELETE_SCHEMA');
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
+        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
             $this->get('tisseo_endiv.schematic_manager')->remove($schematicId);
+        }
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
 
         $schematics = new ArrayCollection();
-        foreach($line->getSchematics() as $schematic)
-        {
-            if ($schematic->getLineVersions()->isEmpty())
+        foreach ($line->getSchematics() as $schematic) {
+            if ($schematic->getLineVersions()->isEmpty()) {
                 $schematics[] = $schematic;
+            }
         }
 
         return $this->render(
@@ -337,6 +340,7 @@ class SchematicController extends CoreController
 
     /**
      * Gis
+     *
      * @param $lineId
      *
      * Setting a Schematic's groupGis attribute
@@ -350,11 +354,11 @@ class SchematicController extends CoreController
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_GROUP_GIS');
 
         $line = $this->get('tisseo_endiv.line_manager')->find($lineId);
-        if (empty($line))
+        if (empty($line)) {
             throw new \Exception('Line id not found');
-
+        }
         $schematicList = new SchematicList();
-        foreach($line->getFileSchematics() as $schematic) {
+        foreach ($line->getFileSchematics() as $schematic) {
             $schematicList->addSchematic($schematic);
         }
 
@@ -372,17 +376,14 @@ class SchematicController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $data = $form->getData();
-            try
-            {
-                foreach ($data->schematics as $schematic)
+            try {
+                foreach ($data->schematics as $schematic) {
                     $this->get('tisseo_endiv.schematic_manager')->save($schematic);
+                }
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 

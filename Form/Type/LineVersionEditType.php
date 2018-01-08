@@ -19,9 +19,9 @@ class LineVersionEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new EntityToIntTransformer($options['em']);
-        $transformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\Schematic");
-        $transformer->setEntityRepository("TisseoEndivBundle:Schematic");
-        $transformer->setEntityType("schematic");
+        $transformer->setEntityClass('Tisseo\\EndivBundle\\Entity\\Schematic');
+        $transformer->setEntityRepository('TisseoEndivBundle:Schematic');
+        $transformer->setEntityType('schematic');
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA,
@@ -44,10 +44,11 @@ class LineVersionEditType extends AbstractType
                     ->setParameter('lv', $lineVersion);
                     $childLine = $query->getOneOrNullResult();
 
-                    if (empty($childLine))
-                        $lineNumber = "";
-                    else
-                        $lineNumber = $childLine["number"];
+                    if (empty($childLine)) {
+                        $lineNumber = '';
+                    } else {
+                        $lineNumber = $childLine['number'];
+                    }
 
                     $form->add('childLine', 'text',
                         array(
@@ -129,7 +130,7 @@ class LineVersionEditType extends AbstractType
                     'property' => 'name',
                     'empty_value' => '',
                     'required' => true,
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->where("c.name IN ('Blanc','Noir')");
                     }
@@ -144,7 +145,7 @@ class LineVersionEditType extends AbstractType
                     'property' => 'name',
                     'empty_value' => '',
                     'required' => true,
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->orderBy('c.name', 'ASC');
                     }

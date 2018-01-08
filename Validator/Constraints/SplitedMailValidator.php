@@ -18,7 +18,7 @@ class SplitedMailValidator extends ConstraintValidator
      * @param mixed      $value      The value that should be validated
      * @param Constraint $constraint The constrain for the validation
      *
-     * @return Boolean Whether or not the value is valid
+     * @return bool Whether or not the value is valid
      */
     public function validate($value, Constraint $constraint)
     {
@@ -28,7 +28,7 @@ class SplitedMailValidator extends ConstraintValidator
 
             $values = explode(',', $value);
             foreach ($values as $email) {
-                /**
+                /*
                  * The validation with email's constraint is not yet compatible with swiftMail
                  * so it must to add a regex's constraint.
                  */

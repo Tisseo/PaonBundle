@@ -6,12 +6,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\EndivBundle\TisseoEndivBundle;
 
 class DataExchangeController extends CoreController
 {
     /**
      * Launch
+     *
      * @param string $jobName
      *
      * Launch a job.
@@ -28,9 +28,8 @@ class DataExchangeController extends CoreController
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         // Check no master jobs are currently running and launch the job if it's clear
         if ($dataExchangeManager->getRunningJob() === null) {
-
             if ($request->getMethod() == 'POST') {
-                $data =  json_decode($request->getContent(), true);
+                $data = json_decode($request->getContent(), true);
                 $params = $dataExchangeManager->buildRequestParam($jobName, $data);
             } else {
                 $params = array();
@@ -38,7 +37,6 @@ class DataExchangeController extends CoreController
             $role = $this->getJenkinsRole($dataExchangeManager);
             $dataExchangeManager->launchJob($jobName, $params, $role);
         }
-
 
         return $this->redirectToRoute('tisseo_paon_data_exchange_show');
     }
@@ -66,6 +64,7 @@ class DataExchangeController extends CoreController
 
     /**
      * @return Response
+     *
      * @throws \Exception
      */
     public function jobsAction()
@@ -94,6 +93,7 @@ class DataExchangeController extends CoreController
      * Gets the lines to select for Import FH task
      *
      * @return Response
+     *
      * @throws \Exception
      */
     public function linesAction()
@@ -107,11 +107,11 @@ class DataExchangeController extends CoreController
          * TODO : Very ugly, if there is not a task with a specified name, then the method return an empty response
          * TODO : List of tasks depends of current user profile.
          * TODO : Need to refactor source code
-        */
+         */
         $dataExchangeManager = $this->get('tisseo_paon.data_exchange_manager');
         $role = $this->getJenkinsRole($dataExchangeManager);
         $jobs = $dataExchangeManager->getJobsList($role);
-        if ($jobs[(count($jobs)-1)]['name'] != 'Import FH') {
+        if ($jobs[(count($jobs) - 1)]['name'] != 'Import FH') {
             return new Response();
         }
 
@@ -129,7 +129,9 @@ class DataExchangeController extends CoreController
      * Returns the role who must be used to launch task
      *
      * @param null $dataExchangeManager instance of tisseo data exchange manager
+     *
      * @return string
+     *
      * @throws \Exception
      */
     private function getJenkinsRole($dataExchangeManager = null)
@@ -141,7 +143,7 @@ class DataExchangeController extends CoreController
         try {
             $this->denyAccessUnlessGranted('BUSINESS_MANAGE_DATA_EXCHANGE_ROOT');
             $role = $dataExchangeManager::ROLE_ADMIN;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             if ($e instanceof AccessDeniedException) {
                 $role = $dataExchangeManager::ROLE_IV;
             } else {

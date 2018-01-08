@@ -5,8 +5,6 @@ namespace Tisseo\PaonBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
-
 use Tisseo\EndivBundle\Entity\LineVersion;
 use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
@@ -18,10 +16,10 @@ class PrintingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityTransformer = new EntityToIntTransformer($options["em"]);
-        $entityTransformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\LineVersion");
-        $entityTransformer->setEntityRepository("TisseoEndivBundle:LineVersion");
-        $entityTransformer->setEntityType("lineVersion");
+        $entityTransformer = new EntityToIntTransformer($options['em']);
+        $entityTransformer->setEntityClass('Tisseo\\EndivBundle\\Entity\\LineVersion');
+        $entityTransformer->setEntityRepository('TisseoEndivBundle:LineVersion');
+        $entityTransformer->setEntityType('lineVersion');
 
         $builder
             ->add(

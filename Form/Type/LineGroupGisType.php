@@ -6,14 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tisseo\PaonBundle\Validator\Constraints\UniqueInCollection;
-use Tisseo\PaonBundle\Form\Type\LineGroupGisContentType;
 
 class LineGroupGisType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

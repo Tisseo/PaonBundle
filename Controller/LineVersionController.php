@@ -8,7 +8,6 @@ use Tisseo\PaonBundle\Form\Type\LineVersionCreateType;
 use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\LineVersion;
-use Tisseo\EndivBundle\Entity\LineVersionDatasource;
 use Tisseo\EndivBundle\Entity\Datasource;
 
 class LineVersionController extends CoreController
@@ -21,23 +20,31 @@ class LineVersionController extends CoreController
     public function listAction()
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_LINE_VERSION');
-
+        $lvm = $this->get('tisseo_endiv.line_version_manager');
         $now = new \Datetime();
+
+        $data = $lvm->findActiveLineVersions(
+            new \Datetime(),
+            null,
+            false,
+            $lvm::SORT_BY_PRIORITY_NUMBER_AND_START_OFFER
+        );
 
         return $this->render(
             'TisseoPaonBundle:LineVersion:list.html.twig',
             array(
-                'navTitle'  => 'tisseo.paon.menu.line_version.manage',
+                'navTitle' => 'tisseo.paon.menu.line_version.manage',
                 'pageTitle' => 'tisseo.paon.line_version.title.list',
-                'data'      => $this->get('tisseo_endiv.line_version_manager')->findActiveLineVersions(new \Datetime(), null, true),
-                'now'       => $now
+                'data' => $data,
+                'now' => $now
             )
         );
     }
 
     /**
      * Create
-     * @param integer $lineId
+     *
+     * @param int $lineId
      *
      * Creating a new LineVersion
      */
@@ -45,12 +52,12 @@ class LineVersionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        if ($lineId === null)
+        if ($lineId === null) {
             $lineId = $request->request->get('lineId');
+        }
 
         $lineManager = $this->get('tisseo_endiv.line_manager');
-        if (empty($lineId))
-        {
+        if (empty($lineId)) {
             return $this->render(
                 'TisseoPaonBundle:LineVersion:create.html.twig',
                 array(
@@ -70,17 +77,14 @@ class LineVersionController extends CoreController
         $lastLineVersion = $line->getLastLineVersion();
 
         // no previous offer on this line
-        if (empty($lastLineVersion))
-        {
+        if (empty($lastLineVersion)) {
             $lineVersion = new LineVersion($properties, null, $line);
-        }
-        else
-        {
+        } else {
             $lineVersion = new LineVersion($properties, $lastLineVersion, null);
             $minDate = $lastLineVersion->getStartDate();
             $minDate->add(new \DateInterval('P1D'));
         }
-        
+
         $modificationManager = $this->get('tisseo_endiv.modification_manager');
         $form = $this->createForm(
             new LineVersionCreateType($modificationManager, ($lineVersion->getLine() !== null ? $lineVersion->getLine()->getId() : null)),
@@ -97,10 +101,8 @@ class LineVersionController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineVersion = $form->getData();
                 $this->get('tisseo_endiv.datasource_manager')->fill(
                     $lineVersion,
@@ -110,9 +112,7 @@ class LineVersionController extends CoreController
 
                 $this->get('tisseo_endiv.line_version_manager')->create($lineVersion);
                 $this->addFlash('success', 'tisseo.flash.success.created');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -133,7 +133,8 @@ class LineVersionController extends CoreController
 
     /**
      * Edit
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * Editing a LineVersion
      */
@@ -144,9 +145,9 @@ class LineVersionController extends CoreController
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
-        if (empty($lineVersion))
-        {
+        if (empty($lineVersion)) {
             $this->addFlash('warning', 'tisseo.paon.line_version.message.not_found');
+
             return $this->redirectToRoute('tisseo_paon_line_version_list');
         }
 
@@ -171,15 +172,11 @@ class LineVersionController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineVersionManager->save($form->getData());
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -198,7 +195,8 @@ class LineVersionController extends CoreController
 
     /**
      * Close LineVersion
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * Closing a LineVersion by setting its endDate.
      */
@@ -209,9 +207,9 @@ class LineVersionController extends CoreController
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
-        if (empty($lineVersion))
-        {
+        if (empty($lineVersion)) {
             $this->addFlash('warning', 'tisseo.paon.line_version.message.not_found');
+
             return $this->redirectToRoute('tisseo_paon_line_version_list');
         }
 
@@ -229,15 +227,11 @@ class LineVersionController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineVersionManager->save($form->getData());
                 $this->addFlash('success', 'tisseo.flash.success.created');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -256,7 +250,8 @@ class LineVersionController extends CoreController
 
     /**
      * Show
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * Showing LineVersion informations
      */
@@ -270,11 +265,11 @@ class LineVersionController extends CoreController
         $history = false;
         $title = 'tisseo.paon.line_version.title.show';
 
-        if ($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
             $history = $request->get('history');
-            if ($history)
+            if ($history) {
                 $title = 'tisseo.paon.line_version.title.show_history';
+            }
         }
 
         return $this->render(
@@ -309,7 +304,8 @@ class LineVersionController extends CoreController
 
     /**
      * Clean
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * Cleaning a LineVersion's timetable data from database.
      */
@@ -317,13 +313,10 @@ class LineVersionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        try
-        {
+        try {
             $this->get('tisseo_endiv.stored_procedure_manager')->cleanLineVersion($lineVersionId);
             $this->addFlash('success', 'tisseo.flash.success.cleaned');
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->addFlashException($e->getMessage());
         }
 
@@ -332,7 +325,8 @@ class LineVersionController extends CoreController
 
     /**
      * Delete
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * Deleting a LineVersion from database
      */
@@ -340,13 +334,10 @@ class LineVersionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_LINE_VERSION');
 
-        try
-        {
+        try {
             $this->get('tisseo_endiv.line_version_manager')->delete($lineVersionId);
             $this->addFlash('success', 'tisseo.flash.success.deleted');
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->addFlashException($e->getMessage());
         }
 
