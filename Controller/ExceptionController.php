@@ -10,7 +10,8 @@ class ExceptionController extends CoreController
 {
     /**
      * Edit
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * If request's method is GET, display a pseudo-form (ajax/json) which
      * purpose is to create/delete comments and link them to trips.
@@ -22,17 +23,13 @@ class ExceptionController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_MANAGE_EXCEPTION');
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST')
-        {
+        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST') {
             $data = json_decode($request->getContent(), true);
 
-            try
-            {
+            try {
                 $this->get('tisseo_endiv.trip_manager')->updateComments($data);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
@@ -69,8 +66,7 @@ class ExceptionController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             return $this->prepareJsonResponse(array(
                 'label' => $form['label']->getData(),
                 'commentText' => $form['commentText']->getData()

@@ -5,7 +5,6 @@ namespace Tisseo\PaonBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\PaonBundle\Form\Type\LineDatasourceType;
 
 class LineType extends AbstractType
 {
@@ -22,7 +21,7 @@ class LineType extends AbstractType
                 array(
                     'label' => 'tisseo.paon.line.label.number'
                 )
-            )    
+            )
             ->add(
                 'physicalMode',
                 'entity',

@@ -16,7 +16,7 @@ class LineGroupGisContentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -41,8 +41,7 @@ class LineGroupGisContentType extends AbstractType
                     $lineGroupGisContent = $event->getData();
 
                     $schematics = $selectedSchematic = null;
-                    if ($lineGroupGisContent instanceof LineGroupGisContent && $lineGroupGisContent->getLine() !== null)
-                    {
+                    if ($lineGroupGisContent instanceof LineGroupGisContent && $lineGroupGisContent->getLine() !== null) {
                         $em = $options['em'];
                         $query = $em->createQuery("
                             SELECT s
@@ -54,10 +53,8 @@ class LineGroupGisContentType extends AbstractType
                         ->setParameter('line', $lineGroupGisContent->getLine());
                         $schematics = $query->getResult();
 
-                        foreach ($schematics as $schematic)
-                        {
-                            if ($schematic->getGroupGis() && $lineGroupGisContent->getLine() == $schematic->getLine())
-                            {
+                        foreach ($schematics as $schematic) {
+                            if ($schematic->getGroupGis() && $lineGroupGisContent->getLine() == $schematic->getLine()) {
                                 $selectedSchematic = $schematic;
                                 break;
                             }
@@ -92,15 +89,18 @@ class LineGroupGisContentType extends AbstractType
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        usort($view->children['line']->vars['choices'], function(ChoiceView $choice1, ChoiceView $choice2) {
+        usort($view->children['line']->vars['choices'], function (ChoiceView $choice1, ChoiceView $choice2) {
             $line1 = $choice1->data;
             $line2 = $choice2->data;
-            if ($line1->getPriority() == $line2->getPriority())
+            if ($line1->getPriority() == $line2->getPriority()) {
                 return strnatcmp($line1->getNumber(), $line2->getNumber());
-            if ($line1->getPriority() > $line2->getPriority())
+            }
+            if ($line1->getPriority() > $line2->getPriority()) {
                 return 1;
-            if ($line1->getPriority() < $line2->getPriority())
+            }
+            if ($line1->getPriority() < $line2->getPriority()) {
                 return -1;
+            }
         });
     }
 

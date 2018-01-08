@@ -3,17 +3,16 @@
 namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\PaonBundle\Form\Type\PrintingType;
 use Tisseo\EndivBundle\Entity\Printing;
-use Tisseo\EndivBundle\Entity\LineVersion;
 
 class PrintingController extends CoreController
 {
     /**
      * Create
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * Creating Printing
      */
@@ -24,9 +23,9 @@ class PrintingController extends CoreController
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
         $lineVersion = $lineVersionManager->find($lineVersionId);
 
-        if (empty($lineVersion))
-        {
+        if (empty($lineVersion)) {
             $this->addFlash('warning', 'tisseo.paon.line_version.message.not_found');
+
             return $this->redirectToRoute('tisseo_paon_line_version_list');
         }
 
@@ -48,15 +47,11 @@ class PrintingController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $this->get('tisseo_endiv.printing_manager')->save($form->getData());
                 $this->addFlash('success', 'tisseo.flash.success.created');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 

@@ -27,36 +27,38 @@ class LineVersionCreateType extends AbstractType
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        usort($view->children['childLine']->vars['choices'], function(ChoiceView $choice1, ChoiceView $choice2) {
+        usort($view->children['childLine']->vars['choices'], function (ChoiceView $choice1, ChoiceView $choice2) {
             $lineVersion1 = $choice1->data;
             $lineVersion2 = $choice2->data;
-            if ($lineVersion1->getLine()->getPriority() == $lineVersion2->getLine()->getPriority())
-            {
+            if ($lineVersion1->getLine()->getPriority() == $lineVersion2->getLine()->getPriority()) {
                 $numberComparison = strnatcmp($lineVersion1->getLine()->getNumber(), $lineVersion2->getLine()->getNumber());
 
-                if ($numberComparison == 0)
-                    return ($lineVersion1->getVersion() < $lineVersion2->getVersion() ? -1 : 1);
-                else
+                if ($numberComparison == 0) {
+                    return $lineVersion1->getVersion() < $lineVersion2->getVersion() ? -1 : 1;
+                } else {
                     return $numberComparison;
+                }
             }
-            if ($lineVersion1->getLine()->getPriority() > $lineVersion2->getLine()->getPriority())
+            if ($lineVersion1->getLine()->getPriority() > $lineVersion2->getLine()->getPriority()) {
                 return 1;
-            if ($lineVersion1->getLine()->getPriority() < $lineVersion2->getLine()->getPriority())
+            }
+            if ($lineVersion1->getLine()->getPriority() < $lineVersion2->getLine()->getPriority()) {
                 return -1;
+            }
         });
     }
 
     private function buildTransformers($em)
     {
         $this->schematicTransformer = new EntityToIntTransformer($em);
-        $this->schematicTransformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\Schematic");
-        $this->schematicTransformer->setEntityRepository("TisseoEndivBundle:Schematic");
-        $this->schematicTransformer->setEntityType("schematic");
+        $this->schematicTransformer->setEntityClass('Tisseo\\EndivBundle\\Entity\\Schematic');
+        $this->schematicTransformer->setEntityRepository('TisseoEndivBundle:Schematic');
+        $this->schematicTransformer->setEntityType('schematic');
 
         $this->lineTransformer = new EntityToIntTransformer($em);
-        $this->lineTransformer->setEntityClass("Tisseo\\EndivBundle\\Entity\\Line");
-        $this->lineTransformer->setEntityRepository("TisseoEndivBundle:Line");
-        $this->lineTransformer->setEntityType("line");
+        $this->lineTransformer->setEntityClass('Tisseo\\EndivBundle\\Entity\\Line');
+        $this->lineTransformer->setEntityRepository('TisseoEndivBundle:Line');
+        $this->lineTransformer->setEntityType('line');
     }
 
     /**
@@ -112,7 +114,7 @@ class LineVersionCreateType extends AbstractType
                     'property' => 'numberAndVersion',
                     'empty_value' => '',
                     'required' => false,
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('lv')
                         ->join('lv.line', 'l')
                         ->where('lv.endDate is null AND lv.plannedEndDate > CURRENT_DATE()')
@@ -151,7 +153,7 @@ class LineVersionCreateType extends AbstractType
                     'property' => 'name',
                     'empty_value' => '',
                     'required' => true,
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->where("c.name IN ('Blanc','Noir')");
                     }
@@ -166,7 +168,7 @@ class LineVersionCreateType extends AbstractType
                     'property' => 'name',
                     'empty_value' => '',
                     'required' => true,
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->orderBy('c.name', 'ASC');
                     }

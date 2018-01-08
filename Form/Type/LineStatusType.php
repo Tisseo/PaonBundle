@@ -3,13 +3,8 @@
 namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Tisseo\PaonBundle\Form\Type\LineStatus;
-
 
 class LineStatusType extends AbstractType
 {
