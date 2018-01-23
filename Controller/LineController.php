@@ -10,7 +10,6 @@ use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineStatus;
 use Tisseo\EndivBundle\Entity\LineDatasource;
-use Tisseo\EndivBundle\Services\LineManager;
 
 class LineController extends CoreController
 {
@@ -36,7 +35,7 @@ class LineController extends CoreController
     /**
      * Edit
      *
-     * @param integer $lineId
+     * @param int $lineId
      *
      * Creating/editing Line
      */
@@ -110,10 +109,11 @@ class LineController extends CoreController
     /**
      * Validate
      *
-     * @param integer $lineId
-     * @param integer $suspend
+     * @param int $lineId
+     * @param int $suspend
      *
      * Validating Line
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function validateSuspendAction(Request $request, $lineId, $suspend)
@@ -178,12 +178,13 @@ class LineController extends CoreController
      *
      * @param Request $request
      * @param $suspend
+     *
      * @return JsonResponse
+     *
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function validateSuspendBatchAction(Request $request, $suspend)
     {
-
         $this->denyAccessUnlessGranted('BUSINESS_VALIDATE_LINES_EXPLOITATION');
 
         $requestParams = $request->request->all();
@@ -204,12 +205,13 @@ class LineController extends CoreController
     /**
      * @param $linesIds
      * @param $suspend
+     *
      * @return bool|string
+     *
      * @throws \Exception
      */
     private function processLines($linesIds, $suspend)
     {
-
         $lineManager = $this->get('tisseo_endiv.line_manager');
         foreach ($linesIds as $lineId) {
             try {
@@ -238,6 +240,7 @@ class LineController extends CoreController
      * Send mail
      *
      * @param $line
+     *
      * @throws \InvalidArgumentException
      */
     private function sendSuspendMail($line)

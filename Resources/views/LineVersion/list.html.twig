@@ -27,167 +27,152 @@
 {% endblock %}
 
 {% block content %}
-    {% for physicalMode, lineVersions in data %}
-        {% if lineVersions is not empty %}
-            <a id="{{ loop.index0 }}" class="header-ribbon physical-mode"><span class="mode-icon mode-{{ physicalMode|lower }}"></span>{{ physicalMode }}</a>
-            <table id="{{ loop.index0 }}" class="table datatable table-hover">
-                <thead>
-                    <th class="col-md-1">{{ 'tisseo.paon.line_version.label.number'|trans }}</th>
-                    <th class="col-md-5">{{ 'tisseo.paon.line_version.label.name'|trans }}</th>
-                    <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.printings'|trans }}</th>
-                    <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.version'|trans }}</th>
-                    <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.start_date'|trans }}</th>
-                    <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.end_date'|trans }}</th>
-                    <th class="col-md-2 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
-                </thead>
-                <tbody>
-                {% for lineVersion in lineVersions %}
-                    {{ lineVersion.ProcessStatus(now) }}
-                    <tr>
-                        <td>
-                            {{ render.line_number(lineVersion, 'lineVersion', 'free') }}
-                        </td>
-                        <td>
-                            <span>{{ lineVersion.name }}</span>
-                        </td>
-                        <td class="text-center">
-                            {{ lineVersion.totalPrintings }}
-                            <a
-                                href="{{ path('tisseo_paon_printing_create', {'lineVersionId': lineVersion.id}) }}"
-                                class="btn btn-xs btn-success small-link pull-right"
-                                data-toggle="modal"
-                                data-target="#base-modal"
-                                onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
-                            >
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            {{ lineVersion.version }}
-                        </td>
-                        <td>
-                            {{ render.line_version_date(lineVersion, 'startDate') }}
-                        </td>
-                        <td>
-                            {%- if lineVersion.endDate -%}
-                                {{ render.line_version_date(lineVersion, 'endDate') }}
-                            {%- elseif lineVersion.plannedEndDate -%}
-                                {{ render.line_version_date(lineVersion, 'plannedEndDate') }}
-                            {%- endif -%}
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                                    {{ 'tisseo.paon.line_version.action.offer'|trans }} <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
+    <table id="{{ loop.index0 }}" class="table datatable table-hover">
+        <thead>
+            <th class="col-md-1">{{ 'tisseo.paon.line_version.label.number'|trans }}</th>
+            <th class="col-md-5">{{ 'tisseo.paon.line_version.label.name'|trans }}</th>
+            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.printings'|trans }}</th>
+            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.version'|trans }}</th>
+            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.start_date'|trans }}</th>
+            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.end_date'|trans }}</th>
+            <th class="col-md-2 no-search no-sort">{{ 'tisseo.global.actions'|trans }}</th>
+        </thead>
+        <tbody>
+            {% for lineVersion in data %}
+                {{ lineVersion.ProcessStatus(now) }}
+                <tr>
+                    <td>
+                        {{ render.line_number(lineVersion, 'lineVersion', 'free') }}
+                    </td>
+                    <td>
+                        <span>{{ lineVersion.name }}</span>
+                    </td>
+                    <td class="text-center">
+                        {{ lineVersion.totalPrintings }}
+                        <a
+                            href="{{ path('tisseo_paon_printing_create', {'lineVersionId': lineVersion.id}) }}"
+                            class="btn btn-xs btn-success small-link pull-right"
+                            data-toggle="modal"
+                            data-target="#base-modal"
+                            onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
+                        >
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        {{ lineVersion.version }}
+                    </td>
+                    <td>
+                        {{ render.line_version_date(lineVersion, 'startDate') }}
+                    </td>
+                    <td>
+                        {%- if lineVersion.endDate -%}
+                            {{ render.line_version_date(lineVersion, 'endDate') }}
+                        {%- elseif lineVersion.plannedEndDate -%}
+                            {{ render.line_version_date(lineVersion, 'plannedEndDate') }}
+                        {%- endif -%}
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                                {{ 'tisseo.paon.line_version.action.offer'|trans }} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        href="{{ path('tisseo_paon_line_version_show', {'lineVersionId': lineVersion.id}) }}"
+                                        class="btn"
+                                        role="button"
+                                        data-toggle="modal"
+                                        data-target="#base-modal"
+                                        onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
+                                    >
+                                        {{ 'tisseo.paon.line_version.action.show'|trans }}
+                                    </a>
+                                </li>
+                                {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
                                     <li>
                                         <a
-                                            href="{{ path('tisseo_paon_line_version_show', {'lineVersionId': lineVersion.id}) }}"
+                                            href="{{ path('tisseo_paon_line_version_edit', {'lineVersionId': lineVersion.id}) }}"
                                             class="btn"
                                             role="button"
                                             data-toggle="modal"
                                             data-target="#base-modal"
                                             onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
                                         >
-                                            {{ 'tisseo.paon.line_version.action.show'|trans }}
+                                            {{ 'tisseo.global.edit'|trans }}
                                         </a>
                                     </li>
-                                    {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                                        <li>
-                                            <a
-                                                href="{{ path('tisseo_paon_line_version_edit', {'lineVersionId': lineVersion.id}) }}"
-                                                class="btn"
-                                                role="button"
-                                                data-toggle="modal"
-                                                data-target="#base-modal"
-                                                onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
-                                            >
-                                                {{ 'tisseo.global.edit'|trans }}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="{{ path('tisseo_paon_line_version_close', {'lineVersionId': lineVersion.id}) }}"
-                                                class="btn"
-                                                role"button"
-                                                data-toggle="modal"
-                                                data-target="#base-modal"
-                                                onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
-                                            >
-                                                {{ 'tisseo.paon.line_version.action.close'|trans }}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="{{ path('tisseo_paon_line_version_clean', {'lineVersionId': lineVersion.id}) }}"
-                                                class="btn clean-offer"
-                                                role="button"
-                                            >
-                                                {{ 'tisseo.paon.line_version.action.clean'|trans }}
-                                            </a>
-                                        </li>
-                                        {% if lineVersion.startDate > now %}
-                                        <li>
-                                            <a
-                                                href="{{ path('tisseo_paon_line_version_delete', {'lineVersionId': lineVersion.id}) }}"
-                                                class="btn delete-offer"
-                                                role="button"
-                                            >
-                                                {{ 'tisseo.paon.line_version.action.delete'|trans }}
-                                            </a>
-                                        </li>
-                                        {% endif %}
-                                    {% endif %}
-                                </ul>
-                            </div>
-                            {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                                    {{ 'tisseo.paon.line_version.action.publication'|trans }} <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
                                     <li>
                                         <a
-                                            href="{{ path('tisseo_paon_calendar_edit', {'lineVersionId': lineVersion.id}) }}"
+                                            href="{{ path('tisseo_paon_line_version_close', {'lineVersionId': lineVersion.id}) }}"
                                             class="btn"
-                                            role="button"
+                                            role"button"
                                             data-toggle="modal"
                                             data-target="#base-modal"
-                                            onclick="return $('.modal-dialog').addClass('modal-dialog-large');"
+                                            onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
                                         >
-                                            {{ 'tisseo.paon.line_version.action.calendar'|trans }}
+                                            {{ 'tisseo.paon.line_version.action.close'|trans }}
                                         </a>
                                     </li>
                                     <li>
-                                    <a class="btn" role="button" href="{{ path('tisseo_paon_exception_edit', {'lineVersionId': lineVersion.id}) }}">
-                                            {{ 'tisseo.paon.line_version.action.exception'|trans }}
+                                        <a
+                                            href="{{ path('tisseo_paon_line_version_clean', {'lineVersionId': lineVersion.id}) }}"
+                                            class="btn clean-offer"
+                                            role="button"
+                                        >
+                                            {{ 'tisseo.paon.line_version.action.clean'|trans }}
                                         </a>
                                     </li>
-                                </ul>
-                            </div>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    {% endfor %}
+                                    {% if lineVersion.startDate > now %}
+                                    <li>
+                                        <a
+                                            href="{{ path('tisseo_paon_line_version_delete', {'lineVersionId': lineVersion.id}) }}"
+                                            class="btn delete-offer"
+                                            role="button"
+                                        >
+                                            {{ 'tisseo.paon.line_version.action.delete'|trans }}
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {% if is_granted('BUSINESS_MANAGE_LINE_VERSION') %}
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                                {{ 'tisseo.paon.line_version.action.publication'|trans }} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        href="{{ path('tisseo_paon_calendar_edit', {'lineVersionId': lineVersion.id}) }}"
+                                        class="btn"
+                                        role="button"
+                                        data-toggle="modal"
+                                        data-target="#base-modal"
+                                        onclick="return $('.modal-dialog').addClass('modal-dialog-large');"
+                                    >
+                                        {{ 'tisseo.paon.line_version.action.calendar'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                <a class="btn" role="button" href="{{ path('tisseo_paon_exception_edit', {'lineVersionId': lineVersion.id}) }}">
+                                        {{ 'tisseo.paon.line_version.action.exception'|trans }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        require(['jquery'], function() {
-            $(document).on("click", ".physical-mode", function() {
-                var id = $(this).attr('id');
-                var datatable =  $('#'+id+".datatable");
-                datatable.toggle();
-                datatable.parent().toggle();
-            });
-        });
-    </script>
     <script>
         require(['bootbox'], function(bootbox) {
             $(document).on("click", ".clean-offer", function(event) {

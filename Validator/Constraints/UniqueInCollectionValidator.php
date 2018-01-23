@@ -17,7 +17,7 @@ class UniqueInCollectionValidator extends ConstraintValidator
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        if($constraint->propertyPath) {
+        if ($constraint->propertyPath) {
             foreach ($value as $element) {
                 $el = $propertyAccessor->getValue($element, $constraint->propertyPath);
 

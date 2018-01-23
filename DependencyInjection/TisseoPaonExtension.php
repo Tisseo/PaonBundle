@@ -30,7 +30,7 @@ class TisseoPaonExtension extends Extension
         $container->setParameter('tisseo_paon.default_email_exp', $config['mailer']['default_email_exp']);
         $container->setParameter('tisseo_paon.line_validation.default_email_dest', $config['mailer']['line_validation_default_email_dest']);
 
-        # DataExchange configuration
+        // DataExchange configuration
         $container->setParameter('tisseo_paon.jenkins_server', $config['data_exchange']['jenkins_server']);
         $container->setParameter('tisseo_paon.jenkins_users', $config['data_exchange']['jenkins_users']);
         $container->setParameter('tisseo_paon.master_job_prefix', $config['data_exchange']['jobs']['master_prefix']);

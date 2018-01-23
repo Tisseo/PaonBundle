@@ -2,9 +2,7 @@
 
 namespace Tisseo\PaonBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
-use Tisseo\EndivBundle\Entity\Line;
 use Tisseo\EndivBundle\Entity\LineGroupGis;
 use Tisseo\EndivBundle\Entity\LineGroupGisContent;
 use Tisseo\EndivBundle\Entity\PrintingLineGroupGis;
@@ -23,9 +21,9 @@ class LineGroupGisController extends CoreController
     {
         $this->denyAccessUnlessGranted('BUSINESS_LIST_GROUP_GIS');
 
-        if($deprecated){
+        if ($deprecated) {
             $groups = $this->get('tisseo_endiv.line_group_gis_manager')->findAll();
-        }else{
+        } else {
             $groups = $this->get('tisseo_endiv.line_group_gis_manager')->findBy(
                 array('deprecated' => false)
             );
@@ -44,7 +42,8 @@ class LineGroupGisController extends CoreController
 
     /**
      * Edit
-     * @param integer $lineGroupGisId
+     *
+     * @param int $lineGroupGisId
      *
      * Editing LineGroupGis
      */
@@ -55,8 +54,7 @@ class LineGroupGisController extends CoreController
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
-        if (empty($lineGroupGis))
-        {
+        if (empty($lineGroupGis)) {
             $lineGroupGis = new LineGroupGis();
             $lineGroupGisContent = new LineGroupGisContent();
             $lineGroupGis->getLineGroupGisContents()->add($lineGroupGisContent);
@@ -75,28 +73,25 @@ class LineGroupGisController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $lineGroupGisManager->save($form->getData());
 
                 $schematics = array();
-                foreach($form['LineGroupGisContents'] as $lineGroupContent)
+                foreach ($form['LineGroupGisContents'] as $lineGroupContent) {
                     $schematics[] = $lineGroupContent['schematic']->getData()->getId();
+                }
                 $this->get('tisseo_endiv.schematic_manager')->updateGroupGis($schematics, true);
 
                 $this->addFlash('success', (empty($lineGroupGisId) ? 'tisseo.flash.success.created' : 'tisseo.flash.success.edited'));
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
             return $this->redirectToRoute('tisseo_paon_line_group_gis_list');
         }
 
-       return $this->render(
+        return $this->render(
             'TisseoPaonBundle:LineGroupGis:form.html.twig',
             array(
                 'title' => 'tisseo.paon.line_group_gis.title.edit',
@@ -107,6 +102,7 @@ class LineGroupGisController extends CoreController
 
     /**
      * Delete
+     *
      * @param $lineGroupGisId
      *
      * Deleting LineGroupGis
@@ -118,16 +114,13 @@ class LineGroupGisController extends CoreController
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
-        if (empty($lineGroupGis))
+        if (empty($lineGroupGis)) {
             throw $this->createNotFoundException('Not found: '.$lineGroupGisId);
-
-        try
-        {
+        }
+        try {
             $lineGroupGisManager->remove($lineGroupGis);
             $this->addFlash('success', 'tisseo.flash.success.deleted');
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->addFlashException($e->getMessage());
         }
 
@@ -136,6 +129,7 @@ class LineGroupGisController extends CoreController
 
     /**
      * Schematics
+     *
      * @param $lineId
      *
      * Returning available Schematics for a LineGroupGis
@@ -155,7 +149,8 @@ class LineGroupGisController extends CoreController
 
     /**
      * Create printingLineGroupGis
-     * @param integer $lineGroupGisId
+     *
+     * @param int $lineGroupGisId
      *
      * Creating PrintingLineGroupGis
      */
@@ -166,9 +161,9 @@ class LineGroupGisController extends CoreController
         $lineGroupGisManager = $this->get('tisseo_endiv.line_group_gis_manager');
         $lineGroupGis = $lineGroupGisManager->find($lineGroupGisId);
 
-        if (empty($lineGroupGis))
-        {
+        if (empty($lineGroupGis)) {
             $this->addFlash('warning', 'tisseo.paon.line_group_gis.message.not_found');
+
             return $this->redirectToRoute('tisseo_paon_line_group_gis_list');
         }
 
@@ -190,15 +185,11 @@ class LineGroupGisController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
-            try
-            {
+        if ($form->isValid()) {
+            try {
                 $this->get('tisseo_endiv.printing_line_group_gis_manager')->save($form->getData());
                 $this->addFlash('success', 'tisseo.flash.success.created');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 

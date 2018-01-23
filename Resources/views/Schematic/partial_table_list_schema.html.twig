@@ -11,7 +11,7 @@
         <tr {% if schematicId is not empty and schematicId == schematic.id %}class="success"{% endif %} data-schematic-id="{{ schematic.id }}">
             <td>{{ schematic.name }}</td>
             <td><input type="checkbox" disabled {% if schematic.filePath %}checked="checked"{% endif %}</td>
-            <td>{{ schematic.date|date('d/m/Y') }}</td>
+            <td>{{ schematic.date|date('d/m/Y - H:i') }}</td>
             <td>{{ schematic.comment }}</td>
             <td>
                 {% if schematic.filePath %}

@@ -27,8 +27,7 @@ class SchematicType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($this->isBatch)
-        {
+        if ($this->isBatch) {
             $builder->add(
                 'deprecated',
                 'checkbox',
@@ -37,9 +36,7 @@ class SchematicType extends AbstractType
                     'required' => false
                 )
             );
-        }
-        else if ($this->groupGis)
-        {
+        } elseif ($this->groupGis) {
             $builder->add(
                 'groupGis',
                 'checkbox',
@@ -48,9 +45,7 @@ class SchematicType extends AbstractType
                     'required' => false
                 )
             );
-        }
-        else
-        {
+        } else {
             $builder
                 ->add(
                     'name',
@@ -75,7 +70,7 @@ class SchematicType extends AbstractType
                 )
                 ->add(
                     'date',
-                    'tisseo_datepicker',
+                    'tisseo_datetimepicker',
                     array(
                         'label' => 'tisseo.paon.schematic.label.date',
                         'attr' => array(

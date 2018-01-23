@@ -11,7 +11,7 @@ use Tisseo\EndivBundle\Entity\Schematic;
  */
 class SchematicList
 {
-    /** @var  \Doctrine\Common\Collections\ArrayCollection */
+    /** @var \Doctrine\Common\Collections\ArrayCollection */
     public $schematics;
 
     public function __construct()

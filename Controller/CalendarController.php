@@ -56,8 +56,7 @@ class CalendarController extends CoreController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $gridCalendar = $form->getData();
 
             return $this->render(
@@ -78,7 +77,8 @@ class CalendarController extends CoreController
 
     /**
      * Edit
-     * @param integer $lineVersionId
+     *
+     * @param int $lineVersionId
      *
      * If request's method is GET, display a pseudo-form (ajax/json) which
      * purpose is to create/delete GridCalendar and link GridMaskType to them.
@@ -93,17 +93,13 @@ class CalendarController extends CoreController
         $gridCalendarManager = $this->get('tisseo_endiv.grid_calendar_manager');
         $lineVersionManager = $this->get('tisseo_endiv.line_version_manager');
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST')
-        {
-            try
-            {
+        if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
+            try {
                 $data = json_decode($request->getContent(), true);
                 $freshData = $lineVersionManager->updateGridCalendars($data, $lineVersionId);
                 $gridCalendarManager->attachGridCalendars($freshData);
                 $this->addFlash('success', 'tisseo.flash.success.edited');
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->addFlashException($e->getMessage());
             }
 
