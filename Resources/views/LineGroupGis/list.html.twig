@@ -79,7 +79,7 @@
                                     {% set lineVersion = lineGroup.line.CurrentLineVersion %}
                                     {% if lineVersion is not none %}
                                         {% set property = lineVersion.PropertyValueByName(constant('Tisseo\\EndivBundle\\Entity\\Property::CERTIFIED')) %}
-                                        {% if property is not none %}
+                                        {% if property == true %}
                                             <img style="height:20px;width:20px;" src="{{ asset('bundles/tisseopaon/images/certified_line.png') }}"/>
                                         {% endif %}
                                     {% endif %}
