@@ -45,9 +45,7 @@
 {% block table_body -%}
     {% for group in groups %}
         <tr>
-            <td>
-                {{ group.name }}
-            </td>
+            <td>{{ group.name }}</td>
             <td class="text-center">
                 {{ group.totalPrintings }}
                 <a
@@ -76,7 +74,16 @@
                             {% set lastLineVersionSchematic = lineGroup.line.LastLineVersion.schematic %}
                             {% set lastGisSchematic = lineGroup.line.LastGisSchematic %}
                             <tr{% if lastGisSchematic.date|date_modify('+2 month') < lastLineVersionSchematic.date %} class="customDanger"{% elseif lastGisSchematic.date > lastLineVersionSchematic.date %} class="customWarning"{% endif %}>
-                                <td>{{ lineGroup.line.number }}</td>
+                                <td>
+                                    {{ lineGroup.line.number }}
+                                    {% set lineVersion = lineGroup.line.CurrentLineVersion %}
+                                    {% if lineVersion is not none %}
+                                        {% set property = lineVersion.PropertyValueByName(constant('Tisseo\\EndivBundle\\Entity\\Property::CERTIFIED')) %}
+                                        {% if property is not none %}
+                                            <img style="height:20px;width:20px;" src="{{ asset('bundles/tisseopaon/images/certified_line.png') }}"/>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
                                 <td>{% if lastSchematic %}{{ lastSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                                 <td>{% if firstValidSchematic %}{{ firstValidSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
                                 <td>{% if lastLineVersionSchematic %}{{ lastLineVersionSchematic.date|date('d/m/Y') }}{% else %}-{% endif %}</td>
@@ -103,6 +110,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script>
         require(['paon/list/lgis'], function(list) {
             list.voussure_checkbox({{ deprecated ? 1:0 }});
