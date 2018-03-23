@@ -113,7 +113,10 @@ class CalendarController extends CoreController
             array(
                 'title' => 'tisseo.paon.calendar.title.edit',
                 'lineVersion' => $lineVersion,
-                'gridCalendars' => $gridCalendarManager->findRelatedGridMaskTypes($lineVersion->getGridCalendars(), $lineVersion->getId()),
+                'gridCalendars' => $gridCalendarManager->findRelatedGridMaskTypes(
+                    $lineVersion->getGridCalendars(),
+                    $lineVersion->getId()
+                ),
                 'gridMaskTypes' => $lineVersionManager->findUnlinkedGridMaskTypes($lineVersion),
             )
         );
