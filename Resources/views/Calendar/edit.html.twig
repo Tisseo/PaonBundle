@@ -1,6 +1,13 @@
 {% extends "::modal.html.twig" %}
 
+{% macro render_extra_infos(grid_mask_type) %}
+    {% if grid_mask_type.included and grid_mask_type.scenario %}
+        {{ grid_mask_type.scenario }} - {{ grid_mask_type.included }} - {{ grid_mask_type.startDate|date('d/m/Y') }} / {{ grid_mask_type.endDate|date('d/m/Y') }}
+    {% endif %}
+{% endmacro %}
+
 {% import "TisseoCoreBundle::macros.html.twig" as render %}
+{% import _self as calendar %}
 
 {% block modal_title %}
     <div>
@@ -41,7 +48,7 @@
                         <tr class="warning">
                             <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType[0].id }}"></input>
                             <td><span>{{ gridMaskType[0].calendarPeriod }} {{ gridMaskType[0].calendarType }}</span></td>
-                            <td colspan="7"></td>
+                            <td colspan="7">{{ calendar.render_extra_infos(gridMaskType[0]) }}</td>
                             <td></td>
                         </tr>
                         {% for tripCalendar in gridMaskType[1] %}
@@ -83,7 +90,7 @@
                     <input type="hidden" class="grid-mask-type-row" value="{{ gridMaskType[0].id }}"></input>
                     <tr class="warning">
                         <td>{{ gridMaskType[0].calendarPeriod }} {{ gridMaskType[0].calendarType }}</td>
-                        <td colspan="7"></td>
+                        <td colspan="7">{{ calendar.render_extra_infos(gridMaskType[0]) }}</td>
                     </tr>
                     {% for tripCalendar in gridMaskType[1] %}
                     <tr>
