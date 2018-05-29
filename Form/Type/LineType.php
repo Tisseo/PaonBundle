@@ -47,6 +47,14 @@ class LineType extends AbstractType
                 )
             )
             ->add(
+                'publicationDate',
+                'datepicker',
+                array(
+                    'label' => 'tisseo.paon.line.label.publication_date',
+                    'required' => false,
+                )
+            )
+            ->add(
                 'lineDatasources',
                 'collection',
                 array(
