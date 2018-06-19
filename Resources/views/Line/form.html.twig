@@ -29,6 +29,9 @@
                 <div class="col-md-4">
                     {{ form_row(form.codeTicketing) }}
                 </div>
+                <div class="col-md-4">
+                    {{ form_row(form.publicationDate) }}
+                </div>
             </div>
         {% for datasource in form.lineDatasources %}
             <div class="row">
@@ -49,4 +52,13 @@
         <span class="glyphicon glyphicon-pencil"></span>{{ 'tisseo.global.save'|trans }}
     </button>
     {{ form_end(form) }}
+    <script type="text/javascript">
+        require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
+            $(document).find('#paon_line_publicationDate').datepicker({
+                language: '{{ app.request.locale }}',
+                startView: 1,
+                autoclose: true
+            });
+        });
+    </script>
 {% endblock %}

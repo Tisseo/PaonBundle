@@ -25,6 +25,7 @@ tisseo:
                 offers: Offres
                 priority: Priorité
                 code_ticketing: Code billettique
+                publication_date: Date de publication
             action:
                 create: Créer une ligne
 
