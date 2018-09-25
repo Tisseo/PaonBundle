@@ -35,6 +35,7 @@ tisseo:
                 suspend: Suspension de ligne
             label:
                 status: Statut actuel
+                date: Dernier import
                 comment: Commentaires
             action:
                 validate: Valider
