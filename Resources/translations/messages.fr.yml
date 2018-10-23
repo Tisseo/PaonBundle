@@ -132,7 +132,12 @@ tisseo:
             action:
                 create: Nouvelle impression
                 export: Export des tirages
-
+        printing_type:
+            label:
+                your_choice: Votre choix
+                printing_type: Type d'impression
+                new_offer: Nouvelle offre
+                reassortment: Réassortiment
         data_exchange:
             title:
                 show: Liste des tâches
