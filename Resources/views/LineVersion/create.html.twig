@@ -47,7 +47,7 @@
                             {{ form_row(form.startDate, {'attr': {'class': 'start-date'}}) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(form.plannedEndDate) }}
+                            {{ form_row(form.plannedEndDate, {'attr': {'class': 'planned-end-date'}}) }}
                         </div>
                     </div>
                 </li>
@@ -154,16 +154,31 @@
             require(['paon/list/schematic']);
         </script>
         <script>
-            require(['bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function() {
+            require([ 'core/moment', 'bootstrap/datepicker', 'bootstrap/datepicker/{{ app.request.locale }}'], function(moment) {
                 $(document).ready(function() {
+                    moment.locale('{{ app.request.locale }}');
+
                     $('.input-range input').datepicker({
                         language: '{{ app.request.locale }}',
                         startView: 1,
                         autoclose: true
                     });
+
+                    $(".start-date").on("change", function (e) {
+                        minDate = moment(e.target.value, 'DD/MM/YYYY');
+                        minDate.add('1', 'days');
+                        $('.planned-end-date').datepicker('setStartDate', minDate.toDate());
+                    });
+                    $(".planned-end-date").on("change", function (e) {
+                        maxDate = moment(e.target.value, 'DD/MM/YYYY');
+                        maxDate.subtract(1, 'days')
+                        $('.start-date').datepicker('setEndDate', maxDate.toDate());
+                    });
+
                     {% if minDate is defined %}
                         {% if minDate.timezone is defined %}    {# check if minDate is date #}
                             $('.start-date').datepicker('setStartDate', "{{ minDate | date('d/m/Y') }}");
+                            $(".start-date").trigger('change');
                         {% endif %}
                     {% endif %}
                 });
