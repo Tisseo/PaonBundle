@@ -183,6 +183,10 @@ tisseo:
                 no_data: Il n'y a aucun calendrier attaché à cette offre. Veuillez créer des grilles horaires dans le menu 'Calendrier' afin de pouvoir effectuer l'édition des exceptions.
                 save: Attention, les données actuellement éditées ne seront pas sauvegardées si vous ne cliquez pas sur "Enregistrer".
                 invalid: Les modifications effectuées ne peuvent être validées car il reste des labels automatiques 'zz' dans les grilles horaires.
+            line_version:
+                min_duration: L'offre précédente ne durerait que 1 jour.
+                min_interval: Les offres doivent être juxtaposées dans le temps. L'offre précédente s'est terminée le %previous_close_date%.
+
 
         comment:
             title:

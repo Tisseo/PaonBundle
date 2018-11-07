@@ -105,12 +105,13 @@
                                     </li>
                                     <li>
                                         <a
-                                            href="{{ path('tisseo_paon_line_version_close', {'lineVersionId': lineVersion.id}) }}"
+                                            href="{%- if not lineVersion.endDate -%}{{ path('tisseo_paon_line_version_close', {'lineVersionId': lineVersion.id}) }}{%- endif -%}"
                                             class="btn"
                                             role"button"
                                             data-toggle="modal"
                                             data-target="#base-modal"
-                                            onclick="return $('.modal-dialog').removeClass('modal-dialog-large');"
+                                            onclick="{%- if lineVersion.endDate -%}return false;{%- endif -%}return $('.modal-dialog').removeClass('modal-dialog-large');"
+                                            {%- if lineVersion.endDate -%} disabled{%- endif -%}
                                         >
                                             {{ 'tisseo.paon.line_version.action.close'|trans }}
                                         </a>
