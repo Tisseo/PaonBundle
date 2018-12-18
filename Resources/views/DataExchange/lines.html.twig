@@ -12,33 +12,43 @@
                             <th class="col-md-2">#</th>
                             <th class="col-md-2">{{ 'tisseo.paon.data_exchange.label.line_number'|trans }}</th>
                             <th class="col-md-3">{{ 'tisseo.paon.line_status.label.status'|trans }}</th>
+                            <th class="col-md-3">{{ 'tisseo.paon.line_status.label.date'|trans }}</th>
                             <th class="col-md-5">{{ 'tisseo.paon.line_status.label.comment'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for line in lines %}
-                            {% if line.currentOrFutureLineVersion is not null %}
-                                {% set lineStatus = line.currentStatus %}
-                                <tr {% if lineStatus is not null %} class= {{ 'line-status-' ~ lineStatus.status }} {% endif %}>
+                    {% for line in lines %}
+                        {% if line.currentOrFutureLineVersion %}
+                            {% set lineStatus = line.currentStatus %}
+                            {% if lineStatus %}
+                                <tr class="{{ 'line-status-'~lineStatus.status }}">
                                     <td>
-                                        {% for lineDatasource in line.lineDatasources %}
+                                    {% for lineDatasource in line.lineDatasources %}
                                         <input type="checkbox" class="ckLine" value="{{ lineDatasource.code }}" name="ckLine[]"
-                                            {% if lineStatus is not null and lineStatus.status == 3 %} disabled='disabled' {% endif %}
+                                            {% if lineStatus.status == 3 %} disabled='disabled' {% endif %}
                                         >
-                                        {% endfor %}
+                                    {% endfor %}
+                                    </td>
+                                    <td>{{ render.line_number(line, 'line', 'free') }}</td>
+                                    <td>{{ ('tisseo.paon.line_status.status.' ~ lineStatus.status)|trans  }}</td>
+                                    <td>{{ lineStatus.DateTime|date('d/m/Y - H:i') }}</td>
+                                    <td>{{ lineStatus.comment }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>
+                                    {% for lineDatasource in line.lineDatasources %}
+                                        <input type="checkbox" class="ckLine" value="{{ lineDatasource.code }}" name="ckLine[]">
+                                    {% endfor %}
                                     </td>
                                     <td>
                                         {{ render.line_number(line, 'line', 'free') }}
                                     </td>
-                                    <td>
-                                        {% if lineStatus is not null %} {{ ('tisseo.paon.line_status.status.' ~ lineStatus.status)|trans  }} {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if lineStatus is not null %} {{ lineStatus.comment }} {% endif %}
-                                    </td>
+                                    <td colspan="3"></td>
                                 </tr>
                             {% endif %}
-                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

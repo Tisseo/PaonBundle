@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\PaonBundle\Form\Type\PrintingType;
 use Tisseo\EndivBundle\Entity\Printing;
+use Symfony\Component\HttpFoundation\Response;
 
 class PrintingController extends CoreController
 {
@@ -15,6 +16,7 @@ class PrintingController extends CoreController
      * @param int $lineVersionId
      *
      * Creating Printing
+     * @return Response A Response instance
      */
     public function createAction(Request $request, $lineVersionId)
     {

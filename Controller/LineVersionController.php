@@ -3,6 +3,7 @@
 namespace Tisseo\PaonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Tisseo\PaonBundle\Form\Type\LineVersionEditType;
 use Tisseo\PaonBundle\Form\Type\LineVersionCreateType;
 use Tisseo\PaonBundle\Form\Type\LineVersionCloseType;
@@ -47,6 +48,8 @@ class LineVersionController extends CoreController
      * @param int $lineId
      *
      * Creating a new LineVersion
+     *
+     * @return Response A Response instance
      */
     public function createAction(Request $request, $lineId = null)
     {
@@ -70,6 +73,7 @@ class LineVersionController extends CoreController
         }
 
         $minDate = null;
+        $minPlannedEndDate = null;
         $propertyManager = $this->get('tisseo_endiv.property_manager');
 
         $properties = $propertyManager->findAll();
@@ -82,7 +86,7 @@ class LineVersionController extends CoreController
         } else {
             $lineVersion = new LineVersion($properties, $lastLineVersion, null);
             $minDate = $lastLineVersion->getStartDate();
-            $minDate->add(new \DateInterval('P1D'));
+            $minDate->add(new \DateInterval('P2D'));
         }
 
         $modificationManager = $this->get('tisseo_endiv.modification_manager');
@@ -137,6 +141,8 @@ class LineVersionController extends CoreController
      * @param int $lineVersionId
      *
      * Editing a LineVersion
+     *
+     * @return Response A Response instance
      */
     public function editAction(Request $request, $lineVersionId)
     {
@@ -199,6 +205,8 @@ class LineVersionController extends CoreController
      * @param int $lineVersionId
      *
      * Closing a LineVersion by setting its endDate.
+     *
+     * @return Response A Response instance
      */
     public function closeAction(Request $request, $lineVersionId)
     {
@@ -254,6 +262,8 @@ class LineVersionController extends CoreController
      * @param int $lineVersionId
      *
      * Showing LineVersion informations
+     *
+     * @return Response A Response instance
      */
     public function showAction(Request $request, $lineVersionId)
     {
@@ -286,6 +296,8 @@ class LineVersionController extends CoreController
      * History
      *
      * Listing all previous versions of LineVersions.
+     *
+     * @return Response A Response instance
      */
     public function historyAction()
     {
@@ -308,6 +320,9 @@ class LineVersionController extends CoreController
      * @param int $lineVersionId
      *
      * Cleaning a LineVersion's timetable data from database.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      */
     public function cleanAction($lineVersionId)
     {
@@ -329,6 +344,9 @@ class LineVersionController extends CoreController
      * @param int $lineVersionId
      *
      * Deleting a LineVersion from database
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      */
     public function deleteAction($lineVersionId)
     {

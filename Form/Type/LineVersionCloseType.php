@@ -61,7 +61,8 @@ class LineVersionCloseType extends AbstractType
                 array(
                     'label' => 'tisseo.paon.line_version.label.end_date',
                     'attr' => array(
-                        'data-to-date' => true
+                        'data-to-date' => true,
+                        'autocomplete' => 'off'
                     )
                 )
             )

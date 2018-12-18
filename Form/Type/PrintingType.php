@@ -3,10 +3,13 @@
 namespace Tisseo\PaonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tisseo\EndivBundle\Entity\LineVersion;
 use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
+use Doctrine\Common\Persistence\ObjectManager;
+use Tisseo\EndivBundle\Entity\PrintingType as EntityPrintingType;
 
 class PrintingType extends AbstractType
 {
@@ -16,10 +19,19 @@ class PrintingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityTransformer = new EntityToIntTransformer($options['em']);
+        /** @var ObjectManager $om */
+        $om = $options['em'];
+        $entityTransformer = new EntityToIntTransformer($om);
         $entityTransformer->setEntityClass('Tisseo\\EndivBundle\\Entity\\LineVersion');
         $entityTransformer->setEntityRepository('TisseoEndivBundle:LineVersion');
         $entityTransformer->setEntityType('lineVersion');
+
+
+        $printing_type = $om->getRepository(EntityPrintingType::class)->findAll();
+        $printingTyeChoiceList = [];
+        foreach ($printing_type as $key => $item) {
+          $printingTyeChoiceList[$item->getId()] = 'tisseo.paon.printing_type.label.' . $item->getLabel();
+        }
 
         $builder
             ->add(
@@ -54,8 +66,34 @@ class PrintingType extends AbstractType
                     'hidden'
                 )->addModelTransformer($entityTransformer)
             )
+            ->add(
+              'printingType',
+              'choice',
+              [
+                'choices' => $printingTyeChoiceList,
+                'placeholder' => 'tisseo.paon.printing_type.label.your_choice',
+                'label' => 'tisseo.paon.printing_type.label.printing_type',
+                'required' => false,
+              ]
+            )
             ->setAction($options['action'])
         ;
+
+        $builder->get('printingType')->addModelTransformer(new CallbackTransformer(
+          function($entity2int) {
+            if (null === $entity2int) {
+              return null;
+            } else {
+              $entity2int->getPrintingType()->getId();
+            }
+          },
+          function($int2entity) use ($om) {
+            if (!$int2entity) return;
+            $printingType = $om->getRepository(EntityPrintingType::class)->findOneBy(['id' => $int2entity]);
+            return $printingType;
+          }
+        ));
+
     }
 
     /**
