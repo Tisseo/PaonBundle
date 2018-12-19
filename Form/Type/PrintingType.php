@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\EndivBundle\Entity\LineVersion;
 use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Tisseo\EndivBundle\Entity\PrintingType as EntityPrintingType;
@@ -26,12 +25,18 @@ class PrintingType extends AbstractType
         $entityTransformer->setEntityRepository('TisseoEndivBundle:LineVersion');
         $entityTransformer->setEntityType('lineVersion');
 
-
         $printing_type = $om->getRepository(EntityPrintingType::class)->findAll();
-        $printingTyeChoiceList = [];
+        $printingTypeChoiceList = [];
+        $loop = 0;
+        $firstChoice = null;
         foreach ($printing_type as $key => $item) {
-          $printingTyeChoiceList[$item->getId()] = 'tisseo.paon.printing_type.label.' . $item->getLabel();
+            $printingTypeChoiceList[$item->getId()] = 'tisseo.paon.printing_type.label.'.$item->getLabel();
+            if ($loop == 0) {
+                $firstChoice = $item->getId();
+            }
+            ++$loop;
         }
+        dump($firstChoice);
 
         $builder
             ->add(
@@ -67,33 +72,34 @@ class PrintingType extends AbstractType
                 )->addModelTransformer($entityTransformer)
             )
             ->add(
-              'printingType',
-              'choice',
-              [
-                'choices' => $printingTyeChoiceList,
-                'placeholder' => 'tisseo.paon.printing_type.label.your_choice',
-                'label' => 'tisseo.paon.printing_type.label.printing_type',
-                'required' => false,
-              ]
+                'printingType',
+                'choice',
+                array(
+                    'choices' => $printingTypeChoiceList,
+                    'label' => 'tisseo.paon.printing_type.label.printing_type',
+                    'data' => $om->getReference('TisseoEndivBundle:PrintingType', $firstChoice)
+                )
             )
             ->setAction($options['action'])
         ;
 
         $builder->get('printingType')->addModelTransformer(new CallbackTransformer(
-          function($entity2int) {
-            if (null === $entity2int) {
-              return null;
-            } else {
-              $entity2int->getPrintingType()->getId();
-            }
-          },
-          function($int2entity) use ($om) {
-            if (!$int2entity) return;
-            $printingType = $om->getRepository(EntityPrintingType::class)->findOneBy(['id' => $int2entity]);
-            return $printingType;
-          }
-        ));
+            function ($entity2int) {
+                if (null === $entity2int) {
+                    return null;
+                } else {
+                    $entity2int->getId();
+                }
+            },
+            function ($int2entity) use ($om) {
+                if (!$int2entity) {
+                    return;
+                }
+                $printingType = $om->getRepository(EntityPrintingType::class)->findOneBy(['id' => $int2entity]);
 
+                return $printingType;
+            }
+        ));
     }
 
     /**
