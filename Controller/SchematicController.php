@@ -39,6 +39,7 @@ class SchematicController extends CoreController
      * @param int $lineId
      *
      * Listing Schematic of a Line
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction($lineId)

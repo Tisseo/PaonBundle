@@ -91,13 +91,13 @@ class DataExchangeManager
         // search for master job running
         if (is_array($jsonData) && count($jsonData) > 0) {
             foreach ($jsonData['jobs'] as $key => $val) {
-                if (strpos($val['name'], $this->masterJob) !== FALSE && strpos($val['color'], '_anime') !== FALSE) {
+                if (strpos($val['name'], $this->masterJob) !== false && strpos($val['color'], '_anime') !== false) {
                     return $val;
                 }
             }
             // if no master job found, search for any running job
             foreach ($jsonData['jobs'] as $key => $val) {
-                if (strpos($val['color'], '_anime') !== FALSE) {
+                if (strpos($val['color'], '_anime') !== false) {
                     return $val;
                 }
             }

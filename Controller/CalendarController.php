@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Tisseo\PaonBundle\Form\Type\GridCalendarType;
 use Tisseo\CoreBundle\Controller\CoreController;
 use Tisseo\EndivBundle\Entity\GridCalendar;
-use Tisseo\EndivBundle\Entity\LineVersion;
 
 class CalendarController extends CoreController
 {
