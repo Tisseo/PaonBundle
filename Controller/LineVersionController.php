@@ -322,7 +322,6 @@ class LineVersionController extends CoreController
      * Cleaning a LineVersion's timetable data from database.
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      */
     public function cleanAction($lineVersionId)
     {
@@ -346,7 +345,6 @@ class LineVersionController extends CoreController
      * Deleting a LineVersion from database
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      */
     public function deleteAction($lineVersionId)
     {

@@ -5,7 +5,6 @@ namespace Tisseo\PaonBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Tisseo\EndivBundle\Entity\LineGroupGis;
 use Tisseo\CoreBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class PrintingLineGroupGisType extends AbstractType
