@@ -30,8 +30,9 @@
     <table id="{{ loop.index0 }}" class="table datatable table-hover">
         <thead>
             <th class="col-md-1">{{ 'tisseo.paon.line_version.label.number'|trans }}</th>
-            <th class="col-md-5">{{ 'tisseo.paon.line_version.label.name'|trans }}</th>
-            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.printings'|trans }}</th>
+            <th class="col-md-4">{{ 'tisseo.paon.line_version.label.name'|trans }}</th>
+            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.printings.line'|trans }}</th>
+            <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.printings.stop'|trans }}</th>
             <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.version'|trans }}</th>
             <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.start_date'|trans }}</th>
             <th class="col-md-1 no-search">{{ 'tisseo.paon.line_version.label.end_date'|trans }}</th>
@@ -48,7 +49,10 @@
                         <span>{{ lineVersion.name }}</span>
                     </td>
                     <td class="text-center">
-                        {{ lineVersion.totalPrintings }}
+                        {{ lineVersion.totalPrintings(1) }}
+                    </td>
+                    <td class="text-center">
+                        {{ lineVersion.totalPrintings(2) }}
                         <a
                             href="{{ path('tisseo_paon_printing_create', {'lineVersionId': lineVersion.id}) }}"
                             class="btn btn-xs btn-success small-link pull-right"

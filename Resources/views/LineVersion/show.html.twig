@@ -75,7 +75,10 @@
             <ul>
                 <li>{{ 'tisseo.paon.printing.label.quantity'|trans }} : {{ printing.quantity }}</li>
                 <li>{{ 'tisseo.paon.printing.label.date'|trans }} : {{ printing.date|date('d/m/Y') }}</li>
-                <li>{{ 'tisseo.paon.printing_type.label.printing_type'|trans }} : {{ ('tisseo.paon.printing_type.label.'~printing.printingType.label)|trans }}</li>
+                {% if printing.printingType %}
+                    <li>{{ 'tisseo.paon.printing_type.label.printing_type'|trans }} : {{ ('tisseo.paon.printing_type.label.'~printing.printingType.label)|trans }}</li>
+                {% endif %}
+                <li>{{ 'tisseo.paon.printing.label.format'|trans }} : {{ ('tisseo.paon.printing.label.format_'~printing.format)|trans }}</li>
                 {% if printing.comment %}
                 <li>{{ 'tisseo.paon.printing.label.comment'|trans }} : {{ printing.comment }}</li>
                 {% endif %}
