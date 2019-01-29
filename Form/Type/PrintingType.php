@@ -36,7 +36,6 @@ class PrintingType extends AbstractType
             }
             ++$loop;
         }
-        dump($firstChoice);
 
         $builder
             ->add(
