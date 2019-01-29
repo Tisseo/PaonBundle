@@ -66,7 +66,9 @@ tisseo:
                 modifications: Modifications
             label:
                 name: Nom commercial
-                printings: Tirages
+                printings:
+                    line: Tirages ligne
+                    stop: Tirages arrêt
                 version: Version
                 status: Statut
                 start_date: Date de début
@@ -129,6 +131,9 @@ tisseo:
                 quantity: Quantité
                 comment: Commentaire
                 date: Date
+                format: Format
+                format_1: FH ligne
+                format_2: FH arrêt
             action:
                 create: Nouvelle impression
                 export: Export des tirages
@@ -138,6 +143,7 @@ tisseo:
                 printing_type: Type d'impression
                 new_offer: Nouvelle offre
                 reassortment: Réassortiment
+                correction: Correction
         data_exchange:
             title:
                 show: Liste des tâches

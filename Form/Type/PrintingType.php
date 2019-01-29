@@ -36,7 +36,6 @@ class PrintingType extends AbstractType
             }
             ++$loop;
         }
-        dump($firstChoice);
 
         $builder
             ->add(
@@ -80,6 +79,18 @@ class PrintingType extends AbstractType
                     'data' => $om->getReference('TisseoEndivBundle:PrintingType', $firstChoice)
                 )
             )
+            ->add(
+                'format',
+                'choice',
+                array(
+                    'choices' => array(
+                        1 => 'tisseo.paon.printing.label.format_1',
+                        2 => 'tisseo.paon.printing.label.format_2',
+                    ),
+                    'label' => 'tisseo.paon.printing.label.format'
+                )
+            )
+
             ->setAction($options['action'])
         ;
 
